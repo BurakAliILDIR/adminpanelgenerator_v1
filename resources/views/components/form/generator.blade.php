@@ -2,7 +2,7 @@
     @if($field[$settings['operation']])
         @switch($field['type'])
             @case('radio')
-            @component('components.form.' . $field['type'],
+            @component('components.form.radio',
                        ['id' => $field['id'],
                        'name' => $field['name'],
                        'value' => $field['value'],
@@ -12,16 +12,17 @@
             ])@endcomponent
             @break
             @case('multi_checkbox')
-            @component('components.form.' . $field['type'],
+            @component('components.form.multi_checkbox',
                       ['id' => $field['id'],
                       'name' => $field['name'],
                       'value' => $field['value'] ?? $settings['extra'][$field['name']],
+                      'checked' => $settings['model']->relation($field['relationship'])->get(),
                       'title' => $field['title'],
                       'attributes' => @$field['attributes'],
             ])@endcomponent
             @break
             @case('checkbox')
-            @component('components.form.' . $field['type'],
+            @component('components.form.checkbox',
                        ['id' => $field['id'],
                        'name' => $field['name'],
                        'checked' => $settings['model'][$field['name']],
@@ -74,7 +75,3 @@
         @endswitch
     @endif
 @endforeach
-{{--
-    var deneme = 2212;
-    deneme = "dsfdsfd"
---}}

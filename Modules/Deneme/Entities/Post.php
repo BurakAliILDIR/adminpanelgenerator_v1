@@ -8,6 +8,7 @@ use Modules\Sales\Entities\SaleInfo;
 
 class Post extends Model
 {
+    ////////// edit sayfasında multi_checkbox 'ta var olanlar seçili gelecek
     use Relations;
     public $fields = [
         'id' => [

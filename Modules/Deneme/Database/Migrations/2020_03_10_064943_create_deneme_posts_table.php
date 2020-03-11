@@ -9,11 +9,10 @@ class CreateDenemePostsTable extends Migration
     public function up()
     {
         Schema::create('deneme_post', function (Blueprint $table) {
-            $table->bigIncrements('id');
             $table->unsignedBigInteger('deneme_id');
             $table->unsignedBigInteger('post_id');
-            $table->string('value');
-            $table->timestamps();
+            $table->foreign('deneme_id')->references('id')->on('deneme')->onDelete('cascade');
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
         });
     }
 

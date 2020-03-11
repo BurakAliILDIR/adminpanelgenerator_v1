@@ -14,7 +14,6 @@ class DenemePostTableSeeder extends Seeder
             DB::table('deneme_post')->insert([
                 'deneme_id' => rand(1, 10),
                 'post_id' => rand(1, 10),
-                'value' => 'value - ' . $i,
             ]);
         }
     }

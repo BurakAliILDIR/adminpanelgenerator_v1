@@ -54,6 +54,7 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+        dd($request->denemeler);
         return "EKLENDİ";
     }
 
@@ -88,7 +89,7 @@ class PostController extends Controller
             'submitText' => 'Kaydet',
             'submitAttributes' => [],
             'extra' => [
-                'oylesine' => SaleInfo::pluck('product_id', 'id'),
+                'denemeler' => Deneme::pluck('ad', 'id'),
             ],
         ];
         return view('deneme::edit', compact('settings'));
@@ -96,6 +97,7 @@ class PostController extends Controller
 
     public function update(Request $request, $id)
     {
+        dd($request->denemeler);
         return "GÜNCELLENDİ";
     }
 

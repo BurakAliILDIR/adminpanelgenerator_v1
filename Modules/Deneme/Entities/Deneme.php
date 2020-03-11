@@ -116,11 +116,6 @@ class Deneme extends Model
             'type' => 'multi_checkbox',
             'title' => 'Kontrol',
             'name' => 'kontrol',
-            'value' => [
-                'alan1' => ['Alan 1', 1,],
-                'alan2' => ['Alan 2', 2,],
-                'alan3' => ['Alan 3', 3,],
-            ],
             'relationship' => [
                 'type' => 'belongsToMany',
                 'model' => Post::class,

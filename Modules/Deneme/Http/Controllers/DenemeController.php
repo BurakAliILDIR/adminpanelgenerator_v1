@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 use Modules\Deneme\Entities\Deneme;
+use Modules\Deneme\Entities\Post;
 use Modules\Sales\Entities\SaleInfo;
 
 class DenemeController extends Controller
@@ -45,6 +46,7 @@ class DenemeController extends Controller
             'submitAttributes' => [],
             'extra' => [
                 'oylesine' => SaleInfo::pluck('product_id', 'id'),
+                'kontrol' => Post::pluck('name', 'id'),
             ],
         ];
         return view('deneme::create', compact('settings'));
@@ -87,6 +89,7 @@ class DenemeController extends Controller
             'submitAttributes' => [],
             'extra' => [
                 'oylesine' => SaleInfo::pluck('product_id', 'id'),
+                'kontrol' => Post::pluck('name', 'id'),
             ],
         ];
         return view('deneme::edit', compact('settings'));
