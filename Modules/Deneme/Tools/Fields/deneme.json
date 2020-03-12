@@ -1,0 +1,133 @@
+{
+    "id": {
+        "id": "id",
+        "type": "hidden",
+        "title": "id",
+        "name": "id",
+        "value": "",
+        "image": false,
+        "file": false,
+        "create": false,
+        "edit": true,
+        "list": false,
+        "detail": true
+    },
+    "ad": {
+        "id": "ad",
+        "type": "text",
+        "title": "Ad",
+        "name": "ad",
+        "value": "",
+        "attributes": [],
+        "image": false,
+        "file": false,
+        "create": true,
+        "edit": true,
+        "list": true,
+        "detail": true
+    },
+    "soyad": {
+        "id": "soyad",
+        "type": "text",
+        "title": "Soyad",
+        "name": "soyad",
+        "value": "",
+        "attributes": [],
+        "image": false,
+        "file": false,
+        "create": true,
+        "edit": true,
+        "list": true,
+        "detail": true
+    },
+    "yas": {
+        "id": "yas",
+        "type": "number",
+        "title": "Yaş",
+        "name": "yas",
+        "value": "",
+        "attributes": [],
+        "image": false,
+        "file": false,
+        "create": true,
+        "edit": true,
+        "list": true,
+        "detail": true
+    },
+    "oylesine": {
+        "id": "oylesine",
+        "type": "select",
+        "title": "oylesine",
+        "name": "oylesine",
+        "value": null,
+        "selected": "21",
+        "relationship": {
+            "type": "hasMany",
+            "model": "Modules\\Sales\\Entities\\SaleInfo",
+            "fields": [
+                "buy_price"
+            ],
+            "keys": {
+                "foreignKey": "count_id",
+                "otherKey": "count"
+            }
+        },
+        "attributes": [],
+        "image": false,
+        "file": false,
+        "create": true,
+        "edit": true,
+        "list": true,
+        "detail": true
+    },
+    "cv": {
+        "id": "cv",
+        "type": "file",
+        "title": "CV",
+        "name": "cv",
+        "value": "",
+        "attributes": [],
+        "image": false,
+        "file": true,
+        "create": true,
+        "edit": true,
+        "list": true,
+        "detail": true
+    },
+    "kontrol": {
+        "id": "checkbox",
+        "type": "multi_checkbox",
+        "title": "Kontrol",
+        "name": "kontrol",
+        "relationship": {
+            "type": "belongsToMany",
+            "model": "Modules\\Deneme\\Entities\\Post",
+            "fields": [
+                "id",
+                "name"
+            ],
+            "keys": {
+                "table": "deneme_post",
+                "foreignKey": "deneme_id",
+                "otherKey": "post_id"
+            }
+        },
+        "attributes": [],
+        "image": false,
+        "file": false,
+        "create": true,
+        "edit": true,
+        "list": true,
+        "detail": true
+    },
+    "durum": {
+        "id": "durum",
+        "type": "checkbox",
+        "title": "Durum",
+        "name": "durum",
+        "create": true,
+        "edit": true,
+        "list": false,
+        "detail": true
+    }
+}

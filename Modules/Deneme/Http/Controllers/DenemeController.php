@@ -11,14 +11,24 @@ use Modules\Sales\Entities\SaleInfo;
 
 class DenemeController extends Controller
 {
+    public $fields = null;
+
+// select edit sayfasında seçili gelmiyor
+    public function __construct()
+    {
+        $path = base_path() . '\Modules\Deneme\Tools\Fields\deneme.json';
+        $this->fields = json_decode(file_get_contents($path), true);
+    }
+
     public function index()
     {
         $model = new Deneme();
+
         $data = Deneme::orderByDESC('id')->paginate(10);
         $settings = [
             'operation' => 'list',
             'title' => 'Denemeler',
-            'fields' => $model->fields,
+            'fields' => $this->fields,
             'model' => $model,
             'data' => $data,
             'route' => [
@@ -38,14 +48,14 @@ class DenemeController extends Controller
         $settings = [
             'operation' => 'create',
             'title' => 'Deneme Ekle',
-            'fields' => $model->fields,
+            'fields' => $this->fields,
             'model' => $model,
             'route' => 'deneme.store',
             'params' => null,
             'submitText' => 'Ekle',
             'submitAttributes' => [],
             'extra' => [
-                'oylesine' => SaleInfo::pluck('product_id', 'id'),
+                'oylesine' => SaleInfo::pluck('buy_price', 'count'),
                 'kontrol' => Post::pluck('name', 'id'),
             ],
         ];
@@ -63,7 +73,7 @@ class DenemeController extends Controller
         $settings = [
             'operation' => 'detail',
             'title' => 'Deneme Detay',
-            'fields' => $model->fields,
+            'fields' => $this->fields,
             'model' => $model,
             'route' => [
                 'create' => 'deneme.create',
@@ -81,14 +91,14 @@ class DenemeController extends Controller
         $settings = [
             'operation' => 'edit',
             'title' => 'Deneme Düzenle',
-            'fields' => $model->fields,
+            'fields' => $this->fields,
             'model' => $model,
             'route' => 'deneme.update',
             'params' => $model->id,
             'submitText' => 'Kaydet',
             'submitAttributes' => [],
             'extra' => [
-                'oylesine' => SaleInfo::pluck('product_id', 'id'),
+                'oylesine' => SaleInfo::pluck('buy_price', 'count'),
                 'kontrol' => Post::pluck('name', 'id'),
             ],
         ];

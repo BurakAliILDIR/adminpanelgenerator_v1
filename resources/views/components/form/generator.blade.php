@@ -36,7 +36,7 @@
                        'name' => $field['name'],
                        'title' => $field['title'],
                        'value' => $field['value'] ?? $settings['extra'][$field['name']],
-                       'selected' => $settings['model'][$field['name']],
+                       'selected' => $settings['model'][$field['relationship']['keys']['foreignKey']],
                        'attributes' => @$field['attributes'],
             ])@endcomponent
             @break

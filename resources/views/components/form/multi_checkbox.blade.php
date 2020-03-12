@@ -13,8 +13,8 @@
                 @endif
                 {{ $val }}
             </label>
+            <br>
         @endforeach
     </div>
 </div>
 <div class="line line-dashed line-lg pull-in"></div>
-{{-- . '[' . $key . ']' --}}
