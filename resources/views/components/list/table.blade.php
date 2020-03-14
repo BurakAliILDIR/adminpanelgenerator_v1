@@ -22,7 +22,6 @@
                     </div>
                 </div>
             </div>
-
         </header>
         <section class="scrollable wrapper w-f">
             <section class="panel panel-default">
@@ -32,7 +31,7 @@
                         <tr>
                             <th width="20"><input type="checkbox"></th>
                             @foreach($settings['fields'] as $key => $val)
-                                @if($settings['fields'][$key][$settings['operation']] )
+                                @if($val[$settings['operation']])
                                     <th>{{ $val['title'] }}</th>
                                 @endif
                             @endforeach
@@ -42,23 +41,20 @@
                         </tr>
                         </thead>
                         <tbody>
-
                         @foreach($settings['data'] as $upper_val)
                             <tr>
-                                <td><input type="checkbox" name="post[]"
-                                           value="{{ $upper_val['id'] }}"></td>
+                                <td><input type="checkbox" name="post[]" value="{{ $upper_val['id'] }}"></td>
                                 @foreach($settings['fields'] as $lower_key => $lower_val)
                                     @if($lower_val[$settings['operation']] )
                                         <td>
-                                            @if($lower_val['image'])
-                                                <img src="{{ $upper_val[$lower_key] }}">
-                                            @elseif($lower_val['file'])
+                                            @if($lower_val['type'] == 'image')
+                                                <img height="41" src="{{ $upper_val[$lower_key] ?? $lower_val['value'] }}">
+                                            @elseif($lower_val['type'] == 'file')
                                                 <a class="btn btn-default btn-sm"
                                                    href="{{ $upper_val[$lower_key] }}">
                                                     {{ $lower_val['title']}} Görüntüle
                                                 </a>
                                             @elseif($lower_val['type'] == 'select')
-                                                {{--{{ $upper_val->relation($lower_key)->first()->id }}--}}
                                                 @foreach($upper_val->relation($lower_val['relationship'])->get() as $val)
                                                     @foreach($lower_val['relationship']['fields'] as $v)
                                                         {{ $val[$v] }}
@@ -66,9 +62,6 @@
                                                             {{ ' - ' }}
                                                         @endif
                                                     @endforeach
-                                                    @if(!$loop->last)
-                                                        {{ ' | ' }}
-                                                    @endif
                                                 @endforeach
                                             @elseif($lower_val['type'] == 'multi_checkbox')
                                                 @foreach($upper_val->relation($lower_val['relationship'])->get() as $val)
@@ -123,9 +116,10 @@
             <div class="row text-center-xs">
                 <div class="col-md-6 hidden-sm">
                     <p class="text-muted m-t">
-                        Gösterimde: {{ $settings['data']->currentPage() * $settings['data']->perPage() - $settings['data']->perPage() }}
-                        -{{ $settings['data']->currentPage() != $settings['data']->lastPage() ? $settings['data']->currentPage() * $settings['data']->perPage() : $settings['data']->total() }}
-                        | Toplam: {{ $settings['data']->total() }}</p>
+                        Gösterimde
+                        olan: {{ $settings['data']->currentPage() * $settings['data']->perPage() - $settings['data']->perPage() }}
+                        - {{ $settings['data']->currentPage() != $settings['data']->lastPage() ? $settings['data']->currentPage() * $settings['data']->perPage() : $settings['data']->total() }}
+                        | Toplam kayıt: {{ $settings['data']->total() }}</p>
                 </div>
                 <div class="col-md-6 col-sm-12 text-right text-center-xs">
                     {{ $settings['data']->links() }}

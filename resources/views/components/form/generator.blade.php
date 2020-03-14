@@ -30,6 +30,8 @@
                        'attributes' => @$field['attributes'],
             ])@endcomponent
             @break
+            @case('multi_image')
+            @break
             @case('select')
             @component('components.form.select',
                        ['id' => $field['id'],
@@ -49,6 +51,7 @@
             ])@endcomponent
             @break
             @case('file')
+            @case('image')
             @component('components.form.file',
                        ['id' => $field['id'],
                        'name' => $field['name'],

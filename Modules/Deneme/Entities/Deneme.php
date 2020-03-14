@@ -4,11 +4,12 @@ namespace Modules\Deneme\Entities;
 
 use App\Traits\Relations;
 use Illuminate\Database\Eloquent\Model;
-use Modules\Sales\Entities\SaleInfo;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Deneme extends Model
+class Deneme extends Model implements HasMedia
 {
-    use Relations;
+    use Relations, HasMediaTrait;
 
     protected $table = 'deneme';
 
@@ -57,4 +58,11 @@ class Deneme extends Model
             'name' => 'alan6',
             'attributes' => [],
         ],*/
+
+    private $path = '\Modules\Deneme\Tools\Fields\deneme.json';
+
+    public function getFields()
+    {
+        return json_decode(file_get_contents(base_path($this->path)), true);
+    }
 }

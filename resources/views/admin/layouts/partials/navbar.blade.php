@@ -25,8 +25,8 @@
                 <!-- nav -->
                 <nav class="nav-primary hidden-xs">
                     <ul class="nav">
-                        <li>
-                            <a href="index.html">
+                        <li class="active">
+                            <a class="active">
                                 <i class="fa fa-dashboard icon">
                                     <b class="bg-danger"></b>
                                 </i>
@@ -38,20 +38,20 @@
                             </a>
                             <ul class="nav lt">
                                 <li>
-                                    <a href="index.html">
+                                    <a href="{{ route('deneme.index') }}">
                                         <i class="fa fa-angle-right"></i>
-                                        <span>Dashboard v1</span>
+                                        <span>Deneme</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="dashboard.html">
+                                    <a href="{{ route('post.index') }}">
                                         <i class="fa fa-angle-right"></i>
-                                        <span>Dashboard v2</span>
+                                        <span>Post</span>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-                        <li class="active">
+                        {{--<li class="active">
                             <a href="#layout" class="active">
                                 <i class="fa fa-columns icon">
                                     <b class="bg-warning"></b>
@@ -94,7 +94,7 @@
                                     </a>
                                 </li>
                             </ul>
-                        </li>
+                        </li>--}}
                         <li>
                             <a href="#uikit">
                                 <i class="fa fa-flask icon">

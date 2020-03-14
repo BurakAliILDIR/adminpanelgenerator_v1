@@ -1,12 +1,10 @@
-@extends('deneme::layouts.master')
-<div class="card">
-    <h5 class="card-header">Featured</h5>
-    <div class="card-body">
-        <h5 class="card-title">Special title treatment</h5>
-        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
-    </div>
-    <div class="card-footer">
-
-    </div>
-</div>
+@extends('admin.layouts.master')
+@section('title', $settings['title'])
+@section('css')
+    <link type="text/css" rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/dropzone.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/dropzone.min.js"></script>
+@endsection
+@section('content')
+    @component('components.detail', ['settings'=> $settings])@endcomponent
+@endsection

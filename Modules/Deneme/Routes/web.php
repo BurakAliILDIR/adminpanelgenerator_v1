@@ -10,6 +10,7 @@ Route::prefix('deneme')->group(function () {
     Route::put('/{id}/duzenle', 'DenemeController@update')->name('deneme.update');
     Route::post('/', 'DenemeController@store')->name('deneme.store');
     Route::delete('/sil/{id}', 'DenemeController@destroy')->name('deneme.destroy');
+    Route::post('/imageUpload/{id}', 'DenemeController@imageUpload')->name('deneme.imageUpload');
 });
 
 Route::prefix('post')->group(function () {

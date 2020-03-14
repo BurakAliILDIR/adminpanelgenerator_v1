@@ -14,4 +14,31 @@ class SaleInfo extends Model
         return $this->belongsTo(Sale::class, 'sale_id');
     }
 
+    /*    "oylesine": {
+        "id": "oylesine",
+        "type": "select",
+        "title": "oylesine",
+        "name": "oylesine",
+        "value": null,
+        "multiple": true,
+        "relationship": {
+            "type": "hasMany",
+            "model": "Modules\\Sales\\Entities\\SaleInfo",
+            "fields": [
+                "buy_price"
+            ],
+            "keys": {
+                "foreignKey": "count_id",
+                "otherKey": "count"
+            },
+            "paginate": false,
+            "perPage": 10
+        },
+        "attributes": [],
+        "create": true,
+        "edit": true,
+        "list": true,
+        "detail": true
+    }
+*/
 }

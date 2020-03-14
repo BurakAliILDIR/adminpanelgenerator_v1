@@ -11,24 +11,14 @@ use Modules\Sales\Entities\SaleInfo;
 
 class DenemeController extends Controller
 {
-    public $fields = null;
-
-// select edit sayfasında seçili gelmiyor
-    public function __construct()
-    {
-        $path = base_path() . '\Modules\Deneme\Tools\Fields\deneme.json';
-        $this->fields = json_decode(file_get_contents($path), true);
-    }
-
     public function index()
     {
         $model = new Deneme();
-
         $data = Deneme::orderByDESC('id')->paginate(10);
         $settings = [
             'operation' => 'list',
             'title' => 'Denemeler',
-            'fields' => $this->fields,
+            'fields' => $model->getFields(),
             'model' => $model,
             'data' => $data,
             'route' => [
@@ -48,7 +38,7 @@ class DenemeController extends Controller
         $settings = [
             'operation' => 'create',
             'title' => 'Deneme Ekle',
-            'fields' => $this->fields,
+            'fields' => $model->getFields(),
             'model' => $model,
             'route' => 'deneme.store',
             'params' => null,
@@ -73,16 +63,17 @@ class DenemeController extends Controller
         $settings = [
             'operation' => 'detail',
             'title' => 'Deneme Detay',
-            'fields' => $this->fields,
+            'fields' => $model->getFields(),
             'model' => $model,
             'route' => [
                 'create' => 'deneme.create',
                 'show' => url()->previous(),
                 'edit' => 'deneme.edit',
                 'delete' => 'deneme.destroy',
+                'imageUpload' => 'deneme.imageUpload',
             ],
         ];
-        return view('deneme::show');
+        return view('deneme::show', compact('settings'));
     }
 
     public function edit($id)
@@ -91,7 +82,7 @@ class DenemeController extends Controller
         $settings = [
             'operation' => 'edit',
             'title' => 'Deneme Düzenle',
-            'fields' => $this->fields,
+            'fields' => $model->getFields(),
             'model' => $model,
             'route' => 'deneme.update',
             'params' => $model->id,
@@ -113,5 +104,19 @@ class DenemeController extends Controller
     public function destroy($id)
     {
         return 'SİLİNDİ';
+    }
+
+    public function imageUpload(Request $request, $id)
+    {
+        switch ($request->file->getClientOriginalExtension()) {
+            case 'jpeg':
+            case 'jpg':
+            case 'png':
+                $model = Deneme::findOrFail($id);
+                $model
+                    ->addMedia($request->file)
+                    ->toMediaCollection('deneme');
+                break;
+        }
     }
 }

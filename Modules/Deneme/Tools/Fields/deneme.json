@@ -5,8 +5,6 @@
         "title": "id",
         "name": "id",
         "value": "",
-        "image": false,
-        "file": false,
         "create": false,
         "edit": true,
         "list": false,
@@ -19,8 +17,6 @@
         "name": "ad",
         "value": "",
         "attributes": [],
-        "image": false,
-        "file": false,
         "create": true,
         "edit": true,
         "list": true,
@@ -33,8 +29,6 @@
         "name": "soyad",
         "value": "",
         "attributes": [],
-        "image": false,
-        "file": false,
         "create": true,
         "edit": true,
         "list": true,
@@ -47,34 +41,6 @@
         "name": "yas",
         "value": "",
         "attributes": [],
-        "image": false,
-        "file": false,
-        "create": true,
-        "edit": true,
-        "list": true,
-        "detail": true
-    },
-    "oylesine": {
-        "id": "oylesine",
-        "type": "select",
-        "title": "oylesine",
-        "name": "oylesine",
-        "value": null,
-        "selected": "21",
-        "relationship": {
-            "type": "hasMany",
-            "model": "Modules\\Sales\\Entities\\SaleInfo",
-            "fields": [
-                "buy_price"
-            ],
-            "keys": {
-                "foreignKey": "count_id",
-                "otherKey": "count"
-            }
-        },
-        "attributes": [],
-        "image": false,
-        "file": false,
         "create": true,
         "edit": true,
         "list": true,
@@ -87,8 +53,18 @@
         "name": "cv",
         "value": "",
         "attributes": [],
-        "image": false,
-        "file": true,
+        "create": true,
+        "edit": true,
+        "list": true,
+        "detail": true
+    },
+    "profile": {
+        "id": "profile",
+        "type": "image",
+        "title": "Profile",
+        "name": "profile",
+        "value": "/admin-template/images/avatar_default.jpg",
+        "attributes": [],
         "create": true,
         "edit": true,
         "list": true,
@@ -103,6 +79,32 @@
             "type": "belongsToMany",
             "model": "Modules\\Deneme\\Entities\\Post",
             "fields": [
+                "name"
+            ],
+            "keys": {
+                "table": "deneme_post",
+                "foreignKey": "deneme_id",
+                "otherKey": "post_id"
+            },
+            "paginate": false,
+            "perPage": 10
+        },
+        "attributes": [],
+        "multiple": true,
+        "create": true,
+        "edit": true,
+        "list": true,
+        "detail": true
+    },
+    "kontrol1": {
+        "id": "checkbox",
+        "type": "multi_checkbox",
+        "title": "Kontrol1",
+        "name": "kontrol1",
+        "relationship": {
+            "type": "belongsToMany",
+            "model": "Modules\\Deneme\\Entities\\Post",
+            "fields": [
                 "id",
                 "name"
             ],
@@ -110,14 +112,27 @@
                 "table": "deneme_post",
                 "foreignKey": "deneme_id",
                 "otherKey": "post_id"
-            }
+            },
+            "paginate": false,
+            "perPage": 10
         },
         "attributes": [],
-        "image": false,
-        "file": false,
+        "multiple": true,
         "create": true,
         "edit": true,
         "list": true,
+        "detail": true
+    },
+    "resimler": {
+        "id": "resimler",
+        "type": "multi_image",
+        "title": "Resimler",
+        "name": "resimler",
+        "attributes": [],
+        "multiple": true,
+        "create": false,
+        "edit": false,
+        "list": false,
         "detail": true
     },
     "durum": {
@@ -129,5 +144,31 @@
         "edit": true,
         "list": false,
         "detail": true
+    },
+    "oylesine": {
+        "id": "oylesine",
+        "type": "select",
+        "title": "Öylesine",
+        "name": "oylesine",
+        "value": null,
+        "multiple": true,
+        "relationship": {
+            "type": "hasMany",
+            "model": "Modules\\Sales\\Entities\\SaleInfo",
+            "fields": [
+                "buy_price"
+            ],
+            "keys": {
+                "foreignKey": "count_id",
+                "otherKey": "count"
+            },
+            "paginate": false,
+            "perPage": 10
+        },
+        "attributes": [],
+        "create": true,
+        "edit": true,
+        "list": true,
+        "detail": false
     }
 }
