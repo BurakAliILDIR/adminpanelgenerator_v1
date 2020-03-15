@@ -9,49 +9,14 @@
                     <section class="scrollable">
                         <div class="wrapper">
                             <div class="clearfix m-b">
-                                <a href="#" class="pull-left thumb m-r">
-                                    <img src="images/avatar.jpg" class="img-circle">
-                                </a>
-                                <div class="clear">
-                                    <div class="h3 m-t-xs m-b-xs">John.Smith</div>
-                                    <small class="text-muted"><i class="fa fa-map-marker"></i> London,
-                                        UK</small>
-                                </div>
-                            </div>
-                            <div class="panel wrapper panel-success">
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <a href="#">
-                                            <span class="m-b-xs h4 block">245</span>
-                                            <small class="text-muted">Followers</small>
-                                        </a>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <a href="#">
-                                            <span class="m-b-xs h4 block">55</span>
-                                            <small class="text-muted">Following</small>
-                                        </a>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <a href="#">
-                                            <span class="m-b-xs h4 block">2,035</span>
-                                            <small class="text-muted">Tweets</small>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="btn-group btn-group-justified m-b">
-                                <a class="btn btn-primary btn-rounded" data-toggle="button">
-                            <span class="text">
-                              <i class="fa fa-eye"></i> Follow
-                            </span>
-                                    <span class="text-active">
-                              <i class="fa fa-eye-slash"></i> Following
-                            </span>
-                                </a>
-                                <a class="btn btn-dark btn-rounded" data-loading-text="Connecting">
-                                    <i class="fa fa-comment-o"></i> Chat
-                                </a>
+                                @foreach($settings['fields'] as $key => $val)
+                                    @if($val[$settings['operation']] && $val['type'] === 'image')
+                                        <span class="pull-left thumb m-r">
+                                            <img src="{{ $settings['model'][$val['name']] ?? $val['value'] }}"
+                                                 class="img-circle">
+                                        </span>
+                                    @endif
+                                @endforeach
                             </div>
                             <div>
                                 @foreach($settings['fields'] as $key => $val)
@@ -64,12 +29,20 @@
                                             @case('radio')
                                             <small class="text-uc text-xs text-muted">{{ $val['title'] }}</small>
                                             <p>{{ $settings['model'][$val['name']] }}</p>
+                                            <div class="line"></div>
+                                            @break
+                                            @case('file')
+                                            <small class="text-uc text-xs text-muted">{{ $val['title'] }}</small>
+                                            <a class="btn btn-default btn-sm"
+                                               href="{{ $settings['model'][$val['name']] }}">
+                                                {{ $val['title']}} Görüntüle
+                                            </a>
+                                            <div class="line"></div>
+                                            @break
                                         @endswitch
                                     @endif
                                 @endforeach
                                 <div class="line"></div>
-
-
                                 <small class="text-uc text-xs text-muted">connection</small>
                                 <p class="m-t-sm">
                                     <a href="#" class="btn btn-rounded btn-twitter btn-icon"><i
@@ -175,47 +148,6 @@
                                             </section>
                                         </section>
                                     </div>
-                                    {{--<ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
-                                                    @foreach($settings['model']->relation($val['relationship'])->get() as $val)
-                                                        <li class="list-group-item" href="#email-content"
-                                                            data-toggle="class:show">
-                                                            <a href="#" class="thumb-sm pull-left m-r-sm">
-                                                                <img src="images/avatar_default.jpg" class="img-circle">
-                                                            </a>
-                                                            <a href="#" class="clear">
-                                                                <small class="pull-right">3 minuts ago</small>
-                                                                <strong class="block">Drew Wllon</strong>
-                                                                <small>Vestibulum ullamcorper sodales nisi nec sodales nisi nec
-                                                                    sodales nisi
-                                                                    nec...</small>
-                                                            </a>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            --}}
-                                    {{--<div class="tab-pane active" id="activity">
-                                        <ul class="list-group no-radius m-b-none m-t-n-xxs list-group-lg no-border">
-                                            <li class="list-group-item" href="#email-content"
-                                                data-toggle="class:show">
-                                                <a href="#" class="thumb-sm pull-left m-r-sm">
-                                                    <img src="images/avatar_default.jpg" class="img-circle">
-                                                </a>
-                                                <a href="#" class="clear">
-                                                    <small class="pull-right">3 minuts ago</small>
-                                                    <strong class="block">Drew Wllon</strong>
-                                                    <small>Vestibulum ullamcorper sodales nisi nec sodales nisi nec
-                                                        sodales nisi
-                                                        nec...</small>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>--}}
-                                    {{--<div class="tab-pane" id="events">
-                                           <div class="text-center wrapper">
-                                              <i class="fa fa-spinner fa fa-spin fa fa-large"></i>
-                                           </div>
-                                        </div>
-                                    --}}
                                 @endif
                             @endforeach
                         </div>
@@ -228,12 +160,16 @@
                         <section class="vbox">
                             <section class="scrollable">
                                 <div class="wrapper">
+                                    <p>{{ $val['title'] . ' : Yükleme Alanı' }}</p>
                                     <section class="panel panel-default">
                                         <form
                                             action="{{ route($settings['route']['imageUpload'], $settings['model']->id) }}"
                                             class="dropzone">
                                             @csrf
                                         </form>
+                                    </section>
+                                    <p>{{ $val['title'] }}</p>
+                                    <section class="panel panel-default">
                                         <div class="tz-gallery">
                                             @php($say = 0)
                                             @foreach($settings['model']->getMedia() as $image)
@@ -241,7 +177,7 @@
                                                     <div class="row">
                                                         @endif
                                                         <div class="col-sm-12 col-md-6">
-                                                            <section class="panel panel-default" style="height: 165px">
+                                                            <section class="panel panel-default">
                                                                 <div class="row">
                                                                     <div class="col-md-12">
                                                                         <a class="lightbox"
@@ -276,6 +212,7 @@
                                                 @php($say += 1)
                                             @endforeach
                                         </div>
+
                                     </section>
                                 </div>
                             </section>
