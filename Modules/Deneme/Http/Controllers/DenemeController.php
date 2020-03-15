@@ -5,9 +5,11 @@ namespace Modules\Deneme\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Str;
 use Modules\Deneme\Entities\Deneme;
 use Modules\Deneme\Entities\Post;
 use Modules\Sales\Entities\SaleInfo;
+use Spatie\MediaLibrary\Models\Media;
 
 class DenemeController extends Controller
 {
@@ -60,6 +62,8 @@ class DenemeController extends Controller
     public function show($id)
     {
         $model = Deneme::findOrFail($id);
+
+
         $settings = [
             'operation' => 'detail',
             'title' => 'Deneme Detay',
@@ -106,6 +110,12 @@ class DenemeController extends Controller
         return 'SİLİNDİ';
     }
 
+    // TODO 1: base controller'larda ImageController adında yeni bir controller açılacak.
+    // TODO 2: create ve detete için route tanımlamaları yapılacak. Hatta action() bile kullanılabilir.
+    // TODO 3: aşağıdaki imageUpload yani create kodu ImageController'a taşınacak.
+    // TODO 4: delete kodu yazılacak.
+    // TODO 5: delete işlemi view alanında gerçekleştirilecek.
+    // TODO 6: image boyutuna göre uygun resim boyutundaki resimi getirme işlemi yapılacak.
     public function imageUpload(Request $request, $id)
     {
         switch ($request->file->getClientOriginalExtension()) {
@@ -115,7 +125,13 @@ class DenemeController extends Controller
                 $model = Deneme::findOrFail($id);
                 $model
                     ->addMedia($request->file)
-                    ->toMediaCollection('deneme');
+                    ->sanitizingFileName(function ($fileName) {
+                        return strtolower(str_replace([
+                            '#', '/', '\\', ' ', '\'', '!', '&', '|', '(', ')', '<', '>', '%', '$', '£', 'ß', 'æ',
+                            '{', '}', '[', ']', '?', '=', '*', '+', '½', ',', '~', 'ğ', 'İ', 'ı', '-'],
+                            '', Str::kebab($fileName)));
+                    })
+                    ->toMediaCollection();
                 break;
         }
     }

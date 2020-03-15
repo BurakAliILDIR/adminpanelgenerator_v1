@@ -90,7 +90,7 @@
                         <ul class="nav nav-tabs nav-white">
                             {{--<li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>--}}
                             @foreach($settings['fields'] as $key => $val)
-                                @if(($val[$settings['operation']]) && @$val['multiple'])
+                                @if(($val[$settings['operation']]) && @$val['multiple'] && $val['type'] !== 'multi_image')
                                     <li class="">
                                         <a href="#{{ $val['name'] }}" data-toggle="tab">{{ $val['title'] }}</a>
                                     </li>
@@ -109,9 +109,7 @@
                                                     <table class="table table-striped m-b-none">
                                                         <thead>
                                                         <tr>
-                                                            @if($val['type'] === 'multi_image')
-                                                                <th>{{ $val['title'] }}</th>
-                                                            @else
+                                                            @if($val['type'] !== 'multi_image')
                                                                 @foreach($val['relationship']['fields'] as $field)
                                                                     <th>{{ $field }}</th>
                                                                 @endforeach
@@ -170,15 +168,6 @@
                                                                     @endforeach
                                                                 </tr>
                                                             @endforeach
-                                                        @else
-                                                            {{ dd($settings['model']) }}
-                                                            {{--
-                                                            TODO 1: Resimler çekilip galeri halinde listelenecek.
-                                                            TODO 2: Resimlere silme işlemi getirilecek.
-                                                            --}}
-                                                            @foreach($settings['model']->getMedia() as $image)
-                                                                <img src="{{ dd($image) }}" alt="">
-                                                            @endforeach
                                                         @endif
                                                         </tbody>
                                                     </table>
@@ -233,75 +222,67 @@
                     </section>
                 </section>
             </aside>
-            <aside class="col-lg-4 b-l">
-                <section class="vbox">
-                    <section class="scrollable">
-                        <div class="wrapper">
-                            <section class="panel panel-default">
-                                <form action="{{ route($settings['route']['imageUpload'], $settings['model']->id) }}"
-                                      class="dropzone">
-                                    @csrf
-                                </form>
-                            </section>
-                            {{--  <section class="panel panel-default">
-                                <form>
-                                    <textarea class="form-control no-border" rows="3"
-                                              placeholder="What are you doing..."></textarea>
-                                </form>
-                                <footer class="panel-footer bg-light lter">
-                                    <button class="btn btn-info pull-right btn-sm">POST</button>
-                                    <ul class="nav nav-pills nav-sm">
-                                        <li><a href="#"><i class="fa fa-camera text-muted"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-video-camera text-muted"></i></a>
-                                        </li>
-                                    </ul>
-                                </footer>
-                            </section>--}}
-                            <section class="panel panel-default">
-                                <h4 class="font-thin padder">Latest Tweets</h4>
-                                <ul class="list-group">
-                                    <li class="list-group-item">
-                                        <p>Wellcome <a href="#" class="text-info">@Drew Wllon</a> and play
-                                            this web
-                                            application template, have fun1 </p>
-                                        <small class="block text-muted"><i class="fa fa-clock-o"></i> 2
-                                            minuts
-                                            ago</small>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <p>Morbi nec <a href="#" class="text-info">@Jonathan George</a> nunc
-                                            condimentum
-                                            ipsum dolor sit amet, consectetur</p>
-                                        <small class="block text-muted"><i class="fa fa-clock-o"></i> 1 hour
-                                            ago</small>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <p><a href="#" class="text-info">@Josh Long</a> Vestibulum
-                                            ullamcorper sodales
-                                            nisi nec adipiscing elit. </p>
-                                        <small class="block text-muted"><i class="fa fa-clock-o"></i> 2
-                                            hours
-                                            ago</small>
-                                    </li>
-                                </ul>
-                            </section>
-                            <section class="panel clearfix bg-info lter">
-                                <div class="panel-body">
-                                    <a href="#" class="thumb pull-left m-r">
-                                        <img src="images/avatar.jpg" class="img-circle">
-                                    </a>
-                                    <div class="clear">
-                                        <a href="#" class="text-info">@Mike Mcalidek <i
-                                                class="fa fa-twitter"></i></a>
-                                        <small class="block text-muted">2,415 followers / 225 tweets</small>
-                                        <a href="#" class="btn btn-xs btn-success m-t-xs">Follow</a>
-                                    </div>
+            @foreach($settings['fields'] as $key => $val)
+                @if($val[$settings['operation']] && @$val['multiple'] && $val['type'] === 'multi_image')
+                    <aside class="col-lg-4 b-l">
+                        <section class="vbox">
+                            <section class="scrollable">
+                                <div class="wrapper">
+                                    <section class="panel panel-default">
+                                        <form
+                                            action="{{ route($settings['route']['imageUpload'], $settings['model']->id) }}"
+                                            class="dropzone">
+                                            @csrf
+                                        </form>
+                                        <div class="tz-gallery">
+                                            @php($say = 0)
+                                            @foreach($settings['model']->getMedia() as $image)
+                                                @if($say % 2 == 0)
+                                                    <div class="row">
+                                                        @endif
+                                                        <div class="col-sm-12 col-md-6">
+                                                            <section class="panel panel-default" style="height: 165px">
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <a class="lightbox"
+                                                                           href="{{ $image->getUrl() }}">
+                                                                            <img
+                                                                                src="{{ $image->getUrl() }}"
+                                                                                alt="{{ $image->name }}">
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <footer
+                                                                            class="panel-footer bg-light lter">
+                                                                            <ul class="nav nav-pills nav-sm">
+                                                                                <button
+                                                                                    class="btn btn-danger pull-right btn-icon btn-sm"
+                                                                                    onclick="return confirm('Kaydı silmek istediğinize emin misiniz?');">
+                                                                                    <i class="fa fa-trash"></i>
+                                                                                    {{--TODO : Silme işlemi burada gerçekleşecek.--}}
+                                                                                </button>
+                                                                            </ul>
+                                                                        </footer>
+                                                                    </div>
+                                                                </div>
+                                                            </section>
+
+                                                        </div>
+                                                        @if($say % 2 == 1)
+                                                    </div>
+                                                @endif
+                                                @php($say += 1)
+                                            @endforeach
+                                        </div>
+                                    </section>
                                 </div>
                             </section>
-                        </div>
-                    </section>
-                </section>
-            </aside>
+                        </section>
+                    </aside>
+                @endif
+            @endforeach
         </section>
     </section>
 </section>
