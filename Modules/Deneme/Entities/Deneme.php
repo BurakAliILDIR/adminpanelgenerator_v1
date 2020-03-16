@@ -6,6 +6,7 @@ use App\Traits\Relations;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
 
 class Deneme extends Model implements HasMedia
 {
@@ -65,4 +66,24 @@ class Deneme extends Model implements HasMedia
     {
         return json_decode(file_get_contents(base_path($this->path)), true);
     }
+
+
+    public function registerMediaCollections()
+    {
+        $this
+            ->addMediaCollection('resimler')
+            ->registerMediaConversions(function (Media $media) {
+                $this
+                    ->addMediaConversion('thumb')
+                    ->width(100)
+                    ->height(100);
+                $this
+                    ->addMediaConversion('card')
+                    ->width(260)
+                    ->height(140);
+            });
+
+    }
+
+
 }

@@ -163,7 +163,7 @@
                                     <p>{{ $val['title'] . ' : Yükleme Alanı' }}</p>
                                     <section class="panel panel-default">
                                         <form
-                                            action="{{ route($settings['route']['imageUpload'], $settings['model']->id) }}"
+                                            action="{{ route('deneme.imageUpload', [$settings['model']->id, $key]) }}"
                                             class="dropzone">
                                             @csrf
                                         </form>

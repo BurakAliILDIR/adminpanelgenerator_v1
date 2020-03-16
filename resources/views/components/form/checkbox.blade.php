@@ -8,4 +8,4 @@
     </div>
 </div>
 <div class="line line-dashed line-lg pull-in"></div>
-{{-- düzeltilecek ! --}}
+{{-- TODO: veritabanından gelen değerle örtüşüyor mu kontrol edilecek. --}}

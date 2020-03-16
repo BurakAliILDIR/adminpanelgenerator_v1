@@ -116,22 +116,22 @@ class DenemeController extends Controller
     // TODO 4: delete kodu yazılacak.
     // TODO 5: delete işlemi view alanında gerçekleştirilecek.
     // TODO 6: image boyutuna göre uygun resim boyutundaki resimi getirme işlemi yapılacak.
-    public function imageUpload(Request $request, $id)
+    public function imageUpload(Request $request, $id, $collection)
     {
+        $model = Deneme::findOrFail($id);
         switch ($request->file->getClientOriginalExtension()) {
             case 'jpeg':
             case 'jpg':
             case 'png':
-                $model = Deneme::findOrFail($id);
                 $model
                     ->addMedia($request->file)
                     ->sanitizingFileName(function ($fileName) {
-                        return strtolower(str_replace([
-                            '#', '/', '\\', ' ', '\'', '!', '&', '|', '(', ')', '<', '>', '%', '$', '£', 'ß', 'æ',
-                            '{', '}', '[', ']', '?', '=', '*', '+', '½', ',', '~', 'ğ', 'İ', 'ı', '-'],
-                            '', Str::kebab($fileName)));
+                        return str_replace(['#', '/', '\\', ' ', '\'', '!', '&', '|', '(', ')', '<', '>',
+                            '%', '$', '£', 'ß', 'æ', '{', '}', '[', ']', '?', '=', '*', '+', '½', ',',
+                            '~', 'ğ', 'İ', 'ı', '-', 'ç', 'ş', 'ü', 'ö',],
+                            '', Str::kebab($fileName));
                     })
-                    ->toMediaCollection();
+                    ->toMediaCollection($collection);
                 break;
         }
     }
