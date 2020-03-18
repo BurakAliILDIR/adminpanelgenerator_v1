@@ -20,7 +20,7 @@
             "title": "Ad",
             "name": "name",
             "value": "",
-            "attributes": [],
+            "attributes": {},
             "multiple": false,
             "create": true,
             "edit": true,
@@ -48,7 +48,7 @@
                 },
                 "perPage": 5
             },
-            "attributes": [],
+            "attributes": {},
             "multiple": true,
             "create": true,
             "edit": true,

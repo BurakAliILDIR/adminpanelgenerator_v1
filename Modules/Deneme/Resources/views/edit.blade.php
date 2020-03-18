@@ -21,5 +21,6 @@
     </div>
 @endsection
 @section('js')
+    <!-- datepicker -->
     <script type="text/javascript" src="/admin-custom-template/datepicker/bootstrap-datepicker.js"></script>
 @endsection

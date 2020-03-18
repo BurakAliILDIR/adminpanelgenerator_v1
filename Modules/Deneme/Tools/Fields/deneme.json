@@ -21,7 +21,7 @@
             "title": "Ad",
             "name": "ad",
             "value": "",
-            "attributes": [],
+            "attributes": {},
             "rules": [
                 "required",
                 "string"
@@ -38,10 +38,29 @@
             "title": "Soyad",
             "name": "soyad",
             "value": "",
-            "attributes": [],
+            "attributes": {},
             "rules": [
                 "required",
                 "string"
+            ],
+            "multiple": false,
+            "create": true,
+            "edit": true,
+            "list": true,
+            "detail": true
+        },
+        "hakkimda": {
+            "id": "hakkimda",
+            "type": "textarea",
+            "title": "Hakkımda",
+            "name": "hakkimda",
+            "value": "",
+            "attributes": {
+                "rows": 5
+            },
+            "rules": [
+                "required",
+                "text"
             ],
             "multiple": false,
             "create": true,
@@ -55,7 +74,7 @@
             "title": "Yaş",
             "name": "yas",
             "value": "",
-            "attributes": [],
+            "attributes": {},
             "rules": [
                 "required",
                 "number"
@@ -72,7 +91,7 @@
             "title": "CV",
             "name": "cv",
             "value": "",
-            "attributes": [],
+            "attributes": {},
             "rules": [
                 "nullable",
                 "file"
@@ -89,7 +108,7 @@
             "title": "Profile",
             "name": "profile",
             "value": "/admin-template/images/avatar_default.jpg",
-            "attributes": [],
+            "attributes": {},
             "rules": [
                 "nullable",
                 "mimes:jpeg,jpg,png"
@@ -118,7 +137,7 @@
                 },
                 "perPage": 3
             },
-            "attributes": [],
+            "attributes": {},
             "rules": [
                 "required"
             ],
@@ -147,7 +166,7 @@
                 },
                 "perPage": 5
             },
-            "attributes": [],
+            "attributes": {},
             "rules": [
                 "required"
             ],
@@ -163,7 +182,7 @@
             "title": "Resimler",
             "name": "resimler",
             "count": 10,
-            "attributes": [],
+            "attributes": {},
             "multiple": true,
             "create": false,
             "edit": false,
@@ -222,7 +241,7 @@
                     "otherKey": "count_id"
                 }
             },
-            "attributes": [],
+            "attributes": {},
             "create": true,
             "edit": true,
             "list": true,
