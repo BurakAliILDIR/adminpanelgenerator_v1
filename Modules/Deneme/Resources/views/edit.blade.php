@@ -11,7 +11,7 @@
                     {{ $settings['title'] }}
                 </header>
                 <div class="panel-body">
-                    {{ Form::model($settings['model'], ['route' => [$settings['route']['action'] , $settings['params']], 'method' => 'put'], ['class' => 'form-horizontal']) }}
+                    {{ Form::model($settings['model'], ['route' => [$settings['route']['action'], $settings['params']], 'method' => 'put'], ['class' => 'form-horizontal']) }}
                     @component('components.form.generator', ['settings'=> $settings,])@endcomponent
                     {{ Form::submit($settings['submitText'], array_merge(['class' => 'btn btn-success'], $settings['submitAttributes'] ?? [])) }}
                     {!! Form::close() !!}
@@ -22,7 +22,4 @@
 @endsection
 @section('js')
     <script type="text/javascript" src="/admin-custom-template/datepicker/bootstrap-datepicker.js"></script>
-    <script type="text/javascript">
-        $('.date').datepicker();
-    </script>
 @endsection
