@@ -1,6 +1,7 @@
 @extends('admin.layouts.master')
 @section('title', $settings['title'])
 @section('css')
+    <!-- datepicker -->
     <link href="/admin-custom-template/datepicker/bootstrap-datepicker.css" rel="stylesheet">
 @endsection
 @section('content')
@@ -23,5 +24,4 @@
 @section('js')
     <!-- datepicker -->
     <script type="text/javascript" src="/admin-custom-template/datepicker/bootstrap-datepicker.js"></script>
-
 @endsection
