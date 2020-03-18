@@ -45,7 +45,6 @@
                         </thead>
                         <tbody>
                         @foreach($settings['data'] as $upper_val)
-
                             <tr>
                                 <td>
                                     <div class="checkbox">
@@ -57,8 +56,7 @@
                                         </label>
                                     </div>
                                 </td>
-                                {{--<td><input type="checkbox" class="delete_checkbox" name="checked[]"
-                                           value="{{ $upper_val['id'] }}"></td>--}}
+
                                 @foreach($settings['fields'] as $lower_key => $lower_val)
 
                                     @if($lower_val[$settings['operation']] )
