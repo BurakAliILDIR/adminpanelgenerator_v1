@@ -1,4 +1,3 @@
-<script src="/admin-template/js/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="/admin-template/js/bootstrap.js"></script>
 <!-- App -->
@@ -7,3 +6,4 @@
 <!-- file input -->
 <script src="/admin-template/js/file-input/bootstrap-filestyle.min.js"></script>
 <script src="/admin-template/js/app.plugin.js"></script>
+@yield('js')

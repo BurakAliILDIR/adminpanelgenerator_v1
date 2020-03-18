@@ -11,8 +11,12 @@ class Post extends Model
 
     private $path = '\Modules\Deneme\Tools\Fields\post.json';
 
-    public function getFields()
+    public function getSettings($key = null)
     {
-        return json_decode(file_get_contents(base_path($this->path)), true);
+        $json = json_decode(file_get_contents(base_path($this->path)), true);
+        if ($key)
+            return $json[$key];
+        else
+            return $json;
     }
 }

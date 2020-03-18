@@ -2,15 +2,18 @@
 
 namespace Modules\Deneme\Entities;
 
+use App\Traits\ImageUploads\ImageUploads;
 use App\Traits\Relations;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\Models\Media;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
+
 
 class Deneme extends Model implements HasMedia
 {
-    use Relations, HasMediaTrait;
+    use Relations, ImageUploads, SoftDeletes;
 
     protected $table = 'deneme';
 
@@ -62,28 +65,12 @@ class Deneme extends Model implements HasMedia
 
     private $path = '\Modules\Deneme\Tools\Fields\deneme.json';
 
-    public function getFields()
+    public function getSettings($key = null)
     {
-        return json_decode(file_get_contents(base_path($this->path)), true);
+        $json = json_decode(file_get_contents(base_path($this->path)), true);
+        if ($key)
+            return $json[$key];
+        else
+            return $json;
     }
-
-
-    public function registerMediaCollections()
-    {
-        $this
-            ->addMediaCollection('resimler')
-            ->registerMediaConversions(function (Media $media) {
-                $this
-                    ->addMediaConversion('thumb')
-                    ->width(100)
-                    ->height(100);
-                $this
-                    ->addMediaConversion('card')
-                    ->width(260)
-                    ->height(140);
-            });
-
-    }
-
-
 }

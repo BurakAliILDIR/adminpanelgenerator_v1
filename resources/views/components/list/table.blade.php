@@ -4,22 +4,22 @@
     <section class="vbox">
         <header class="header bg-white b-b clearfix">
             <div class="row m-t-sm">
-                <div class="col-sm-8 m-b-xs">
-                    <button type="button" class="btn btn-sm btn-default" title="Remove"><i
-                            class="fa fa-trash-o"></i></button>
-                    <a href="{{ route($settings['route']['create']) }}" class="btn btn-sm btn-default"><i
-                            class="fa fa-plus"></i> Ekle</a>
-                </div>
                 <div class="col-sm-4 m-b-xs">
-                    <div class="input-group">
-                        <input type="text" class="input-sm form-control" placeholder="Ara">
-                        <span class="input-group-btn">
-                          <button class="btn btn-sm btn-default" type="button">
+                    <form>
+                        <div class="input-group">
+                            <input type="text" name="ara" class="input-sm form-control" placeholder="Ara">
+                            <span class="input-group-btn">
+                          <button class="btn btn-sm btn-default" type="submit">
                               <i class="fa fa-search"></i>
                               Ara
                           </button>
                         </span>
-                    </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-8 m-b-xs">
+                    <a href="{{ route($settings['route']['create']) }}" class="btn btn-sm btn-primary"
+                       style="float: right;"><i class="fa fa-plus"></i> Ekle</a>
                 </div>
             </div>
         </header>
@@ -29,56 +29,31 @@
                     <table class="table table-striped m-b-none">
                         <thead>
                         <tr>
-                            <th width="20"><input type="checkbox"></th>
+                            <th width="5">
+                                <button type="button" id="multiple_delete" class="btn btn-xs btn-danger"
+                                        title="Seçili Kayıtları Sil"><i class="fa fa-trash-o"></i>
+                                </button>
+                            </th>
                             @foreach($settings['fields'] as $key => $val)
                                 @if($val[$settings['operation']])
                                     <th>{{ $val['title'] }}</th>
                                 @endif
                             @endforeach
-                            <th width="20"></th>
-                            <th width="20"></th>
-                            <th width="20"></th>
+                            <th width="5"></th>
+                            <th width="5"></th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($settings['data'] as $upper_val)
+
                             <tr>
-                                <td><input type="checkbox" name="post[]" value="{{ $upper_val['id'] }}"></td>
+                                <td><input type="checkbox" class="delete_checkbox" name="checked[]"
+                                           value="{{ $upper_val['id'] }}"></td>
                                 @foreach($settings['fields'] as $lower_key => $lower_val)
+
                                     @if($lower_val[$settings['operation']] )
-                                        <td>
-                                            @if($lower_val['type'] == 'image')
-                                                <img height="41" src="{{ $upper_val[$lower_key] ?? $lower_val['value'] }}">
-                                            @elseif($lower_val['type'] == 'file')
-                                                <a class="btn btn-default btn-sm"
-                                                   href="{{ $upper_val[$lower_key] }}">
-                                                    {{ $lower_val['title']}} Görüntüle
-                                                </a>
-                                            @elseif($lower_val['type'] == 'select')
-                                                @foreach($upper_val->relation($lower_val['relationship'])->get() as $val)
-                                                    @foreach($lower_val['relationship']['fields'] as $v)
-                                                        {{ $val[$v] }}
-                                                        @if(!$loop->last)
-                                                            {{ ' - ' }}
-                                                        @endif
-                                                    @endforeach
-                                                @endforeach
-                                            @elseif($lower_val['type'] == 'multi_checkbox')
-                                                @foreach($upper_val->relation($lower_val['relationship'])->get() as $val)
-                                                    @foreach($lower_val['relationship']['fields'] as $v)
-                                                        {{ $val[$v] }}
-                                                        @if(!$loop->last)
-                                                            {{ ' - ' }}
-                                                        @endif
-                                                    @endforeach
-                                                    @if(!$loop->last)
-                                                        {{ ' | ' }}
-                                                    @endif
-                                                @endforeach
-                                            @else
-                                                <span>{{ $upper_val[$lower_key] }}</span>
-                                            @endif
-                                        </td>
+
+                                        @component('components.table.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
                                     @endif
                                 @endforeach
                                 <td>
@@ -92,18 +67,6 @@
                                        href="{{ route($settings['route']['edit'], $upper_val['id']) }}">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                </td>
-                                <td>
-                                    <form
-                                        action="{{ route($settings['route']['delete'], $upper_val['id']) }}"
-                                        method="post">
-                                        @Csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-icon btn-danger" type="submit"
-                                                onclick="return confirm('Kaydı silmek istediğinize emin misiniz?');">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -128,3 +91,24 @@
         </footer>
     </section>
 </aside>
+<script>
+    $(document).on('click', '#multiple_delete', function () {
+        let ids = [];
+        if (confirm('Seçili kayıtları silmek istediğinize emin misiniz?')) {
+            $('.delete_checkbox:checked').each(function () {
+                ids.push($(this).val());
+            });
+            if (ids.length > 0) {
+                $.ajax({
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    url: '{{ route($settings['route']['delete']) }}',
+                    method: 'DELETE',
+                    data: {checked: ids},
+                    success: function (data) {
+                        location.reload();
+                    }
+                });
+            }
+        }
+    });
+</script>

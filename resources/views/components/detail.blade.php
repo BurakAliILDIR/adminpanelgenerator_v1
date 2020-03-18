@@ -12,46 +12,61 @@
                                 @foreach($settings['fields'] as $key => $val)
                                     @if($val[$settings['operation']] && $val['type'] === 'image')
                                         <span class="pull-left thumb m-r">
-                                            <img src="{{ $settings['model'][$val['name']] ?? $val['value'] }}"
-                                                 class="img-circle">
+                                            <img
+                                                src="{{ $settings['model']->getFirstMediaUrl($key) === "" ? $val['value'] : $settings['model']->getFirstMediaUrl($key) }}"
+                                                class="img-circle">
                                         </span>
                                     @endif
                                 @endforeach
                             </div>
                             <div>
                                 @foreach($settings['fields'] as $key => $val)
-                                    @if($val[$settings['operation']])
+                                    @if($val[$settings['operation']] && !(@$val['multiple'] ?? true))
                                         @switch($val['type'])
                                             @case('text')
                                             @case('email')
-                                            @case('date')
                                             @case('number')
                                             @case('radio')
-                                            <small class="text-uc text-xs text-muted">{{ $val['title'] }}</small>
-                                            <p>{{ $settings['model'][$val['name']] }}</p>
+                                            <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
+                                            {{ $settings['model'][$val['name']] }}
                                             <div class="line"></div>
                                             @break
                                             @case('file')
-                                            <small class="text-uc text-xs text-muted">{{ $val['title'] }}</small>
-                                            <a class="btn btn-default btn-sm"
-                                               href="{{ $settings['model'][$val['name']] }}">
-                                                {{ $val['title']}} Görüntüle
-                                            </a>
+                                            <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
+                                            @if($settings['model'][$val['name']])
+                                                <a class="btn btn-default btn-xs"
+                                                   href="{{ $settings['model'][$val['name']] }}">
+                                                    {{ $val['title'] }}
+                                                    Görüntüle
+                                                </a>
+                                            @else
+                                                -
+                                            @endif
+                                            <div class="line"></div>
+                                            @break
+                                            @case('select')
+                                            <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
+                                            @foreach($val['relationship']['fields'] as $v)
+                                                {{ $settings['model']->relation($val['relationship'])->first()[$v] }}
+                                                @if(!$loop->last)
+                                                    {{ ' - ' }}
+                                                @endif
+                                            @endforeach
+                                            <div class="line"></div>
+                                            @break
+                                            @case('date')
+                                            <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
+                                            {{ \Carbon\Carbon::parse($settings['model'][$val['name']])->format('d/m/Y')}}
+                                            <div class="line"></div>
+                                            @break
+                                            @case('date_time')
+                                            <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
+                                            {{ \Carbon\Carbon::parse($settings['model'][$val['name']])->format('d/m/Y H:i:s')}}
                                             <div class="line"></div>
                                             @break
                                         @endswitch
                                     @endif
                                 @endforeach
-                                <div class="line"></div>
-                                <small class="text-uc text-xs text-muted">connection</small>
-                                <p class="m-t-sm">
-                                    <a href="#" class="btn btn-rounded btn-twitter btn-icon"><i
-                                            class="fa fa-twitter"></i></a>
-                                    <a href="#" class="btn btn-rounded btn-facebook btn-icon"><i
-                                            class="fa fa-facebook"></i></a>
-                                    <a href="#" class="btn btn-rounded btn-gplus btn-icon"><i
-                                            class="fa fa-google-plus"></i></a>
-                                </p>
                             </div>
                         </div>
                     </section>
@@ -59,92 +74,66 @@
             </aside>
             <aside class="bg-white">
                 <section class="vbox">
+
+
                     <header class="header bg-light bg-gradient">
                         <ul class="nav nav-tabs nav-white">
-                            {{--<li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>--}}
                             @foreach($settings['fields'] as $key => $val)
                                 @if(($val[$settings['operation']]) && @$val['multiple'] && $val['type'] !== 'multi_image')
-                                    <li class="">
-                                        <a href="#{{ $val['name'] }}" data-toggle="tab">{{ $val['title'] }}</a>
+                                    <li id="{{ $val['name'] }}Leaf">
+                                        <a href="#{{ $val['name'] }}" id="{{ $val['name'] }}A" data-toggle="tab"
+                                           onclick="setLeaf('{{ $val['name'] }}')">{{ $val['title'] }}</a>
                                     </li>
                                 @endif
                             @endforeach
                         </ul>
                     </header>
+
+
                     <section class="scrollable">
                         <div class="tab-content">
                             @foreach($settings['fields'] as $key => $val)
-                                @if(($val[$settings['operation']]) && @$val['multiple'])
-                                    <div class="tab-pane" id="{{ $val['name'] }}">
+                                @if(($val[$settings['operation']]) && @$val['multiple'] && $val['type'] !== 'multi_image')
+                                    <div class="tab-pane" id="{{ $val['name'] }}Page">
                                         <section class="scrollable wrapper w-f">
-                                            <section class="panel panel-default">
-                                                <div class="table-responsive">
-                                                    <table class="table table-striped m-b-none">
-                                                        <thead>
-                                                        <tr>
-                                                            @if($val['type'] !== 'multi_image')
-                                                                @foreach($val['relationship']['fields'] as $field)
-                                                                    <th>{{ $field }}</th>
-                                                                @endforeach
-                                                            @endif
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        @if($val['type'] !== 'multi_image')
-                                                            @foreach($settings['model']->relation($val['relationship'])->limit($val['relationship']['perPage'])->get() as $data)
-                                                                <tr>
-                                                                    @foreach($data->getFields() as $lower_key => $lower_val)
 
+                                            <section class="panel panel-default">
+                                                @php
+                                                    $data = $settings['model']->relation($val['relationship'])->orderByDESC('id')->paginate($val['relationship']['perPage'], ['*'], $key);
+                                                    //$data->setPageName($key);
+                                                @endphp
+                                                @if($data->count() > 0)
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped m-b-none">
+                                                            <thead>
+                                                            <tr>
+                                                                @foreach($data[0]->getSettings('fields') as $up)
+
+                                                                    @foreach($val['relationship']['fields'] as $field)
+                                                                        @if($up['name'] === $field)
+                                                                            <th>{{ $up['title'] }}</th>
+                                                                        @endif
+                                                                    @endforeach
+                                                                @endforeach
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            @foreach($data as $upper_val)
+                                                                <tr>
+                                                                    @foreach($upper_val->getSettings('fields') as $lower_key => $lower_val)
                                                                         @if(array_search($lower_key, $val['relationship']['fields']) !== false)
-                                                                            <td>
-                                                                                @switch($lower_val['type'])
-                                                                                    @case('image')
-                                                                                    <img
-                                                                                        src="{{ $data[$lower_key] ?? $lower_val['value'] }}">
-                                                                                    @break
-                                                                                    @case('file')
-                                                                                    <a class="btn btn-default btn-sm"
-                                                                                       href="{{ $data[$lower_key] }}">
-                                                                                        {{ $lower_val['title']}}
-                                                                                        Görüntüle
-                                                                                    </a>
-                                                                                    @break
-                                                                                    @case('select')
-                                                                                    @foreach($data->relation($lower_val['relationship'])->get() as $val)
-                                                                                        @foreach($lower_val['relationship']['fields'] as $v)
-                                                                                            {{ $val[$v] }}
-                                                                                            @if(!$loop->last)
-                                                                                                {{ ' - ' }}
-                                                                                            @endif
-                                                                                        @endforeach
-                                                                                    @endforeach
-                                                                                    @break
-                                                                                    @case('multi_checkbox')
-                                                                                    @foreach($data->relation($lower_val['relationship'])->get() as $val)
-                                                                                        @foreach($lower_val['relationship']['fields'] as $v)
-                                                                                            {{ $val[$v] }}
-                                                                                            @if(!$loop->last)
-                                                                                                {{ ' - ' }}
-                                                                                            @endif
-                                                                                        @endforeach
-                                                                                        @if(!$loop->last)
-                                                                                            {{ ' | ' }}
-                                                                                        @endif
-                                                                                    @endforeach
-                                                                                    @break
-                                                                                    @default
-                                                                                    {{ $data[$lower_key] }}
-                                                                                    @break
-                                                                                @endswitch
-                                                                            </td>
+                                                                            @component('components.table.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
                                                                         @endif
                                                                     @endforeach
                                                                 </tr>
                                                             @endforeach
-                                                        @endif
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    {{ $data->appends([$key => $data->currentPage()])->links() }}
+                                                @else
+                                                    <small>Kayıt bulunmamaktadır.</small>
+                                                @endif
                                             </section>
                                         </section>
                                     </div>
@@ -163,57 +152,65 @@
                                     <p>{{ $val['title'] . ' : Yükleme Alanı' }}</p>
                                     <section class="panel panel-default">
                                         <form
-                                            action="{{ route('deneme.imageUpload', [$settings['model']->id, $key]) }}"
+                                            action="{{ route('imageUpload', [$settings['model']->id, $key, str_replace('\\', '-', get_class($settings['model']))]) }}"
                                             class="dropzone">
                                             @csrf
                                         </form>
                                     </section>
-                                    <p>{{ $val['title'] }}</p>
-                                    <section class="panel panel-default">
-                                        <div class="tz-gallery">
-                                            @php($say = 0)
-                                            @foreach($settings['model']->getMedia() as $image)
-                                                @if($say % 2 == 0)
-                                                    <div class="row">
-                                                        @endif
-                                                        <div class="col-sm-12 col-md-6">
-                                                            <section class="panel panel-default">
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <a class="lightbox"
-                                                                           href="{{ $image->getUrl() }}">
-                                                                            <img
-                                                                                src="{{ $image->getUrl() }}"
-                                                                                alt="{{ $image->name }}">
-                                                                        </a>
+                                    <form action="{{ route('deleteImage') }}" method="post">
+                                        @Csrf @method('DELETE')
+                                        <p>{{ $val['title'] }}
+                                            <button
+                                                class="btn btn-danger pull-right btn-xs"
+                                                onclick="return confirm('Seçili resimleri silmek istediğinize emin misiniz?');">
+                                                <i class="fa fa-trash"></i> Seçili Resimleri Sil
+                                            </button>
+                                        </p>
+                                        <section class="panel panel-default">
+                                            <div class="tz-gallery">
+                                                @php($say = 0)
+                                                @foreach($settings['model']->getMedia($key) as $image)
+                                                    @if($say % 2 == 0)
+                                                        <div class="row">
+                                                            @endif
+                                                            <div class="col-sm-12 col-md-6">
+                                                                <section class="panel panel-default m-t">
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <a class="lightbox"
+                                                                               href="{{ $image->getUrl('big') }}">
+                                                                                <img
+                                                                                    src="{{ $image->getUrl('card') }}"
+                                                                                    alt="{{ $image->name }}">
+                                                                            </a>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <footer
-                                                                            class="panel-footer bg-light lter">
-                                                                            <ul class="nav nav-pills nav-sm">
-                                                                                <button
-                                                                                    class="btn btn-danger pull-right btn-icon btn-sm"
-                                                                                    onclick="return confirm('Kaydı silmek istediğinize emin misiniz?');">
-                                                                                    <i class="fa fa-trash"></i>
-                                                                                    {{--TODO : Silme işlemi burada gerçekleşecek.--}}
-                                                                                </button>
-                                                                            </ul>
-                                                                        </footer>
+                                                                    <div class="row">
+                                                                        <div class="col-md-12">
+                                                                            <footer
+                                                                                class="panel-footer bg-light lter">
+                                                                                <ul class="nav nav-pills nav-sm">
+                                                                                    <label class="pull-right">
+                                                                                        <input type="checkbox"
+                                                                                               name='mediaTodelete[]'
+                                                                                               value="{{$image->id}}">
+                                                                                        Sil
+                                                                                    </label>
+                                                                                </ul>
+                                                                            </footer>
+                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </section>
-
+                                                                </section>
+                                                            </div>
+                                                            @if($say % 2 == 1)
                                                         </div>
-                                                        @if($say % 2 == 1)
-                                                    </div>
-                                                @endif
-                                                @php($say += 1)
-                                            @endforeach
-                                        </div>
+                                                    @endif
+                                                    @php($say += 1)
+                                                @endforeach
+                                            </div>
 
-                                    </section>
+                                        </section>
+                                    </form>
                                 </div>
                             </section>
                         </section>
@@ -223,3 +220,29 @@
         </section>
     </section>
 </section>
+<script>
+    let value = null;
+
+    function setLeaf(name) {
+        value = localStorage.getItem("leaf");
+        if (document.getElementById(value + 'Leaf') !== null) {
+            document.getElementById(value + 'Leaf').classList.remove('active');
+            document.getElementById(value + 'Page').classList.remove('active');
+            document.getElementById(value + 'A').removeAttribute("aria-expanded");
+        }
+        localStorage.setItem("leaf", name);
+        document.getElementById(name + 'Leaf').classList.add('active');
+        document.getElementById(name + 'Page').classList.add('active');
+        document.getElementById(name + 'A').setAttribute("aria-expanded", "true");
+
+    }
+
+    window.onload = function getLeaf() {
+        value = localStorage.getItem("leaf");
+        if (document.getElementById(value + 'Leaf') !== null) {
+            document.getElementById(value + 'Leaf').classList.add('active');
+            document.getElementById(value + 'A').setAttribute("aria-expanded", "true");
+            document.getElementById(value + 'Page').classList.add('active');
+        }
+    };
+</script>

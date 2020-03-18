@@ -5,22 +5,35 @@ namespace Modules\Deneme\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 use Modules\Deneme\Entities\Deneme;
 use Modules\Deneme\Entities\Post;
 use Modules\Sales\Entities\SaleInfo;
 use Spatie\MediaLibrary\Models\Media;
+use Spatie\Searchable\Search;
+use function GuzzleHttp\Promise\all;
 
 class DenemeController extends Controller
 {
     public function index()
     {
         $model = new Deneme();
-        $data = Deneme::orderByDESC('id')->paginate(10);
+        $jsonSettings = $model->getSettings();
+        $data = null;
+        if ($search = \request()->input('ara')) {
+            $conditions = $jsonSettings['searchable'];
+            $data = Deneme::where(function ($query) use ($conditions, $search) {
+                foreach ($conditions as $column)
+                    $query->orWhere($column, 'like', '%' . $search . '%');
+            })->orderByDESC('id')->paginate(10);
+        } else
+            $data = Deneme::orderByDESC('id')->paginate(10);
+
         $settings = [
             'operation' => 'list',
             'title' => 'Denemeler',
-            'fields' => $model->getFields(),
+            'fields' => $jsonSettings['fields'],
             'model' => $model,
             'data' => $data,
             'route' => [
@@ -40,15 +53,19 @@ class DenemeController extends Controller
         $settings = [
             'operation' => 'create',
             'title' => 'Deneme Ekle',
-            'fields' => $model->getFields(),
+            'fields' => $model->getSettings('fields'),
             'model' => $model,
-            'route' => 'deneme.store',
             'params' => null,
             'submitText' => 'Ekle',
             'submitAttributes' => [],
+            'route' => [
+                'index' => 'deneme.index',
+                'action' => 'deneme.store',
+            ],
             'extra' => [
                 'oylesine' => SaleInfo::pluck('buy_price', 'count'),
                 'kontrol' => Post::pluck('name', 'id'),
+                'diger' => Post::pluck('name', 'id'),
             ],
         ];
         return view('deneme::create', compact('settings'));
@@ -56,25 +73,30 @@ class DenemeController extends Controller
 
     public function store(Request $request)
     {
-        return "EKLENDİ";
+        //dd($request->all());
+        $model = new Deneme();
+        $fields = $model->getSettings('fields');
+        foreach ($fields as $field) {
+            $model[$field['name']] = $request[$field['name']];
+        }
+
+        return redirect()->back();
     }
 
     public function show($id)
     {
         $model = Deneme::findOrFail($id);
-
-
         $settings = [
             'operation' => 'detail',
             'title' => 'Deneme Detay',
-            'fields' => $model->getFields(),
+            'fields' => $model->getSettings('fields'),
             'model' => $model,
             'route' => [
+                'index' => 'deneme.index',
                 'create' => 'deneme.create',
                 'show' => url()->previous(),
                 'edit' => 'deneme.edit',
                 'delete' => 'deneme.destroy',
-                'imageUpload' => 'deneme.imageUpload',
             ],
         ];
         return view('deneme::show', compact('settings'));
@@ -86,15 +108,19 @@ class DenemeController extends Controller
         $settings = [
             'operation' => 'edit',
             'title' => 'Deneme Düzenle',
-            'fields' => $model->getFields(),
+            'fields' => $model->getSettings('fields'),
             'model' => $model,
-            'route' => 'deneme.update',
             'params' => $model->id,
             'submitText' => 'Kaydet',
             'submitAttributes' => [],
+            'route' => [
+                'index' => 'deneme.index',
+                'action' => 'deneme.update',
+            ],
             'extra' => [
                 'oylesine' => SaleInfo::pluck('buy_price', 'count'),
                 'kontrol' => Post::pluck('name', 'id'),
+                'diger' => Post::pluck('name', 'id'),
             ],
         ];
         return view('deneme::edit', compact('settings'));
@@ -105,34 +131,9 @@ class DenemeController extends Controller
         return "GÜNCELLENDİ";
     }
 
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        return 'SİLİNDİ';
-    }
-
-    // TODO 1: base controller'larda ImageController adında yeni bir controller açılacak.
-    // TODO 2: create ve detete için route tanımlamaları yapılacak. Hatta action() bile kullanılabilir.
-    // TODO 3: aşağıdaki imageUpload yani create kodu ImageController'a taşınacak.
-    // TODO 4: delete kodu yazılacak.
-    // TODO 5: delete işlemi view alanında gerçekleştirilecek.
-    // TODO 6: image boyutuna göre uygun resim boyutundaki resimi getirme işlemi yapılacak.
-    public function imageUpload(Request $request, $id, $collection)
-    {
-        $model = Deneme::findOrFail($id);
-        switch ($request->file->getClientOriginalExtension()) {
-            case 'jpeg':
-            case 'jpg':
-            case 'png':
-                $model
-                    ->addMedia($request->file)
-                    ->sanitizingFileName(function ($fileName) {
-                        return str_replace(['#', '/', '\\', ' ', '\'', '!', '&', '|', '(', ')', '<', '>',
-                            '%', '$', '£', 'ß', 'æ', '{', '}', '[', ']', '?', '=', '*', '+', '½', ',',
-                            '~', 'ğ', 'İ', 'ı', '-', 'ç', 'ş', 'ü', 'ö',],
-                            '', Str::kebab($fileName));
-                    })
-                    ->toMediaCollection($collection);
-                break;
-        }
+        $models = Deneme::whereIn('id', $request->checked);
+        return $models->delete();
     }
 }

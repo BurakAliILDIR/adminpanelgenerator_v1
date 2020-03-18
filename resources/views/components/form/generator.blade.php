@@ -30,15 +30,13 @@
                        'attributes' => @$field['attributes'],
             ])@endcomponent
             @break
-            @case('multi_image')
-            @break
             @case('select')
             @component('components.form.select',
                        ['id' => $field['id'],
                        'name' => $field['name'],
                        'title' => $field['title'],
                        'value' => $field['value'] ?? $settings['extra'][$field['name']],
-                       'selected' => $settings['model'][$field['relationship']['keys']['foreignKey']],
+                       'selected' => $settings['model'][$field['relationship']['keys']['otherKey']],
                        'attributes' => @$field['attributes'],
             ])@endcomponent
             @break
@@ -54,7 +52,9 @@
             @case('image')
             @component('components.form.file',
                        ['id' => $field['id'],
+                       'type' => $field['type'],
                        'name' => $field['name'],
+                       'value' => $settings['model']->getFirstMediaUrl($field['name']) === "" ? $field['value'] : $settings['model']->getFirstMediaUrl($field['name']),
                        'title' => $field['title'],
                        'attributes' => @$field['attributes'],
             ])@endcomponent

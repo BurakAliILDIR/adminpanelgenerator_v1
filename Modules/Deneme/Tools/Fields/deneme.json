@@ -1,174 +1,232 @@
 {
-    "id": {
-        "id": "id",
-        "type": "hidden",
-        "title": "id",
-        "name": "id",
-        "value": "",
-        "create": false,
-        "edit": true,
-        "list": false,
-        "detail": true
-    },
-    "ad": {
-        "id": "ad",
-        "type": "text",
-        "title": "Ad",
-        "name": "ad",
-        "value": "",
-        "attributes": [],
-        "create": true,
-        "edit": true,
-        "list": true,
-        "detail": true
-    },
-    "soyad": {
-        "id": "soyad",
-        "type": "text",
-        "title": "Soyad",
-        "name": "soyad",
-        "value": "",
-        "attributes": [],
-        "create": true,
-        "edit": true,
-        "list": true,
-        "detail": true
-    },
-    "yas": {
-        "id": "yas",
-        "type": "number",
-        "title": "Yaş",
-        "name": "yas",
-        "value": "",
-        "attributes": [],
-        "create": true,
-        "edit": true,
-        "list": true,
-        "detail": true
-    },
-    "cv": {
-        "id": "cv",
-        "type": "file",
-        "title": "CV",
-        "name": "cv",
-        "value": "",
-        "attributes": [],
-        "create": true,
-        "edit": true,
-        "list": true,
-        "detail": true
-    },
-    "profile": {
-        "id": "profile",
-        "type": "image",
-        "title": "Profile",
-        "name": "profile",
-        "value": "/admin-template/images/avatar_default.jpg",
-        "attributes": [],
-        "create": true,
-        "edit": true,
-        "list": true,
-        "detail": true
-    },
-    "kontrol": {
-        "id": "checkbox",
-        "type": "multi_checkbox",
-        "title": "Kontrol",
-        "name": "kontrol",
-        "relationship": {
-            "type": "belongsToMany",
-            "model": "Modules\\Deneme\\Entities\\Post",
-            "fields": [
-                "name"
-            ],
-            "keys": {
-                "table": "deneme_post",
-                "foreignKey": "deneme_id",
-                "otherKey": "post_id"
-            },
-            "paginate": false,
-            "perPage": 10
+    "searchable": [
+        "ad",
+        "soyad"
+    ],
+    "fields": {
+        "id": {
+            "id": "id",
+            "type": "hidden",
+            "title": "Kimlik",
+            "name": "id",
+            "value": "",
+            "create": false,
+            "edit": true,
+            "list": false,
+            "detail": true
         },
-        "attributes": [],
-        "multiple": true,
-        "create": true,
-        "edit": true,
-        "list": true,
-        "detail": true
-    },
-    "kontrol1": {
-        "id": "checkbox",
-        "type": "multi_checkbox",
-        "title": "Kontrol1",
-        "name": "kontrol1",
-        "relationship": {
-            "type": "belongsToMany",
-            "model": "Modules\\Deneme\\Entities\\Post",
-            "fields": [
-                "id",
-                "name"
+        "ad": {
+            "id": "ad",
+            "type": "text",
+            "title": "Ad",
+            "name": "ad",
+            "value": "",
+            "attributes": [],
+            "rules": [
+                "required",
+                "string"
             ],
-            "keys": {
-                "table": "deneme_post",
-                "foreignKey": "deneme_id",
-                "otherKey": "post_id"
-            },
-            "paginate": false,
-            "perPage": 10
+            "multiple": false,
+            "create": true,
+            "edit": true,
+            "list": true,
+            "detail": true
         },
-        "attributes": [],
-        "multiple": true,
-        "create": true,
-        "edit": true,
-        "list": true,
-        "detail": true
-    },
-    "resimler": {
-        "id": "resimler",
-        "type": "multi_image",
-        "title": "Resimler",
-        "name": "resimler",
-        "attributes": [],
-        "multiple": true,
-        "create": false,
-        "edit": false,
-        "list": false,
-        "detail": true
-    },
-    "durum": {
-        "id": "durum",
-        "type": "checkbox",
-        "title": "Durum",
-        "name": "durum",
-        "create": true,
-        "edit": true,
-        "list": false,
-        "detail": true
-    },
-    "oylesine": {
-        "id": "oylesine",
-        "type": "select",
-        "title": "Öylesine",
-        "name": "oylesine",
-        "value": null,
-        "multiple": true,
-        "relationship": {
-            "type": "hasMany",
-            "model": "Modules\\Sales\\Entities\\SaleInfo",
-            "fields": [
-                "buy_price"
+        "soyad": {
+            "id": "soyad",
+            "type": "text",
+            "title": "Soyad",
+            "name": "soyad",
+            "value": "",
+            "attributes": [],
+            "rules": [
+                "required",
+                "string"
             ],
-            "keys": {
-                "foreignKey": "count_id",
-                "otherKey": "count"
-            },
-            "paginate": false,
-            "perPage": 10
+            "multiple": false,
+            "create": true,
+            "edit": true,
+            "list": true,
+            "detail": true
         },
-        "attributes": [],
-        "create": true,
-        "edit": true,
-        "list": true,
-        "detail": false
+        "yas": {
+            "id": "yas",
+            "type": "number",
+            "title": "Yaş",
+            "name": "yas",
+            "value": "",
+            "attributes": [],
+            "rules": [
+                "required",
+                "number"
+            ],
+            "multiple": false,
+            "create": true,
+            "edit": true,
+            "list": true,
+            "detail": true
+        },
+        "cv": {
+            "id": "cv",
+            "type": "file",
+            "title": "CV",
+            "name": "cv",
+            "value": "",
+            "attributes": [],
+            "rules": [
+                "nullable",
+                "file"
+            ],
+            "multiple": false,
+            "create": true,
+            "edit": true,
+            "list": true,
+            "detail": true
+        },
+        "profile": {
+            "id": "profile",
+            "type": "image",
+            "title": "Profile",
+            "name": "profile",
+            "value": "/admin-template/images/avatar_default.jpg",
+            "attributes": [],
+            "rules": [
+                "nullable",
+                "mimes:jpeg,jpg,png"
+            ],
+            "multiple": false,
+            "create": true,
+            "edit": true,
+            "list": true,
+            "detail": true
+        },
+        "kontrol": {
+            "id": "kontrol",
+            "type": "multi_checkbox",
+            "title": "Kontrol",
+            "name": "kontrol",
+            "relationship": {
+                "type": "belongsToMany",
+                "model": "Modules\\Deneme\\Entities\\Post",
+                "fields": [
+                    "name"
+                ],
+                "keys": {
+                    "table": "deneme_post",
+                    "foreignKey": "deneme_id",
+                    "otherKey": "post_id"
+                },
+                "perPage": 3
+            },
+            "attributes": [],
+            "rules": [
+                "required"
+            ],
+            "multiple": true,
+            "create": true,
+            "edit": true,
+            "list": true,
+            "detail": true
+        },
+        "diger": {
+            "id": "diger",
+            "type": "multi_checkbox",
+            "title": "Diğer",
+            "name": "diger",
+            "relationship": {
+                "type": "belongsToMany",
+                "model": "Modules\\Deneme\\Entities\\Post",
+                "fields": [
+                    "id",
+                    "name"
+                ],
+                "keys": {
+                    "table": "deneme_post",
+                    "foreignKey": "deneme_id",
+                    "otherKey": "post_id"
+                },
+                "perPage": 5
+            },
+            "attributes": [],
+            "rules": [
+                "required"
+            ],
+            "multiple": true,
+            "create": true,
+            "edit": true,
+            "list": true,
+            "detail": true
+        },
+        "resimler": {
+            "id": "resimler",
+            "type": "multi_image",
+            "title": "Resimler",
+            "name": "resimler",
+            "count": 10,
+            "attributes": [],
+            "multiple": true,
+            "create": false,
+            "edit": false,
+            "list": false,
+            "detail": true
+        },
+        "durum": {
+            "id": "durum",
+            "type": "checkbox",
+            "title": "Durum",
+            "name": "durum",
+            "rules": [],
+            "multiple": false,
+            "create": true,
+            "edit": true,
+            "list": false,
+            "detail": true
+        },
+        "created_at": {
+            "id": "created_at",
+            "type": "date_time",
+            "title": "Eklenme Tarihi",
+            "name": "created_at",
+            "multiple": false,
+            "create": true,
+            "edit": true,
+            "list": true,
+            "detail": true
+        },
+        "updated_at": {
+            "id": "updated_at",
+            "type": "date",
+            "title": "Son Düzenlenme Tarihi",
+            "name": "updated_at",
+            "multiple": false,
+            "create": true,
+            "edit": true,
+            "list": true,
+            "detail": true
+        },
+        "oylesine": {
+            "id": "oylesine",
+            "type": "select",
+            "title": "Öylesine",
+            "name": "oylesine",
+            "value": null,
+            "multiple": false,
+            "relationship": {
+                "type": "hasOne",
+                "model": "Modules\\Sales\\Entities\\SaleInfo",
+                "fields": [
+                    "buy_price"
+                ],
+                "keys": {
+                    "foreignKey": "count",
+                    "otherKey": "count_id"
+                }
+            },
+            "attributes": [],
+            "create": true,
+            "edit": true,
+            "list": true,
+            "detail": true
+        }
     }
 }

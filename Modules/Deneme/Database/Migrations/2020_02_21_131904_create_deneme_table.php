@@ -15,6 +15,7 @@ class CreateDenemeTable extends Migration
             $table->string('yas');
             $table->unsignedBigInteger('count_id');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

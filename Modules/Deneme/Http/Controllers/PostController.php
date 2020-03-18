@@ -11,14 +11,6 @@ use Modules\Sales\Entities\SaleInfo;
 
 class PostController extends Controller
 {
-    public $fields = null;
-
-    public function __construct()
-    {
-        $path = base_path() . '\Modules\Deneme\Tools\Fields\post.json';
-        $this->fields = json_decode(file_get_contents($path), true);
-    }
-
     public function index()
     {
         $model = new Post();
@@ -26,7 +18,7 @@ class PostController extends Controller
         $settings = [
             'operation' => 'list',
             'title' => 'Postlar',
-            'fields' => $this->fields,
+            'fields' => $model->getSettings('fields'),
             'model' => $model,
             'data' => $data,
             'route' => [
@@ -47,7 +39,7 @@ class PostController extends Controller
         $settings = [
             'operation' => 'create',
             'title' => 'Post Ekle',
-            'fields' => $this->fields,
+            'fields' => $model->getSettings('fields'),
             'model' => $model,
             'route' => 'post.store',
             'params' => null,
@@ -72,7 +64,7 @@ class PostController extends Controller
         $settings = [
             'operation' => 'detail',
             'title' => 'Post Detay',
-            'fields' => $this->fields,
+            'fields' => $model->getSettings('fields'),
             'model' => $model,
             'route' => [
                 'create' => 'post.create',
@@ -81,7 +73,7 @@ class PostController extends Controller
                 'delete' => 'post.destroy',
             ],
         ];
-        return view('deneme::show');
+        return view('deneme::show', compact('settings'));
     }
 
     public function edit($id)
@@ -90,7 +82,7 @@ class PostController extends Controller
         $settings = [
             'operation' => 'edit',
             'title' => 'Post Düzenle',
-            'fields' => $this->fields,
+            'fields' => $model->getSettings('fields'),
             'model' => $model,
             'route' => 'post.update',
             'params' => $model->id,

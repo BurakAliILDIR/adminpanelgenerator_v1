@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="app-fluid">
-@include('admin.layouts.partials.head')
-@yield('css')
+<head>
+    @include('admin.layouts.partials.head')
+    @yield('css')
+</head>
+
 <body>
 <section class="vbox">
     @include('admin.layouts.partials.header')
@@ -24,6 +27,5 @@
     </section>
 </section>
 @include('admin.layouts.partials.script')
-@yield('js')
 </body>
 </html>

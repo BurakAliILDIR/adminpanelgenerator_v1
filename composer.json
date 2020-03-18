@@ -9,6 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5",
+        "components/bootstrap-datetimepicker": "^2.4",
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
@@ -17,7 +18,8 @@
         "laravel/tinker": "^2.0",
         "laravelcollective/html": "^6.1",
         "nwidart/laravel-modules": "^6.2",
-        "spatie/laravel-medialibrary": "^7.0.0"
+        "spatie/laravel-medialibrary": "^7.0.0",
+        "spatie/laravel-searchable": "^1.6"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
