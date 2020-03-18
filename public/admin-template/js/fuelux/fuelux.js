@@ -102,6 +102,12 @@
 				if ($this.data('checkbox')) return;
 				$this.checkbox($this.data());
 			});
+
+			$('.checkbox-delete > input[data-val="delete"]').each(function () {
+				var $this = $(this);
+				if ($this.data('checkbox')) return;
+				$this.checkbox($this.data());
+			});
 		});
 	});
 
@@ -524,8 +530,8 @@
 			var pageRequested = parseInt($(e.target).val(), 10);
 			pageRequested = (isNaN(pageRequested)) ? 1 : pageRequested;
 			var maxPages = this.$pageslabel.text();
-		
-			this.options.dataOptions.pageIndex = 
+
+			this.options.dataOptions.pageIndex =
 				(pageRequested > maxPages) ? maxPages - 1 : pageRequested - 1;
 
 			this.renderData();
@@ -652,7 +658,7 @@
  */
 
 +function ($) { "use strict";
-	
+
 	// PILLBOX CONSTRUCTOR AND PROTOTYPE
 
 	var Pillbox = function (element, options) {
@@ -709,7 +715,7 @@
 			$this.pillbox($this.data());
 		});
 	});
-	
+
 }(window.jQuery);
 
 

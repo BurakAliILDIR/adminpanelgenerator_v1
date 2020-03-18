@@ -17,7 +17,8 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 90%;
+    margin-left: 5%;
     height: 100%;
     opacity: 0;
     background-color: rgba(46, 132, 206, 0.7);

@@ -3,6 +3,10 @@
         "ad",
         "soyad"
     ],
+    "dates": [
+        "created_at",
+        "updated_at"
+    ],
     "fields": {
         "id": {
             "id": "id",
@@ -65,7 +69,7 @@
             "multiple": false,
             "create": true,
             "edit": true,
-            "list": true,
+            "list": false,
             "detail": true
         },
         "yas": {
@@ -144,38 +148,10 @@
             "multiple": true,
             "create": true,
             "edit": true,
-            "list": true,
+            "list": false,
             "detail": true
         },
-        "diger": {
-            "id": "diger",
-            "type": "multi_checkbox",
-            "title": "Diğer",
-            "name": "diger",
-            "relationship": {
-                "type": "belongsToMany",
-                "model": "Modules\\Deneme\\Entities\\Post",
-                "fields": [
-                    "id",
-                    "name"
-                ],
-                "keys": {
-                    "table": "deneme_post",
-                    "foreignKey": "deneme_id",
-                    "otherKey": "post_id"
-                },
-                "perPage": 5
-            },
-            "attributes": {},
-            "rules": [
-                "required"
-            ],
-            "multiple": true,
-            "create": true,
-            "edit": true,
-            "list": true,
-            "detail": true
-        },
+
         "resimler": {
             "id": "resimler",
             "type": "multi_image",
@@ -194,11 +170,23 @@
             "type": "checkbox",
             "title": "Durum",
             "name": "durum",
+            "value": 1,
             "rules": [],
             "multiple": false,
             "create": true,
             "edit": true,
             "list": false,
+            "detail": true
+        },
+        "datee": {
+            "id": "datee",
+            "type": "date",
+            "title": "datee Tarihi",
+            "name": "datee",
+            "multiple": false,
+            "create": true,
+            "edit": true,
+            "list": true,
             "detail": true
         },
         "created_at": {
@@ -209,25 +197,25 @@
             "multiple": false,
             "create": true,
             "edit": true,
-            "list": true,
+            "list": false,
             "detail": true
         },
         "updated_at": {
             "id": "updated_at",
-            "type": "date",
+            "type": "date_time",
             "title": "Son Düzenlenme Tarihi",
             "name": "updated_at",
             "multiple": false,
             "create": true,
             "edit": true,
-            "list": true,
+            "list": false,
             "detail": true
         },
-        "oylesine": {
-            "id": "oylesine",
+        "count_id": {
+            "id": "count_id",
             "type": "select",
             "title": "Öylesine",
-            "name": "oylesine",
+            "name": "count_id",
             "value": null,
             "multiple": false,
             "relationship": {

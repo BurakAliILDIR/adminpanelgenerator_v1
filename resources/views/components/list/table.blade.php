@@ -7,9 +7,9 @@
                 <div class="col-sm-4 m-b-xs">
                     <form>
                         <div class="input-group">
-                            <input type="text" name="ara" class="input-sm form-control" placeholder="Ara">
+                            <input type="text" name="ara" class="input-sm form-control rounded" placeholder="Ara">
                             <span class="input-group-btn">
-                          <button class="btn btn-sm btn-default" type="submit">
+                          <button class="btn btn-sm btn-default btn-rounded" type="submit">
                               <i class="fa fa-search"></i>
                               Ara
                           </button>
@@ -18,7 +18,7 @@
                     </form>
                 </div>
                 <div class="col-sm-8 m-b-xs">
-                    <a href="{{ route($settings['route']['create']) }}" class="btn btn-sm btn-primary"
+                    <a href="{{ route($settings['route']['create']) }}" class="btn btn-sm btn-primary btn-rounded"
                        style="float: right;"><i class="fa fa-plus"></i> Ekle</a>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                         <thead>
                         <tr>
                             <th width="5">
-                                <button type="button" id="multiple_delete" class="btn btn-xs btn-danger"
+                                <button type="button" id="multiple_delete" data-url="{{ route($settings['route']['delete']) }}" class="btn btn-xs btn-danger btn-rounded"
                                         title="Seçili Kayıtları Sil"><i class="fa fa-trash-o"></i>
                                 </button>
                             </th>
@@ -39,16 +39,26 @@
                                     <th>{{ $val['title'] }}</th>
                                 @endif
                             @endforeach
-                            <th width="5"></th>
-                            <th width="5"></th>
+                            <th width="5"><i class="fa fa-search"></i></th>
+                            <th width="5"><i class="fa fa-edit"></i></th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($settings['data'] as $upper_val)
 
                             <tr>
-                                <td><input type="checkbox" class="delete_checkbox" name="checked[]"
-                                           value="{{ $upper_val['id'] }}"></td>
+                                <td>
+                                    <div class="checkbox">
+                                        <label class="checkbox-delete" id="{{ $upper_val['id'] }}">
+                                            <input type="checkbox" name="checked[]"
+                                                   value="{{ $upper_val['id'] }}"
+                                                   data-delete="{{ $upper_val['id'] }}" data-val="delete">
+                                            <i class="fa fa-fw fa-square-o"></i>
+                                        </label>
+                                    </div>
+                                </td>
+                                {{--<td><input type="checkbox" class="delete_checkbox" name="checked[]"
+                                           value="{{ $upper_val['id'] }}"></td>--}}
                                 @foreach($settings['fields'] as $lower_key => $lower_val)
 
                                     @if($lower_val[$settings['operation']] )
@@ -57,13 +67,13 @@
                                     @endif
                                 @endforeach
                                 <td>
-                                    <a class="btn btn-sm btn-icon btn-warning"
+                                    <a class="btn btn-sm btn-icon btn-warning btn-rounded"
                                        href="{{ route($settings['route']['show'], $upper_val['id']) }}">
                                         <i class="fa fa-search"></i>
                                     </a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-sm btn-icon btn-info"
+                                    <a class="btn btn-sm btn-icon btn-info btn-rounded"
                                        href="{{ route($settings['route']['edit'], $upper_val['id']) }}">
                                         <i class="fa fa-edit"></i>
                                     </a>
@@ -91,24 +101,5 @@
         </footer>
     </section>
 </aside>
-<script>
-    $(document).on('click', '#multiple_delete', function () {
-        let ids = [];
-        if (confirm('Seçili kayıtları silmek istediğinize emin misiniz?')) {
-            $('.delete_checkbox:checked').each(function () {
-                ids.push($(this).val());
-            });
-            if (ids.length > 0) {
-                $.ajax({
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    url: '{{ route($settings['route']['delete']) }}',
-                    method: 'DELETE',
-                    data: {checked: ids},
-                    success: function (data) {
-                        location.reload();
-                    }
-                });
-            }
-        }
-    });
+<script src="/admin-custom-template/table/table-delete.js">
 </script>

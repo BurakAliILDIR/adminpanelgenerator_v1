@@ -9,7 +9,10 @@ $factory->define(Deneme::class, function (Faker $faker) {
     return [
         'ad' => $faker->firstName,
         'soyad' => $faker->lastName,
+        'durum' => $faker->boolean,
+        'hakkimda' => $faker->text,
+        'datee' => $faker->date(),
         'yas' => $faker->numberBetween(10, 50),
-        'count_id' => 2,
+        'count_id' => $faker->numberBetween(1, 5),
     ];
 });

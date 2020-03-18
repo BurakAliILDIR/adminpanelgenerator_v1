@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-sm-offset-3 col-sm-4">
         @if($type === 'image')
-            <img style="width: 100%" src="{{ $value }}" class="img-circle">
+            <img style="width: 100%" src="{{ $value }}">
         @else
             @if($value !== '')
                 <a class="btn btn-default btn-sm m-b"

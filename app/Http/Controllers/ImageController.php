@@ -19,7 +19,7 @@ class ImageController extends Controller
             ->sanitizingFileName(function ($fileName) {
                 return str_replace(['#', '/', '\\', ' ', '\'', '!', '&', '|', '(', ')', '<', '>',
                     '%', '$', '£', 'ß', 'æ', '{', '}', '[', ']', '?', '=', '*', '+', '½', ',',
-                    '~', 'ğ', 'İ', 'ı', '-', 'ç', 'ş', 'ü', 'ö',],
+                    '~', 'ğ', 'İ', 'ı', '-', 'ç', 'ş', 'ü', 'ö', '_'],
                     '', Str::kebab($fileName));
             })
             ->toMediaCollection($collection);

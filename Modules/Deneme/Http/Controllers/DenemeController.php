@@ -2,17 +2,15 @@
 
 namespace Modules\Deneme\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Modules\Deneme\Entities\Deneme;
 use Modules\Deneme\Entities\Post;
 use Modules\Sales\Entities\SaleInfo;
-use Spatie\MediaLibrary\Models\Media;
-use Spatie\Searchable\Search;
-use function GuzzleHttp\Promise\all;
+
 
 class DenemeController extends Controller
 {
@@ -63,7 +61,7 @@ class DenemeController extends Controller
                 'action' => 'deneme.store',
             ],
             'extra' => [
-                'oylesine' => SaleInfo::pluck('buy_price', 'count'),
+                'count_id' => SaleInfo::pluck('buy_price', 'count'),
                 'kontrol' => Post::pluck('name', 'id'),
                 'diger' => Post::pluck('name', 'id'),
             ],
@@ -76,14 +74,71 @@ class DenemeController extends Controller
         //dd($request->all());
         $model = new Deneme();
         $fields = $model->getSettings('fields');
+
         foreach ($fields as $field) {
-            $model[$field['name']] = $request[$field['name']];
+            if ( !$field['create']) continue;
+            $name = $field['name'];
+            switch ($field['type']) {
+                case 'checkbox':
+                    $model[$name] = $request[$name] ?? 0;
+                    break;
+                case 'radio':
+                case 'hidden':
+                case 'email':
+                case 'number':
+                case 'select':
+                case 'text':
+                case 'textarea':
+                    $model[$name] = $request[$name];
+                    break;
+                //case 'multi_checkbox':
+                //dd($name);
+
+                //  $model->relation($field['relationship'])->sync($request[$name]);
+                //break;
+                case 'date':
+                    $model[$name] = Carbon::parse($request[$name])->format('Y-m-d');
+                    //dd($model[$name]);
+                    break;
+                case 'date_time':
+                    //$model[$name] = new DateTime("@{$request[$name]}");
+                    break;
+                case 'file':
+                case 'image':
+                    if ($request->hasFile($name))
+                        $model
+                            ->addMedia(\request($name))
+                            ->sanitizingFileName(function ($fileName) {
+                                return str_replace(['#', '/', '\\', ' ', '\'', '!', '&', '|', '(', ')', '<', '>',
+                                    '%', '$', '£', 'ß', 'æ', '{', '}', '[', ']', '?', '=', '*', '+', '½', ',',
+                                    '~', 'ğ', 'İ', 'ı', '-', 'ç', 'ş', 'ü', 'ö', '_'],
+                                    '', Str::kebab($fileName));
+                            })
+                            ->toMediaCollection($name);
+                    break;
+                case 'password':
+                    $model[$name] = Hash::make($request[$name]);
+                    break;
+                default:
+                    break;
+            }
         }
 
+        $model->saveOrFail();
+
+
+        foreach ($fields as $field) {
+            if ( !$field['create']) continue;
+            if ($field['type'] === 'multi_checkbox') {
+                //dd($request[$field['name']]);
+                $model->relation($field['relationship'])->sync($request[$field['name']]);
+            }
+        }
         return redirect()->back();
     }
 
-    public function show($id)
+    public
+    function show($id)
     {
         $model = Deneme::findOrFail($id);
         $settings = [
@@ -102,7 +157,8 @@ class DenemeController extends Controller
         return view('deneme::show', compact('settings'));
     }
 
-    public function edit($id)
+    public
+    function edit($id)
     {
         $model = Deneme::findOrFail($id);
         $settings = [
@@ -118,7 +174,7 @@ class DenemeController extends Controller
                 'action' => 'deneme.update',
             ],
             'extra' => [
-                'oylesine' => SaleInfo::pluck('buy_price', 'count'),
+                'count_id' => SaleInfo::pluck('buy_price', 'count'),
                 'kontrol' => Post::pluck('name', 'id'),
                 'diger' => Post::pluck('name', 'id'),
             ],
@@ -126,12 +182,14 @@ class DenemeController extends Controller
         return view('deneme::edit', compact('settings'));
     }
 
-    public function update(Request $request, $id)
+    public
+    function update(Request $request, $id)
     {
         return "GÜNCELLENDİ";
     }
 
-    public function destroy(Request $request)
+    public
+    function destroy(Request $request)
     {
         $models = Deneme::whereIn('id', $request->checked);
         return $models->delete();

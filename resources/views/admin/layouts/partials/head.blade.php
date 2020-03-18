@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="/admin-template/css/animate.css" type="text/css"/>
     <link rel="stylesheet" href="/admin-template/css/font-awesome.min.css" type="text/css"/>
     <link rel="stylesheet" href="/admin-template/css/font.css" type="text/css"/>
-    <link rel="stylesheet" href="/admin-template/js/datatables/datatables.css" type="text/css"/>
+    <link rel="stylesheet" href="/admin-template/js/fuelux/fuelux.css" type="text/css" />
+
     <link rel="stylesheet" href="/admin-template/css/app.css" type="text/css"/>
     <!--[if lt IE 9]>
     <script src="/admin-template/js/ie/html5shiv.js"></script>

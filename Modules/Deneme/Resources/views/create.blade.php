@@ -12,7 +12,7 @@
                     {{ $settings['title'] }}
                 </header>
                 <div class="panel-body">
-                    {{ Form::model($settings['model'], ['route' => [$settings['route']['action'], $settings['params']]], ['class' => 'form-horizontal']) }}
+                    {{ Form::model($settings['model'],['route' => [$settings['route']['action'], $settings['params']], 'class' => 'form-horizontal', 'files' => true]) }}
                     @component('components.form.generator', ['settings'=> $settings,])@endcomponent
                     {{ Form::submit($settings['submitText'], array_merge(['class' => 'btn btn-success'], $settings['submitAttributes'] ?? [])) }}
                     {!! Form::close() !!}

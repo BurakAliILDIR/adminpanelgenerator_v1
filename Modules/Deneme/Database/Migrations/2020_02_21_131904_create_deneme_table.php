@@ -12,8 +12,11 @@ class CreateDenemeTable extends Migration
             $table->bigIncrements('id');
             $table->string('ad');
             $table->string('soyad');
+            $table->text('hakkimda');
+            $table->boolean('durum');
             $table->string('yas');
             $table->unsignedBigInteger('count_id');
+            $table->date('datee');
             $table->timestamps();
             $table->softDeletes();
         });

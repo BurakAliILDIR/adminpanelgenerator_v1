@@ -13,8 +13,7 @@
                                     @if($val[$settings['operation']] && $val['type'] === 'image')
                                         <span class="pull-left thumb m-r">
                                             <img
-                                                src="{{ $settings['model']->getFirstMediaUrl($key) === "" ? $val['value'] : $settings['model']->getFirstMediaUrl($key) }}"
-                                                class="img-circle">
+                                                src="{{ $settings['model']->getFirstMediaUrl($key) === '' ? $val['value'] : $settings['model']->getFirstMediaUrl($key) }}">
                                         </span>
                                     @endif
                                 @endforeach
@@ -33,9 +32,9 @@
                                             @break
                                             @case('file')
                                             <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
-                                            @if($settings['model'][$val['name']])
-                                                <a class="btn btn-default btn-xs"
-                                                   href="{{ $settings['model'][$val['name']] }}">
+                                            @if(($file = $settings['model']->getFirstMediaUrl($key)) !== '')
+                                                <a class="btn btn-default btn-xs btn-rounded"
+                                                   href="{{ $file }}">
                                                     {{ $val['title'] }}
                                                     Görüntüle
                                                 </a>
@@ -56,12 +55,12 @@
                                             @break
                                             @case('date')
                                             <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
-                                            {{ \Carbon\Carbon::parse($settings['model'][$val['name']])->format('d/m/Y')}}
+                                            {{ \Carbon\Carbon::parse($settings['model'][$val['name']])->format('d/m/Y') }}
                                             <div class="line"></div>
                                             @break
                                             @case('date_time')
                                             <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
-                                            {{ \Carbon\Carbon::parse($settings['model'][$val['name']])->format('d/m/Y H:i:s')}}
+                                            {{ \Carbon\Carbon::parse($settings['model'][$val['name']])->format('d/m/Y H:i:s') }}
                                             <div class="line"></div>
                                             @break
                                         @endswitch
@@ -161,16 +160,15 @@
                                         @Csrf @method('DELETE')
                                         <p>{{ $val['title'] }}
                                             <button
-                                                class="btn btn-danger pull-right btn-xs"
+                                                class="btn btn-danger pull-right btn-xs btn-rounded"
                                                 onclick="return confirm('Seçili resimleri silmek istediğinize emin misiniz?');">
                                                 <i class="fa fa-trash"></i> Seçili Resimleri Sil
                                             </button>
                                         </p>
                                         <section class="panel panel-default">
                                             <div class="tz-gallery">
-                                                @php($say = 0)
-                                                @foreach($settings['model']->getMedia($key) as $image)
-                                                    @if($say % 2 == 0)
+                                                @foreach($settings['model']->getMedia($key) as $order => $image)
+                                                    @if(!($order % 2))
                                                         <div class="row">
                                                             @endif
                                                             <div class="col-sm-12 col-md-6">
@@ -202,10 +200,9 @@
                                                                     </div>
                                                                 </section>
                                                             </div>
-                                                            @if($say % 2 == 1)
+                                                            @if($order % 2)
                                                         </div>
                                                     @endif
-                                                    @php($say += 1)
                                                 @endforeach
                                             </div>
 

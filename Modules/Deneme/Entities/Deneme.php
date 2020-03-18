@@ -4,6 +4,7 @@ namespace Modules\Deneme\Entities;
 
 use App\Traits\ImageUploads\ImageUploads;
 use App\Traits\Relations;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -15,8 +16,10 @@ class Deneme extends Model implements HasMedia
 {
     use Relations, ImageUploads, SoftDeletes;
 
+    protected $guarded = [];
     protected $table = 'deneme';
 
+    protected $dates = ['created_at', 'updated_at'];
     // her alanın içine create, edit, index, show alanı eklenecek
     // fields dizisi json dosyanın içine json tipinde yazılacak
     // bu sayede extra alanlar ekleyebilir hale gelecek kullanıcı
@@ -73,4 +76,11 @@ class Deneme extends Model implements HasMedia
         else
             return $json;
     }
+
+    public function scopeDateFormat($value)
+    {
+        $date = Carbon::parse($value);
+        return $date->format('Y-m-d');
+    }
+
 }

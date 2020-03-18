@@ -1594,7 +1594,7 @@
         datesDisabled: [],
         endDate: Infinity,
         forceParse: true,
-        format: 'dd/mm/yyyy',
+        format: 'dd.mm.yyyy',
         keyboardNavigation: true,
         language: 'tr',
         minViewMode: 0,
@@ -1889,4 +1889,4 @@
 
 }));
 
-$('.date').datepicker();
+$('input[data-toggle="date"]').datepicker();

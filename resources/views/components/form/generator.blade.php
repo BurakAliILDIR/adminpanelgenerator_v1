@@ -25,6 +25,7 @@
             @component('components.form.checkbox',
                        ['id' => $field['id'],
                        'name' => $field['name'],
+                       'value' => $field['value'],
                        'checked' => $settings['model'][$field['name']],
                        'title' => $field['title'],
                        'attributes' => @$field['attributes'],
