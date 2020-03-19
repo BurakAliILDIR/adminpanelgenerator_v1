@@ -16,9 +16,10 @@ class Deneme extends Model implements HasMedia
 
     protected $guarded = [];
     protected $table = 'deneme';
-/* TODO 1:  datetime yapılacak (edit view)*/
-/* TODO 2:  update işlemi yapılacak */
-/* TODO 3:  radio yapılacak */
+    /* TODO 1:  datetime yapılacak (edit view)*/
+    /* TODO 2:  update işlemi yapılacak */
+    /* TODO 3:  radio yapılacak */
+    /* TODO 4:  validation yapılacak */
     protected $dates = ['created_at', 'updated_at'];
     // her alanın içine create, edit, index, show alanı eklenecek
     // fields dizisi json dosyanın içine json tipinde yazılacak
