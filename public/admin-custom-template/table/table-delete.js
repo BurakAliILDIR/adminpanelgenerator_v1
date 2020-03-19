@@ -19,12 +19,3 @@ $(document).on('click', '#multiple_delete', function () {
     }
 });
 
-let control = 0;
-$(document).on('click', '.checkbox-delete', function () {
-    if (control % 2) {
-        const id = $(this).attr('id');
-        const checkbox = $('[data-delete="' + id + '"]');
-        checkbox.attr("checked", !checkbox.attr("checked"));
-    }
-    control += 1;
-});

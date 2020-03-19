@@ -1,12 +1,4 @@
 
-/*
- * Fuel UX Checkbox
- * https://github.com/ExactTarget/fuelux
- *
- * Copyright (c) 2012 ExactTarget
- * Licensed under the MIT license.
- */
-
 +function ($) { "use strict";
 
 
@@ -102,24 +94,10 @@
 				if ($this.data('checkbox')) return;
 				$this.checkbox($this.data());
 			});
-
-			$('.checkbox-delete > input[data-val="delete"]').each(function () {
-				var $this = $(this);
-				if ($this.data('checkbox')) return;
-				$this.checkbox($this.data());
-			});
 		});
 	});
 
 }(window.jQuery);
-
-/*
- * Fuel UX Utilities
- * https://github.com/ExactTarget/fuelux
- *
- * Copyright (c) 2012 ExactTarget
- * Licensed under the MIT license.
- */
 
 +function ($) { "use strict";
 
@@ -139,13 +117,6 @@
 		};
 
 }(window.jQuery);
-/*
- * Fuel UX Combobox
- * https://github.com/ExactTarget/fuelux
- *
- * Copyright (c) 2012 ExactTarget
- * Licensed under the MIT license.
- */
 
 +function ($) { "use strict";
 
@@ -314,14 +285,6 @@
 	});
 
 }(window.jQuery);
-
-/*
- * Fuel UX Datagrid
- * https://github.com/ExactTarget/fuelux
- *
- * Copyright (c) 2012 ExactTarget
- * Licensed under the MIT license.
- */
 
 +function ($) { "use strict";
 
@@ -717,15 +680,6 @@
 	});
 
 }(window.jQuery);
-
-
-/*
- * Fuel UX Radio
- * https://github.com/ExactTarget/fuelux
- *
- * Copyright (c) 2012 ExactTarget
- * Licensed under the MIT license.
- */
 
 +function ($) { "use strict";
 

@@ -2,15 +2,8 @@
 .checkbox-custom {
   margin-left: -20px;
 }
-.checkbox-delete {
-  margin-left: -20px;
-}
 .radio-custom input[type=radio],
 .checkbox-custom input[type=checkbox] {
-  position: absolute;
-  left: -9999em;
-}
-.checkbox-delete input[type=checkbox] {
   position: absolute;
   left: -9999em;
 }
@@ -22,34 +15,18 @@
   margin-right: 4px;
   color: #ddd;
 }
-.checkbox-delete > i:before {
-  font-size: 1.333em;
-  vertical-align: -10%;
-  margin-left: 0;
-  margin-right: 4px;
-  color: #ddd;
-}
 .radio-custom > i.checked:before,
 .checkbox-custom > i.checked:before {
   color: #92cf5c;
 }
-.checkbox-delete > i.checked:before {
-    color: #fb6b5b;
-}
 .radio-custom > i.disabled:before,
 .checkbox-custom > i.disabled:before {
-  color: #eee;
-}
-.checkbox-delete > i.disabled:before {
   color: #eee;
 }
 .radio-custom > i.checked:before {
   content: '\f111';
 }
 .checkbox-custom > i.checked:before {
-  content: '\f046';
-}
-.checkbox-delete > i.checked:before {
   content: '\f046';
 }
 .spinner .input-group-btn {

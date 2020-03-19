@@ -70,7 +70,7 @@ class DenemeController extends Controller
 
     public function store(Request $request)
     {
-        //dd($request->all());
+        dd($request->all());
         $model = new Deneme();
         $fields = $model->getSettings('fields');
 
@@ -92,11 +92,9 @@ class DenemeController extends Controller
                     break;
                 case 'date':
                     $model[$name] = \Carbon\Carbon::parse($request[$name])->format('Y-m-d');
-                    //dd($model[$name]);
                     break;
                 case 'date_time':
-                    //$model[$name] = new DateTime("@{$request[$name]}");
-                    $model[$name] =  \Carbon\Carbon::parse($request[$name])->format('Y-m-d H:i:s');
+                    $model[$name] = \Carbon\Carbon::parse($request[$name])->format('Y-m-d H:i:s');
                     break;
                 case 'file':
                 case 'image':
@@ -120,7 +118,6 @@ class DenemeController extends Controller
         }
 
         $model->saveOrFail();
-
 
         foreach ($fields as $field) {
             if ( !$field['create']) continue;

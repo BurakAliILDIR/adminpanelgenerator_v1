@@ -1,5 +1,5 @@
 <h3>{{ $settings['title'] }}</h3>
-
+<style>.checkbox-custom > i.checked:before {color: #fb6b5b;}</style>
 <aside>
     <section class="vbox">
         <header class="header bg-white b-b clearfix">
@@ -7,7 +7,8 @@
                 <div class="col-sm-4 m-b-xs">
                     <form>
                         <div class="input-group">
-                            <input type="text" name="ara" class="input-sm form-control rounded" placeholder="Ara">
+                            <input type="text" name="ara" class="input-sm form-control rounded"
+                                   placeholder="{{ $settings['title'] }} İçinde Ara (Tümü için boş bırakınız)">
                             <span class="input-group-btn">
                           <button class="btn btn-sm btn-default btn-rounded" type="submit">
                               <i class="fa fa-search"></i>
@@ -30,7 +31,9 @@
                         <thead>
                         <tr>
                             <th width="5">
-                                <button type="button" id="multiple_delete" data-url="{{ route($settings['route']['delete']) }}" class="btn btn-xs btn-danger btn-rounded"
+                                <button type="button" id="multiple_delete"
+                                        data-url="{{ route($settings['route']['delete']) }}"
+                                        class="btn btn-xs btn-danger btn-rounded"
                                         title="Seçili Kayıtları Sil"><i class="fa fa-trash-o"></i>
                                 </button>
                             </th>
@@ -48,10 +51,10 @@
                             <tr>
                                 <td>
                                     <div class="checkbox">
-                                        <label class="checkbox-delete" id="{{ $upper_val['id'] }}">
+                                        <label class="checkbox-custom" id="{{ $upper_val['id'] }}">
                                             <input type="checkbox" name="checked[]"
                                                    value="{{ $upper_val['id'] }}"
-                                                   data-delete="{{ $upper_val['id'] }}" data-val="delete">
+                                                   data-val="delete">
                                             <i class="fa fa-fw fa-square-o"></i>
                                         </label>
                                     </div>
