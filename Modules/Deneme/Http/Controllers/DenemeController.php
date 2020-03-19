@@ -2,7 +2,6 @@
 
 namespace Modules\Deneme\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -91,17 +90,13 @@ class DenemeController extends Controller
                 case 'textarea':
                     $model[$name] = $request[$name];
                     break;
-                //case 'multi_checkbox':
-                //dd($name);
-
-                //  $model->relation($field['relationship'])->sync($request[$name]);
-                //break;
                 case 'date':
-                    $model[$name] = Carbon::parse($request[$name])->format('Y-m-d');
+                    $model[$name] = \Carbon\Carbon::parse($request[$name])->format('Y-m-d');
                     //dd($model[$name]);
                     break;
                 case 'date_time':
                     //$model[$name] = new DateTime("@{$request[$name]}");
+                    $model[$name] =  \Carbon\Carbon::parse($request[$name])->format('Y-m-d H:i:s');
                     break;
                 case 'file':
                 case 'image':

@@ -3,6 +3,8 @@
 @section('css')
     <!-- datepicker -->
     <link href="/admin-custom-template/datepicker/bootstrap-datepicker.css" rel="stylesheet">
+    <!-- datetimepicker -->
+    <link href="/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
 @endsection
 @section('content')
     <div class="row">
@@ -22,6 +24,9 @@
     </div>
 @endsection
 @section('js')
+    <!-- datetimepicker -->
+    <script src="/admin-custom-template/datetimepicker/moment.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.js"></script>
     <!-- datepicker -->
     <script type="text/javascript" src="/admin-custom-template/datepicker/bootstrap-datepicker.js"></script>
 @endsection

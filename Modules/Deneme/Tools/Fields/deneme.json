@@ -189,6 +189,28 @@
             "list": true,
             "detail": true
         },
+        "dateee": {
+            "id": "dateee",
+            "type": "date",
+            "title": "dateee Tarihi",
+            "name": "dateee",
+            "multiple": false,
+            "create": true,
+            "edit": true,
+            "list": true,
+            "detail": true
+        },
+        "dateetime": {
+            "id": "dateetime",
+            "type": "date_time",
+            "title": "dateetime Tarihi",
+            "name": "dateetime",
+            "multiple": false,
+            "create": true,
+            "edit": true,
+            "list": false,
+            "detail": true
+        },
         "created_at": {
             "id": "created_at",
             "type": "date_time",

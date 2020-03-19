@@ -20,7 +20,8 @@ class Deneme extends Model implements HasMedia
     /* TODO 2:  update işlemi yapılacak */
     /* TODO 3:  radio yapılacak */
     /* TODO 4:  validation yapılacak */
-    protected $dates = ['created_at', 'updated_at'];
+
+    protected $dates = ['created_at', 'updated_at', 'dateetime', 'datee'];
     // her alanın içine create, edit, index, show alanı eklenecek
     // fields dizisi json dosyanın içine json tipinde yazılacak
     // bu sayede extra alanlar ekleyebilir hale gelecek kullanıcı
