@@ -1,6 +1,9 @@
 <div class="form-group">
     {{ Form::label($id, $title, ['class' => 'col-sm-2 control-label']) }}
-    <div class="col-sm-10">
+    <div class="col-sm-10 @error($name) is-invalid @enderror">
+        @error($name)
+        <div class="label bg-danger">{{ $message }}</div>
+        @enderror
         {{ Form::text($name, $value, array_merge(['class' => 'form-control m-b', 'data-toggle' => 'datetimepicker'.$id, 'readonly' => 'readonly'], $attributes ?? [])) }}
     </div>
 </div>

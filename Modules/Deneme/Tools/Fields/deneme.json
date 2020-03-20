@@ -1,11 +1,16 @@
 {
+    "routes": {
+        "index": "deneme.index",
+        "create": "deneme.create",
+        "store": "deneme.store",
+        "show": "deneme.show",
+        "edit": "deneme.edit",
+        "update": "deneme.update",
+        "delete": "deneme.destroy"
+    },
     "searchable": [
         "ad",
         "soyad"
-    ],
-    "dates": [
-        "created_at",
-        "updated_at"
     ],
     "fields": {
         "id": {
@@ -15,9 +20,9 @@
             "name": "id",
             "value": "",
             "create": false,
-            "edit": true,
+            "edit": false,
             "list": false,
-            "detail": true
+            "detail": false
         },
         "ad": {
             "id": "ad",
@@ -27,8 +32,7 @@
             "value": "",
             "attributes": {},
             "rules": [
-                "required",
-                "string"
+                "required"
             ],
             "multiple": false,
             "create": true,
@@ -44,8 +48,7 @@
             "value": "",
             "attributes": {},
             "rules": [
-                "required",
-                "string"
+                "required"
             ],
             "multiple": false,
             "create": true,
@@ -64,7 +67,7 @@
             },
             "rules": [
                 "required",
-                "text"
+                "min:10"
             ],
             "multiple": false,
             "create": true,
@@ -80,8 +83,28 @@
             "value": "",
             "attributes": {},
             "rules": [
-                "required",
-                "number"
+                "required"
+            ],
+            "multiple": false,
+            "create": true,
+            "edit": true,
+            "list": true,
+            "detail": true
+        },
+        "cinsiyet": {
+            "id": "cinsiyet",
+            "type": "radio",
+            "title": "Cinsiyet",
+            "name": "cinsiyet",
+            "value": "",
+            "items": [
+                "Bay",
+                "Bayan",
+                "Belirtmek istemiyorum"
+            ],
+            "attributes": {},
+            "rules": [
+                "required"
             ],
             "multiple": false,
             "create": true,
@@ -97,7 +120,6 @@
             "value": "",
             "attributes": {},
             "rules": [
-                "nullable",
                 "file"
             ],
             "multiple": false,
@@ -114,13 +136,12 @@
             "value": "/admin-template/images/avatar_default.jpg",
             "attributes": {},
             "rules": [
-                "nullable",
                 "mimes:jpeg,jpg,png"
             ],
             "multiple": false,
             "create": true,
             "edit": true,
-            "list": true,
+            "list": false,
             "detail": true
         },
         "kontrol": {
@@ -151,7 +172,6 @@
             "list": false,
             "detail": true
         },
-
         "resimler": {
             "id": "resimler",
             "type": "multi_image",
@@ -168,10 +188,11 @@
         "durum": {
             "id": "durum",
             "type": "checkbox",
-            "title": "Durum",
+            "title": "Onaylı",
             "name": "durum",
-            "value": 1,
-            "rules": [],
+            "rules": [
+                "accepted"
+            ],
             "multiple": false,
             "create": true,
             "edit": true,
@@ -183,17 +204,9 @@
             "type": "date",
             "title": "datee Tarihi",
             "name": "datee",
-            "multiple": false,
-            "create": true,
-            "edit": true,
-            "list": true,
-            "detail": true
-        },
-        "dateee": {
-            "id": "dateee",
-            "type": "date",
-            "title": "dateee Tarihi",
-            "name": "dateee",
+            "rules": [
+                "required"
+            ],
             "multiple": false,
             "create": true,
             "edit": true,
@@ -205,6 +218,9 @@
             "type": "date_time",
             "title": "dateetime Tarihi",
             "name": "dateetime",
+            "rules": [
+                "required"
+            ],
             "multiple": false,
             "create": true,
             "edit": true,
@@ -216,6 +232,9 @@
             "type": "date_time",
             "title": "Eklenme Tarihi",
             "name": "created_at",
+            "rules": [
+                "required"
+            ],
             "multiple": false,
             "create": true,
             "edit": true,
@@ -227,6 +246,9 @@
             "type": "date_time",
             "title": "Son Düzenlenme Tarihi",
             "name": "updated_at",
+            "rules": [
+                "required"
+            ],
             "multiple": false,
             "create": true,
             "edit": true,
@@ -239,6 +261,9 @@
             "title": "Öylesine",
             "name": "count_id",
             "value": null,
+            "rules": [
+                "required"
+            ],
             "multiple": false,
             "relationship": {
                 "type": "hasOne",

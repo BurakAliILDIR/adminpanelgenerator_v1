@@ -8,15 +8,26 @@
 @endsection
 @section('content')
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-5 col-md-offset-3">
             <section class="panel panel-default">
                 <header class="panel-heading font-bold">
-                    {{ $settings['title'] }}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="m-t">
+                                <a class="btn btn-xs btn-default btn-rounded "
+                                   href="{{ route($settings['route']['index']) }}">
+                                    <i class="fa fa-arrow-left"></i>
+                                    Tüm Kayıtlara Dön
+                                </a>
+                                <span class="m-l">{{ $settings['title'] }}</span>
+                            </div>
+                        </div>
+                    </div>
                 </header>
                 <div class="panel-body">
-                    {{ Form::model($settings['model'], ['route' => [$settings['route']['action'], $settings['params']], 'method' => 'put'], ['class' => 'form-horizontal']) }}
+                    {{ Form::model($settings['model'], ['route' => [$settings['route']['update'], $settings['params']], 'method' => 'put', 'class' => 'form-horizontal', 'files' => true]) }}
                     @component('components.form.generator', ['settings'=> $settings,])@endcomponent
-                    {{ Form::submit($settings['submitText'], array_merge(['class' => 'btn btn-success'], $settings['submitAttributes'] ?? [])) }}
+                    {{ Form::submit($settings['submitText'], array_merge(['class' => 'btn btn-lg btn-info pull-right'], $settings['submitAttributes'] ?? [])) }}
                     {!! Form::close() !!}
                 </div>
             </section>

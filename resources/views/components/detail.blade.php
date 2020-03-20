@@ -1,7 +1,44 @@
+<?php
+    $fields = $settings['fields'];
+    $model = $settings['model'];
+    $route = $settings['route'];
+?>
 <section class="vbox">
     <header class="header bg-white b-b b-light">
-        <p>{{ $settings['title'] }}</p>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="m-t">
+                    <a class="btn btn-xs btn-default btn-rounded "
+                       href="{{ route($route['index']) }}">
+                        <i class="fa fa-arrow-left"></i>
+                        Tüm Kayıtlara Dön
+                    </a>
+                    <span class="m-l">{{ $settings['title'] }}</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="m-t m-r pull-right">
+                    <a class="btn btn-xs btn-info btn-rounded "
+                       href="{{ route($route['edit'], $model['id']) }}">
+                        <i class="fa fa-edit"></i>
+                        Bu Kaydı Düzenle
+                    </a>
+                    <form action="{{ route($route['delete']) }}" method="post"
+                          style="display: inline-block;">
+                        @method('DELETE') @csrf
+                        <input type="hidden" name="id" value="{{ $model['id'] }}">
+                        <input type="hidden" name="back" value="{{ URL::previous() }}">
+                        <button type="submit" class="btn btn-xs btn-danger btn-rounded"
+                                onclick="confirm('Kaydı silmek istediğinize emin misiniz?')">
+                            <i class="fa fa-trash"></i>
+                            Bu Kaydı Sil
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </header>
+
     <section class="scrollable">
         <section class="hbox stretch">
             <aside class="aside-lg bg-light lter b-r">
@@ -9,17 +46,17 @@
                     <section class="scrollable">
                         <div class="wrapper">
                             <div class="clearfix m-b">
-                                @foreach($settings['fields'] as $key => $val)
+                                @foreach($fields as $key => $val)
                                     @if($val[$settings['operation']] && $val['type'] === 'image')
                                         <span class="pull-left thumb m-r">
                                             <img
-                                                src="{{ $settings['model']->getFirstMediaUrl($key) === '' ? $val['value'] : $settings['model']->getFirstMediaUrl($key) }}">
+                                                src="{{ $model->getFirstMediaUrl($key) === '' ? $val['value'] : $model->getFirstMediaUrl($key) }}">
                                         </span>
                                     @endif
                                 @endforeach
                             </div>
                             <div>
-                                @foreach($settings['fields'] as $key => $val)
+                                @foreach($fields as $key => $val)
                                     @if($val[$settings['operation']] && !(@$val['multiple'] ?? true))
                                         @switch($val['type'])
                                             @case('text')
@@ -27,12 +64,12 @@
                                             @case('number')
                                             @case('radio')
                                             <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
-                                            {{ $settings['model'][$val['name']] }}
+                                            {!! $model[$val['name']] !!}
                                             <div class="line"></div>
                                             @break
                                             @case('file')
                                             <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
-                                            @if(($file = $settings['model']->getFirstMediaUrl($key)) !== '')
+                                            @if(($file = $model->getFirstMediaUrl($key)) !== '')
                                                 <a class="btn btn-default btn-xs btn-rounded"
                                                    href="{{ $file }}">
                                                     {{ $val['title'] }}
@@ -46,7 +83,7 @@
                                             @case('select')
                                             <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
                                             @foreach($val['relationship']['fields'] as $v)
-                                                {{ $settings['model']->relation($val['relationship'])->first()[$v] }}
+                                                {{ $model->relation($val['relationship'])->first()[$v] }}
                                                 @if(!$loop->last)
                                                     {{ ' - ' }}
                                                 @endif
@@ -55,12 +92,12 @@
                                             @break
                                             @case('date')
                                             <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
-                                            {{ \Carbon\Carbon::parse($settings['model'][$val['name']])->format('d/m/Y') }}
+                                            {{ \Carbon\Carbon::parse($model[$val['name']])->format('d/m/Y') }}
                                             <div class="line"></div>
                                             @break
                                             @case('date_time')
                                             <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
-                                            {{ \Carbon\Carbon::parse($settings['model'][$val['name']])->format('d/m/Y H:i:s') }}
+                                            {{ \Carbon\Carbon::parse($model[$val['name']])->format('d/m/Y H:i:s') }}
                                             <div class="line"></div>
                                             @break
                                         @endswitch
@@ -73,11 +110,9 @@
             </aside>
             <aside class="bg-white">
                 <section class="vbox">
-
-
                     <header class="header bg-light bg-gradient">
                         <ul class="nav nav-tabs nav-white">
-                            @foreach($settings['fields'] as $key => $val)
+                            @foreach($fields as $key => $val)
                                 @if(($val[$settings['operation']]) && @$val['multiple'] && $val['type'] !== 'multi_image')
                                     <li id="{{ $val['name'] }}Leaf">
                                         <a href="#{{ $val['name'] }}" id="{{ $val['name'] }}A" data-toggle="tab"
@@ -87,21 +122,17 @@
                             @endforeach
                         </ul>
                     </header>
-
-
                     <section class="scrollable">
                         <div class="tab-content">
-                            @foreach($settings['fields'] as $key => $val)
+                            @foreach($fields as $key => $val)
                                 @if(($val[$settings['operation']]) && @$val['multiple'] && $val['type'] !== 'multi_image')
                                     <div class="tab-pane" id="{{ $val['name'] }}Page">
                                         <section class="scrollable wrapper w-f">
-
-                                            <section class="panel panel-default">
-                                                @php
-                                                    $data = $settings['model']->relation($val['relationship'])->orderByDESC('id')->paginate($val['relationship']['perPage'], ['*'], $key);
-                                                    //$data->setPageName($key);
-                                                @endphp
-                                                @if($data->count() > 0)
+                                            @php
+                                                $data = $model->relation($val['relationship'])->orderByDESC('id')->paginate($val['relationship']['perPage'], ['*'], $key);
+                                            @endphp
+                                            @if($data->count() > 0)
+                                                <section class="panel panel-default">
                                                     <div class="table-responsive">
                                                         <table class="table table-striped m-b-none">
                                                             <thead>
@@ -129,11 +160,11 @@
                                                             </tbody>
                                                         </table>
                                                     </div>
-                                                    {{ $data->appends([$key => $data->currentPage()])->links() }}
-                                                @else
-                                                    <small>Kayıt bulunmamaktadır.</small>
-                                                @endif
-                                            </section>
+                                                </section>
+                                                {{ $data->appends([$key => $data->currentPage()])->links() }}
+                                            @else
+                                                <small>Kayıt bulunmamaktadır.</small>
+                                            @endif
                                         </section>
                                     </div>
                                 @endif
@@ -142,7 +173,7 @@
                     </section>
                 </section>
             </aside>
-            @foreach($settings['fields'] as $key => $val)
+            @foreach($fields as $key => $val)
                 @if($val[$settings['operation']] && @$val['multiple'] && $val['type'] === 'multi_image')
                     <aside class="col-lg-4 b-l">
                         <section class="vbox">
@@ -151,63 +182,64 @@
                                     <p>{{ $val['title'] . ' : Yükleme Alanı' }}</p>
                                     <section class="panel panel-default">
                                         <form
-                                            action="{{ route('imageUpload', [$settings['model']->id, $key, str_replace('\\', '-', get_class($settings['model']))]) }}"
+                                            action="{{ route('imageUpload', [$model->id, $val['name'], str_replace('\\', '-', get_class($model))]) }}"
                                             class="dropzone">
                                             @csrf
                                         </form>
                                     </section>
-                                    <form action="{{ route('deleteImage') }}" method="post">
-                                        @Csrf @method('DELETE')
-                                        <p>{{ $val['title'] }}
-                                            <button
-                                                class="btn btn-danger pull-right btn-xs btn-rounded"
-                                                onclick="return confirm('Seçili resimleri silmek istediğinize emin misiniz?');">
-                                                <i class="fa fa-trash"></i> Seçili Resimleri Sil
-                                            </button>
-                                        </p>
-                                        <section class="panel panel-default">
-                                            <div class="tz-gallery">
-                                                @foreach($settings['model']->getMedia($key) as $order => $image)
-                                                    @if(!($order % 2))
-                                                        <div class="row">
-                                                            @endif
-                                                            <div class="col-sm-12 col-md-6">
-                                                                <section class="panel panel-default m-t">
-                                                                    <div class="row">
-                                                                        <div class="col-md-12">
-                                                                            <a class="lightbox"
-                                                                               href="{{ $image->getUrl('big') }}">
-                                                                                <img
-                                                                                    src="{{ $image->getUrl('card') }}"
-                                                                                    alt="{{ $image->name }}">
-                                                                            </a>
+                                    @if(($images = $model->getMedia($val['name']))->count())
+                                        <form action="{{ route('deleteImage') }}" method="post">
+                                            @Csrf @method('DELETE')
+                                            <p>{{ $val['title'] }}
+                                                <button
+                                                    class="btn btn-danger pull-right btn-xs btn-rounded"
+                                                    onclick="return confirm('Seçili resimleri silmek istediğinize emin misiniz?');">
+                                                    <i class="fa fa-trash"></i> Seçili Resimleri Sil
+                                                </button>
+                                            </p>
+                                            <section class="panel panel-default">
+                                                <div class="tz-gallery">
+                                                    @foreach($images as $order => $image)
+                                                        @if(!($order % 2))
+                                                            <div class="row">
+                                                                @endif
+                                                                <div class="col-sm-12 col-md-6">
+                                                                    <section class="panel panel-default m-t">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <a class="lightbox"
+                                                                                   href="{{ $image->getUrl('big') }}">
+                                                                                    <img
+                                                                                        src="{{ $image->getUrl('card') }}"
+                                                                                        alt="{{ $image->name }}">
+                                                                                </a>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="col-md-12">
-                                                                            <footer
-                                                                                class="panel-footer bg-light lter">
-                                                                                <ul class="nav nav-pills nav-sm">
-                                                                                    <label class="pull-right">
-                                                                                        <input type="checkbox"
-                                                                                               name='mediaTodelete[]'
-                                                                                               value="{{$image->id}}">
-                                                                                        Sil
-                                                                                    </label>
-                                                                                </ul>
-                                                                            </footer>
+                                                                        <div class="row">
+                                                                            <div class="col-md-12">
+                                                                                <footer
+                                                                                    class="panel-footer bg-light lter">
+                                                                                    <ul class="nav nav-pills nav-sm">
+                                                                                        <label class="pull-right">
+                                                                                            <input type="checkbox"
+                                                                                                   name='mediaTodelete[]'
+                                                                                                   value="{{$image->id}}">
+                                                                                            Sil
+                                                                                        </label>
+                                                                                    </ul>
+                                                                                </footer>
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </section>
+                                                                    </section>
+                                                                </div>
+                                                                @if($order % 2)
                                                             </div>
-                                                            @if($order % 2)
-                                                        </div>
-                                                    @endif
-                                                @endforeach
-                                            </div>
-
-                                        </section>
-                                    </form>
+                                                        @endif
+                                                    @endforeach
+                                                </div>
+                                            </section>
+                                        </form>
+                                    @endif
                                 </div>
                             </section>
                         </section>
@@ -217,29 +249,4 @@
         </section>
     </section>
 </section>
-<script>
-    let value = null;
-
-    function setLeaf(name) {
-        value = localStorage.getItem("leaf");
-        if (document.getElementById(value + 'Leaf') !== null) {
-            document.getElementById(value + 'Leaf').classList.remove('active');
-            document.getElementById(value + 'Page').classList.remove('active');
-            document.getElementById(value + 'A').removeAttribute("aria-expanded");
-        }
-        localStorage.setItem("leaf", name);
-        document.getElementById(name + 'Leaf').classList.add('active');
-        document.getElementById(name + 'Page').classList.add('active');
-        document.getElementById(name + 'A').setAttribute("aria-expanded", "true");
-
-    }
-
-    window.onload = function getLeaf() {
-        value = localStorage.getItem("leaf");
-        if (document.getElementById(value + 'Leaf') !== null) {
-            document.getElementById(value + 'Leaf').classList.add('active');
-            document.getElementById(value + 'A').setAttribute("aria-expanded", "true");
-            document.getElementById(value + 'Page').classList.add('active');
-        }
-    };
-</script>
+<script src="/admin-custom-template/detail/change-leaf.js"></script>

@@ -15,5 +15,6 @@ $factory->define(Deneme::class, function (Faker $faker) {
         'yas' => $faker->numberBetween(10, 50),
         'count_id' => $faker->numberBetween(1, 5),
         'dateetime' => $faker->dateTime,
+        'cinsiyet' => ['Bay', 'Bayan', 'Belirtmek istemiyorum'][$faker->numberBetween(0, 2)],
     ];
 });

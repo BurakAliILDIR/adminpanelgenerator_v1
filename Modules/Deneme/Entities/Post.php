@@ -2,7 +2,7 @@
 
 namespace Modules\Deneme\Entities;
 
-use App\Traits\Relations;
+use App\Traits\ModelTraits\Relations;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model

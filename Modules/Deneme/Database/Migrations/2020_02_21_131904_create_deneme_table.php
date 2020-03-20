@@ -18,6 +18,7 @@ class CreateDenemeTable extends Migration
             $table->unsignedBigInteger('count_id');
             $table->date('datee');
             $table->dateTime('dateetime');
+            $table->string('cinsiyet');
             $table->timestamps();
             $table->softDeletes();
         });

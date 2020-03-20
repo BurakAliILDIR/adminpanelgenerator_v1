@@ -1,14 +1,14 @@
 <?php
 
 
-namespace App\Traits\ImageUploads;
+namespace App\Traits\MediaUploads;
 
 
 use Spatie\MediaLibrary\File;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
 
-Trait ImageUploads
+Trait MediaUploads
 {
     use HasMediaTrait;
 
@@ -44,6 +44,10 @@ Trait ImageUploads
                 $this->image_size_format($key, $val['count']);
             } else if ($val['type'] === 'image') {
                 $this->image_size_format($key, 1);
+            } else {
+                $this
+                    ->addMediaCollection($key)
+                    ->onlyKeepLatest(1);
             }
         }
     }

@@ -2,8 +2,8 @@
 
 namespace Modules\Deneme\Entities;
 
-use App\Traits\ImageUploads\ImageUploads;
-use App\Traits\Relations;
+use App\Traits\MediaUploads\MediaUploads;
+use App\Traits\ModelTraits\Relations;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,61 +12,23 @@ use Spatie\MediaLibrary\HasMedia\HasMedia;
 
 class Deneme extends Model implements HasMedia
 {
-    use Relations, ImageUploads, SoftDeletes;
+    use Relations, MediaUploads, SoftDeletes;
 
     protected $guarded = [];
     protected $table = 'deneme';
-    /* TODO 1:  datetime yapılacak (edit view)*/
-    /* TODO 2:  update işlemi yapılacak */
-    /* TODO 3:  radio yapılacak */
-    /* TODO 4:  validation yapılacak */
+    /* TODO 1:  validation yapılacak */
+    /* TODO 2:  işlem sonrasında geriye bilgilendirme mesajları dönülecek */
+    /* TODO 3:  controller'daki extra alanları json'a çevrilecek yapılacak */
+    /* TODO 4:  table ve detail' de parametrelerin uzun olmasından dolayı düzenleme yapıldı. Devamı getirilecek.
+     Ayrı bir php dosyasına alınıp tek yerden de yönetilebilir. Alt partiallara koymayıp merkezi alandan (üst) kontrol edilmeli.
+    */
 
-    protected $dates = ['created_at', 'updated_at', 'dateetime', 'datee'];
     // her alanın içine create, edit, index, show alanı eklenecek
     // fields dizisi json dosyanın içine json tipinde yazılacak
     // bu sayede extra alanlar ekleyebilir hale gelecek kullanıcı
     // daha sonrası düşünülerek yapılacak
 
     // hangi sayfaların olacağı ve olmicağı seçilecek
-    /*'alan2' => [
-            'id' => 'alan2',
-            'type' => 'select',
-            'title' => 'Alan 2',
-            'name' => 'alan2',
-            'value' => ['aaa', 'bbb', 'ccc'],
-            'selected' => 1,
-            'attributes' => [],
-        ],
-        'alan3' => [
-            'id' => 'alan3',
-            'type' => 'radio',
-            'title' => 'Alan 3',
-            'name' => 'alan3',
-            'value' => '111',
-            'attributes' => [],
-        ],
-        'alan4' => [
-            'id' => 'alan4',
-            'type' => 'radio',
-            'title' => 'Alan 4',
-            'name' => 'alan3',
-            'value' => '222',
-            'attributes' => [],
-        ],
-        'alan5' => [
-            'id' => 'alan5',
-            'type' => 'file',
-            'title' => 'Alan 5',
-            'name' => 'alan5',
-            'attributes' => [],
-        ],
-        'alan6' => [
-            'id' => 'alan6',
-            'type' => 'password',
-            'title' => 'Alan 6',
-            'name' => 'alan6',
-            'attributes' => [],
-        ],*/
 
     private $path = '\Modules\Deneme\Tools\Fields\deneme.json';
 
@@ -84,5 +46,4 @@ class Deneme extends Model implements HasMedia
         $date = Carbon::parse($value);
         return $date->format('Y-m-d');
     }
-
 }
