@@ -1,7 +1,7 @@
 <?php
-    $fields = $settings['fields'];
-    $model = $settings['model'];
-    $route = $settings['route'];
+$fields = $settings['fields'];
+$model = $settings['model'];
+$route = $settings['route'];
 ?>
 <section class="vbox">
     <header class="header bg-white b-b b-light">
@@ -27,7 +27,7 @@
                           style="display: inline-block;">
                         @method('DELETE') @csrf
                         <input type="hidden" name="id" value="{{ $model['id'] }}">
-                        <input type="hidden" name="back" value="{{ URL::previous() }}">
+                        <input type="hidden" name="back" value="{{ url()->previous() }}">
                         <button type="submit" class="btn btn-xs btn-danger btn-rounded"
                                 onclick="confirm('Kaydı silmek istediğinize emin misiniz?')">
                             <i class="fa fa-trash"></i>
@@ -81,9 +81,10 @@
                                             <div class="line"></div>
                                             @break
                                             @case('select')
+                                            <?php $relation_infos = $val['relationship'] ?>
                                             <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
-                                            @foreach($val['relationship']['fields'] as $v)
-                                                {{ $model->relation($val['relationship'])->first()[$v] }}
+                                            @foreach($relation_infos['fields'] as $v)
+                                                {{ $model->relation($relation_infos)->first()[$v] }}
                                                 @if(!$loop->last)
                                                     {{ ' - ' }}
                                                 @endif
@@ -126,10 +127,12 @@
                         <div class="tab-content">
                             @foreach($fields as $key => $val)
                                 @if(($val[$settings['operation']]) && @$val['multiple'] && $val['type'] !== 'multi_image')
+                                    <?php $relation_infos = $val['relationship'] ?>
+
                                     <div class="tab-pane" id="{{ $val['name'] }}Page">
                                         <section class="scrollable wrapper w-f">
                                             @php
-                                                $data = $model->relation($val['relationship'])->orderByDESC('id')->paginate($val['relationship']['perPage'], ['*'], $key);
+                                                $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key);
                                             @endphp
                                             @if($data->count() > 0)
                                                 <section class="panel panel-default">
@@ -139,7 +142,7 @@
                                                             <tr>
                                                                 @foreach($data[0]->getSettings('fields') as $up)
 
-                                                                    @foreach($val['relationship']['fields'] as $field)
+                                                                    @foreach($relation_infos['fields'] as $field)
                                                                         @if($up['name'] === $field)
                                                                             <th>{{ $up['title'] }}</th>
                                                                         @endif
@@ -151,7 +154,7 @@
                                                             @foreach($data as $upper_val)
                                                                 <tr>
                                                                     @foreach($upper_val->getSettings('fields') as $lower_key => $lower_val)
-                                                                        @if(array_search($lower_key, $val['relationship']['fields']) !== false)
+                                                                        @if(array_search($lower_key, $relation_infos['fields']) !== false)
                                                                             @component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
                                                                         @endif
                                                                     @endforeach

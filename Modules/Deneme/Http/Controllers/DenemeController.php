@@ -60,7 +60,7 @@ class DenemeController extends Controller
             'submitAttributes' => [],
             'route' => $this->jsonSettings['routes'],
             'extra' => [
-                'count_id' => SaleInfo::pluck('buy_price', 'count'),
+                'count_id' => SaleInfo::pluck('buy_price', 'id'),
                 'kontrol' => Post::pluck('name', 'id'),
                 'diger' => Post::pluck('name', 'id'),
             ],
@@ -137,7 +137,7 @@ class DenemeController extends Controller
             'submitAttributes' => [],
             'route' => $this->jsonSettings['routes'],
             'extra' => [
-                'count_id' => SaleInfo::pluck('buy_price', 'count'),
+                'count_id' => SaleInfo::pluck('buy_price', 'id'),
                 'kontrol' => Post::pluck('name', 'id'),
                 'diger' => Post::pluck('name', 'id'),
             ],

@@ -16,9 +16,8 @@ class Deneme extends Model implements HasMedia
 
     protected $guarded = [];
     protected $table = 'deneme';
-    /* TODO 1:  işlem sonrasında geriye bilgilendirme mesajları dönülecek */
-    /* TODO 2:  controller'daki extra alanları json'a çevrilecek yapılacak */
-    /* TODO 3:  table ve detail' de parametrelerin uzun olmasından dolayı düzenleme yapıldı. Devamı getirilecek. Ayrı bir php dosyasına alınıp tek yerden de yönetilebilir. Alt partiallara koymayıp merkezi alandan (üst) kontrol edilmeli. */
+    /* TODO 1:  controller'daki extra alanları json'a çevrilecek yapılacak */
+    /* TODO 2:  table ve detail' de parametrelerin uzun olmasından dolayı düzenleme yapıldı. Devamı getirilecek. Ayrı bir php dosyasına alınıp tek yerden de yönetilebilir. Alt partiallara koymayıp merkezi alandan (üst) kontrol edilmeli. */
 
     // her alanın içine create, edit, index, show alanı eklenecek
     // fields dizisi json dosyanın içine json tipinde yazılacak
@@ -27,7 +26,7 @@ class Deneme extends Model implements HasMedia
 
     // hangi sayfaların olacağı ve olmicağı seçilecek
 
-    private $path = '\Modules\Deneme\Tools\Fields\deneme.json';
+    private $path = '\Modules\Deneme\BuildSource\deneme.json';
 
     public function getSettings($key = null)
     {
