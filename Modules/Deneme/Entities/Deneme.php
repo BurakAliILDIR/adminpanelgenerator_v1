@@ -16,8 +16,7 @@ class Deneme extends Model implements HasMedia
 
     protected $guarded = [];
     protected $table = 'deneme';
-    /* TODO 1:  controller'daki extra alanları json'a çevrilecek yapılacak */
-    /* TODO 2:  table ve detail' de parametrelerin uzun olmasından dolayı düzenleme yapıldı. Devamı getirilecek. Ayrı bir php dosyasına alınıp tek yerden de yönetilebilir. Alt partiallara koymayıp merkezi alandan (üst) kontrol edilmeli. */
+    /* TODO 1: name alanı kaldırılacak. key ile değiştirilecek.  */
 
     // her alanın içine create, edit, index, show alanı eklenecek
     // fields dizisi json dosyanın içine json tipinde yazılacak
@@ -35,11 +34,5 @@ class Deneme extends Model implements HasMedia
             return $json[$key];
         else
             return $json;
-    }
-
-    public function scopeDateFormat($value)
-    {
-        $date = Carbon::parse($value);
-        return $date->format('Y-m-d');
     }
 }

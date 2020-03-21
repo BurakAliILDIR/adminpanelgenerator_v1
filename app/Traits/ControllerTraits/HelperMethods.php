@@ -29,4 +29,14 @@ Trait HelperMethods
                 })
                 ->toMediaCollection($name);
     }
+
+    private function getPluck($operation_type) : array
+    {
+        $plucks = [];
+        foreach ($this->jsonSettings['fields'] as $key => $field) {
+            if ($field[$operation_type] && @($relation = $field['relationship']))
+                $plucks[$key] = (new $relation['model'])->pluck($relation['pluck']['display'], $relation['pluck']['value']);
+        }
+        return $plucks;
+    }
 }

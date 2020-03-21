@@ -8,3 +8,6 @@
     </div>
 </div>
 <div class="line line-dashed line-lg pull-in"></div>
+<script>
+    CKEDITOR.replace('{{ $name }}');
+</script>

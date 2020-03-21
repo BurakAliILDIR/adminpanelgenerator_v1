@@ -152,14 +152,18 @@
             "relationship": {
                 "type": "belongsToMany",
                 "model": "Modules\\Deneme\\Entities\\Post",
-                "fields": [
-                    "name"
-                ],
                 "keys": {
                     "table": "deneme_post",
                     "foreignKey": "deneme_id",
                     "otherKey": "post_id"
                 },
+                "pluck": {
+                    "display": "name",
+                    "value": "id"
+                },
+                "fields": [
+                    "name"
+                ],
                 "perPage": 3
             },
             "attributes": {},
@@ -268,13 +272,17 @@
             "relationship": {
                 "type": "hasOne",
                 "model": "Modules\\Sales\\Entities\\SaleInfo",
+                "keys": {
+                    "foreignKey": "id",
+                    "otherKey": "count_id"
+                },
+                "pluck": {
+                    "display": "buy_price",
+                    "value": "id"
+                },
                 "fields": [
                     "buy_price"
-                ],
-                "keys": {
-                    "foreignKey": "count",
-                    "otherKey": "count_id"
-                }
+                ]
             },
             "attributes": {},
             "create": true,

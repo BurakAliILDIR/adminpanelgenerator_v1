@@ -63,6 +63,7 @@ $route = $settings['route'];
                                             @case('email')
                                             @case('number')
                                             @case('radio')
+                                            @case('textarea')
                                             <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
                                             {!! $model[$val['name']] !!}
                                             <div class="line"></div>
@@ -191,6 +192,7 @@ $route = $settings['route'];
                                         </form>
                                     </section>
                                     @if(($images = $model->getMedia($val['name']))->count())
+                                        @component('components.alert.alert_messages')@endcomponent
                                         <form action="{{ route('deleteImage') }}" method="post">
                                             @Csrf @method('DELETE')
                                             <p>{{ $val['title'] }}

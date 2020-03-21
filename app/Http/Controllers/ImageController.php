@@ -11,10 +11,8 @@ class ImageController extends Controller
     public function imageUpload(Request $request, $id, $collection, $path)
     {
         $path = str_replace('-', '\\', $path);
-        $model = new $path;
-        $model = $model->findOrFail($id);
 
-        $model
+        (new $path)->findOrFail($id)
             ->addMedia($request->file)
             ->sanitizingFileName(function ($fileName) {
                 return str_replace(['#', '/', '\\', ' ', '\'', '!', '&', '|', '(', ')', '<', '>',
@@ -31,6 +29,7 @@ class ImageController extends Controller
         if (count($toDeleteIds)) {
             Media::whereIn('id', $toDeleteIds)->delete();
         }
+        session()->flash('danger', 'Seçili resimler silindi.');
         return redirect()->back();
     }
 }

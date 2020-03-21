@@ -5,6 +5,12 @@
     <link href="/admin-custom-template/datepicker/bootstrap-datepicker.css" rel="stylesheet">
     <!-- datetimepicker -->
     <link href="/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <!-- Tinymce -->
+    {{--
+--}}
+    <script src="/admin-custom-template/ckeditor/ckeditor.js" type="text/javascript"></script>
+
+
 @endsection
 @section('content')
     <div class="row">

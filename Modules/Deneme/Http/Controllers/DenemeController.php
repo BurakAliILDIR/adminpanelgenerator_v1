@@ -50,8 +50,9 @@ class DenemeController extends Controller
 
     public function create()
     {
+        $operation_type = 'create';
         $settings = [
-            'operation' => 'create',
+            'operation' => $operation_type,
             'title' => 'Deneme Ekle',
             'fields' => $this->jsonSettings['fields'],
             'model' => $this->model,
@@ -59,11 +60,7 @@ class DenemeController extends Controller
             'submitText' => 'Ekle',
             'submitAttributes' => [],
             'route' => $this->jsonSettings['routes'],
-            'extra' => [
-                'count_id' => SaleInfo::pluck('buy_price', 'id'),
-                'kontrol' => Post::pluck('name', 'id'),
-                'diger' => Post::pluck('name', 'id'),
-            ],
+            'extra' => $this->getPluck($operation_type),
         ];
         return view('deneme::create', compact('settings'));
     }
@@ -127,8 +124,9 @@ class DenemeController extends Controller
     public function edit($id)
     {
         $this->model = $this->model->findOrFail($id);
+        $operation_type = 'edit';
         $settings = [
-            'operation' => 'edit',
+            'operation' => $operation_type,
             'title' => 'Deneme Düzenle',
             'fields' => $this->jsonSettings['fields'],
             'model' => $this->model,
@@ -136,11 +134,7 @@ class DenemeController extends Controller
             'submitText' => 'Kaydet',
             'submitAttributes' => [],
             'route' => $this->jsonSettings['routes'],
-            'extra' => [
-                'count_id' => SaleInfo::pluck('buy_price', 'id'),
-                'kontrol' => Post::pluck('name', 'id'),
-                'diger' => Post::pluck('name', 'id'),
-            ],
+            'extra' => $this->getPluck($operation_type),
         ];
         return view('deneme::edit', compact('settings'));
     }
