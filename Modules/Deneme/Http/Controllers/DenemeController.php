@@ -69,12 +69,11 @@ class DenemeController extends Controller
     {
         $fields = $this->jsonSettings['fields'];
         $operation_type = 'create';
-        foreach ($fields as $field) {
+        foreach ($fields as $key => $field) {
             if ( !$field[$operation_type]) continue;
-            $name = $field['name'];
             switch ($type = $field['type']) {
                 case 'checkbox':
-                    $this->model[$name] = $request[$name] ?? 0;
+                    $this->model[$key] = $request[$key] ?? 0;
                     break;
                 case 'radio':
                 case 'hidden':
@@ -83,18 +82,18 @@ class DenemeController extends Controller
                 case 'select':
                 case 'text':
                 case 'textarea':
-                    $this->model[$name] = $request[$name];
+                    $this->model[$key] = $request[$key];
                     break;
                 case 'date':
                 case 'date_time':
-                    $this->model[$name] = \Carbon\Carbon::parse($request[$name])->format($type == 'date_time' ? 'Y-m-d H:i:s' : 'Y-m-d');
+                    $this->model[$key] = \Carbon\Carbon::parse($request[$key])->format($type == 'date_time' ? 'Y-m-d H:i:s' : 'Y-m-d');
                     break;
                 case 'file':
                 case 'image':
-                    $this->insertToSingleMedia($request, $name);
+                    $this->insertToSingleMedia($request, $key);
                     break;
                 case 'password':
-                    $this->model[$name] = Hash::make($request[$name]);
+                    $this->model[$key] = Hash::make($request[$key]);
                     break;
                 default:
                     break;
@@ -144,12 +143,11 @@ class DenemeController extends Controller
         $this->model = $this->model->findOrFail($id);
         $fields = $this->jsonSettings['fields'];
         $operation_type = 'edit';
-        foreach ($fields as $field) {
+        foreach ($fields as $key => $field) {
             if ( !$field[$operation_type]) continue;
-            $name = $field['name'];
             switch ($type = $field['type']) {
                 case 'checkbox':
-                    $this->model[$name] = $request[$name] ?? 0;
+                    $this->model[$key] = $request[$key] ?? 0;
                     break;
                 case 'radio':
                 case 'hidden':
@@ -158,18 +156,18 @@ class DenemeController extends Controller
                 case 'select':
                 case 'text':
                 case 'textarea':
-                    $this->model[$name] = $request[$name];
+                    $this->model[$key] = $request[$key];
                     break;
                 case 'date':
                 case 'date_time':
-                    $this->model[$name] = \Carbon\Carbon::parse($request[$name])->format($type == 'date_time' ? 'Y-m-d H:i:s' : 'Y-m-d');
+                    $this->model[$key] = \Carbon\Carbon::parse($request[$key])->format($type == 'date_time' ? 'Y-m-d H:i:s' : 'Y-m-d');
                     break;
                 case 'file':
                 case 'image':
-                    $this->insertToSingleMedia($request, $name);
+                    $this->insertToSingleMedia($request, $key);
                     break;
                 case 'password':
-                    $this->model[$name] = Hash::make($request[$name]);
+                    $this->model[$key] = Hash::make($request[$key]);
                     break;
                 default:
                     break;

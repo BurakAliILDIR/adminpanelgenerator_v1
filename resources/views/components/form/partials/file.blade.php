@@ -15,10 +15,10 @@
 </div>
 
 <div class="form-group">
-    {{ Form::label($id, $title, ['class' => 'col-sm-2 control-label']) }}
-    <div class="col-sm-10 @error($name) is-invalid @enderror">
-        {{ Form::file($name, array_merge(['class' => 'filestyle', 'data-icon' => 'false', 'data-classButton' => 'btn btn-default', 'data-classInput' => 'form-control inline input-s', 'id' => $id], $attributes ?? [])) }}
-        @error($name)
+    {{ Form::label($key, $title, ['class' => 'col-sm-2 control-label']) }}
+    <div class="col-sm-10 @error($key) is-invalid @enderror">
+        {{ Form::file($key, array_merge(['class' => 'filestyle', 'data-icon' => 'false', 'data-classButton' => 'btn btn-default', 'data-classInput' => 'form-control inline input-s'], $attributes ?? [])) }}
+        @error($key)
         <div class="label bg-danger">{{ $message }}</div>
         @enderror
     </div>

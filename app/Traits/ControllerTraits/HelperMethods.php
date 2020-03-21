@@ -9,10 +9,10 @@ Trait HelperMethods
 {
     private function many_to_many_sync(Request $request, $fields, $operation_type) : void
     {
-        foreach ($fields as $field) {
+        foreach ($fields as $key => $field) {
             if ( !$field[$operation_type]) continue;
             if ($field['type'] === 'multi_checkbox')
-                $this->model->relation($field['relationship'])->sync($request[$field['name']]);
+                $this->model->relation($field['relationship'])->sync($request[$key]);
         }
     }
 

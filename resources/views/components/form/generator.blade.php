@@ -1,10 +1,8 @@
 <?php $model = $settings['model']; ?>
-@foreach($settings['fields'] as $field)
+@foreach($settings['fields'] as $key => $field)
     @if($field[$settings['operation']])
         <?php
-        $name = @$field['name'];
         $title = @$field['title'];
-        $id = @$field['id'];
         $value = @$field['value'];
         $attributes = @$field['attributes'];
         ?>
@@ -12,19 +10,17 @@
         @switch($field['type'])
             @case('radio')
             @component('components.form.partials.radio',
-                       ['id' => $id,
-                       'name' => $name,
+                       ['key' => $key,
                        'items' => $field['items'],
-                       'checked' => $model[$name],
+                       'checked' => $model[$key],
                        'title' => $title,
                        'attributes' => $attributes,
             ])@endcomponent
             @break
             @case('multi_checkbox')
             @component('components.form.partials.multi_checkbox',
-                      ['id' => $id,
-                      'name' => $name,
-                      'value' => $value ?? $settings['extra'][$name],
+                      ['key' => $key,
+                      'value' => $value ?? $settings['extra'][$key],
                       'checked' => $model->relation($field['relationship'])->get(),
                       'title' => $title,
                       'attributes' => $attributes,
@@ -32,27 +28,24 @@
             @break
             @case('checkbox')
             @component('components.form.partials.checkbox',
-                       ['id' => $id,
-                       'name' => $name,
-                       'checked' => $model[$name],
+                       ['key' => $key,
+                       'checked' => $model[$key],
                        'title' => $title,
                        'attributes' => $attributes,
             ])@endcomponent
             @break
             @case('select')
             @component('components.form.partials.select',
-                       ['id' => $id,
-                       'name' => $name,
+                       ['key' => $key,
                        'title' => $title,
-                       'value' => $value ?? $settings['extra'][$name],
+                       'value' => $value ?? $settings['extra'][$key],
                        'selected' => $model[$field['relationship']['keys']['otherKey']],
                        'attributes' => $attributes,
             ])@endcomponent
             @break
             @case('password')
             @component('components.form.partials.password',
-                       ['id' => $id,
-                       'name' => $name,
+                       ['key' => $key,
                        'title' => $title,
                        'attributes' => $attributes,
             ])@endcomponent
@@ -60,27 +53,24 @@
             @case('file')
             @case('image')
             @component('components.form.partials.file',
-                       ['id' => $id,
+                       ['key' => $key,
                        'type' => $field['type'],
-                       'name' => $name,
-                       'value' => $model->getFirstMediaUrl($name) === "" ? $value : $model->getFirstMediaUrl($name),
+                       'value' => $model->getFirstMediaUrl($key) === "" ? $value : $model->getFirstMediaUrl($key),
                        'title' => $title,
                        'attributes' => $attributes,
             ])@endcomponent
             @break
             @case('hidden')
             @component('components.form.partials.hidden',
-                       ['id' => $id,
-                       'name' => $name,
-                       'value' => $model[$name]
+                       ['key' => $key,
+                       'value' => $model[$key]
             ])@endcomponent
             @break
             @default
             @component('components.form.partials.' . $field['type'],
-                       ['id' => $id,
-                       'name' => $name,
+                       ['key' => $key,
                        'title' => $title,
-                       'value' => $model[$name],
+                       'value' => $model[$key],
                        'attributes' => $attributes,
             ])@endcomponent
             @break

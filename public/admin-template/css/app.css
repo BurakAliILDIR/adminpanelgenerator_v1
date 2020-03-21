@@ -8,6 +8,7 @@ body {
   color: #717171;
   background-color: transparent;
   -webkit-font-smoothing: antialiased;
+  word-break: break-all;
 }
 .h1,
 .h2,

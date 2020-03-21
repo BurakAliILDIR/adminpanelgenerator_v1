@@ -1,22 +1,22 @@
 <div class="form-check">
-    {{ Form::label($id, $title, ['class' => 'col-sm-2 control-label']) }}
-    <div class="col-sm-10 @error($name.'[]') is-invalid @enderror">
-        @error($name)
+    {{ Form::label($key, $title, ['class' => 'col-sm-2 control-label']) }}
+    <div class="col-sm-10 @error($key.'[]') is-invalid @enderror">
+        @error($key)
         <div class="label bg-danger">{{ $message }}</div>
         @enderror
-        @foreach($value as $key => $val)
+        @foreach($value as $k => $v)
             <div class="checkbox">
                 <label class="checkbox-custom center-block">
                     @if($checked->count())
                         @for($i = 0; $i < $checked->count(); $i++)
-                            {{ Form::checkbox($name.'[]', $key, $checked->contains('id', $key)) }}
+                            {{ Form::checkbox($key.'[]', $k, $checked->contains('id', $k)) }}
                             @break
                         @endfor
                     @else
-                        {{ Form::checkbox($name.'[]', $key) }}
+                        {{ Form::checkbox($key.'[]', $k) }}
                     @endif
                     <i class="fa fa-fw fa-square-o"></i>
-                    {{ $val }}
+                    {{ $v }}
                 </label>
             </div>
         @endforeach

@@ -40,8 +40,8 @@ $route = $settings['route'];
     </header>
 
     <section class="scrollable">
-        <section class="hbox stretch">
-            <aside class="aside-lg bg-light lter b-r">
+        <section class="hbox stretch row">
+            <aside class="bg-light lter b-r col-md-3">
                 <section class="vbox">
                     <section class="scrollable">
                         <div class="wrapper">
@@ -65,7 +65,7 @@ $route = $settings['route'];
                                             @case('radio')
                                             @case('textarea')
                                             <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
-                                            {!! $model[$val['name']] !!}
+                                            {!! $model[$key] !!}
                                             <div class="line"></div>
                                             @break
                                             @case('file')
@@ -94,12 +94,12 @@ $route = $settings['route'];
                                             @break
                                             @case('date')
                                             <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
-                                            {{ \Carbon\Carbon::parse($model[$val['name']])->format('d/m/Y') }}
+                                            {{ \Carbon\Carbon::parse($model[$key])->format('d/m/Y') }}
                                             <div class="line"></div>
                                             @break
                                             @case('date_time')
                                             <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
-                                            {{ \Carbon\Carbon::parse($model[$val['name']])->format('d/m/Y H:i:s') }}
+                                            {{ \Carbon\Carbon::parse($model[$key])->format('d/m/Y H:i:s') }}
                                             <div class="line"></div>
                                             @break
                                         @endswitch
@@ -110,15 +110,15 @@ $route = $settings['route'];
                     </section>
                 </section>
             </aside>
-            <aside class="bg-white">
+            <aside class="bg-white col-md-6">
                 <section class="vbox">
                     <header class="header bg-light bg-gradient">
                         <ul class="nav nav-tabs nav-white">
                             @foreach($fields as $key => $val)
                                 @if(($val[$settings['operation']]) && @$val['multiple'] && $val['type'] !== 'multi_image')
-                                    <li id="{{ $val['name'] }}Leaf">
-                                        <a href="#{{ $val['name'] }}" id="{{ $val['name'] }}A" data-toggle="tab"
-                                           onclick="setLeaf('{{ $val['name'] }}')">{{ $val['title'] }}</a>
+                                    <li id="{{ $key }}Leaf">
+                                        <a href="#{{ $key }}" id="{{ $key }}A" data-toggle="tab"
+                                           onclick="setLeaf('{{ $key }}')">{{ $val['title'] }}</a>
                                     </li>
                                 @endif
                             @endforeach
@@ -130,7 +130,7 @@ $route = $settings['route'];
                                 @if(($val[$settings['operation']]) && @$val['multiple'] && $val['type'] !== 'multi_image')
                                     <?php $relation_infos = $val['relationship'] ?>
 
-                                    <div class="tab-pane" id="{{ $val['name'] }}Page">
+                                    <div class="tab-pane" id="{{ $key }}Page">
                                         <section class="scrollable wrapper w-f">
                                             @php
                                                 $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key);
@@ -141,11 +141,11 @@ $route = $settings['route'];
                                                         <table class="table table-striped m-b-none">
                                                             <thead>
                                                             <tr>
-                                                                @foreach($data[0]->getSettings('fields') as $up)
+                                                                @foreach($data[0]->getSettings('fields') as $relation_key => $relation_val)
 
                                                                     @foreach($relation_infos['fields'] as $field)
-                                                                        @if($up['name'] === $field)
-                                                                            <th>{{ $up['title'] }}</th>
+                                                                        @if($relation_key === $field)
+                                                                            <th>{{ $relation_val['title'] }}</th>
                                                                         @endif
                                                                     @endforeach
                                                                 @endforeach
@@ -177,21 +177,21 @@ $route = $settings['route'];
                     </section>
                 </section>
             </aside>
-            @foreach($fields as $key => $val)
-                @if($val[$settings['operation']] && @$val['multiple'] && $val['type'] === 'multi_image')
-                    <aside class="col-lg-4 b-l">
-                        <section class="vbox">
-                            <section class="scrollable">
-                                <div class="wrapper">
+            <aside class="col-md-3 b-l">
+                <section class="vbox">
+                    <section class="scrollable">
+                        <div class="wrapper">
+                            @foreach($fields as $key => $val)
+                                @if($val[$settings['operation']] && @$val['multiple'] && $val['type'] === 'multi_image')
                                     <p>{{ $val['title'] . ' : Yükleme Alanı' }}</p>
                                     <section class="panel panel-default">
                                         <form
-                                            action="{{ route('imageUpload', [$model->id, $val['name'], str_replace('\\', '-', get_class($model))]) }}"
+                                            action="{{ route('imageUpload', [$model->id, $key, str_replace('\\', '-', get_class($model))]) }}"
                                             class="dropzone">
                                             @csrf
                                         </form>
                                     </section>
-                                    @if(($images = $model->getMedia($val['name']))->count())
+                                    @if(($images = $model->getMedia($key))->count())
                                         @component('components.alert.alert_messages')@endcomponent
                                         <form action="{{ route('deleteImage') }}" method="post">
                                             @Csrf @method('DELETE')
@@ -245,12 +245,13 @@ $route = $settings['route'];
                                             </section>
                                         </form>
                                     @endif
-                                </div>
-                            </section>
-                        </section>
-                    </aside>
-                @endif
-            @endforeach
+
+                                @endif
+                            @endforeach
+                        </div>
+                    </section>
+                </section>
+            </aside>
         </section>
     </section>
 </section>

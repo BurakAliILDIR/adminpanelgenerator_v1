@@ -14,10 +14,8 @@
     ],
     "fields": {
         "id": {
-            "id": "id",
             "type": "hidden",
             "title": "Kimlik",
-            "name": "id",
             "value": "",
             "create": false,
             "edit": false,
@@ -25,10 +23,8 @@
             "detail": false
         },
         "ad": {
-            "id": "ad",
             "type": "text",
             "title": "Ad",
-            "name": "ad",
             "value": "",
             "attributes": {},
             "rules": [
@@ -41,10 +37,8 @@
             "detail": true
         },
         "soyad": {
-            "id": "soyad",
             "type": "text",
             "title": "Soyad",
-            "name": "soyad",
             "value": "",
             "attributes": {},
             "rules": [
@@ -57,10 +51,8 @@
             "detail": true
         },
         "hakkimda": {
-            "id": "hakkimda",
             "type": "textarea",
             "title": "Hakkımda",
-            "name": "hakkimda",
             "value": "",
             "attributes": {
                 "rows": 5
@@ -72,14 +64,12 @@
             "multiple": false,
             "create": true,
             "edit": true,
-            "list": false,
+            "list": true,
             "detail": true
         },
         "yas": {
-            "id": "yas",
             "type": "number",
             "title": "Yaş",
-            "name": "yas",
             "value": "",
             "attributes": {},
             "rules": [
@@ -92,10 +82,8 @@
             "detail": true
         },
         "cinsiyet": {
-            "id": "cinsiyet",
             "type": "radio",
             "title": "Cinsiyet",
-            "name": "cinsiyet",
             "value": "",
             "items": [
                 "Bay",
@@ -113,10 +101,8 @@
             "detail": true
         },
         "cv": {
-            "id": "cv",
             "type": "file",
             "title": "CV",
-            "name": "cv",
             "value": "",
             "attributes": {},
             "rules": [
@@ -129,10 +115,8 @@
             "detail": true
         },
         "profile": {
-            "id": "profile",
             "type": "image",
             "title": "Profil Resmi",
-            "name": "profile",
             "value": "/admin-template/images/avatar_default.jpg",
             "attributes": {},
             "rules": [
@@ -145,10 +129,8 @@
             "detail": true
         },
         "kontrol": {
-            "id": "kontrol",
             "type": "multi_checkbox",
             "title": "Kontrol",
-            "name": "kontrol",
             "relationship": {
                 "type": "belongsToMany",
                 "model": "Modules\\Deneme\\Entities\\Post",
@@ -177,10 +159,8 @@
             "detail": true
         },
         "resimler": {
-            "id": "resimler",
             "type": "multi_image",
             "title": "Resimler",
-            "name": "resimler",
             "count": 10,
             "attributes": {},
             "multiple": true,
@@ -190,68 +170,10 @@
             "detail": true
         },
         "durum": {
-            "id": "durum",
             "type": "checkbox",
             "title": "Onaylı",
-            "name": "durum",
             "rules": [
                 "accepted"
-            ],
-            "multiple": false,
-            "create": true,
-            "edit": true,
-            "list": false,
-            "detail": true
-        },
-        "datee": {
-            "id": "datee",
-            "type": "date",
-            "title": "datee Tarihi",
-            "name": "datee",
-            "rules": [
-                "required"
-            ],
-            "multiple": false,
-            "create": true,
-            "edit": true,
-            "list": true,
-            "detail": true
-        },
-        "dateetime": {
-            "id": "dateetime",
-            "type": "date_time",
-            "title": "dateetime Tarihi",
-            "name": "dateetime",
-            "rules": [
-                "required"
-            ],
-            "multiple": false,
-            "create": true,
-            "edit": true,
-            "list": false,
-            "detail": true
-        },
-        "created_at": {
-            "id": "created_at",
-            "type": "date_time",
-            "title": "Eklenme Tarihi",
-            "name": "created_at",
-            "rules": [
-                "required"
-            ],
-            "multiple": false,
-            "create": true,
-            "edit": true,
-            "list": false,
-            "detail": true
-        },
-        "updated_at": {
-            "id": "updated_at",
-            "type": "date_time",
-            "title": "Son Düzenlenme Tarihi",
-            "name": "updated_at",
-            "rules": [
-                "required"
             ],
             "multiple": false,
             "create": true,
@@ -289,6 +211,57 @@
             "edit": true,
             "list": true,
             "detail": true
+        },
+        "datee": {
+            "type": "date",
+            "title": "Bilmem Tarihi",
+            "rules": [
+                "required"
+            ],
+            "multiple": false,
+            "create": true,
+            "edit": true,
+            "list": true,
+            "detail": true
+        },
+        "dateetime": {
+            "type": "date_time",
+            "title": "Eklenme Tarihi",
+            "name": "created_at",
+            "rules": [
+                "required"
+            ],
+            "multiple": false,
+            "create": true,
+            "edit": true,
+            "list": false,
+            "detail": true
+        },
+        "created_at": {
+            "type": "date_time",
+            "title": "Eklenme Tarihi",
+            "name": "created_at",
+            "rules": [
+                "required"
+            ],
+            "multiple": false,
+            "create": false,
+            "edit": false,
+            "list": false,
+            "detail": true
+        },
+        "updated_at": {
+            "type": "date_time",
+            "title": "Son Düzenlenme Tarihi",
+            "name": "updated_at",
+            "rules": [
+                "required"
+            ],
+            "multiple": false,
+            "create": false,
+            "edit": true,
+            "list": false,
+            "detail": false
         }
     }
 }

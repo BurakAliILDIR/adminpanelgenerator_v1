@@ -44,7 +44,7 @@
         {{ \Carbon\Carbon::parse($upper_val[$lower_key])->format('d/m/Y H:i:s') }}
         @break
         @default
-        {{ $upper_val[$lower_key] }}
+        {!! $upper_val[$lower_key] !!}
         @break
     @endswitch
 </td>

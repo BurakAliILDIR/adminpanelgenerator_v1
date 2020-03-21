@@ -7,14 +7,14 @@ trait DynamicRulesValidate
     public function rules()
     {
         $validates = [];
-        foreach ($this->fields as $field) {
+        foreach ($this->fields as $key => $field) {
             if ($field[$this->operation]) {
                 $row = '';
                 $rules = $field['rules'];
                 foreach ($rules as $rule) {
                     $row .= last($rules) === $rule ? $rule : ($rule . '|');
                 }
-                $validates[$field['name']] = $row;
+                $validates[$key] = $row;
             }
         }
 
@@ -24,9 +24,9 @@ trait DynamicRulesValidate
     public function attributes()
     {
         $attributes = [];
-        foreach ($this->fields as $field) {
+        foreach ($this->fields as $key => $field) {
             if ($field[$this->operation])
-                $attributes[$field["name"]] = $field["title"];
+                $attributes[$key] = $field['title'];
         }
         return $attributes;
     }
@@ -36,13 +36,13 @@ trait DynamicRulesValidate
    {
 
        $validates = [];
-       foreach ($this->fields as $field) {
+       foreach ($this->fields as $key => $field) {
            if ($field['create']) {
                $row = '';
                $rules = $field['rules'];
                foreach ($rules as $rule) {
                    $row .= last($rules) === $rule ? $rule : ($rule . '|');
-                   $validates[$field['name'].".". $rule] = __("dogrulama.".$rule, ["alan" => $field["title"]]);
+                   $validates[$key.".". $rule] = __("dogrulama.".$rule, ["alan" => $field["title"]]);
                }
 
            }

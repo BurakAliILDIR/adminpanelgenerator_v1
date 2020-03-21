@@ -1,16 +1,16 @@
 <div class="form-check">
-    {{ Form::label($id, $title, ['class' => 'col-sm-2 control-label']) }}
-    <div class="col-sm-10 @error($name) is-invalid @enderror">
+    {{ Form::label($key, $title, ['class' => 'col-sm-2 control-label']) }}
+    <div class="col-sm-10 @error($key) is-invalid @enderror">
         @foreach($items as $item)
             <div class="radio">
                 <label class="radio-custom">
-                    {{ Form::radio($name, $item, $checked ? $item == $checked : $loop->first, array_merge(['class' => 'form-check-input', 'id' => $id], $attributes ?? [])) }}
+                    {{ Form::radio($key, $item, $checked ? $item == $checked : $loop->first, array_merge(['class' => 'form-check-input'], $attributes ?? [])) }}
                     <i class="fa fa-circle-o"></i>
                     {{ $item }}
                 </label>
             </div>
         @endforeach
-        @error($name)
+        @error($key)
         <div class="label bg-danger">{{ $message }}</div>
         @enderror
     </div>
