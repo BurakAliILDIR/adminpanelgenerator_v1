@@ -24,6 +24,15 @@
                                 <span class="m-l">{{ $settings['title'] }}</span>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="m-t">
+                                <a class="btn btn-xs btn-default btn-rounded pull-right"
+                                   href="{{ route($settings['route']['show'], $settings['model']['id']) }}">
+                                    Detay Sayfasına Git
+                                    <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </header>
                 <div class="panel-body">

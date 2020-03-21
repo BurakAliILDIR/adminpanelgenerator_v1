@@ -64,7 +64,7 @@
             "multiple": false,
             "create": true,
             "edit": true,
-            "list": true,
+            "list": false,
             "detail": true
         },
         "yas": {

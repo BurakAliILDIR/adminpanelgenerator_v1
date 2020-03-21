@@ -16,7 +16,7 @@ class Deneme extends Model implements HasMedia
 
     protected $guarded = [];
     protected $table = 'deneme';
-    /* TODO 1: select için önceki seçili değer sayfaya geri gelindiğinde tekrar seçili olması sağlanacak.  */
+    /* TODO 1:  */
 
     // her alanın içine create, edit, index, show alanı eklenecek
     // fields dizisi json dosyanın içine json tipinde yazılacak

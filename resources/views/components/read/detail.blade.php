@@ -64,12 +64,12 @@ $route = $settings['route'];
                                             @case('number')
                                             @case('radio')
                                             @case('textarea')
-                                            <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
+                                            <small class="text-uc text-muted">{{ $val['title'] }} : </small>
                                             {!! $model[$key] !!}
                                             <div class="line"></div>
                                             @break
                                             @case('file')
-                                            <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
+                                            <small class="text-uc text-muted">{{ $val['title'] }} : </small>
                                             @if(($file = $model->getFirstMediaUrl($key)) !== '')
                                                 <a class="btn btn-default btn-xs btn-rounded"
                                                    href="{{ $file }}" target="_blank">
@@ -83,7 +83,7 @@ $route = $settings['route'];
                                             @break
                                             @case('select')
                                             <?php $relation_infos = $val['relationship'] ?>
-                                            <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
+                                            <small class="text-uc text-muted">{{ $val['title'] }} : </small>
                                             @foreach($relation_infos['fields'] as $v)
                                                 {{ $model->relation($relation_infos)->first()[$v] }}
                                                 @if(!$loop->last)
@@ -93,12 +93,12 @@ $route = $settings['route'];
                                             <div class="line"></div>
                                             @break
                                             @case('date')
-                                            <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
+                                            <small class="text-uc text-muted">{{ $val['title'] }} : </small>
                                             {{ \Carbon\Carbon::parse($model[$key])->format('d/m/Y') }}
                                             <div class="line"></div>
                                             @break
                                             @case('date_time')
-                                            <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
+                                            <small class="text-uc text-muted">{{ $val['title'] }} : </small>
                                             {{ \Carbon\Carbon::parse($model[$key])->format('d/m/Y H:i:s') }}
                                             <div class="line"></div>
                                             @break
