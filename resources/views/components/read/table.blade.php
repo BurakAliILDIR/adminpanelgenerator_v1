@@ -29,10 +29,10 @@ $route = $settings['route'];
                         </div>
                     </form>
                 </div>
-
             </div>
         </header>
         <section class="scrollable wrapper w-f">
+            @component('components.alert.alert_messages')@endcomponent
             <section class="panel panel-default">
                 <div class="table-responsive">
                     <table class="table table-striped m-b-none">
@@ -69,7 +69,7 @@ $route = $settings['route'];
                                 </td>
                                 @foreach($fields as $lower_key => $lower_val)
                                     @if($lower_val[$settings['operation']] )
-                                        @component('components.table.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
+                                        @component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
                                     @endif
                                 @endforeach
                                 <td>

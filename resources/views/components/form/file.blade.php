@@ -5,7 +5,7 @@
         @else
             @if($value !== '')
                 <a class="btn btn-default btn-sm m-b"
-                   href="{{ $value }}">
+                   href="{{ $value }}" target="_blank">
                     {{ $title }}
                     Görüntüle
                 </a>

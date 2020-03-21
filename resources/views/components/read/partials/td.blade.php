@@ -8,7 +8,7 @@
         @case('file')
         @if(($file = $upper_val->getFirstMediaUrl($lower_key)) !== '')
             <a class="btn btn-default btn-xs btn-rounded"
-               href="{{ $file }}">
+               href="{{ $file }}" target="_blank">
                 {{ $lower_val['title'] }}
                 Görüntüle
             </a>

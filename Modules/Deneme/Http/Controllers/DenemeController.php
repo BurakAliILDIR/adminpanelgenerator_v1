@@ -107,6 +107,7 @@ class DenemeController extends Controller
         $this->model->saveOrFail();
 
         $this->many_to_many_sync($request, $fields, $operation_type);
+        session()->flash('success', 'Kayıt başarıyla eklendi.');
         return redirect()->back();
     }
 
@@ -184,6 +185,7 @@ class DenemeController extends Controller
         $this->model->saveOrFail();
 
         $this->many_to_many_sync($request, $fields, $operation_type);
+        session()->flash('info', 'Kayıt başarıyla güncellendi.');
         return redirect()->back();
     }
 
@@ -191,9 +193,11 @@ class DenemeController extends Controller
     {
         if (($id = $request->id) && ($back = $request->back)) {
             $this->model->destroy($id);
+            session()->flash('danger', 'Kayıt silindi.');
             return redirect($back);
         }
         $models = $this->model->whereIn('id', $request->checked);
+        session()->flash('danger', 'Seçili kayıtlar silindi.');
         return $models->delete();
     }
 }

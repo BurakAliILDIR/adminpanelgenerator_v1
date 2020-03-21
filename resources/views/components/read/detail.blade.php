@@ -71,7 +71,7 @@
                                             <small class="text-uc text-xs text-muted">{{ $val['title'] }} : </small>
                                             @if(($file = $model->getFirstMediaUrl($key)) !== '')
                                                 <a class="btn btn-default btn-xs btn-rounded"
-                                                   href="{{ $file }}">
+                                                   href="{{ $file }}" target="_blank">
                                                     {{ $val['title'] }}
                                                     Görüntüle
                                                 </a>
@@ -152,7 +152,7 @@
                                                                 <tr>
                                                                     @foreach($upper_val->getSettings('fields') as $lower_key => $lower_val)
                                                                         @if(array_search($lower_key, $val['relationship']['fields']) !== false)
-                                                                            @component('components.table.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
+                                                                            @component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
                                                                         @endif
                                                                     @endforeach
                                                                 </tr>

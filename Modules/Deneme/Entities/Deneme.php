@@ -16,12 +16,9 @@ class Deneme extends Model implements HasMedia
 
     protected $guarded = [];
     protected $table = 'deneme';
-    /* TODO 1:  validation yapılacak */
-    /* TODO 2:  işlem sonrasında geriye bilgilendirme mesajları dönülecek */
-    /* TODO 3:  controller'daki extra alanları json'a çevrilecek yapılacak */
-    /* TODO 4:  table ve detail' de parametrelerin uzun olmasından dolayı düzenleme yapıldı. Devamı getirilecek.
-     Ayrı bir php dosyasına alınıp tek yerden de yönetilebilir. Alt partiallara koymayıp merkezi alandan (üst) kontrol edilmeli.
-    */
+    /* TODO 1:  işlem sonrasında geriye bilgilendirme mesajları dönülecek */
+    /* TODO 2:  controller'daki extra alanları json'a çevrilecek yapılacak */
+    /* TODO 3:  table ve detail' de parametrelerin uzun olmasından dolayı düzenleme yapıldı. Devamı getirilecek. Ayrı bir php dosyasına alınıp tek yerden de yönetilebilir. Alt partiallara koymayıp merkezi alandan (üst) kontrol edilmeli. */
 
     // her alanın içine create, edit, index, show alanı eklenecek
     // fields dizisi json dosyanın içine json tipinde yazılacak

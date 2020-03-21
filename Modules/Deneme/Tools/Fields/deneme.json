@@ -131,7 +131,7 @@
         "profile": {
             "id": "profile",
             "type": "image",
-            "title": "Profile",
+            "title": "Profil Resmi",
             "name": "profile",
             "value": "/admin-template/images/avatar_default.jpg",
             "attributes": {},

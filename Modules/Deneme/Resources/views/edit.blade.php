@@ -25,9 +25,10 @@
                     </div>
                 </header>
                 <div class="panel-body">
+                    @component('components.alert.alert_messages')@endcomponent
                     {{ Form::model($settings['model'], ['route' => [$settings['route']['update'], $settings['params']], 'method' => 'put', 'class' => 'form-horizontal', 'files' => true]) }}
                     @component('components.form.generator', ['settings'=> $settings,])@endcomponent
-                    {{ Form::submit($settings['submitText'], array_merge(['class' => 'btn btn-lg btn-info pull-right'], $settings['submitAttributes'] ?? [])) }}
+                    {{ Form::submit($settings['submitText'], array_merge(['class' => 'btn btn-info btn-block'], $settings['submitAttributes'] ?? [])) }}
                     {!! Form::close() !!}
                 </div>
             </section>

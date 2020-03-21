@@ -9,7 +9,7 @@
     <link type="text/css" rel="stylesheet" href="/plugins/dropzone/dropzone.min.css">
 @endsection
 @section('content')
-    @component('components.detail', ['settings'=> $settings])@endcomponent
+    @component('components.read.detail', ['settings'=> $settings])@endcomponent
 @endsection
 @section('js')
     {{-- Gallery JS--}}
