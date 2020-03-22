@@ -25,7 +25,7 @@ class Deneme extends Model implements HasMedia
 
     // hangi sayfaların olacağı ve olmicağı seçilecek
 
-    private $path = '\Modules\Deneme\BuildSource\deneme.json';
+    private $path = '\Modules\Deneme\Source\deneme.json';
 
     public function getSettings($key = null)
     {

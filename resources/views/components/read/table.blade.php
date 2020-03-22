@@ -21,11 +21,11 @@ $route = $settings['route'];
               <input type="text" name="ara" class="input-sm form-control rounded"
                      placeholder="{{ $settings['title'] }} içinde ara (Tüm kayıtlar için boş olarak arayabilirsiniz)">
               <span class="input-group-btn">
-                          <button class="btn btn-sm btn-default btn-rounded" type="submit">
-                              <i class="fa fa-search"></i>
-                              Ara
-                          </button>
-                        </span>
+                <button class="btn btn-sm btn-default btn-rounded" type="submit">
+                  <i class="fa fa-search"></i>
+                  Ara
+                </button>
+              </span>
             </div>
           </form>
         </div>

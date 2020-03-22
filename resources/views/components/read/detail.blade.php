@@ -97,7 +97,7 @@ $route = $settings['route'];
                       {{ \Carbon\Carbon::parse($model[$key])->format('d/m/Y') }}
                       <div class="line"></div>
                       @break
-                      @case('date_time')
+                      @case('datetime')
                       <small class="text-uc text-muted">{{ $val['title'] }} : </small>
                       {{ \Carbon\Carbon::parse($model[$key])->format('d/m/Y H:i:s') }}
                       <div class="line"></div>
