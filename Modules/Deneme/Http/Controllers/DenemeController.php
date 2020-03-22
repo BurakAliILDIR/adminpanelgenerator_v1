@@ -186,6 +186,8 @@ class DenemeController extends Controller
         if (($id = $request->id) && ($back = $request->back)) {
             $this->model->destroy($id);
             session()->flash('danger', 'Kayıt silindi.');
+            if (($indexURL = route($this->jsonSettings['routes']['index'])) !== $back)
+                $back = $indexURL;
             return redirect($back);
         }
         $models = $this->model->whereIn('id', $request->checked);

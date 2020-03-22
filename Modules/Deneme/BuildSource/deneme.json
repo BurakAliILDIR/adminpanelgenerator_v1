@@ -226,7 +226,7 @@
         },
         "dateetime": {
             "type": "date_time",
-            "title": "Eklenme Tarihi",
+            "title": "Datee Tarihi",
             "name": "created_at",
             "rules": [
                 "required"
@@ -259,7 +259,7 @@
             ],
             "multiple": false,
             "create": false,
-            "edit": true,
+            "edit": false,
             "list": false,
             "detail": false
         }
