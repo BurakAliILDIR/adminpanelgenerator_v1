@@ -33,9 +33,9 @@ class DenemeController extends Controller
       $data = $this->model->where(function ($query) use ($conditions, $search) {
         foreach ($conditions as $column)
           $query->orWhere($column, 'like', '%' . $search . '%');
-      })->orderByDESC('id')->paginate(10);
+      })->orderByDESC('id')->paginate(3);
     } else
-      $data = $this->model->orderByDESC('id')->paginate(10);
+      $data = $this->model->orderByDESC('id')->paginate(3);
     
     $settings = [
       'operation' => 'list',

@@ -18,7 +18,7 @@ $route = $settings['route'];
         <div class="col-sm-5 m-b-xs">
           <form>
             <div class="input-group">
-              <input type="text" name="ara" class="input-sm form-control rounded"
+              <input type="text" name="ara" class="input-sm form-control rounded" autocomplete="off"
                      placeholder="{{ $settings['title'] }} içinde ara (Tüm kayıtlar için boş olarak arayabilirsiniz)">
               <span class="input-group-btn">
                 <button class="btn btn-sm btn-default btn-rounded" type="submit">

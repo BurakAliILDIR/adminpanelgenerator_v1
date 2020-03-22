@@ -9,7 +9,7 @@ class Post extends Model
 {
     use Relations;
 
-    private $path = '\Modules\Deneme\BuildSource\post.json';
+    private $path = '\Modules\Deneme\Source\post.json';
 
     public function getSettings($key = null)
     {
