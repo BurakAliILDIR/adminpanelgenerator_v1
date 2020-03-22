@@ -16,10 +16,21 @@ $route = $settings['route'];
              class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> Yeni Kayıt</a>
         </div>
         <div class="col-sm-5 m-b-xs">
+          <?php $ara = \request()->input('ara'); ?>
           <form>
             <div class="input-group">
+              @if($ara)
+                <span class="input-group-btn">
+                <a href="{{ route($route['index']) }}" class="btn btn-sm btn-default btn-rounded pull-left"
+                   type="button">
+                  <i class="fa fa-list"></i>
+                  Tüm Kayıtları Listele
+                </a>
+              </span>
+              @endif
               <input type="text" name="ara" class="input-sm form-control rounded" autocomplete="off"
-                     placeholder="{{ $settings['title'] }} içinde ara (Tüm kayıtlar için boş olarak arayabilirsiniz)">
+                     placeholder="{{ $settings['title'] }} içinde ara"
+                     value="{{ $ara }}">
               <span class="input-group-btn">
                 <button class="btn btn-sm btn-default btn-rounded" type="submit">
                   <i class="fa fa-search"></i>

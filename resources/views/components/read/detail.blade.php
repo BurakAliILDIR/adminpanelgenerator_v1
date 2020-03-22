@@ -9,8 +9,7 @@ $route = $settings['route'];
     <div class="row">
       <div class="col-md-6">
         <div class="m-t">
-          <a class="btn btn-xs btn-default btn-rounded "
-             href="{{ route($route['index']) }}">
+          <a class="btn btn-xs btn-default btn-rounded " href="{{ route($route['index']) }}">
             <i class="fa fa-arrow-left"></i>
             Tüm Kayıtlara Dön
           </a>
@@ -39,7 +38,6 @@ $route = $settings['route'];
       </div>
     </div>
   </header>
-
   <section class="scrollable">
     <section class="hbox stretch row">
       <aside class="bg-light lter b-r col-md-3">
@@ -50,7 +48,8 @@ $route = $settings['route'];
                 @foreach($fields as $key => $val)
                   @if($val[$settings['operation']] && $val['type'] === 'image')
                     <span class="pull-left thumb m-r">
-                    <img src="{{ $model->getFirstMediaUrl($key) === '' ? $val['value'] : $model->getFirstMediaUrl($key) }}">
+                    <img
+                      src="{{ $model->getFirstMediaUrl($key) === '' ? $val['value'] : $model->getFirstMediaUrl($key) }}">
                     </span>
                   @endif
                 @endforeach
@@ -118,7 +117,9 @@ $route = $settings['route'];
                 @if(($val[$settings['operation']]) && @$val['multiple'] && $val['type'] !== 'multi_image')
                   <li id="{{ $key }}Leaf">
                     <a href="#{{ $key }}" id="{{ $key }}A" data-toggle="tab"
-                       onclick="setLeaf('{{ $key }}')">{{ $val['title'] }}</a>
+                       onclick="setLeaf('{{ $key }}')">
+                      {{ $val['title'] }}
+                    </a>
                   </li>
                 @endif
               @endforeach
@@ -129,7 +130,6 @@ $route = $settings['route'];
               @foreach($fields as $key => $val)
                 @if(($val[$settings['operation']]) && @$val['multiple'] && $val['type'] !== 'multi_image')
                   <?php $relation_infos = $val['relationship'] ?>
-
                   <div class="tab-pane" id="{{ $key }}Page">
                     <section class="scrollable wrapper-md w-f">
                       @php
@@ -142,7 +142,6 @@ $route = $settings['route'];
                               <thead>
                               <tr>
                                 @foreach($data[0]->getSettings('fields') as $relation_key => $relation_val)
-
                                   @foreach($relation_infos['fields'] as $field)
                                     @if($relation_key === $field)
                                       <th>{{ $relation_val['title'] }}</th>
@@ -185,8 +184,7 @@ $route = $settings['route'];
                 @if($val[$settings['operation']] && @$val['multiple'] && $val['type'] === 'multi_image')
                   <p>{{ $val['title'] . ' : Yükleme Alanı' }}</p>
                   <section class="panel panel-default">
-                    <form
-                      action="{{ route('imageUpload', [$model->id, $key, str_replace('\\', '-', get_class($model))]) }}"
+                    <form action="{{ route('imageUpload', [$model->id, $key, str_replace('\\', '-', get_class($model))]) }}"
                       class="dropzone">
                       @csrf
                     </form>
@@ -196,14 +194,14 @@ $route = $settings['route'];
                     <form action="{{ route('deleteImage') }}" method="post">
                       @Csrf @method('DELETE')
                       <p>{{ $val['title'] }}
-                        <button
-                          class="btn btn-danger pull-right btn-xs btn-rounded"
+                        <button class="btn btn-danger pull-right btn-xs btn-rounded"
                           onclick="return confirm('Seçili resimleri silmek istediğinize emin misiniz?');">
                           <i class="fa fa-trash"></i> Seçili Resimleri Sil
                         </button>
                       </p>
                       <section class="panel panel-default">
                         <div class="tz-gallery">
+                          <style>.checkbox-custom > i.checked:before {color: #fb6b5b;}</style>
                           @foreach($images as $order => $image)
                             @if(!($order % 2))
                               <div class="row">
@@ -214,23 +212,21 @@ $route = $settings['route'];
                                       <div class="col-md-12">
                                         <a class="lightbox"
                                            href="{{ $image->getUrl('big') }}">
-                                          <img
-                                            src="{{ $image->getUrl('card') }}"
-                                            alt="{{ $image->name }}">
+                                          <img src="{{ $image->getUrl('card') }}" alt="{{ $image->name }}">
                                         </a>
                                       </div>
                                     </div>
                                     <div class="row">
                                       <div class="col-md-12">
-                                        <footer
-                                          class="panel-footer bg-light lter">
+                                        <footer class="bg-light lter">
                                           <ul class="nav nav-pills nav-sm">
-                                            <label class="pull-right">
-                                              <input type="checkbox"
-                                                     name='mediaTodelete[]'
-                                                     value="{{$image->id}}">
-                                              Sil
-                                            </label>
+                                            <div class="checkbox m-l">
+                                              <label class="checkbox-custom center-block">
+                                                <input type="checkbox" name='mediaTodelete[]' value="{{$image->id}}">
+                                                <i class="fa fa-fw fa-square-o"></i>
+                                                Sil
+                                              </label>
+                                            </div>
                                           </ul>
                                         </footer>
                                       </div>
@@ -245,7 +241,6 @@ $route = $settings['route'];
                       </section>
                     </form>
                   @endif
-
                 @endif
               @endforeach
             </div>

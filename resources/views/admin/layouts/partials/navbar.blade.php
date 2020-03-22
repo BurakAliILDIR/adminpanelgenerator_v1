@@ -1,4 +1,4 @@
-<aside class="bg-light aside-md hidden-print hidden-xs navbar-fixed-top-xs" id="nav">
+<aside class="bg-light aside-md hidden-print hidden-xs" id="nav">
   <section class="vbox">
     <header class="header bg-primary lter text-center">
       <div class="btn-group">
@@ -322,7 +322,7 @@
       </div>
     </section>
 
-    <footer class="footer lt hidden-xs b-t b-light navbar-fixed-bottom">
+    <footer class="footer lt hidden-xs b-t b-light">
       <div id="chat" class="dropup">
         <section class="dropdown-menu on aside-md m-l-n">
           <section class="panel bg-white">
