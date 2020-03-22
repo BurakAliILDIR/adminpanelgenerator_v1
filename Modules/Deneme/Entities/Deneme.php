@@ -12,27 +12,17 @@ use Spatie\MediaLibrary\HasMedia\HasMedia;
 
 class Deneme extends Model implements HasMedia
 {
-    use Relations, MediaUploads, SoftDeletes;
-
-    protected $guarded = [];
-    protected $table = 'deneme';
-    /* TODO 1:  */
-
-    // her alanın içine create, edit, index, show alanı eklenecek
-    // fields dizisi json dosyanın içine json tipinde yazılacak
-    // bu sayede extra alanlar ekleyebilir hale gelecek kullanıcı
-    // daha sonrası düşünülerek yapılacak
-
-    // hangi sayfaların olacağı ve olmicağı seçilecek
-
-    private $path = '\Modules\Deneme\Source\deneme.json';
-
-    public function getSettings($key = null)
-    {
-        $json = json_decode(file_get_contents(base_path($this->path)), true);
-        if ($key)
-            return $json[$key];
-        else
-            return $json;
-    }
+  use Relations, MediaUploads, SoftDeletes;
+  
+  protected $guarded = [];
+  protected $table = 'deneme';
+  /* TODO 1:  */
+  
+  private $path = '\Modules\Deneme\Source\deneme.json';
+  
+  public function getSettings($key = null)
+  {
+    $json = json_decode(file_get_contents(base_path($this->path)), true);
+    return $key ? $json[$key] : $json;
+  }
 }
