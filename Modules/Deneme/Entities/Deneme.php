@@ -16,8 +16,7 @@ class Deneme extends Model implements HasMedia
 
     protected $guarded = [];
     protected $table = 'deneme';
-    /* TODO 1: pagination değeri json dan gelecek */
-    /* TODO 1: inputlara autoload gelecek */
+    /* TODO 1:  */
 
     // her alanın içine create, edit, index, show alanı eklenecek
     // fields dizisi json dosyanın içine json tipinde yazılacak

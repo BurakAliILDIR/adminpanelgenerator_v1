@@ -3,6 +3,7 @@ $fields = $settings['fields'];
 $model = $settings['model'];
 $route = $settings['route'];
 ?>
+
 <section class="vbox">
   <header class="header bg-white b-b b-light">
     <div class="row">
@@ -44,14 +45,13 @@ $route = $settings['route'];
       <aside class="bg-light lter b-r col-md-3">
         <section class="vbox">
           <section class="scrollable">
-            <div class="wrapper">
+            <div class="wrapper-lg">
               <div class="clearfix m-b">
                 @foreach($fields as $key => $val)
                   @if($val[$settings['operation']] && $val['type'] === 'image')
                     <span class="pull-left thumb m-r">
-                                            <img
-                                              src="{{ $model->getFirstMediaUrl($key) === '' ? $val['value'] : $model->getFirstMediaUrl($key) }}">
-                                        </span>
+                    <img src="{{ $model->getFirstMediaUrl($key) === '' ? $val['value'] : $model->getFirstMediaUrl($key) }}">
+                    </span>
                   @endif
                 @endforeach
               </div>
@@ -131,7 +131,7 @@ $route = $settings['route'];
                   <?php $relation_infos = $val['relationship'] ?>
 
                   <div class="tab-pane" id="{{ $key }}Page">
-                    <section class="scrollable wrapper w-f">
+                    <section class="scrollable wrapper-md w-f">
                       @php
                         $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key);
                       @endphp
@@ -180,7 +180,7 @@ $route = $settings['route'];
       <aside class="col-md-3 b-l">
         <section class="vbox">
           <section class="scrollable">
-            <div class="wrapper">
+            <div class="wrapper-md">
               @foreach($fields as $key => $val)
                 @if($val[$settings['operation']] && @$val['multiple'] && $val['type'] === 'multi_image')
                   <p>{{ $val['title'] . ' : Yükleme Alanı' }}</p>

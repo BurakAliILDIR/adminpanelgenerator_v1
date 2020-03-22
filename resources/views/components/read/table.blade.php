@@ -31,7 +31,7 @@ $route = $settings['route'];
         </div>
       </div>
     </header>
-    <section class="scrollable wrapper w-f">
+    <section class="scrollable wrapper-sm w-f">
       @component('components.alert.alert_messages')@endcomponent
       <section class="panel panel-default">
         <div class="table-responsive">
@@ -99,8 +99,8 @@ $route = $settings['route'];
         <div class="col-md-3 hidden-sm">
           <p class="text-muted m-t text-right">
             Gösterimde
-            olan: {{ $settings['data']->currentPage() * $settings['data']->perPage() - $settings['data']->perPage() }}
-            - {{ $settings['data']->currentPage() != $settings['data']->lastPage() ? $settings['data']->currentPage() * $settings['data']->perPage() : $settings['data']->total() }}
+            olan: {{ $settings['data']->firstItem() }}
+            - {{ $settings['data']->lastItem() }}
             | Toplam kayıt: {{ $settings['data']->total() }}</p>
         </div>
       </div>

@@ -28,14 +28,15 @@ class DenemeController extends Controller
   public function index()
   {
     $data = null;
+    $paginate = $this->jsonSettings['paginate'];
     if ($search = \request()->input('ara')) {
       $conditions = $this->jsonSettings['searchable'];
       $data = $this->model->where(function ($query) use ($conditions, $search) {
         foreach ($conditions as $column)
           $query->orWhere($column, 'like', '%' . $search . '%');
-      })->orderByDESC('id')->paginate(3);
+      })->orderByDESC('id')->paginate($paginate);
     } else
-      $data = $this->model->orderByDESC('id')->paginate(3);
+      $data = $this->model->orderByDESC('id')->paginate($paginate);
     
     $settings = [
       'operation' => 'list',
