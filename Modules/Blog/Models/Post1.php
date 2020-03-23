@@ -1,6 +1,6 @@
 <?php
 
-namespace $NAMESPACE$;
+namespace Modules\Blog\Models;
 
 use App\Traits\MediaUploads\MediaUploads;
 use App\Traits\ModelTraits\Relations;
@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 
-class $CLASS$ extends Model implements HasMedia
+class Post1 extends Model implements HasMedia
 {
   use Relations, SourceSettings, MediaUploads, SoftDeletes;
   
   protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_at'];
   
-  private $path = '$MODULE_NAMESPACE$\$STUDLY_NAME$\Source\$CLASS$.json';
+  private $path = 'Modules\Blog\Source\blog.json';
 }

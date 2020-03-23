@@ -1,12 +1,12 @@
 <?php
 
-namespace $MODULE_NAMESPACE$\$STUDLY_NAME$\Requests;
+namespace $NAMESPACE$;
 
 use App\Traits\ValidationTraits\DynamicRulesValidate;
 use Illuminate\Foundation\Http\FormRequest;
-use $MODULE_NAMESPACE$\$STUDLY_NAME$\Models\$STUDLY_NAME$;
+use $MODULE_NAMESPACE$\$STUDLY_NAME$\Models\$CLASS$;
 
-class $STUDLY_NAME$CreateRequest extends FormRequest
+class $CLASS$CreateRequest extends FormRequest
 {
     use DynamicRulesValidate;
     private $fields = null;
@@ -14,6 +14,6 @@ class $STUDLY_NAME$CreateRequest extends FormRequest
 
     public function __construct()
     {
-        $this->fields = (new $STUDLY_NAME$())->getSettings('fields');
+        $this->fields = (new $CLASS$())->getSettings('fields');
     }
 }

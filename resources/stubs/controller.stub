@@ -6,11 +6,11 @@ use App\Traits\ControllerTraits\HelperMethods;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-use $MODULE_NAMESPACE$\$STUDLY_NAME$\Models\$STUDLY_NAME$;
-use $MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\$STUDLY_NAME$CreateRequest;
-use $MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\$STUDLY_NAME$EditRequest;
+use $MODULE_NAMESPACE$\$STUDLY_NAME$\Models\$CLASS$;
+use $MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\$CLASS$CreateRequest;
+use $MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\$CLASS$EditRequest;
 
-class $CLASS$ extends Controller
+class $CLASS$Controller extends Controller
 {
   use HelperMethods;
   private $model = null;
@@ -18,7 +18,7 @@ class $CLASS$ extends Controller
   
   public function __construct()
   {
-    $this->model = new $STUDLY_NAME$();
+    $this->model = new $CLASS$();
     $this->jsonSettings = $this->model->getSettings();
   }
   
@@ -63,7 +63,7 @@ class $CLASS$ extends Controller
     return view('$LOWER_NAME$::create', compact('settings'));
   }
   
-  public function store($STUDLY_NAME$CreateRequest $request)
+  public function store($CLASS$CreateRequest $request)
   {
     $fields = $this->jsonSettings['fields'];
     $operation_type = 'create';
@@ -136,7 +136,7 @@ class $CLASS$ extends Controller
     return view('$LOWER_NAME$::edit', compact('settings'));
   }
   
-  public function update($STUDLY_NAME$EditRequest $request, $id)
+  public function update($CLASS$EditRequest $request, $id)
   {
     $this->model = $this->model->findOrFail($id);
     $fields = $this->jsonSettings['fields'];
