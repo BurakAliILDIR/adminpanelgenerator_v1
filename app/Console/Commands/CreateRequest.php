@@ -11,12 +11,18 @@ use Nwidart\Modules\Support\Stub;
 
 class CreateRequest extends Command
 {
-  protected $signature = 'module:create-request {name: Request adı boş geçilemez.} {module: Module adı boş geçilemez.} {type: Type için "Create" veya "Edit" değerilerinden birini giriniz.}';
+  protected $signature = 'module:create-request {name} {module} {type}';
   
   protected $description = 'Belirtilen module ve model için request nesnesi oluşturun.';
   
+  public function __construct()
+  {
+    parent::__construct();
+  }
+  
   public function handle()
   {
+    $this->info($this->argument('name'));
     $name = Str::studly($this->argument('name'));
     $module = $this->laravel['modules']->findOrFail($this->argument('module'));
     $type = Str::studly($this->argument('type'));
@@ -29,7 +35,7 @@ class CreateRequest extends Command
     
     $module_namespace = config('modules.namespace') . '\\' . $module;
     $contents = (new Stub('/request.stub', [
-      'NAMESPACE' => $module_namespace . '\\' . $requestPath,
+      'NAMESPACE' => $module_namespace . '\\' . $requestPath . '\\' . $name,
       'MODULE' => $module_namespace,
       'NAME' => $this->argument('name'),
       'TYPE' => $type,

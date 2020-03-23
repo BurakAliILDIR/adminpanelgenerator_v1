@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use $MODULE_NAMESPACE$\$STUDLY_NAME$\Models\$STUDLY_NAME$;
-use $MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\$STUDLY_NAME$CreateRequest;
-use $MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\$STUDLY_NAME$EditRequest;
+use $MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\$STUDLY_NAME$\$STUDLY_NAME$CreateRequest;
+use $MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\$STUDLY_NAME$\$STUDLY_NAME$EditRequest;
 
 class $CLASS$ extends Controller
 {
@@ -63,7 +63,7 @@ class $CLASS$ extends Controller
     return view('$LOWER_NAME$::create', compact('settings'));
   }
   
-  public function store($CLASS$CreateRequest $request)
+  public function store($STUDLY_NAME$CreateRequest $request)
   {
     $fields = $this->jsonSettings['fields'];
     $operation_type = 'create';
@@ -136,7 +136,7 @@ class $CLASS$ extends Controller
     return view('$LOWER_NAME$::edit', compact('settings'));
   }
   
-  public function update($CLASS$EditRequest $request, $id)
+  public function update($STUDLY_NAME$EditRequest $request, $id)
   {
     $this->model = $this->model->findOrFail($id);
     $fields = $this->jsonSettings['fields'];

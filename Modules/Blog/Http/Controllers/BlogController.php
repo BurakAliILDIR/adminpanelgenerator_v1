@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use Modules\Blog\Models\Blog;
-use Modules\Blog\Http\Requests\BlogCreateRequest;
-use Modules\Blog\Http\Requests\BlogEditRequest;
+use Modules\Blog\Http\Requests\Blog\BlogCreateRequest;
+use Modules\Blog\Http\Requests\Blog\BlogEditRequest;
 
 class BlogController extends Controller
 {
@@ -18,7 +18,7 @@ class BlogController extends Controller
   
   public function __construct()
   {
-    $this->model = new Blog();
+    $this->model = new BlogController();
     $this->jsonSettings = $this->model->getSettings();
   }
   

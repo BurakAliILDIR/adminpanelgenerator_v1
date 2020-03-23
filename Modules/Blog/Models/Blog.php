@@ -14,6 +14,6 @@ class Blog extends Model implements HasMedia
   use Relations, SourceSettings, MediaUploads, SoftDeletes;
   
   protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_at'];
-  protected $table = 'deneme';
-  private $path = 'Modules\Blog\Source\blog.json';
+  
+  private $path = 'Modules\Blog\Source\Blog.json';
 }
