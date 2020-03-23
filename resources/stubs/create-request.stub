@@ -1,0 +1,19 @@
+<?php
+
+namespace $MODULE_NAMESPACE$\$STUDLY_NAME$\Requests;
+
+use App\Traits\ValidationTraits\DynamicRulesValidate;
+use Illuminate\Foundation\Http\FormRequest;
+use $MODULE_NAMESPACE$\$STUDLY_NAME$\Models\$STUDLY_NAME$;
+
+class $STUDLY_NAME$CreateRequest extends FormRequest
+{
+    use DynamicRulesValidate;
+    private $fields = null;
+    private $operation = 'create';
+
+    public function __construct()
+    {
+        $this->fields = (new $STUDLY_NAME$())->getSettings('fields');
+    }
+}

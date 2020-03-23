@@ -7,10 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use Modules\Deneme\Entities\Deneme;
-use Modules\Deneme\Entities\Post;
 use Modules\Deneme\Http\Requests\Deneme\DenemeCreateRequest;
 use Modules\Deneme\Http\Requests\Deneme\DenemeEditRequest;
-use Modules\Sales\Entities\SaleInfo;
 
 
 class DenemeController extends Controller
@@ -40,7 +38,7 @@ class DenemeController extends Controller
     
     $settings = [
       'operation' => 'list',
-      'title' => 'Denemeler',
+      'title' => $this->jsonSettings['titles']['index'],
       'fields' => $this->jsonSettings['fields'],
       'model' => $this->model,
       'data' => $data,
@@ -54,7 +52,7 @@ class DenemeController extends Controller
     $operation_type = 'create';
     $settings = [
       'operation' => $operation_type,
-      'title' => 'Deneme Ekle',
+      'title' => $this->jsonSettings['titles']['create'],
       'fields' => $this->jsonSettings['fields'],
       'model' => $this->model,
       'params' => null,
@@ -113,7 +111,7 @@ class DenemeController extends Controller
     $this->model = $this->model->findOrFail($id);
     $settings = [
       'operation' => 'detail',
-      'title' => 'Deneme Detay',
+      'title' => $this->jsonSettings['titles']['show'],
       'fields' => $this->jsonSettings['fields'],
       'model' => $this->model,
       'route' => $this->jsonSettings['routes'],
@@ -127,7 +125,7 @@ class DenemeController extends Controller
     $operation_type = 'edit';
     $settings = [
       'operation' => $operation_type,
-      'title' => 'Deneme Düzenle',
+      'title' => $this->jsonSettings['titles']['edit'],
       'fields' => $this->jsonSettings['fields'],
       'model' => $this->model,
       'params' => $this->model->id,

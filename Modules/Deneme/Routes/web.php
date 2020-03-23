@@ -7,7 +7,7 @@ Route::prefix('deneme')->group(function () {
     Route::get('/ekle', 'DenemeController@create')->name('deneme.create');
     Route::get('/{id}', 'DenemeController@show')->name('deneme.show');
     Route::get('/{id}/duzenle', 'DenemeController@edit')->name('deneme.edit');
-    Route::put('/{id}/duzenle', 'DenemeController@update')->name('deneme.update');
+    Route::put('/{id}', 'DenemeController@update')->name('deneme.update');
     Route::post('/', 'DenemeController@store')->name('deneme.store');
     Route::delete('/sil', 'DenemeController@destroy')->name('deneme.destroy');
 });

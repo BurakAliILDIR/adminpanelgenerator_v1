@@ -1,10 +1,10 @@
 <?php
 
-namespace $NAMESPACE$;
+namespace Modules\Blog\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class $CLASS$ extends FormRequest
+class BlogEditRequest extends FormRequest
 {
     public function rules()
     {

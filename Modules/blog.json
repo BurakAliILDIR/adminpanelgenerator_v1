@@ -1,19 +1,19 @@
 {
   "paginate": 7,
   "titles": {
-    "index": "Denemeler",
-    "show": "Deneme Detay",
-    "create": "Deneme Ekle",
-    "edit": "Deneme Düzenle"
+    "index": "Bloglar",
+    "show": "Blog Detay",
+    "create": "Blog Ekle",
+    "edit": "Blog Düzenle"
   },
   "routes": {
-    "index": "deneme.index",
-    "create": "deneme.create",
-    "store": "deneme.store",
-    "show": "deneme.show",
-    "edit": "deneme.edit",
-    "update": "deneme.update",
-    "delete": "deneme.destroy"
+    "index": "blog.index",
+    "create": "blog.create",
+    "store": "blog.store",
+    "show": "blog.show",
+    "edit": "blog.edit",
+    "update": "blog.update",
+    "delete": "blog.destroy"
   },
   "searchable": [
     "ad",
