@@ -43,22 +43,15 @@ class CreateModule extends Command
     //Artisan::call('module:make-request Edit'. $Name.'Request ' . $Name);
     
     
-//    dd('durdur');
     // girilen değeri alma.
     $name = $this->argument('name');
     // gelen tüm değerleri array olarak alma
     // $arguments = $this->arguments();
     
-    $this->info($name);
-    $this->info('-1');
     Artisan::call('module:make ' . $name);
-    $this->info('0');
     Artisan::call('module:make-model ' . $name . ' ' . $name . ' -m');
-    $this->info('1');
     Artisan::call('module:create-request ' . $name . ' ' . $name . ' Create');
-    $this->info('2');
     Artisan::call('module:create-request ' . $name . ' ' . $name . ' Edit');
-    $this->info('3');
     
   }
 }
