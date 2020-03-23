@@ -142,8 +142,8 @@
         "type": "belongsToMany",
         "model": "Modules\\Deneme\\Entities\\Post",
         "keys": {
-          "table": "deneme_post",
-          "foreignKey": "deneme_id",
+          "table": "blog_post",
+          "foreignKey": "blog_id",
           "otherKey": "post_id"
         },
         "pluck": {

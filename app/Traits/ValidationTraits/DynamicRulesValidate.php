@@ -17,7 +17,6 @@ trait DynamicRulesValidate
         $validates[$key] = $row;
       }
     }
-    
     return $validates;
   }
   
