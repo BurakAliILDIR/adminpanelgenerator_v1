@@ -1,16 +1,16 @@
 <?php
 
-namespace $CLASS_NAMESPACE$;
+namespace Modules\Yeni\Http\Controllers;
 
 use App\Traits\ControllerTraits\HelperMethods;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-use $MODULE_NAMESPACE$\$STUDLY_NAME$\Models\$STUDLY_NAME$;
-use $MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\$STUDLY_NAME$CreateRequest;
-use $MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\$STUDLY_NAME$EditRequest;
+use Modules\Yeni\Models\Yeni;
+use Modules\Yeni\Http\Requests\YeniCreateRequest;
+use Modules\Yeni\Http\Requests\YeniEditRequest;
 
-class $CLASS$ extends Controller
+class YeniController extends Controller
 {
   use HelperMethods;
   private $model = null;
@@ -18,7 +18,7 @@ class $CLASS$ extends Controller
   
   public function __construct()
   {
-    $this->model = new $CLASS$();
+    $this->model = new YeniController();
     $this->jsonSettings = $this->model->getSettings();
   }
   
@@ -43,7 +43,7 @@ class $CLASS$ extends Controller
       'data' => $data,
       'route' => $this->jsonSettings['routes'],
     ];
-    return view('$LOWER_NAME$::index', compact('settings'));
+    return view('yeni::index', compact('settings'));
   }
   
   public function create()
@@ -60,10 +60,10 @@ class $CLASS$ extends Controller
       'route' => $this->jsonSettings['routes'],
       'plucks' => $this->getPluck($operation_type),
     ];
-    return view('$LOWER_NAME$::create', compact('settings'));
+    return view('yeni::create', compact('settings'));
   }
   
-  public function store($CLASS$CreateRequest $request)
+  public function store(YeniControllerCreateRequest $request)
   {
     $fields = $this->jsonSettings['fields'];
     $operation_type = 'create';
@@ -115,7 +115,7 @@ class $CLASS$ extends Controller
       'model' => $this->model,
       'route' => $this->jsonSettings['routes'],
     ];
-    return view('$LOWER_NAME$::show', compact('settings'));
+    return view('yeni::show', compact('settings'));
   }
   
   public function edit($id)
@@ -133,10 +133,10 @@ class $CLASS$ extends Controller
       'route' => $this->jsonSettings['routes'],
       'plucks' => $this->getPluck($operation_type),
     ];
-    return view('$LOWER_NAME$::edit', compact('settings'));
+    return view('yeni::edit', compact('settings'));
   }
   
-  public function update($CLASS$EditRequest $request, $id)
+  public function update(YeniControllerEditRequest $request, $id)
   {
     $this->model = $this->model->findOrFail($id);
     $fields = $this->jsonSettings['fields'];

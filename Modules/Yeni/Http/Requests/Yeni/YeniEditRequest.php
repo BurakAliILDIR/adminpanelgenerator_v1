@@ -1,19 +1,19 @@
 <?php
 
-namespace $NAMESPACE$;
+namespace Modules\Yeni\Http\Requests;
 
 use App\Traits\ValidationTraits\DynamicRulesValidate;
 use Illuminate\Foundation\Http\FormRequest;
-use $MODULE$\Models\$NAME$;
+use Modules\Yeni\Models\Yeni;
 
-class $NAME$$TYPE$Request extends FormRequest
+class YeniEditRequest extends FormRequest
 {
     use DynamicRulesValidate;
     private $fields = null;
-    private $operation = '$LOWER_TYPE$';
+    private $operation = 'edit';
 
     public function __construct()
     {
-        $this->fields = (new $NAME$())->getSettings('fields');
+        $this->fields = (new Yeni())->getSettings('fields');
     }
 }

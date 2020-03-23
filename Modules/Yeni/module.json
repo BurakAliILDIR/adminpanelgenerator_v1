@@ -1,0 +1,13 @@
+{
+    "name": "Yeni",
+    "alias": "yeni",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\Yeni\\Providers\\YeniServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
