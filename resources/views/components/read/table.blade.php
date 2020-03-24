@@ -2,6 +2,7 @@
 $fields = $settings['fields'];
 $model = $settings['model'];
 $route = $settings['route'];
+$data = $settings['data'];
 ?>
 <h3>{{ $settings['title'] }}</h3>
 <style>.checkbox-custom > i.checked:before {
@@ -66,7 +67,7 @@ $route = $settings['route'];
             </tr>
             </thead>
             <tbody>
-            @foreach($settings['data'] as $upper_val)
+            @foreach($data as $upper_val)
               <tr>
                 <td>
                   <div class="checkbox">
@@ -105,14 +106,12 @@ $route = $settings['route'];
     <footer class="footer bg-white b-t">
       <div class="row text-center-xs">
         <div class="col-md-9 col-sm-12 text-center-xs">
-          {{ $settings['data']->links() }}
+          {{ $data->links() }}
         </div>
         <div class="col-md-3 hidden-sm">
           <p class="text-muted m-t text-right">
-            Gösterimde
-            olan: {{ $settings['data']->firstItem() }}
-            - {{ $settings['data']->lastItem() }}
-            | Toplam kayıt: {{ $settings['data']->total() }}</p>
+            {{$data->firstItem() ? 'Gösterimde olan: ' . $data->firstItem() . ' - ' . $data->lastItem() . ' |' : '' }}
+             Toplam kayıt: {{ $data->total() }}</p>
         </div>
       </div>
     </footer>

@@ -27,6 +27,7 @@ Trait HelperMethods
             '~', 'ğ', 'İ', 'ı', '-', 'ç', 'ş', 'ü', 'ö', '_'],
             '', Str::kebab($fileName));
         })
+        ->preservingOriginal()
         ->toMediaCollection($name);
   }
   

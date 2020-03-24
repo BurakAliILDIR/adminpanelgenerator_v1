@@ -98,7 +98,7 @@
       "attributes": {},
       "rules": [
         "required",
-        "number"
+        "numeric"
       ],
       "multiple": false,
       "create": true,
@@ -142,7 +142,7 @@
     "profile": {
       "type": "image",
       "title": "Profil Resmi",
-      "value": "/admin-template/images/avatar_default.jpg",
+      "value": "/detaults/avatar_default.jpg",
       "attributes": {},
       "rules": [
         "mimes:jpeg,jpg,png"
