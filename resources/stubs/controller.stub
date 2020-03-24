@@ -18,7 +18,7 @@ class $CLASS$ extends Controller
   
   public function __construct()
   {
-    $this->model = new $CLASS$();
+    $this->model = new $STUDLY_NAME$();
     $this->jsonSettings = $this->model->getSettings();
   }
   

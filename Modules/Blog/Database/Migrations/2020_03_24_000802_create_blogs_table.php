@@ -11,8 +11,8 @@ class CreateBlogsTable extends Migration
   
   public function __construct()
   {
-  $name = substr('CreateBlogsTable', 6, -6);
-  $model = '\\Modules\\'.$name.'\\Models\\'.$name;
+    $name = substr('CreateBlogsTable', 6, -6);
+    $model = '\\Modules\\' . $name . '\\Models\\' . $name;
     $this->fields = (new $model())->getSettings('fields');
   }
   

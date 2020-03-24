@@ -4,7 +4,7 @@
     @error($key)
     <div class="label bg-danger">{{ $message }}</div>
     @enderror
-    @foreach($value as $k => $v)
+    @forelse($value as $k => $v)
       <div class="checkbox">
         <label class="checkbox-custom center-block">
           @if($checked->count())
@@ -19,7 +19,10 @@
           {{ $v }}
         </label>
       </div>
-    @endforeach
+    @empty
+      <small>{{ $title }} tablosunda veri bulunmamaktadır. Bu alan ile işlem gerçekleştirmek için lütfen {{ $title }}
+        tablosuna veri ekleyiniz.</small>
+    @endforelse
   </div>
 </div>
 <div class="line line-dashed line-lg pull-in"></div>

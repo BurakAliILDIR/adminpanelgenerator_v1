@@ -18,7 +18,7 @@ class BlogController extends Controller
   
   public function __construct()
   {
-    $this->model = new BlogController();
+    $this->model = new Blog();
     $this->jsonSettings = $this->model->getSettings();
   }
   
