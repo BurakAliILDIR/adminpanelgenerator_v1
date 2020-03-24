@@ -25,7 +25,7 @@
       "title": "Kimlik",
       "value": "",
       "create": false,
-      "edit": false,
+      "update": false,
       "list": false,
       "detail": false
     },
@@ -39,7 +39,7 @@
       ],
       "multiple": false,
       "create": true,
-      "edit": true,
+      "update": true,
       "list": true,
       "detail": true
     },
@@ -53,7 +53,7 @@
       ],
       "multiple": false,
       "create": true,
-      "edit": true,
+      "update": true,
       "list": true,
       "detail": true
     },
@@ -70,7 +70,7 @@
       ],
       "multiple": false,
       "create": true,
-      "edit": true,
+      "update": true,
       "list": false,
       "detail": true
     },
@@ -84,7 +84,7 @@
       ],
       "multiple": false,
       "create": true,
-      "edit": true,
+      "update": true,
       "list": true,
       "detail": true
     },
@@ -103,7 +103,7 @@
       ],
       "multiple": false,
       "create": true,
-      "edit": true,
+      "update": true,
       "list": true,
       "detail": true
     },
@@ -117,41 +117,43 @@
       ],
       "multiple": false,
       "create": true,
-      "edit": true,
+      "update": true,
       "list": true,
       "detail": true
     },
     "profile": {
       "type": "image",
       "title": "Profil Resmi",
-      "value": "/admin-template/images/avatar_default.jpg",
+      "value": "avatar.jpg",
       "attributes": {},
       "rules": [
         "mimes:jpeg,jpg,png"
       ],
       "multiple": false,
       "create": true,
-      "edit": true,
+      "update": true,
       "list": false,
       "detail": true
     },
-    "kontrol": {
+    "users": {
       "type": "multi_checkbox",
-      "title": "Kontrol",
+      "title": "Kullanıcılar",
       "relationship": {
         "type": "belongsToMany",
-        "model": "Modules\\Deneme\\Entities\\Post",
+        "model": "Modules\\User\\Models\\User",
         "keys": {
-          "table": "blog_post",
+          "table": "blog_user",
           "foreignKey": "blog_id",
-          "otherKey": "post_id"
+          "otherKey": "user_id"
         },
         "pluck": {
           "display": "name",
           "value": "id"
         },
         "fields": [
-          "name"
+          "name",
+          "surname",
+          "gender"
         ],
         "perPage": 3
       },
@@ -160,7 +162,7 @@
       ],
       "multiple": true,
       "create": true,
-      "edit": true,
+      "update": true,
       "list": false,
       "detail": true
     },
@@ -171,7 +173,7 @@
       "attributes": {},
       "multiple": true,
       "create": false,
-      "edit": false,
+      "update": false,
       "list": false,
       "detail": true
     },
@@ -184,7 +186,7 @@
       ],
       "multiple": false,
       "create": true,
-      "edit": true,
+      "update": true,
       "list": false,
       "detail": true
     },
@@ -214,7 +216,7 @@
       },
       "attributes": {},
       "create": true,
-      "edit": true,
+      "update": true,
       "list": true,
       "detail": true
     },
@@ -226,7 +228,7 @@
       ],
       "multiple": false,
       "create": true,
-      "edit": true,
+      "update": true,
       "list": true,
       "detail": true
     },
@@ -239,7 +241,7 @@
       ],
       "multiple": false,
       "create": true,
-      "edit": true,
+      "update": true,
       "list": false,
       "detail": true
     },
@@ -252,7 +254,7 @@
       ],
       "multiple": false,
       "create": false,
-      "edit": false,
+      "update": false,
       "list": false,
       "detail": true
     },
@@ -265,7 +267,7 @@
       ],
       "multiple": false,
       "create": false,
-      "edit": false,
+      "update": false,
       "list": false,
       "detail": false
     }

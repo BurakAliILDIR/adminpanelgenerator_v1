@@ -142,12 +142,41 @@
     "profile": {
       "type": "image",
       "title": "Profil Resmi",
-      "value": "/detaults/avatar_default.jpg",
+      "value": "avatar.jpg",
       "attributes": {},
       "rules": [
         "mimes:jpeg,jpg,png"
       ],
       "multiple": false,
+      "create": true,
+      "update": true,
+      "list": false,
+      "detail": true
+    },
+    "blogs": {
+      "type": "multi_checkbox",
+      "title": "Bloglar",
+      "relationship": {
+        "type": "belongsToMany",
+        "model": "Modules\\Blog\\Models\\Blog",
+        "keys": {
+          "table": "blog_user",
+          "foreignKey": "user_id",
+          "otherKey": "blog_id"
+        },
+        "pluck": {
+          "display": "ad",
+          "value": "id"
+        },
+        "fields": [
+          "ad", "soyad"
+        ],
+        "perPage": 3
+      },
+      "attributes": {},
+      "rules": [
+      ],
+      "multiple": true,
       "create": true,
       "update": true,
       "list": false,

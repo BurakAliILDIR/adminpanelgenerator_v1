@@ -52,11 +52,20 @@
       ])@endcomponent
       @break
       @case('file')
-      @case('image')
       @component('components.form.partials.file',
+                 //dd($value);
                  ['key' => $key,
                  'type' => $field['type'],
                  'value' => $model->getFirstMediaUrl($key) === "" ? $value : $model->getFirstMediaUrl($key),
+                 'title' => $title,
+                 'attributes' => $attributes,
+      ])@endcomponent
+      @break
+      @case('image')
+      @component('components.form.partials.image',
+                 ['key' => $key,
+                 'type' => $field['type'],
+                 'value' => $model->getFirstMediaUrl($key) === "" ? \Illuminate\Support\Facades\Storage::url('/application/defaults/' . $value) : $model->getFirstMediaUrl($key),
                  'title' => $title,
                  'attributes' => $attributes,
       ])@endcomponent

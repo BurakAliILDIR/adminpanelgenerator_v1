@@ -17,8 +17,10 @@
         "laravel/framework": "^7.0",
         "laravel/tinker": "^2.0",
         "laravelcollective/html": "^6.1",
+        "moontoast/math": "^1.2",
         "nwidart/laravel-modules": "^6.2",
         "spatie/laravel-medialibrary": "^7.0.0",
+        "spatie/laravel-permission": "^3.11",
         "spatie/laravel-searchable": "^1.6"
     },
     "require-dev": {

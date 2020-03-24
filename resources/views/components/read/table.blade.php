@@ -86,7 +86,7 @@ $data = $settings['data'];
                 @endforeach
                 <td>
                   <a class="btn btn-sm btn-icon btn-warning btn-rounded"
-                     href="{{ route($route['show'], $upper_val['id']) }}">
+                     href="{{ route($route['show'], ((string)$upper_val['id'])) }}">
                     <i class="fa fa-search"></i>
                   </a>
                 </td>
@@ -111,7 +111,7 @@ $data = $settings['data'];
         <div class="col-md-3 hidden-sm">
           <p class="text-muted m-t text-right">
             {{$data->firstItem() ? 'Gösterimde olan: ' . $data->firstItem() . ' - ' . $data->lastItem() . ' |' : '' }}
-             Toplam kayıt: {{ $data->total() }}</p>
+            {{ ($total = $data->total()) !== 0 ? 'Toplam kayıt: '. $total : 'Kayıt bulunmamaktadır.' }}</p>
         </div>
       </div>
     </footer>

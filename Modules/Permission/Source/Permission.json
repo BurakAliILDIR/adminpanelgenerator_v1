@@ -1,0 +1,111 @@
+{
+  "paginate": 7,
+  "titles": {
+    "index": "İzinler",
+    "show": "İzin Detay",
+    "create": "İzin Ekle",
+    "edit": "İzin Düzenle"
+  },
+  "routes": {
+    "index": "permission.index",
+    "create": "permission.create",
+    "store": "permission.store",
+    "show": "permission.show",
+    "edit": "permission.edit",
+    "update": "permission.update",
+    "delete": "permission.destroy"
+  },
+  "searchable": [
+    "name"
+  ],
+  "fields": {
+    "id": {
+      "type": "hidden",
+      "title": "Kimlik",
+      "value": "",
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": false
+    },
+    "name": {
+      "type": "text",
+      "title": "İzin Adı",
+      "value": "",
+      "attributes": {},
+      "rules": [
+        "required"
+      ],
+      "multiple": false,
+      "create": true,
+      "update": true,
+      "list": true,
+      "detail": true
+    },
+    "guard_name": {
+      "type": "text",
+      "title": "Guard Name",
+      "value": "",
+      "attributes": {},
+      "rules": [
+        "required"
+      ],
+      "multiple": false,
+      "create": false,
+      "update": false,
+      "list": true,
+      "detail": true
+    },
+    "roles": {
+      "type": "multi_checkbox",
+      "title": "Roller",
+      "relationship": {
+        "type": "belongsToMany",
+        "model": "Modules\\Role\\Models\\Role",
+        "keys": {
+          "table": "role_has_permissions",
+          "foreignKey": "permission_id",
+          "otherKey": "role_id"
+        },
+        "pluck": {
+          "display": "name",
+          "value": "id"
+        },
+        "fields": [
+          "name",
+          "created_at",
+          "updated_at"
+        ],
+        "perPage": 7
+      },
+      "attributes": {},
+      "rules": [
+      ],
+      "multiple": true,
+      "create": true,
+      "update": true,
+      "list": false,
+      "detail": true
+    },
+    "created_at": {
+      "type": "datetime",
+      "title": "Eklenme Tarihi",
+      "name": "created_at",
+      "multiple": false,
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": true
+    },
+    "updated_at": {
+      "type": "datetime",
+      "title": "Son Düzenlenme Tarihi",
+      "name": "updated_at",
+      "multiple": false,
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": true
+    }
+  }
+}

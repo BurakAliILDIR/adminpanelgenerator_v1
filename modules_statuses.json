@@ -1,5 +1,9 @@
 {
     "Deneme": true,
     "Sales": true,
-    "User": true
+    "User": true,
+    "Blog": true,
+    "Role": true,
+    "Permissions": true,
+    "Permission": true
 }

@@ -1,4 +1,3 @@
-!public/defaults/
-!public/
+public/*
+!public/application
 !.gitignore
-*

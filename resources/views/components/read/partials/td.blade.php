@@ -2,7 +2,7 @@
   @switch($lower_val['type'])
     @case('image')
     <img
-      src="{{ $upper_val->getFirstMediaUrl($lower_key) === "" ? $lower_val['value'] : $upper_val->getFirstMediaUrl($lower_key) }}"
+      src="{{ $upper_val->getFirstMediaUrl($lower_key) === "" ? \Illuminate\Support\Facades\Storage::url('/application/defaults/'.$lower_val['value']) : $upper_val->getFirstMediaUrl($lower_key) }}"
       width="61">
     @break
     @case('file')

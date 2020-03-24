@@ -49,12 +49,12 @@ $route = $settings['route'];
                   @if($val[$settings['operation']] && $val['type'] === 'image')
                     <span class="pull-left thumb m-r">
                     <img
-                      src="{{ $model->getFirstMediaUrl($key) === '' ? $val['value'] : $model->getFirstMediaUrl($key) }}">
+                      src="{{ $model->getFirstMediaUrl($key) === '' ? \Illuminate\Support\Facades\Storage::url('/application/defaults/' . $val['value']) : $model->getFirstMediaUrl($key) }}">
                     </span>
                   @endif
                 @endforeach
               </div>
-              <div>
+              <div style="word-break: break-all">
                 @foreach($fields as $key => $val)
                   @if($val[$settings['operation']] && !(@$val['multiple'] ?? true))
                     @switch($val['type'])
@@ -64,7 +64,7 @@ $route = $settings['route'];
                       @case('radio')
                       @case('textarea')
                       <small class="text-uc text-muted">{{ $val['title'] }} : </small>
-                      {!! $model[$key] !!}
+                      <span>{!! $model[$key] !!}</span>
                       <div class="line"></div>
                       @break
                       @case('file')
@@ -126,53 +126,55 @@ $route = $settings['route'];
             </ul>
           </header>
           <section class="scrollable">
-            <div class="tab-content">
-              @foreach($fields as $key => $val)
-                @if(($val[$settings['operation']]) && @$val['multiple'] && $val['type'] !== 'multi_image')
-                  <?php $relation_infos = $val['relationship'] ?>
-                  <div class="tab-pane" id="{{ $key }}Page">
-                    <section class="scrollable wrapper-md w-f">
-                      @php
-                        $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key);
-                      @endphp
-                      @if($data->count() > 0)
-                        <section class="panel panel-default">
-                          <div class="table-responsive">
-                            <table class="table table-striped m-b-none">
-                              <thead>
-                              <tr>
-                                @foreach($data[0]->getSettings('fields') as $relation_key => $relation_val)
-                                  @foreach($relation_infos['fields'] as $field)
-                                    @if($relation_key === $field)
-                                      <th>{{ $relation_val['title'] }}</th>
-                                    @endif
-                                  @endforeach
-                                @endforeach
-                              </tr>
-                              </thead>
-                              <tbody>
-                              @foreach($data as $upper_val)
+            <section class="scrollable">
+              <div class="tab-content">
+                @foreach($fields as $key => $val)
+                  @if(($val[$settings['operation']]) && @$val['multiple'] && $val['type'] !== 'multi_image')
+                    <?php $relation_infos = $val['relationship'] ?>
+                    <div class="tab-pane" id="{{ $key }}Page">
+                      <section class="scrollable wrapper-md w-f">
+                        @php
+                          $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key);
+                        @endphp
+                        @if($data->count() > 0)
+                          <section class="panel panel-default">
+                            <div class="table-responsive">
+                              <table class="table table-striped m-b-none">
+                                <thead>
                                 <tr>
-                                  @foreach($upper_val->getSettings('fields') as $lower_key => $lower_val)
-                                    @if(array_search($lower_key, $relation_infos['fields']) !== false)
-                                      @component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
-                                    @endif
+                                  @foreach($data[0]->getSettings('fields') as $relation_key => $relation_val)
+                                    @foreach($relation_infos['fields'] as $field)
+                                      @if($relation_key === $field)
+                                        <th>{{ $relation_val['title'] }}</th>
+                                      @endif
+                                    @endforeach
                                   @endforeach
                                 </tr>
-                              @endforeach
-                              </tbody>
-                            </table>
-                          </div>
-                        </section>
-                        {{ $data->appends([$key => $data->currentPage()])->links() }}
-                      @else
-                        <small>Kayıt bulunmamaktadır.</small>
-                      @endif
-                    </section>
-                  </div>
-                @endif
-              @endforeach
-            </div>
+                                </thead>
+                                <tbody>
+                                @foreach($data as $upper_val)
+                                  <tr>
+                                    @foreach($upper_val->getSettings('fields') as $lower_key => $lower_val)
+                                      @if(array_search($lower_key, $relation_infos['fields']) !== false)
+                                        @component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
+                                      @endif
+                                    @endforeach
+                                  </tr>
+                                @endforeach
+                                </tbody>
+                              </table>
+                            </div>
+                          </section>
+                          {{ $data->appends([$key => $data->currentPage()])->links() }}
+                        @else
+                          <small>Kayıt bulunmamaktadır.</small>
+                        @endif
+                      </section>
+                    </div>
+                  @endif
+                @endforeach
+              </div>
+            </section>
           </section>
         </section>
       </aside>
@@ -184,7 +186,8 @@ $route = $settings['route'];
                 @if($val[$settings['operation']] && @$val['multiple'] && $val['type'] === 'multi_image')
                   <p>{{ $val['title'] . ' : Yükleme Alanı' }}</p>
                   <section class="panel panel-default">
-                    <form action="{{ route('imageUpload', [$model->id, $key, str_replace('\\', '-', get_class($model))]) }}"
+                    <form
+                      action="{{ route('imageUpload', [$model->id, $key, str_replace('\\', '-', get_class($model))]) }}"
                       class="dropzone">
                       @csrf
                     </form>
@@ -195,13 +198,15 @@ $route = $settings['route'];
                       @Csrf @method('DELETE')
                       <p>{{ $val['title'] }}
                         <button class="btn btn-danger pull-right btn-xs btn-rounded"
-                          onclick="return confirm('Seçili resimleri silmek istediğinize emin misiniz?');">
+                                onclick="return confirm('Seçili resimleri silmek istediğinize emin misiniz?');">
                           <i class="fa fa-trash"></i> Seçili Resimleri Sil
                         </button>
                       </p>
                       <section class="panel panel-default">
                         <div class="tz-gallery">
-                          <style>.checkbox-custom > i.checked:before {color: #fb6b5b;}</style>
+                          <style>.checkbox-custom > i.checked:before {
+                              color: #fb6b5b;
+                            }</style>
                           @foreach($images as $order => $image)
                             @if(!($order % 2))
                               <div class="row">

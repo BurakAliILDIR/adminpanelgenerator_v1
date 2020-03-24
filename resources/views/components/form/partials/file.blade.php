@@ -1,19 +1,14 @@
-<div class="row">
-  <div class="col-sm-offset-3 col-sm-4">
-    @if($type === 'image')
-      <img style="width: 100%" src="{{ $value }}">
-    @else
-      @if($value !== '')
-        <a class="btn btn-default btn-sm m-b"
-           href="{{ $value }}" target="_blank">
-          {{ $title }}
-          Görüntüle
-        </a>
-      @endif
-    @endif
+@if($value !== '')
+  <div class="row">
+    <div class="col-sm-offset-3 col-sm-4">
+      <a class="btn btn-default btn-sm m-b"
+         href="{{ $value }}" target="_blank">
+        {{ $title }}
+        Görüntüle
+      </a>
+    </div>
   </div>
-</div>
-
+@endif
 <div class="form-group">
   {{ Form::label($key, $title, ['class' => 'col-sm-2 control-label']) }}
   <div class="col-sm-10 @error($key) is-invalid @enderror">

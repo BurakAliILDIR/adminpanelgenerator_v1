@@ -93,8 +93,6 @@ class $CLASS$ extends Controller
         case 'password':
           $this->model[$key] = Hash::make($request[$key]);
           break;
-        default:
-          break;
       }
     }
     
@@ -166,8 +164,6 @@ class $CLASS$ extends Controller
           break;
         case 'password':
           $this->model[$key] = Hash::make($request[$key]);
-          break;
-        default:
           break;
       }
     }
