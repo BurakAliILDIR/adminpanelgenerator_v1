@@ -1,16 +1,16 @@
 <?php
 
-namespace Modules\Blog\Http\Controllers;
+namespace Modules\Article\Http\Controllers;
 
 use App\Traits\ControllerTraits\HelperMethods;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-use Modules\Blog\Models\Blog;
-use Modules\Blog\Http\Requests\Blog\BlogCreateRequest;
-use Modules\Blog\Http\Requests\Blog\BlogEditRequest;
+use Modules\Article\Models\Article;
+use Modules\Article\Http\Requests\CreateArticleRequest;
+use Modules\Article\Http\Requests\UpdateArticleRequest;
 
-class BlogController extends Controller
+class ArticleController extends Controller
 {
   use HelperMethods;
   private $model = null;
@@ -18,7 +18,7 @@ class BlogController extends Controller
   
   public function __construct()
   {
-    $this->model = new Blog();
+    $this->model = new Article();
     $this->jsonSettings = $this->model->getSettings();
   }
   
@@ -43,7 +43,7 @@ class BlogController extends Controller
       'data' => $data,
       'route' => $this->jsonSettings['routes'],
     ];
-    return view('blog::index', compact('settings'));
+    return view('article::index', compact('settings'));
   }
   
   public function create()
@@ -60,10 +60,10 @@ class BlogController extends Controller
       'route' => $this->jsonSettings['routes'],
       'plucks' => $this->getPluck($operation_type),
     ];
-    return view('blog::create', compact('settings'));
+    return view('article::create', compact('settings'));
   }
   
-  public function store(BlogCreateRequest $request)
+  public function store(CreateArticleRequest $request)
   {
     $fields = $this->jsonSettings['fields'];
     $operation_type = 'create';
@@ -115,7 +115,7 @@ class BlogController extends Controller
       'model' => $this->model,
       'route' => $this->jsonSettings['routes'],
     ];
-    return view('blog::show', compact('settings'));
+    return view('article::show', compact('settings'));
   }
   
   public function edit($id)
@@ -133,10 +133,10 @@ class BlogController extends Controller
       'route' => $this->jsonSettings['routes'],
       'plucks' => $this->getPluck($operation_type),
     ];
-    return view('blog::edit', compact('settings'));
+    return view('article::edit', compact('settings'));
   }
   
-  public function update(BlogEditRequest $request, $id)
+  public function update(UpdateArticleRequest $request, $id)
   {
     $this->model = $this->model->findOrFail($id);
     $fields = $this->jsonSettings['fields'];

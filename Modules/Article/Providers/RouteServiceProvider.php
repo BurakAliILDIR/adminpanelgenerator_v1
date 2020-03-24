@@ -1,13 +1,13 @@
 <?php
 
-namespace Modules\Blog\Providers;
+namespace Modules\Article\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    protected $moduleNamespace = 'Modules\Blog\Http\Controllers';
+    protected $moduleNamespace = 'Modules\Article\Http\Controllers';
 
     public function boot()
     {
@@ -25,7 +25,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::middleware('web')
             ->namespace($this->moduleNamespace)
-            ->group(module_path('Blog', '/Routes/web.php'));
+            ->group(module_path('Article', '/Routes/web.php'));
     }
 
     protected function mapApiRoutes()
@@ -33,6 +33,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::prefix('api')
             ->middleware('api')
             ->namespace($this->moduleNamespace)
-            ->group(module_path('Blog', '/Routes/api.php'));
+            ->group(module_path('Article', '/Routes/api.php'));
     }
 }

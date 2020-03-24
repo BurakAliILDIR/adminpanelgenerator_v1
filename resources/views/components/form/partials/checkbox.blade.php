@@ -11,7 +11,6 @@
       <div class="label bg-danger">{{ $message }}</div>
       @enderror
     </div>
-
   </div>
 </div>
 <br>

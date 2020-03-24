@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Blog\Providers;
+namespace Modules\Article\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Factory;
 
-class BlogServiceProvider extends ServiceProvider
+class ArticleServiceProvider extends ServiceProvider
 {
     /**
      * Boot the application events.
@@ -18,7 +18,7 @@ class BlogServiceProvider extends ServiceProvider
         $this->registerConfig();
         $this->registerViews();
         $this->registerFactories();
-        $this->loadMigrationsFrom(module_path('Blog', 'Database/Migrations'));
+        $this->loadMigrationsFrom(module_path('Article', 'Database/Migrations'));
     }
 
     /**
@@ -39,10 +39,10 @@ class BlogServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->publishes([
-            module_path('Blog', 'Config/config.php') => config_path('blog.php'),
+            module_path('Article', 'Config/config.php') => config_path('article.php'),
         ], 'config');
         $this->mergeConfigFrom(
-            module_path('Blog', 'Config/config.php'), 'blog'
+            module_path('Article', 'Config/config.php'), 'article'
         );
     }
 
@@ -53,17 +53,17 @@ class BlogServiceProvider extends ServiceProvider
      */
     public function registerViews()
     {
-        $viewPath = resource_path('views/modules/blog');
+        $viewPath = resource_path('views/modules/article');
 
-        $sourcePath = module_path('Blog', 'Resources/views');
+        $sourcePath = module_path('Article', 'Resources/views');
 
         $this->publishes([
             $sourcePath => $viewPath
         ],'views');
 
         $this->loadViewsFrom(array_merge(array_map(function ($path) {
-            return $path . '/modules/blog';
-        }, \Config::get('view.paths')), [$sourcePath]), 'blog');
+            return $path . '/modules/article';
+        }, \Config::get('view.paths')), [$sourcePath]), 'article');
     }
 
     /**
@@ -73,12 +73,12 @@ class BlogServiceProvider extends ServiceProvider
      */
     public function registerTranslations()
     {
-        $langPath = resource_path('lang/modules/blog');
+        $langPath = resource_path('lang/modules/article');
 
         if (is_dir($langPath)) {
-            $this->loadTranslationsFrom($langPath, 'blog');
+            $this->loadTranslationsFrom($langPath, 'article');
         } else {
-            $this->loadTranslationsFrom(module_path('Blog', 'Resources/lang'), 'blog');
+            $this->loadTranslationsFrom(module_path('Article', 'Resources/lang'), 'article');
         }
     }
 
@@ -90,7 +90,7 @@ class BlogServiceProvider extends ServiceProvider
     public function registerFactories()
     {
         if (! app()->environment('production') && $this->app->runningInConsole()) {
-            app(Factory::class)->load(module_path('Blog', 'Database/factories'));
+            app(Factory::class)->load(module_path('Article', 'Database/factories'));
         }
     }
 

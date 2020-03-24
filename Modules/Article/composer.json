@@ -1,5 +1,5 @@
 {
-    "name": "nwidart/blog",
+    "name": "nwidart/article",
     "description": "",
     "authors": [
         {
@@ -10,7 +10,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Modules\\Blog\\Providers\\BlogServiceProvider"
+                "Modules\\Article\\Providers\\ArticleServiceProvider"
             ],
             "aliases": {
 
@@ -19,7 +19,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\Blog\\": ""
+            "Modules\\Article\\": ""
         }
     }
 }

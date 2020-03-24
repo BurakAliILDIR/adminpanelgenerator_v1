@@ -4,21 +4,21 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBlogsTable extends Migration
+class CreateArticlesTable extends Migration
 {
   use \App\Traits\MigrationTraits\BelongsToManyTableSettings;
   private $fields = null;
   
   public function __construct()
   {
-    $name = substr('CreateBlogsTable', 6, -6);
+    $name = substr('CreateArticlesTable', 6, -6);
     $model = '\\Modules\\' . $name . '\\Models\\' . $name;
     $this->fields = (new $model())->getSettings('fields');
   }
   
   public function up()
   {
-    Schema::create('blogs', function (Blueprint $table) {
+    Schema::create('articles', function (Blueprint $table) {
       $table->bigIncrements('id');
       $table->timestamps();
       $table->softDeletes();
@@ -61,6 +61,6 @@ class CreateBlogsTable extends Migration
   public function down()
   {
     $this->belongsToManyDown();
-    Schema::dropIfExists('blogs');
+    Schema::dropIfExists('articles');
   }
 }

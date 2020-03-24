@@ -50,8 +50,8 @@ class CreateModule extends Command
     
     Artisan::call('module:make ' . $name);
     Artisan::call('module:make-model ' . $name . ' ' . $name . ' -m');
-    Artisan::call('module:create-request ' . $name . ' ' . $name . ' Create');
-    Artisan::call('module:create-request ' . $name . ' ' . $name . ' Edit');
+    Artisan::call('module:make-request Create' . $name . 'Request ' . $name);
+    Artisan::call('module:make-request Update' . $name . 'Request ' . $name);
     
   }
 }

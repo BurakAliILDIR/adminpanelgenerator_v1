@@ -1,11 +1,11 @@
 <?php
 
-namespace $NAMESPACE$;
+namespace Modules\Article\Http\Requests;
 
 use App\Traits\ValidationTraits\DynamicRulesValidate;
 use Illuminate\Foundation\Http\FormRequest;
 
-class $CLASS$ extends FormRequest
+class CreateArticleRequest extends FormRequest
 {
   use DynamicRulesValidate;
   private $fields = null;
@@ -13,9 +13,9 @@ class $CLASS$ extends FormRequest
   
   public function __construct()
   {
-    $this->operation = substr('$CLASS$', 0, 6);
+    $this->operation = substr('CreateArticleRequest', 0, 6);
     dump($this->operation);
-    $name = substr('$CLASS$', 6, -7);
+    $name = substr('CreateArticleRequest', 6, -7);
     $model = '\\Modules\\' . $name . '\\Models\\' . $name;
     dump($model);
     $this->fields = (new $model())->getSettings('fields');

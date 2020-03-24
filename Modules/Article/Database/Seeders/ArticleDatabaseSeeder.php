@@ -1,11 +1,11 @@
 <?php
 
-namespace Modules\Blog\Database\Seeders;
+namespace Modules\Article\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-class BlogDatabaseSeeder extends Seeder
+class ArticleDatabaseSeeder extends Seeder
 {
     public function run()
     {
