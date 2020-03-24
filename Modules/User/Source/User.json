@@ -1,0 +1,184 @@
+{
+  "paginate": 7,
+  "titles": {
+    "index": "Kullanıcılar",
+    "show": "Kullanıcı Detay",
+    "create": "Kullanıcı Ekle",
+    "edit": "Kullanıcı Düzenle"
+  },
+  "routes": {
+    "index": "user.index",
+    "create": "user.create",
+    "store": "user.store",
+    "show": "user.show",
+    "edit": "user.edit",
+    "update": "user.update",
+    "delete": "user.destroy"
+  },
+  "searchable": [
+    "ad",
+    "soyad"
+  ],
+  "fields": {
+    "id": {
+      "type": "hidden",
+      "title": "Kimlik",
+      "value": "",
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": false
+    },
+    "name": {
+      "type": "text",
+      "title": "Ad",
+      "value": "",
+      "attributes": {},
+      "rules": [
+        "required"
+      ],
+      "multiple": false,
+      "create": true,
+      "update": true,
+      "list": true,
+      "detail": true
+    },
+    "surname": {
+      "type": "text",
+      "title": "Soyad",
+      "value": "",
+      "attributes": {},
+      "rules": [
+        "required"
+      ],
+      "multiple": false,
+      "create": true,
+      "update": true,
+      "list": true,
+      "detail": true
+    },
+    "bio": {
+      "type": "textarea",
+      "title": "Hakkında",
+      "value": "",
+      "attributes": {
+        "rows": 4
+      },
+      "rules": [
+        "required",
+        "min:10"
+      ],
+      "multiple": false,
+      "create": true,
+      "update": true,
+      "list": false,
+      "detail": true
+    },
+    "age": {
+      "type": "number",
+      "decimal": false,
+      "title": "Yaş",
+      "value": "",
+      "attributes": {},
+      "rules": [
+        "required"
+      ],
+      "multiple": false,
+      "create": true,
+      "update": true,
+      "list": true,
+      "detail": true
+    },
+    "gender": {
+      "type": "radio",
+      "title": "Cinsiyet",
+      "value": "",
+      "items": [
+        "Bay",
+        "Bayan",
+        "Belirtmek istemiyorum"
+      ],
+      "attributes": {},
+      "rules": [
+        "required"
+      ],
+      "multiple": false,
+      "create": true,
+      "update": true,
+      "list": true,
+      "detail": true
+    },
+    "cv": {
+      "type": "file",
+      "title": "CV",
+      "value": "",
+      "attributes": {},
+      "rules": [
+        "file"
+      ],
+      "multiple": false,
+      "create": true,
+      "update": true,
+      "list": true,
+      "detail": true
+    },
+    "profile": {
+      "type": "image",
+      "title": "Profil Resmi",
+      "value": "/admin-template/images/avatar_default.jpg",
+      "attributes": {},
+      "rules": [
+        "mimes:jpeg,jpg,png"
+      ],
+      "multiple": false,
+      "create": true,
+      "update": true,
+      "list": false,
+      "detail": true
+    },
+    "images": {
+      "type": "multi_image",
+      "title": "Resimler",
+      "count": 10,
+      "attributes": {},
+      "multiple": true,
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": true
+    },
+    "date_of_birth": {
+      "type": "date",
+      "title": "Doğum Tarihi",
+      "rules": [
+        "required",
+        "date"
+      ],
+      "multiple": false,
+      "create": true,
+      "update": true,
+      "list": true,
+      "detail": true
+    },
+    "created_at": {
+      "type": "datetime",
+      "title": "Eklenme Tarihi",
+      "name": "created_at",
+      "multiple": false,
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": true
+    },
+    "updated_at": {
+      "type": "datetime",
+      "title": "Son Düzenlenme Tarihi",
+      "name": "updated_at",
+      "multiple": false,
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": true
+    }
+  }
+}

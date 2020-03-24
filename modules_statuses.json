@@ -3,5 +3,6 @@
     "Sales": true,
     "Blog": true,
     "Yeni": true,
-    "Article": true
+    "Article": true,
+    "User": true
 }

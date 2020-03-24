@@ -1,16 +1,16 @@
 <?php
 
-namespace $CLASS_NAMESPACE$;
+namespace Modules\Blog\Http\Controllers;
 
 use App\Traits\ControllerTraits\HelperMethods;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-use $MODULE_NAMESPACE$\$STUDLY_NAME$\Models\$STUDLY_NAME$;
-use $MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\Create$STUDLY_NAME$Request;
-use $MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\Update$STUDLY_NAME$Request;
+use Modules\Blog\Models\Blog;
+use Modules\Blog\Http\Requests\CreateBlogRequest;
+use Modules\Blog\Http\Requests\UpdateBlogRequest;
 
-class $CLASS$ extends Controller
+class BlogController extends Controller
 {
   use HelperMethods;
   private $model = null;
@@ -18,7 +18,7 @@ class $CLASS$ extends Controller
   
   public function __construct()
   {
-    $this->model = new $STUDLY_NAME$();
+    $this->model = new Blog();
     $this->jsonSettings = $this->model->getSettings();
   }
   
@@ -43,7 +43,7 @@ class $CLASS$ extends Controller
       'data' => $data,
       'route' => $this->jsonSettings['routes'],
     ];
-    return view('$LOWER_NAME$::index', compact('settings'));
+    return view('blog::index', compact('settings'));
   }
   
   public function create()
@@ -60,10 +60,10 @@ class $CLASS$ extends Controller
       'route' => $this->jsonSettings['routes'],
       'plucks' => $this->getPluck($operation_type),
     ];
-    return view('$LOWER_NAME$::create', compact('settings'));
+    return view('blog::create', compact('settings'));
   }
   
-  public function store(Create$STUDLY_NAME$Request $request)
+  public function store(CreateBlogRequest $request)
   {
     $fields = $this->jsonSettings['fields'];
     $operation_type = 'create';
@@ -115,13 +115,13 @@ class $CLASS$ extends Controller
       'model' => $this->model,
       'route' => $this->jsonSettings['routes'],
     ];
-    return view('$LOWER_NAME$::show', compact('settings'));
+    return view('blog::show', compact('settings'));
   }
   
   public function edit($id)
   {
     $this->model = $this->model->findOrFail($id);
-    $operation_type = 'update';
+    $operation_type = 'edit';
     $settings = [
       'operation' => $operation_type,
       'title' => $this->jsonSettings['titles']['edit'],
@@ -133,14 +133,14 @@ class $CLASS$ extends Controller
       'route' => $this->jsonSettings['routes'],
       'plucks' => $this->getPluck($operation_type),
     ];
-    return view('$LOWER_NAME$::edit', compact('settings'));
+    return view('blog::edit', compact('settings'));
   }
   
-  public function update(Update$STUDLY_NAME$Request $request, $id)
+  public function update(UpdateBlogRequest $request, $id)
   {
     $this->model = $this->model->findOrFail($id);
     $fields = $this->jsonSettings['fields'];
-    $operation_type = 'update';
+    $operation_type = 'edit';
     foreach ($fields as $key => $field) {
       if ( !$field[$operation_type]) continue;
       switch ($type = $field['type']) {

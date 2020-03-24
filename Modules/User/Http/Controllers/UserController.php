@@ -1,16 +1,16 @@
 <?php
 
-namespace $CLASS_NAMESPACE$;
+namespace Modules\User\Http\Controllers;
 
 use App\Traits\ControllerTraits\HelperMethods;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-use $MODULE_NAMESPACE$\$STUDLY_NAME$\Models\$STUDLY_NAME$;
-use $MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\Create$STUDLY_NAME$Request;
-use $MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\Update$STUDLY_NAME$Request;
+use Modules\User\Models\User;
+use Modules\User\Http\Requests\CreateUserRequest;
+use Modules\User\Http\Requests\UpdateUserRequest;
 
-class $CLASS$ extends Controller
+class UserController extends Controller
 {
   use HelperMethods;
   private $model = null;
@@ -18,7 +18,7 @@ class $CLASS$ extends Controller
   
   public function __construct()
   {
-    $this->model = new $STUDLY_NAME$();
+    $this->model = new User();
     $this->jsonSettings = $this->model->getSettings();
   }
   
@@ -43,7 +43,7 @@ class $CLASS$ extends Controller
       'data' => $data,
       'route' => $this->jsonSettings['routes'],
     ];
-    return view('$LOWER_NAME$::index', compact('settings'));
+    return view('user::index', compact('settings'));
   }
   
   public function create()
@@ -60,10 +60,10 @@ class $CLASS$ extends Controller
       'route' => $this->jsonSettings['routes'],
       'plucks' => $this->getPluck($operation_type),
     ];
-    return view('$LOWER_NAME$::create', compact('settings'));
+    return view('user::create', compact('settings'));
   }
   
-  public function store(Create$STUDLY_NAME$Request $request)
+  public function store(CreateUserRequest $request)
   {
     $fields = $this->jsonSettings['fields'];
     $operation_type = 'create';
@@ -115,7 +115,7 @@ class $CLASS$ extends Controller
       'model' => $this->model,
       'route' => $this->jsonSettings['routes'],
     ];
-    return view('$LOWER_NAME$::show', compact('settings'));
+    return view('user::show', compact('settings'));
   }
   
   public function edit($id)
@@ -133,10 +133,10 @@ class $CLASS$ extends Controller
       'route' => $this->jsonSettings['routes'],
       'plucks' => $this->getPluck($operation_type),
     ];
-    return view('$LOWER_NAME$::edit', compact('settings'));
+    return view('user::edit', compact('settings'));
   }
   
-  public function update(Update$STUDLY_NAME$Request $request, $id)
+  public function update(UpdateUserRequest $request, $id)
   {
     $this->model = $this->model->findOrFail($id);
     $fields = $this->jsonSettings['fields'];
