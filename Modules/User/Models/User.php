@@ -14,7 +14,7 @@ class User extends Model implements HasMedia
 {
   use Notifiable, Relations, SourceSettings, MediaUploads, SoftDeletes;
   
-  protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_at'];
+  protected $guarded = ['id', 'email_verified_at', 'created_at', 'updated_at', 'deleted_at'];
   
   private $path = 'Modules\User\Source\User.json';
 }

@@ -16,8 +16,9 @@
     "delete": "user.destroy"
   },
   "searchable": [
-    "ad",
-    "soyad"
+    "name",
+    "surname",
+    "email"
   ],
   "fields": {
     "id": {
@@ -57,6 +58,21 @@
       "list": true,
       "detail": true
     },
+    "email": {
+      "type": "email",
+      "title": "E-posta",
+      "value": "",
+      "attributes": {},
+      "rules": [
+        "required",
+        "email"
+      ],
+      "multiple": false,
+      "create": true,
+      "update": true,
+      "list": true,
+      "detail": true
+    },
     "bio": {
       "type": "textarea",
       "title": "Hakkında",
@@ -81,7 +97,8 @@
       "value": "",
       "attributes": {},
       "rules": [
-        "required"
+        "required",
+        "number"
       ],
       "multiple": false,
       "create": true,
@@ -158,6 +175,15 @@
       "create": true,
       "update": true,
       "list": true,
+      "detail": true
+    },
+    "email_verified_at": {
+      "type": "datetime",
+      "title": "E-posta Onay Tarihi",
+      "multiple": false,
+      "create": false,
+      "update": false,
+      "list": false,
       "detail": true
     },
     "created_at": {
