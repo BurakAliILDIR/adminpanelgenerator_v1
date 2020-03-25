@@ -1,7 +1,7 @@
 @if($value !== '')
   <div class="row">
     <div class="col-sm-offset-3 col-sm-4">
-      <a class="btn btn-default btn-sm m-b"
+      <a class="btn btn-default btn-xs m-b btn-rounded"
          href="{{ $value }}" target="_blank">
         {{ $title }}
         Görüntüle

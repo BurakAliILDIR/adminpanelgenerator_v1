@@ -140,7 +140,7 @@
       "title": "Kullanıcılar",
       "relationship": {
         "type": "belongsToMany",
-        "model": "Modules\\User\\Models\\User",
+        "model": "App\\Models\\User",
         "keys": {
           "table": "blog_user",
           "foreignKey": "blog_id",

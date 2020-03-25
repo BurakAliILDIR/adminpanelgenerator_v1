@@ -34,19 +34,31 @@
                           <i class="fa fa-angle-down text"></i>
                           <i class="fa fa-angle-up text-active"></i>
                         </span>
-                <span>Workset</span>
+                <span>Çalışmalar</span>
               </a>
               <ul class="nav lt">
                 <li>
-                  <a href="{{ route('deneme.index') }}">
+                  <a href="{{ route('blog.index') }}">
                     <i class="fa fa-angle-right"></i>
-                    <span>Deneme</span>
+                    <span>Bloglar</span>
                   </a>
                 </li>
                 <li>
-                  <a href="{{ route('post.index') }}">
+                  <a href="{{ route('user.index') }}">
                     <i class="fa fa-angle-right"></i>
-                    <span>Post</span>
+                    <span>Kullanıcılar</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ route('role.index') }}">
+                    <i class="fa fa-angle-right"></i>
+                    <span>Roller</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="{{ route('permission.index') }}">
+                    <i class="fa fa-angle-right"></i>
+                    <span>İzinler</span>
                   </a>
                 </li>
               </ul>
@@ -95,6 +107,8 @@
                     </li>
                 </ul>
             </li>--}}
+            {{--
+            Burası sonraki menüler
             <li>
               <a href="#uikit">
                 <i class="fa fa-flask icon">
@@ -315,7 +329,7 @@
                 </i>
                 <span>Notes</span>
               </a>
-            </li>
+            </li>--}}
           </ul>
         </nav>
         <!-- / nav -->

@@ -1,16 +1,17 @@
 <?php
 
-namespace Modules\Blog\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\Traits\ControllerTraits\HelperMethods;
+use App\Traits\ModelTraits\SourceSettings;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-use Modules\Blog\Models\Blog;
-use Modules\Blog\Http\Requests\CreateBlogRequest;
-use Modules\Blog\Http\Requests\UpdateBlogRequest;
+use Modules\Role\Http\Requests\CreateRoleRequest;
+use Modules\Role\Http\Requests\UpdateRoleRequest;
+use Spatie\Permission\Models\Role;
 
-class BlogController extends Controller
+class RoleController extends Controller
 {
   use HelperMethods;
   private $model = null;
@@ -18,11 +19,8 @@ class BlogController extends Controller
   
   public function __construct()
   {
-    $this->model = new Blog();
+    $this->model = new \Modules\Role\Models\Role();
     $this->jsonSettings = $this->model->getSettings();
-   /* if(!auth()->user()->hasPermission('blog.*')){
-      return redirect(route('Yetki.Yok'));
-    };*/
   }
   
   public function index()
@@ -46,7 +44,7 @@ class BlogController extends Controller
       'data' => $data,
       'route' => $this->jsonSettings['routes'],
     ];
-    return view('blog::index', compact('settings'));
+    return view('role::index', compact('settings'));
   }
   
   public function create()
@@ -63,48 +61,24 @@ class BlogController extends Controller
       'route' => $this->jsonSettings['routes'],
       'plucks' => $this->getPluck($operation_type),
     ];
-    return view('blog::create', compact('settings'));
+    return view('role::create', compact('settings'));
   }
   
-  public function store(CreateBlogRequest $request)
+  public function store(CreateRoleRequest $request)
   {
+    $role = new \Spatie\Permission\Models\Role();
+    
     $fields = $this->jsonSettings['fields'];
     $operation_type = 'create';
     foreach ($fields as $key => $field) {
       if ( !$field[$operation_type]) continue;
-      switch ($type = $field['type']) {
-        case 'checkbox':
-          $this->model[$key] = $request[$key] ?? 0;
-          break;
-        case 'radio':
-        case 'hidden':
-        case 'email':
-        case 'number':
-        case 'select':
-        case 'text':
-        case 'textarea':
-          $this->model[$key] = $request[$key];
-          break;
-        case 'date':
-        case 'datetime':
-          $this->model[$key] = \Carbon\Carbon::parse($request[$key])->format($type == 'datetime' ? 'Y-m-d H:i:s' : 'Y-m-d');
-          break;
-        case 'file':
-        case 'image':
-          $this->insertToSingleMedia($request, $key);
-          break;
-        case 'password':
-          $this->model[$key] = Hash::make($request[$key]);
-          break;
-        default:
-          break;
-      }
+      if ($field['type'] === 'text')
+        $role[$key] = $request[$key];
     }
+    $role->saveOrFail();
+    $role->syncPermissions($request->permissions);
     
-    $this->model->saveOrFail();
-    
-    $this->many_to_many_sync($request, $fields, $operation_type);
-    session()->flash('success', 'Kayıt başarıyla eklendi.');
+    session()->flash('success', 'Rol başarıyla eklendi.');
     return redirect()->back();
   }
   
@@ -118,7 +92,7 @@ class BlogController extends Controller
       'model' => $this->model,
       'route' => $this->jsonSettings['routes'],
     ];
-    return view('blog::show', compact('settings'));
+    return view('role::show', compact('settings'));
   }
   
   public function edit($id)
@@ -136,48 +110,23 @@ class BlogController extends Controller
       'route' => $this->jsonSettings['routes'],
       'plucks' => $this->getPluck($operation_type),
     ];
-    return view('blog::edit', compact('settings'));
+    return view('role::edit', compact('settings'));
   }
   
-  public function update(UpdateBlogRequest $request, $id)
+  public function update(UpdateRoleRequest $request, $id)
   {
-    $this->model = $this->model->findOrFail($id);
+    $role = (new \Spatie\Permission\Models\Role())->findOrFail($id);
+  
     $fields = $this->jsonSettings['fields'];
     $operation_type = 'update';
     foreach ($fields as $key => $field) {
       if ( !$field[$operation_type]) continue;
-      switch ($type = $field['type']) {
-        case 'checkbox':
-          $this->model[$key] = $request[$key] ?? 0;
-          break;
-        case 'radio':
-        case 'hidden':
-        case 'email':
-        case 'number':
-        case 'select':
-        case 'text':
-        case 'textarea':
-          $this->model[$key] = $request[$key];
-          break;
-        case 'date':
-        case 'datetime':
-          $this->model[$key] = \Carbon\Carbon::parse($request[$key])->format($type === 'datetime' ? 'Y-m-d H:i:s' : 'Y-m-d');
-          break;
-        case 'file':
-        case 'image':
-          $this->insertToSingleMedia($request, $key);
-          break;
-        case 'password':
-          $this->model[$key] = Hash::make($request[$key]);
-          break;
-        default:
-          break;
-      }
+      if ($field['type'] === 'text')
+        $role[$key] = $request[$key];
     }
+    $role->saveOrFail();
+    $role->syncPermissions($request->permissions);
     
-    $this->model->saveOrFail();
-    
-    $this->many_to_many_sync($request, $fields, $operation_type);
     session()->flash('info', 'Kayıt başarıyla güncellendi.');
     return redirect()->back();
   }

@@ -20,7 +20,7 @@
       @case('multi_checkbox')
       @component('components.form.partials.multi_checkbox',
                 ['key' => $key,
-                'value' => $value ?? $settings['plucks'][$key],
+                'value' => $settings['plucks'][$key] ?? $value,
                 'checked' => $model->relation($field['relationship'])->get(),
                 'title' => $title,
                 'attributes' => $attributes,
@@ -50,13 +50,19 @@
                  'title' => $title,
                  'attributes' => $attributes,
       ])@endcomponent
+      @case('date')
+      @case('datetime')
+      @component('components.form.partials.' . $field['type'],
+                 ['key' => $key,
+                 'title' => $title,
+                 'value' => $model[$key],
+                 'attributes' => $attributes,
+      ])@endcomponent
       @break
       @case('file')
       @component('components.form.partials.file',
-                 //dd($value);
                  ['key' => $key,
-                 'type' => $field['type'],
-                 'value' => $model->getFirstMediaUrl($key) === "" ? $value : $model->getFirstMediaUrl($key),
+                 'value' => $model->getFirstMediaUrl($key),
                  'title' => $title,
                  'attributes' => $attributes,
       ])@endcomponent
@@ -64,8 +70,7 @@
       @case('image')
       @component('components.form.partials.image',
                  ['key' => $key,
-                 'type' => $field['type'],
-                 'value' => $model->getFirstMediaUrl($key) === "" ? \Illuminate\Support\Facades\Storage::url('/application/defaults/' . $value) : $model->getFirstMediaUrl($key),
+                 'value' => $model->getFirstMediaUrl($key),
                  'title' => $title,
                  'attributes' => $attributes,
       ])@endcomponent
@@ -73,14 +78,13 @@
       @case('hidden')
       @component('components.form.partials.hidden',
                  ['key' => $key,
-                 'value' => $model[$key]
+                 'value' => $model[$key] ?? $value
       ])@endcomponent
       @break
       @default
       @component('components.form.partials.' . $field['type'],
                  ['key' => $key,
                  'title' => $title,
-                 'value' => $model[$key],
                  'attributes' => $attributes,
       ])@endcomponent
       @break

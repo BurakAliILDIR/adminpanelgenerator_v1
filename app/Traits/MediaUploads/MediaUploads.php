@@ -39,16 +39,14 @@ Trait MediaUploads
   
   public function registerMediaCollections()
   {
-    foreach ($this->getSettings('fields') as $key => $val) {
-      if ($val['type'] === 'multi_image') {
+    $fields = $this->getSettings('fields');
+    foreach ($fields as $key => $val) {
+      if ($val['type'] === 'multi_image')
         $this->image_size_format($key, $val['count']);
-      } else if ($val['type'] === 'image') {
+      else if ($val['type'] === 'image')
         $this->image_size_format($key, 1);
-      } else {
-        $this
-          ->addMediaCollection($key)
-          ->onlyKeepLatest(1);
-      }
+      else
+        $this->addMediaCollection($key)->onlyKeepLatest(1);
     }
   }
 }
