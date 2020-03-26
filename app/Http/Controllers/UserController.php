@@ -59,9 +59,6 @@ class UserController extends Controller
   public function show($id)
   {
     $model = $this->model->findOrFail($id);
-    // TODO -----------------------------------| BURADA KALINDI |---------------------------------
-    dd($model->getPermissionsViaRoles());
-    // TODO -----------------------------------| BURADA KALINDI |---------------------------------
     /* getPermissionsViaRoles kullanılırsa sadece rol aracılığı ile bağlatılı olduğu izinler gelir.
       Dezavantaj olarak bir kullanıcıya birden fazla rol verildiğinde,
       roller aynı izinleri bulunduruyorsa fazla sayıda getiriyor aynı izin tiplerini. */

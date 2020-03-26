@@ -47,7 +47,7 @@ class RoleController extends Controller
     $this->model->name = $request->name;
     $this->model->saveOrFail();
     $this->model->syncPermissions($request->permissions);
-    
+
     session()->flash('success', 'Rol başarıyla eklendi.');
     return redirect()->back();
   }
@@ -74,6 +74,10 @@ class RoleController extends Controller
     $this->model->name = $request->name;
     $this->model->saveOrFail();
     $this->model->syncPermissions($request->permissions);
+    foreach (Permission::all() as $permission) {
+      foreach (User::permission($permission)->get() as $user)
+        $user->syncPermissions($user->getPermissionsViaRoles());
+    }
     
     session()->flash('info', 'Rol başarıyla güncellendi.');
     return redirect()->back();

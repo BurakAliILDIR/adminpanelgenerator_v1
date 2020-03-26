@@ -51,6 +51,11 @@ return [
       //'edit-request' => ['STUDLY_NAME', 'MODULE_NAMESPACE'],
       'routes/web' => ['LOWER_NAME', 'STUDLY_NAME'],
       'routes/api' => ['LOWER_NAME'],
+// TODO 1: View'lara varsayılan olarak eğer can() true ise o işlemi gerçekleştirebilmesi mümkün olsun, diye söylemek lazım.
+// TODO 2: Ayrıca permission'lar module oluşurken otomatik olarak eklenmeli.
+// TODO 3: 2 numaralı TODO harekete geçerse permiison'ların create özelliği ortadan kalkmalı.
+// TODO 4: Eğer module silinme durumunda otomatik olarak permissionları da silinebilecekse delete'leri de kalkabilir. 
+// TODO 5: Eğer create kaldırılırsa permission.store'daki user'a izin aktarma işlemi de beraberinde gelmeli.
       'views/index' => ['LOWER_NAME'],
       'views/show' => ['LOWER_NAME'],
       'views/create' => ['LOWER_NAME'],
