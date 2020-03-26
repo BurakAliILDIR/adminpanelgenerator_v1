@@ -122,16 +122,12 @@
                             <thead>
                             <tr>
                               <th>Rol Adı</th>
-                              <th>Eklenme Tarihi</th>
-                              <th>Son Düzenleme Tarihi</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($roles as $row)
                               <tr>
                                 <td>{!! $row->name !!}</td>
-                                <td>{!! $row->created_at !!}</td>
-                                <td>{!! $row->updated_at !!}</td>
                               </tr>
                             @endforeach
                             </tbody>

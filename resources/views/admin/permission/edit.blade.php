@@ -33,8 +33,8 @@
           @component('components.alert.alert_messages')@endcomponent
           {{ Form::model($model, ['route' => ['permission.update', $model->id],  'method' => 'put', 'class' => 'form-horizontal']) }}
           @component('components.form.partials.text',
-               ['key' => 'name',
-               'title' => 'İzin Adı',
+          ['key' => 'name',
+          'title' => 'İzin Adı',
           ])@endcomponent
           @component('components.form.partials.multi_checkbox',
           ['key' => 'roles',

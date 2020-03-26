@@ -122,16 +122,12 @@
                             <thead>
                             <tr>
                               <th>İzin Adı</th>
-                              <th>Eklenme Tarihi</th>
-                              <th>Son Düzenleme Tarihi</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($permissions as $row)
                               <tr>
                                 <td>{!! $row->name !!}</td>
-                                <td>{!! $row->created_at !!}</td>
-                                <td>{!! $row->updated_at !!}</td>                              
                               </tr>
                             @endforeach
                             </tbody>

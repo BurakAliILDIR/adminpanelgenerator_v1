@@ -1,5 +1,6 @@
 {
   "paginate": 7,
+  "slugs": ["ad", "soyad", "cinsiyet"],
   "titles": {
     "index": "Denemeler",
     "show": "Deneme Detay",

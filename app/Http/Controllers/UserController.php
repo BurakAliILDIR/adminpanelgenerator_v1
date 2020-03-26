@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -36,22 +37,16 @@ class UserController extends Controller
   public function create()
   {
     $model = $this->model;
-    return view('admin.user.create', compact('model'));
+    $roles = Role::pluck('name', 'id');
+    
+    return view('admin.user.create', compact('model', 'roles'));
   }
   
   public function store(CreateUserRequest $request)
   {
-    $this->model->name = $request->name;
-    $this->model->surname = $request->surname;
     $this->model->email = $request->email;
     $this->model->password = Hash::make($request->password);
-    $this->model->bio = $request->bio;
-    $this->model->phone = $request->phone;
-    $this->model->gender = $request->gender;
-    $this->model->date_of_birth = \Carbon\Carbon::parse($request->date_of_birth)->format('Y-m-d');
-    $this->model->confirm = $request->confirm ?? 0;
-    $this->insertToSingleMedia($request, 'profile');
-    $this->model->saveOrFail();
+    $this->saveModelFilling($request);
     
     session()->flash('success', 'Kayıt başarıyla eklendi.');
     return redirect()->back();
@@ -60,31 +55,33 @@ class UserController extends Controller
   public function show($id)
   {
     $model = $this->model->findOrFail($id);
+    // TODO -----------------------------------| BURADA KALINDI |---------------------------------
+    // TODO -----------------------------------| BURADA KALINDI |---------------------------------
+    // TODO -----------------------------------| BURADA KALINDI |---------------------------------
+    dd($model->getPermissionNames());
+    /* getPermissionsViaRoles kullanılırsa sadece rol aracılığı ile bağlatılı olduğu izinler gelir.
+      Dezavantaj olarak bir kullanıcıya birden fazla rol verildiğinde,
+      roller aynı izinleri bulunduruyorsa fazla sayıda getiriyor aynı izin tiplerini. */
+    /* getAllPermissions kullanınıcın bağlantılı olduğu izinler tüm gelir. */
     $roles = $model->getRoleNames();
     $permissions = $model->getAllPermissions();
     $fields = $model->getSettings('fields');
+    
     return view('admin.user.show', compact('model', 'roles', 'permissions', 'fields'));
   }
   
   public function edit($id)
   {
     $model = User::findOrFail($id);
-    return view('admin.user.edit', compact('model'));
+    $roles = Role::pluck('name', 'id');
+    
+    return view('admin.user.edit', compact('model', 'roles'));
   }
   
   public function update(UpdateUserRequest $request, $id)
   {
     $this->model = $this->model->findOrFail($id);
-    $this->model->name = $request->name;
-    $this->model->surname = $request->surname;
-    $this->model->bio = $request->bio;
-    $this->model->phone = $request->phone;
-    $this->model->gender = $request->gender;
-    $this->model->date_of_birth = \Carbon\Carbon::parse($request->date_of_birth)->format('Y-m-d');
-    $this->model->confirm = $request->confirm ?? 0;
-    $this->insertToSingleMedia($request, 'profile');
-    $this->model->saveOrFail();
-    
+    $this->saveModelFilling($request);
     session()->flash('info', 'Kullanıcı başarıyla güncellendi.');
     return redirect()->back();
   }
@@ -115,5 +112,20 @@ class UserController extends Controller
             '', Str::kebab($fileName));
         })->preservingOriginal()
         ->toMediaCollection($name);
+  }
+  
+  // store ve update fonksiyonları için ortak model doldurma.
+  private function saveModelFilling(Request $request) : void
+  {
+    $this->model->name = $request->name;
+    $this->model->surname = $request->surname;
+    $this->model->bio = $request->bio;
+    $this->model->phone = $request->phone;
+    $this->model->gender = $request->gender;
+    $this->model->date_of_birth = \Carbon\Carbon::parse($request->date_of_birth)->format('Y-m-d');
+    $this->model->confirm = $request->confirm ?? 0;
+    $this->insertToSingleMedia($request, 'profile');
+    $this->model->saveOrFail();
+    $this->model->syncRoles($request->roles);
   }
 }

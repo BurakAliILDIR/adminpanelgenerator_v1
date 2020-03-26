@@ -26,6 +26,7 @@
           @component('components.form.partials.text',
                ['key' => 'name',
                'title' => 'İzin Adı',
+               'attributes' => ['autofocus']
           ])@endcomponent
           @component('components.form.partials.multi_checkbox',
           ['key' => 'roles',

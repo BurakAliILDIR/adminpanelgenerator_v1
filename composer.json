@@ -9,6 +9,7 @@
   "license": "MIT",
   "require": {
     "php": "^7.4.4",
+    "brick/math": "^0.8.14",
     "components/bootstrap-datetimepicker": "^2.4",
     "doctrine/dbal": "^2.10",
     "fideloper/proxy": "^4.2",
@@ -17,11 +18,12 @@
     "laravel/framework": "^7.0",
     "laravel/tinker": "^2.0",
     "laravelcollective/html": "^6.1",
-    "moontoast/math": "^1.2",
     "nwidart/laravel-modules": "^6.2",
     "spatie/laravel-medialibrary": "^7.0.0",
     "spatie/laravel-permission": "^3.11",
-    "spatie/laravel-searchable": "^1.6"
+    "spatie/laravel-searchable": "^1.6",
+    "spatie/laravel-sluggable": "^2.4",
+    "spatie/pdf-to-image": "^2.0"
   },
   "require-dev": {
     "facade/ignition": "^2.0",

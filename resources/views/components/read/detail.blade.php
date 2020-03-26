@@ -84,7 +84,7 @@ $route = $settings['route'];
                       <?php $relation_infos = $val['relationship'] ?>
                       <small class="text-uc text-muted">{{ $val['title'] }} : </small>
                       @foreach($relation_infos['fields'] as $v)
-                        {{ $model->relation($relation_infos)->first()[$v] }}
+                        {{ $model->relation($relation_infos)->first()[$v] ?? '-' }}
                         @if(!$loop->last)
                           {{ ' - ' }}
                         @endif

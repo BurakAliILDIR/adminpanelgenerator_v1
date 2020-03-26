@@ -18,7 +18,7 @@
     @break
     @case('select')
     @foreach($lower_val['relationship']['fields'] as $v)
-      {{ $upper_val->relation($lower_val['relationship'])->first()[$v] }}
+      {{ $upper_val->relation($lower_val['relationship'])->first()[$v] ?? '-' }}
       @if(!$loop->last)
         {{ ' - ' }}
       @endif

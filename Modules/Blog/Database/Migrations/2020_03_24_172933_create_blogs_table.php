@@ -20,6 +20,7 @@ class CreateBlogsTable extends Migration
   {
     Schema::create('blogs', function (Blueprint $table) {
       $table->uuid('id')->index()->unique()->primary();
+      $table->string('slug')->unique()->index();
       $table->timestamps();
       $table->softDeletes();
       foreach ($this->fields as $key => $field) {

@@ -76,6 +76,12 @@
           'value' => $model->getFirstMediaUrl('profile'),
           'title' => 'Profil Fotoğrafı',
           ])@endcomponent
+          @component('components.form.partials.multi_checkbox',
+          ['key' => 'roles',
+          'value' => $roles,
+          'checked' => $model->roles()->get(),
+          'title' => 'Roller',
+          ])@endcomponent
           {{ Form::submit('Kaydet', array_merge(['class' => 'btn btn-info btn-block'])) }}
           {!! Form::close() !!}
         </div>

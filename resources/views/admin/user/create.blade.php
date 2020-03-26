@@ -32,6 +32,7 @@
           @component('components.form.partials.text',
                ['key' => 'name',
                'title' => 'Ad',
+               'attributes' => ['autofocus']
           ])@endcomponent
           @component('components.form.partials.text',
                ['key' => 'surname',
@@ -69,6 +70,12 @@
           'type' => 'image',
           'value' => '',
           'title' => 'Profil Fotoğrafı',
+          ])@endcomponent
+          @component('components.form.partials.multi_checkbox',
+          ['key' => 'roles',
+          'value' => $roles,
+          'checked' => Collect([]),
+          'title' => 'Roller',
           ])@endcomponent
           {{ Form::submit("Ekle", array_merge(['class' => 'btn btn-primary btn-block'])) }}
           {!! Form::close() !!}

@@ -147,6 +147,7 @@
                           </table>
                         </div>
                       </section>
+                      {{--{{ $roles->appends(['roller' => $roles->currentPage()])->links() }}--}}
                     @else
                       <small>Rol bulunmamaktadır.</small>
                     @endif
@@ -166,13 +167,14 @@
                             <tbody>
                             @foreach($permissions as $row)
                               <tr>
-                                <td>{!! $row !!}</td>
+                                <td>{!! $row->name !!}</td>
                               </tr>
                             @endforeach
                             </tbody>
                           </table>
                         </div>
                       </section>
+                      {{--{{ $permissions->appends(['izinler' => $permissions->currentPage()])->links() }}--}}
                     @else
                       <small>İzin bulunmamaktadır.</small>
                     @endif
