@@ -2,81 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use App\Traits\ControllerTraits\HelperMethods;
-use App\Traits\ModelTraits\SourceSettings;
+use App\Http\Requests\Role\CreateRoleRequest;
+use App\Http\Requests\Role\UpdateRoleRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Hash;
-use Modules\Role\Http\Requests\CreateRoleRequest;
-use Modules\Role\Http\Requests\UpdateRoleRequest;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-  use HelperMethods;
   private $model = null;
-  private $jsonSettings = null;
   
   public function __construct()
   {
-    $this->model = new \Modules\Role\Models\Role();
-    $this->jsonSettings = $this->model->getSettings();
+    $this->model = new Role();
   }
   
   public function index()
   {
     $data = null;
-    $paginate = $this->jsonSettings['paginate'];
     if ($search = \request()->input('ara')) {
-      $conditions = $this->jsonSettings['searchable'];
+      $conditions = ['name'];
       $data = $this->model->where(function ($query) use ($conditions, $search) {
         foreach ($conditions as $column)
           $query->orWhere($column, 'like', '%' . $search . '%');
-      })->orderByDESC('id')->paginate($paginate);
+      })->orderByDESC('id')->paginate(7);
     } else
-      $data = $this->model->orderByDESC('id')->paginate($paginate);
+      $data = $this->model->orderByDESC('id')->paginate(7);
     
-    $settings = [
-      'operation' => 'list',
-      'title' => $this->jsonSettings['titles']['index'],
-      'fields' => $this->jsonSettings['fields'],
-      'model' => $this->model,
-      'data' => $data,
-      'route' => $this->jsonSettings['routes'],
-    ];
-    return view('role::index', compact('settings'));
+    return view('admin.role.index', compact('data'));
   }
   
   public function create()
   {
-    $operation_type = 'create';
-    $settings = [
-      'operation' => $operation_type,
-      'title' => $this->jsonSettings['titles']['create'],
-      'fields' => $this->jsonSettings['fields'],
-      'model' => $this->model,
-      'params' => null,
-      'submitText' => 'Ekle',
-      'submitAttributes' => [],
-      'route' => $this->jsonSettings['routes'],
-      'plucks' => $this->getPluck($operation_type),
-    ];
-    return view('role::create', compact('settings'));
+    $model = $this->model;
+    $permissions = Permission::pluck('name', 'id');
+    
+    return view('admin.role.create', compact('model', 'permissions'));
   }
   
   public function store(CreateRoleRequest $request)
   {
-    $role = new \Spatie\Permission\Models\Role();
-    
-    $fields = $this->jsonSettings['fields'];
-    $operation_type = 'create';
-    foreach ($fields as $key => $field) {
-      if ( !$field[$operation_type]) continue;
-      if ($field['type'] === 'text')
-        $role[$key] = $request[$key];
-    }
-    $role->saveOrFail();
-    $role->syncPermissions($request->permissions);
+    $this->model->name = $request->name;
+    $this->model->saveOrFail();
+    $this->model->syncPermissions($request->permissions);
     
     session()->flash('success', 'Rol başarıyla eklendi.');
     return redirect()->back();
@@ -84,50 +54,28 @@ class RoleController extends Controller
   
   public function show($id)
   {
-    $this->model = $this->model->findOrFail($id);
-    $settings = [
-      'operation' => 'detail',
-      'title' => $this->jsonSettings['titles']['show'],
-      'fields' => $this->jsonSettings['fields'],
-      'model' => $this->model,
-      'route' => $this->jsonSettings['routes'],
-    ];
-    return view('role::show', compact('settings'));
+    $model = $this->model->findOrFail($id);
+    $users = User::role($model->name)->paginate(7);
+    $permissions = $model->permissions()->paginate(7);
+    return view('admin.role.show', compact('model', 'users', 'permissions'));
   }
   
   public function edit($id)
   {
-    $this->model = $this->model->findOrFail($id);
-    $operation_type = 'update';
-    $settings = [
-      'operation' => $operation_type,
-      'title' => $this->jsonSettings['titles']['edit'],
-      'fields' => $this->jsonSettings['fields'],
-      'model' => $this->model,
-      'params' => $this->model->id,
-      'submitText' => 'Kaydet',
-      'submitAttributes' => [],
-      'route' => $this->jsonSettings['routes'],
-      'plucks' => $this->getPluck($operation_type),
-    ];
-    return view('role::edit', compact('settings'));
+    $model = $this->model->findOrFail($id);
+    $permissions = Permission::pluck('name', 'id');
+    
+    return view('admin.role.edit', compact('model', 'permissions'));
   }
   
   public function update(UpdateRoleRequest $request, $id)
   {
-    $role = (new \Spatie\Permission\Models\Role())->findOrFail($id);
-  
-    $fields = $this->jsonSettings['fields'];
-    $operation_type = 'update';
-    foreach ($fields as $key => $field) {
-      if ( !$field[$operation_type]) continue;
-      if ($field['type'] === 'text')
-        $role[$key] = $request[$key];
-    }
-    $role->saveOrFail();
-    $role->syncPermissions($request->permissions);
+    $this->model = $this->model->findOrFail($id);
+    $this->model->name = $request->name;
+    $this->model->saveOrFail();
+    $this->model->syncPermissions($request->permissions);
     
-    session()->flash('info', 'Kayıt başarıyla güncellendi.');
+    session()->flash('info', 'Rol başarıyla güncellendi.');
     return redirect()->back();
   }
   
@@ -135,13 +83,13 @@ class RoleController extends Controller
   {
     if (($id = $request->id) && ($back = $request->back)) {
       $this->model->destroy($id);
-      session()->flash('danger', 'Kayıt silindi.');
-      if (($indexURL = route($this->jsonSettings['routes']['index'])) !== $back)
+      session()->flash('danger', 'Rol silindi.');
+      if (($indexURL = route('role.index')) !== $back)
         $back = $indexURL;
       return redirect($back);
     }
     $models = $this->model->whereIn('id', $request->checked);
-    session()->flash('danger', 'Seçili kayıtlar silindi.');
+    session()->flash('danger', 'Seçili roller silindi.');
     return $models->delete();
   }
 }

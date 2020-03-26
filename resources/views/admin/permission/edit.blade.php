@@ -1,12 +1,6 @@
 @extends('admin.layouts.master')
-@section('title', $settings['title'])
+@section('title', 'İzin Düzenle')
 @section('css')
-  <!-- datepicker -->
-  <link href="/admin-custom-template/datepicker/bootstrap-datepicker.css" rel="stylesheet">
-  <!-- datetimepicker -->
-  <link href="/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
-  <!-- CkEditor -->
-  <script src="/admin-custom-template/ckeditor/ckeditor.js" type="text/javascript"></script>
 @endsection
 @section('content')
   <div class="row">
@@ -17,17 +11,17 @@
             <div class="col-md-6">
               <div class="m-t">
                 <a class="btn btn-xs btn-default btn-rounded "
-                   href="{{ route($settings['route']['index']) }}">
+                   href="{{ route('permission.index') }}">
                   <i class="fa fa-arrow-left"></i>
                   Tüm Kayıtlara Dön
                 </a>
-                <span class="m-l">{{ $settings['title'] }}</span>
+                <span class="m-l">{{ 'İzin Düzenle' }}</span>
               </div>
             </div>
             <div class="col-md-6">
               <div class="m-t">
                 <a class="btn btn-xs btn-default btn-rounded pull-right"
-                   href="{{ route($settings['route']['show'], $settings['model']['id']) }}">
+                   href="{{ route('permission.show', $model->id) }}">
                   Detay Sayfasına Git
                   <i class="fa fa-arrow-right"></i>
                 </a>
@@ -37,9 +31,18 @@
         </header>
         <div class="panel-body">
           @component('components.alert.alert_messages')@endcomponent
-          {{ Form::model($settings['model'], ['route' => [$settings['route']['update'], $settings['params']], 'method' => 'put', 'class' => 'form-horizontal', 'files' => true]) }}
-          @component('components.form.generator', ['settings'=> $settings,])@endcomponent
-          {{ Form::submit($settings['submitText'], array_merge(['class' => 'btn btn-info btn-block'], $settings['submitAttributes'] ?? [])) }}
+          {{ Form::model($model, ['route' => ['permission.update', $model->id],  'method' => 'put', 'class' => 'form-horizontal']) }}
+          @component('components.form.partials.text',
+               ['key' => 'name',
+               'title' => 'İzin Adı',
+          ])@endcomponent
+          @component('components.form.partials.multi_checkbox',
+          ['key' => 'roles',
+          'value' => $roles,
+          'checked' => $model->roles()->get(),
+          'title' => 'Roller',
+          ])@endcomponent
+          {{ Form::submit('Kaydet', array_merge(['class' => 'btn btn-info btn-block'])) }}
           {!! Form::close() !!}
         </div>
       </section>
@@ -47,9 +50,4 @@
   </div>
 @endsection
 @section('js')
-  <!-- datetimepicker -->
-  <script src="/admin-custom-template/datetimepicker/moment.min.js" type="text/javascript"></script>
-  <script type="text/javascript" src="/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.js"></script>
-  <!-- datepicker -->
-  <script type="text/javascript" src="/admin-custom-template/datepicker/bootstrap-datepicker.js"></script>
 @endsection

@@ -85,7 +85,7 @@ class UserController extends Controller
     $this->insertToSingleMedia($request, 'profile');
     $this->model->saveOrFail();
     
-    session()->flash('info', 'Kayıt başarıyla güncellendi.');
+    session()->flash('info', 'Kullanıcı başarıyla güncellendi.');
     return redirect()->back();
   }
   
@@ -99,7 +99,7 @@ class UserController extends Controller
       return redirect($back);
     }
     $models = User::whereIn('id', $request->checked);
-    session()->flash('danger', 'Seçili kayıtlar silindi.');
+    session()->flash('danger', 'Seçili kullanıcılar silindi.');
     return $models->delete();
   }
   

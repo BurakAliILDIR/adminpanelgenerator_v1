@@ -74,7 +74,7 @@
                   <small class="text-uc text-muted">Doğum Tarihi : </small>
                   <span>{!! $model['date_of_birth'] ? \Carbon\Carbon::parse($model['date_of_birth'])->format('d/m/Y') : '-' !!}</span>
                   <div class="line"></div>
-                  <small class="text-uc text-muted">Aktiflik : </small>
+                  <small class="text-uc text-muted">Durum : </small>
                   <span>{!! $model['confirm'] ? 'Aktif' : 'Pasif' !!}</span>
                   <div class="line"></div>
                   <small class="text-uc text-muted">Hakkında : </small>
@@ -223,8 +223,6 @@
                     </div>
                   @endif
                 @endforeach
-
-
               </div>
             </section>
           </section>

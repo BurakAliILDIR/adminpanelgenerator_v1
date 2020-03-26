@@ -1,21 +1,23 @@
 <?php
 
-namespace Modules\Role\Http\Requests;
+namespace App\Http\Requests\Role;
 
 use App\Traits\ValidationTraits\DynamicRulesValidate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateRoleRequest extends FormRequest
 {
-  use DynamicRulesValidate;
-  private $fields = null;
-  private $operation = null;
-  
-  public function __construct()
+  public function rules()
   {
-    $this->operation = strtolower(substr('CreateRoleRequest', 0, 6));
-    $name = substr('CreateRoleRequest', 6, -7);
-    $model = '\\Modules\\' . $name . '\\Models\\' . $name;
-    $this->fields = (new $model())->getSettings('fields');
+    return [
+      'name' => 'required|unique:roles',
+    ];
+  }
+  
+  public function attributes()
+  {
+    return [
+      'name' => 'Rol adı',
+    ];
   }
 }
