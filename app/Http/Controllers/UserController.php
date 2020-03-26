@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
+use App\Traits\ControllerTraits\HelperMethods;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -12,6 +13,7 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+  use HelperMethods;
   private $model = null;
   
   public function __construct()
@@ -47,7 +49,9 @@ class UserController extends Controller
     $this->model->email = $request->email;
     $this->model->password = Hash::make($request->password);
     $this->saveModelFilling($request);
-    
+    $this->model->assignRole($request->roles);
+    $this->model->syncPermissions($this->model->getPermissionsViaRoles());
+  // TODO : role veya izine save uygulandığında o izindeki veya roldeki kullanıcılar çekilip üst satırdaki kod çalışacak.
     session()->flash('success', 'Kayıt başarıyla eklendi.');
     return redirect()->back();
   }
@@ -56,7 +60,7 @@ class UserController extends Controller
   {
     $model = $this->model->findOrFail($id);
     // TODO -----------------------------------| BURADA KALINDI |---------------------------------
-    dd($model->getPermissionNames());
+    dd($model->getPermissionsViaRoles());
     // TODO -----------------------------------| BURADA KALINDI |---------------------------------
     /* getPermissionsViaRoles kullanılırsa sadece rol aracılığı ile bağlatılı olduğu izinler gelir.
       Dezavantaj olarak bir kullanıcıya birden fazla rol verildiğinde,
@@ -81,6 +85,10 @@ class UserController extends Controller
   {
     $this->model = $this->model->findOrFail($id);
     $this->saveModelFilling($request);
+    $this->model->syncRoles($request->roles);
+    $this->model->syncPermissions($this->model->getPermissionsViaRoles());
+    
+    
     session()->flash('info', 'Kullanıcı başarıyla güncellendi.');
     return redirect()->back();
   }
@@ -99,20 +107,6 @@ class UserController extends Controller
     return $models->delete();
   }
   
-  private function insertToSingleMedia(Request $request, $name) : void
-  {
-    if ($request->hasFile($name))
-      $this->model
-        ->addMedia(\request($name))
-        ->sanitizingFileName(function ($fileName) {
-          return str_replace(['#', '/', '\\', ' ', '\'', '!', '&', '|', '(', ')', '<', '>',
-            '%', '$', '£', 'ß', 'æ', '{', '}', '[', ']', '?', '=', '*', '+', '½', ',',
-            '~', 'ğ', 'İ', 'ı', '-', 'ç', 'ş', 'ü', 'ö', '_'],
-            '', Str::kebab($fileName));
-        })->preservingOriginal()
-        ->toMediaCollection($name);
-  }
-  
   // store ve update fonksiyonları için ortak model doldurma.
   private function saveModelFilling(Request $request) : void
   {
@@ -125,6 +119,5 @@ class UserController extends Controller
     $this->model->confirm = $request->confirm ?? 0;
     $this->insertToSingleMedia($request, 'profile');
     $this->model->saveOrFail();
-    $this->model->syncRoles($request->roles);
   }
 }
