@@ -15,6 +15,7 @@
         <header class="panel-heading font-bold">
           <div class="row">
             <div class="col-md-6">
+              {{--@can(class_basename($settings['model']).'index')--}}
               <div class="m-t">
                 <a class="btn btn-xs btn-default btn-rounded "
                    href="{{ route($settings['route']['index']) }}">
@@ -23,15 +24,18 @@
                 </a>
                 <span class="m-l">{{ $settings['title'] }}</span>
               </div>
+              {{--@endcan--}}
             </div>
             <div class="col-md-6">
-              <div class="m-t">
-                <a class="btn btn-xs btn-default btn-rounded pull-right"
-                   href="{{ route($settings['route']['show'], $settings['model']['id']) }}">
-                  Detay Sayfasına Git
-                  <i class="fa fa-arrow-right"></i>
-                </a>
-              </div>
+              @can(class_basename($settings['model']).'detail')
+                <div class="m-t">
+                  <a class="btn btn-xs btn-default btn-rounded pull-right"
+                     href="{{ route($settings['route']['show'], $settings['model']['id']) }}">
+                    Detay Sayfasına Git
+                    <i class="fa fa-arrow-right"></i>
+                  </a>
+                </div>
+              @endcan
             </div>
           </div>
         </header>

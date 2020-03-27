@@ -15,14 +15,16 @@
                 <header class="panel-heading font-bold">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="m-t">
+                          {{--@can(class_basename($model).'index')--}}
+                          <div class="m-t">
                                 <a class="btn btn-xs btn-default btn-rounded "
                                    href="{{ route($settings['route']['index']) }}">
                                     <i class="fa fa-arrow-left"></i>
                                     Tüm Kayıtlara Dön
                                 </a>
                                 <span class="m-l">{{ $settings['title'] }}</span>
-                            </div>
+                          </div>
+                          {{--@endcan--}}
                         </div>
                     </div>
                 </header>

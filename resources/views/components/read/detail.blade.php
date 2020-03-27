@@ -8,32 +8,39 @@ $route = $settings['route'];
   <header class="header bg-white b-b b-light">
     <div class="row">
       <div class="col-md-6">
-        <div class="m-t">
-          <a class="btn btn-xs btn-default btn-rounded " href="{{ route($route['index']) }}">
-            <i class="fa fa-arrow-left"></i>
-            Tüm Kayıtlara Dön
-          </a>
-          <span class="m-l">{{ $settings['title'] }}</span>
-        </div>
+        {{--@can(class_basename($model).'index')--}}
+          <div class="m-t">
+            <a class="btn btn-xs btn-default btn-rounded " href="{{ route($route['index']) }}">
+              <i class="fa fa-arrow-left"></i>
+              Tüm Kayıtlara Dön
+            </a>
+            <span class="m-l">{{ $settings['title'] }}</span>
+          </div>
+        {{--@endcan--}}
       </div>
       <div class="col-md-6">
         <div class="m-t m-r pull-right">
-          <a class="btn btn-xs btn-info btn-rounded "
-             href="{{ route($route['edit'], $model['id']) }}">
-            <i class="fa fa-edit"></i>
-            Bu Kaydı Düzenle
-          </a>
-          <form action="{{ route($route['delete']) }}" method="post"
-                style="display: inline-block;">
-            @method('DELETE') @csrf
-            <input type="hidden" name="id" value="{{ $model['id'] }}">
-            <input type="hidden" name="back" value="{{ URL::previous() }}">
-            <button type="submit" class="btn btn-xs btn-danger btn-rounded"
-                    onclick="confirm('Kaydı silmek istediğinize emin misiniz?')">
-              <i class="fa fa-trash"></i>
-              Bu Kaydı Sil
-            </button>
-          </form>
+          @can(class_basename($model).'update')
+
+            <a class="btn btn-xs btn-info btn-rounded "
+               href="{{ route($route['edit'], $model['id']) }}">
+              <i class="fa fa-edit"></i>
+              Bu Kaydı Düzenle
+            </a>
+          @endcan
+          @can(class_basename($model).'delete')
+            <form action="{{ route($route['delete']) }}" method="post"
+                  style="display: inline-block;">
+              @method('DELETE') @csrf
+              <input type="hidden" name="id" value="{{ $model['id'] }}">
+              <input type="hidden" name="back" value="{{ URL::previous() }}">
+              <button type="submit" class="btn btn-xs btn-danger btn-rounded"
+                      onclick="confirm('Kaydı silmek istediğinize emin misiniz?')">
+                <i class="fa fa-trash"></i>
+                Bu Kaydı Sil
+              </button>
+            </form>
+          @endcan
         </div>
       </div>
     </div>
@@ -179,78 +186,90 @@ $route = $settings['route'];
         </section>
       </aside>
       <aside class="col-md-3 b-l">
-        <section class="vbox">
-          <section class="scrollable">
-            <div class="wrapper-md">
-              @foreach($fields as $key => $val)
-                @if($val[$settings['operation']] && @$val['multiple'] && $val['type'] === 'multi_image')
-                  <p>{{ $val['title'] . ' : Yükleme Alanı' }}</p>
-                  <section class="panel panel-default">
-                    <form
-                      action="{{ route('imageUpload', [$model->id, $key, str_replace('\\', '-', get_class($model))]) }}"
-                      class="dropzone">
-                      @csrf
-                    </form>
-                  </section>
-                  @if(($images = $model->getMedia($key))->count())
-                    @component('components.alert.alert_messages')@endcomponent
-                    <form action="{{ route('deleteImage') }}" method="post">
-                      @Csrf @method('DELETE')
-                      <p>{{ $val['title'] }}
-                        <button class="btn btn-danger pull-right btn-xs btn-rounded"
-                                onclick="return confirm('Seçili resimleri silmek istediğinize emin misiniz?');">
-                          <i class="fa fa-trash"></i> Seçili Resimleri Sil
-                        </button>
-                      </p>
-                      <section class="panel panel-default">
-                        <div class="tz-gallery">
-                          <style>.checkbox-custom > i.checked:before {
-                              color: #fb6b5b;
-                            }</style>
-                          @foreach($images as $order => $image)
-                            @if(!($order % 2))
-                              <div class="row">
-                                @endif
-                                <div class="col-sm-12 col-md-6">
-                                  <section class="panel panel-default m-t">
-                                    <div class="row">
-                                      <div class="col-md-12">
-                                        <a class="lightbox"
-                                           href="{{ $image->getUrl('big') }}">
-                                          <img src="{{ $image->getUrl('card') }}" alt="{{ $image->name }}">
-                                        </a>
-                                      </div>
-                                    </div>
-                                    <div class="row">
-                                      <div class="col-md-12">
-                                        <footer class="bg-light lter">
-                                          <ul class="nav nav-pills nav-sm">
-                                            <div class="checkbox m-l">
-                                              <label class="checkbox-custom center-block">
-                                                <input type="checkbox" name='mediaTodelete[]' value="{{$image->id}}">
-                                                <i class="fa fa-fw fa-square-o"></i>
-                                                Sil
-                                              </label>
-                                            </div>
-                                          </ul>
-                                        </footer>
-                                      </div>
-                                    </div>
-                                  </section>
-                                </div>
-                                @if($order % 2)
-                              </div>
+        @can('Image.upload')
+          <section class="vbox">
+            <section class="scrollable">
+              <div class="wrapper-md">
+                @foreach($fields as $key => $val)
+                  @if($val[$settings['operation']] && @$val['multiple'] && $val['type'] === 'multi_image')
+                    <p>{{ $val['title'] . ' : Yükleme Alanı' }}</p>
+                    <section class="panel panel-default">
+                      <form
+                        action="{{ route('imageUpload', [$model->id, $key, str_replace('\\', '-', get_class($model))]) }}"
+                        class="dropzone">
+                        @csrf
+                      </form>
+                    </section>
+                    @if(($images = $model->getMedia($key))->count())
+                      <?php if (auth()->check()) $hasDeletePermission = auth()->user()->can('Image.delete'); ?>
+                      @component('components.alert.alert_messages')@endcomponent
+                      @if($hasDeletePermission ?? false)
+                        <form action="{{ route('deleteImage') }}" method="post">
+                          @Csrf @method('DELETE')
+                          @endif
+                          <p>
+                            {{ $val['title'] }}
+                            {{-- TODO : eğer seçili resim varsa formu gönderebilsin. --}}
+                            @if($hasDeletePermission ?? false)
+                              <button class="btn btn-danger pull-right btn-xs btn-rounded"
+                                      onclick="return confirm('Seçili resimleri silmek istediğinize emin misiniz?');">
+                                <i class="fa fa-trash"></i> Seçili Resimleri Sil
+                              </button>
                             @endif
-                          @endforeach
-                        </div>
-                      </section>
-                    </form>
-                  @endif
-                @endif
-              @endforeach
-            </div>
+                          </p>
+                          <section class="panel panel-default">
+                            <div class="tz-gallery">
+                              <style>.checkbox-custom > i.checked:before {
+                                  color: #fb6b5b;
+                                }</style>
+                              @foreach($images as $order => $image)
+                                @if(!($order % 2))
+                                  <div class="row">
+                                    @endif
+                                    <div class="col-sm-12 col-md-6">
+                                      <section class="panel panel-default m-t">
+                                        <div class="row">
+                                          <div class="col-md-12">
+                                            <a class="lightbox"
+                                               href="{{ $image->getUrl('big') }}">
+                                              <img src="{{ $image->getUrl('card') }}" alt="{{ $image->name }}">
+                                            </a>
+                                          </div>
+                                        </div>
+                                        @if($hasDeletePermission ?? false)
+                                          <div class="row">
+                                            <div class="col-md-12">
+                                              <footer class="bg-light lter">
+                                                <ul class="nav nav-pills nav-sm">
+                                                  <div class="checkbox m-l">
+                                                    <label class="checkbox-custom center-block">
+                                                      <input type="checkbox" name='mediaTodelete[]'
+                                                             value="{{$image->id}}">
+                                                      <i class="fa fa-fw fa-square-o"></i>
+                                                      Sil
+                                                    </label>
+                                                  </div>
+                                                </ul>
+                                              </footer>
+                                            </div>
+                                          </div>
+                                        @endif
+                                      </section>
+                                    </div>
+                                    @if($order % 2)
+                                  </div>
+                                @endif
+                              @endforeach
+                            </div>
+                          </section>
+                        </form>
+                      @endif
+                    @endif
+                    @endforeach
+              </div>
+            </section>
           </section>
-        </section>
+        @endcan
       </aside>
     </section>
   </section>

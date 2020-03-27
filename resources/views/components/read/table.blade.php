@@ -13,8 +13,10 @@ $data = $settings['data'];
     <header class="header bg-white b-b clearfix">
       <div class="row m-t-sm">
         <div class="col-sm-7 m-b-xs">
-          <a href="{{ route($route['create']) }}"
-             class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> Yeni Kayıt</a>
+          @can(class_basename($model).'create')
+            <a href="{{ route($route['create']) }}"
+               class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> Yeni Kayıt</a>
+          @endcan
         </div>
         <div class="col-sm-5 m-b-xs">
           <?php $ara = \request()->input('ara'); ?>
@@ -50,52 +52,64 @@ $data = $settings['data'];
           <table class="table table-striped m-b-none">
             <thead>
             <tr>
-              <th width="5">
-                <button type="button" id="multiple_delete"
-                        data-url="{{ route($route['delete']) }}"
-                        class="btn btn-xs btn-danger btn-rounded"
-                        title="Seçili Kayıtları Sil"><i class="fa fa-trash-o"></i>
-                </button>
-              </th>
+              @can(class_basename($model).'delete')
+                <th width="5">
+                  <button type="button" id="multiple_delete"
+                          data-url="{{ route($route['delete']) }}"
+                          class="btn btn-xs btn-danger btn-rounded"
+                          title="Seçili Kayıtları Sil"><i class="fa fa-trash-o"></i>
+                  </button>
+                </th>
+              @endcan
               @foreach($fields as $key => $val)
                 @if($val[$settings['operation']])
                   <th>{{ $val['title'] }}</th>
                 @endif
               @endforeach
-              <th width="5"></th>
-              <th width="5"></th>
+              @can(class_basename($model).'detail')
+                <th width="5"></th>
+              @endcan
+              @can(class_basename($model).'update')
+                <th width="5"></th>
+              @endcan
             </tr>
             </thead>
             <tbody>
             @foreach($data as $upper_val)
               <tr>
-                <td>
-                  <div class="checkbox">
-                    <label class="checkbox-custom" id="{{ $upper_val['id'] }}">
-                      <input type="checkbox" name="checked[]"
-                             value="{{ $upper_val['id'] }}"
-                             data-val="delete">
-                      <i class="fa fa-fw fa-square-o"></i>
-                    </label>
-                  </div>
-                </td>
+                @can(class_basename($model).'delete')
+                  <td>
+                    <div class="checkbox">
+                      <label class="checkbox-custom" id="{{ $upper_val['id'] }}">
+                        <input type="checkbox" name="checked[]"
+                               value="{{ $upper_val['id'] }}"
+                               data-val="delete">
+                        <i class="fa fa-fw fa-square-o"></i>
+                      </label>
+                    </div>
+                  </td>
+                @endcan
                 @foreach($fields as $lower_key => $lower_val)
                   @if($lower_val[$settings['operation']] )
                     @component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
                   @endif
                 @endforeach
-                <td>
-                  <a class="btn btn-sm btn-icon btn-warning btn-rounded"
-                     href="{{ route($route['show'], ((string)$upper_val['id'])) }}">
-                    <i class="fa fa-search"></i>
-                  </a>
-                </td>
-                <td>
-                  <a class="btn btn-sm btn-icon btn-info btn-rounded"
-                     href="{{ route($route['edit'], $upper_val['id']) }}">
-                    <i class="fa fa-edit"></i>
-                  </a>
-                </td>
+                @can(class_basename($model).'detail')
+                  <td>
+                    <a class="btn btn-sm btn-icon btn-warning btn-rounded"
+                       href="{{ route($route['show'], ((string)$upper_val['id'])) }}">
+                      <i class="fa fa-search"></i>
+                    </a>
+                  </td>
+                @endcan
+                @can(class_basename($model).'update')
+                  <td>
+                    <a class="btn btn-sm btn-icon btn-info btn-rounded"
+                       href="{{ route($route['edit'], $upper_val['id']) }}">
+                      <i class="fa fa-edit"></i>
+                    </a>
+                  </td>
+                @endcan
               </tr>
             @endforeach
             </tbody>

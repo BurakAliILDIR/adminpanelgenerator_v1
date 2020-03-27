@@ -56,10 +56,10 @@ return [
 // TODO 3: 2 numaralı TODO harekete geçerse permiison'ların create özelliği ortadan kalkmalı.
 // TODO 4: Eğer module silinme durumunda otomatik olarak permissionları da silinebilecekse delete'leri de kalkabilir. 
 // TODO 5: Eğer create kaldırılırsa permission.store'daki user'a izin aktarma işlemi de beraberinde gelmeli.
-      'views/index' => ['LOWER_NAME'],
-      'views/show' => ['LOWER_NAME'],
-      'views/create' => ['LOWER_NAME'],
-      'views/edit' => ['LOWER_NAME'],
+      'views/index' => ['STUDLY_NAME'],
+      'views/show' => ['STUDLY_NAME'],
+      'views/create' => ['STUDLY_NAME'],
+      'views/edit' => ['STUDLY_NAME'],
       'webpack' => ['LOWER_NAME'],
       'json' => ['LOWER_NAME', 'STUDLY_NAME', 'MODULE_NAMESPACE', 'PROVIDER_NAMESPACE'],
       //'views/index' => ['LOWER_NAME'],
