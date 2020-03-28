@@ -37,6 +37,7 @@
         </header>
         <div class="panel-body">
           @component('components.alert.alert_messages')@endcomponent
+          @component('components.alert.error_messages')@endcomponent
           {{ Form::model($model, ['route' => ['user.update', $model->id],  'method' => 'put', 'class' => 'form-horizontal', 'files' => true]) }}
           @component('components.form.partials.text',
                ['key' => 'name',
@@ -49,7 +50,7 @@
           @component('components.form.partials.email',
                ['key' => 'email',
                'title' => 'E-posta',
-               'attributes' => ['disabled']
+               'attributes' => ['readonly']
           ])@endcomponent
           @component('components.form.partials.textarea',
                ['key' => 'bio',

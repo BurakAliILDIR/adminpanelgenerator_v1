@@ -8,23 +8,23 @@ use Illuminate\Support\Facades\Route;
 class RouteServiceProvider extends ServiceProvider
 {
     /**
-     * This namespace is applied to your controller routes.
-     *
-     * In addition, it is set as the URL generator's root namespace.
+     * Bu ad alanı denetleyici rotalarınıza uygulanır.
+     *                                                                
+     * Ayrıca, URL oluşturucunun kök ad alanı olarak ayarlanır.
      *
      * @var string
      */
     protected $namespace = 'App\Http\Controllers';
 
     /**
-     * The path to the "home" route for your application.
+     * Uygulamanız için "home" yolunun yolu.
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/';
 
     /**
-     * Define your route model bindings, pattern filters, etc.
+     * Rota modeli bağlantılarınızı, desen filtrelerinizi vb. Tanımlayın.
      *
      * @return void
      */
@@ -36,7 +36,7 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     /**
-     * Define the routes for the application.
+     * Uygulama için rotaları tanımlayın.
      *
      * @return void
      */
@@ -50,9 +50,9 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     /**
-     * Define the "web" routes for the application.
-     *
-     * These routes all receive session state, CSRF protection, etc.
+     * Uygulama için "web" yollarını tanımlayın.
+     *                                                              
+     * Bu yolların tümü oturum durumu, CSRF koruması vb. alır.
      *
      * @return void
      */
@@ -64,9 +64,9 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     /**
-     * Define the "api" routes for the application.
-     *
-     * These routes are typically stateless.
+     * Uygulama için "api" yollarını tanımlayın.
+     *                                             
+     * Bu rotalar tipik olarak vatansızdır.
      *
      * @return void
      */

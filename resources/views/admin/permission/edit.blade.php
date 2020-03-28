@@ -31,10 +31,12 @@
         </header>
         <div class="panel-body">
           @component('components.alert.alert_messages')@endcomponent
+          @component('components.alert.error_messages')@endcomponent
           {{ Form::model($model, ['route' => ['permission.update', $model->id],  'method' => 'put', 'class' => 'form-horizontal']) }}
           @component('components.form.partials.text',
           ['key' => 'name',
           'title' => 'İzin Adı',
+          'attributes' => ['readonly']
           ])@endcomponent
           @component('components.form.partials.multi_checkbox',
           ['key' => 'roles',

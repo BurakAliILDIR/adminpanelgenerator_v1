@@ -11,8 +11,7 @@ class $CLASS$ extends Migration
   
   public function __construct()
   {
-    $name = substr('$CLASS$', 6, -6);
-    $model = '\\Modules\\' . $name . '\\Models\\' . $name;
+    $model = 'Modules\\$TABLE$\\Models\\$TABLE$';
     $this->fields = (new $model())->getSettings('fields');
   }
   

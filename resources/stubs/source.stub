@@ -1,0 +1,58 @@
+{
+  "paginate": 7,
+  "slugs": [],
+  "titles": {
+    "index": "$STUDLY_NAME$ Listesi",
+    "show": "$STUDLY_NAME$ Detay",
+    "create": "$STUDLY_NAME$ Ekle",
+    "edit": "$STUDLY_NAME$ Düzenle"
+  },
+  "routes": {
+    "index": "$LOWER_NAME$.index",
+    "create": "$LOWER_NAME$.create",
+    "store": "$LOWER_NAME$.store",
+    "show": "$LOWER_NAME$.show",
+    "edit": "$LOWER_NAME$.edit",
+    "update": "$LOWER_NAME$.update",
+    "delete": "$LOWER_NAME$.destroy"
+  },
+  "searchable": [],
+  "fields": {
+    "id": {
+      "type": "hidden",
+      "title": "Kimlik",
+      "value": "",
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": false
+    },
+    
+    "created_at": {
+      "type": "datetime",
+      "title": "Eklenme Tarihi",
+      "name": "created_at",
+      "rules": [
+        "required"
+      ],
+      "multiple": false,
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": true
+    },
+    "updated_at": {
+      "type": "datetime",
+      "title": "Son Düzenlenme Tarihi",
+      "name": "updated_at",
+      "rules": [
+        "required"
+      ],
+      "multiple": false,
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": false
+    }
+  }
+}

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Gate;
 class AuthServiceProvider extends ServiceProvider
 {
   /**
-   * The policy mappings for the application.
+   * Uygulama için ilke eşlemeleri.
    * @var array
    */
   protected $policies = [
@@ -16,17 +16,17 @@ class AuthServiceProvider extends ServiceProvider
   ];
   
   /**
-   * Register any authentication / authorization services.
+   * Kimlik doğrulama / yetkilendirme hizmetlerini kaydedin.
    * @return void
    */
   public function boot()
   {
     $this->registerPolicies();
     
-    // Implicitly grant "Super Admin" role all permissions
+    // Implicitly grant "super-admin" role all permissions
     // This works in the app by using gate-related functions like auth()->user->can() and @can()
     Gate::before(function ($user, $ability) {
-      return $user->hasRole('Super Admin') ? true : null;
+      return $user->hasRole('super-admin') ? true : null;
     });
   }
 }

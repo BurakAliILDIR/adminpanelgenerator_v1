@@ -21,7 +21,7 @@ class EventServiceProvider extends ServiceProvider
     ];
 
     /**
-     * Register any events for your application.
+     * Başvurunuz için herhangi bir etkinliği kaydedin.
      *
      * @return void
      */

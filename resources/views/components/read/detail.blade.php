@@ -8,7 +8,7 @@ $route = $settings['route'];
   <header class="header bg-white b-b b-light">
     <div class="row">
       <div class="col-md-6">
-        {{--@can(class_basename($model).'index')--}}
+        {{--@can(class_basename($model).'.index')--}}
           <div class="m-t">
             <a class="btn btn-xs btn-default btn-rounded " href="{{ route($route['index']) }}">
               <i class="fa fa-arrow-left"></i>
@@ -20,7 +20,7 @@ $route = $settings['route'];
       </div>
       <div class="col-md-6">
         <div class="m-t m-r pull-right">
-          @can(class_basename($model).'update')
+          @can(class_basename($model).'.update')
 
             <a class="btn btn-xs btn-info btn-rounded "
                href="{{ route($route['edit'], $model['id']) }}">
@@ -28,7 +28,7 @@ $route = $settings['route'];
               Bu Kaydı Düzenle
             </a>
           @endcan
-          @can(class_basename($model).'delete')
+          @can(class_basename($model).'.delete')
             <form action="{{ route($route['delete']) }}" method="post"
                   style="display: inline-block;">
               @method('DELETE') @csrf

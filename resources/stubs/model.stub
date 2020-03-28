@@ -15,6 +15,8 @@ use Spatie\Sluggable\SlugOptions;
 class $CLASS$ extends Model implements HasMedia
 {
   use Relations, UUID, SourceSettings, MediaUploads, HasSlug, SoftDeletes;
+
+  protected $table = '$CLASS$';
   
   protected $keyType = 'string';
 
@@ -22,7 +24,7 @@ class $CLASS$ extends Model implements HasMedia
 
   protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_at'];
   
-  private $path = '$MODULE_NAMESPACE$\$STUDLY_NAME$\Source\$CLASS$.json';
+  private $path = '$MODULE_NAMESPACE$\$STUDLY_NAME$\Source\Source.json';
   
   public function getSlugOptions() : SlugOptions
   {

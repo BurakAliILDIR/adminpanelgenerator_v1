@@ -15,7 +15,6 @@
                 <header class="panel-heading font-bold">
                     <div class="row">
                         <div class="col-md-6">
-                          {{--@can(class_basename($model).'index')--}}
                           <div class="m-t">
                                 <a class="btn btn-xs btn-default btn-rounded "
                                    href="{{ route($settings['route']['index']) }}">
@@ -24,12 +23,10 @@
                                 </a>
                                 <span class="m-l">{{ $settings['title'] }}</span>
                           </div>
-                          {{--@endcan--}}
                         </div>
                     </div>
                 </header>
                 <div class="panel-body">
-                    @component('components.alert.alert_messages')@endcomponent
                     {{ Form::model($settings['model'], ['route' => [$settings['route']['store'], $settings['params']], 'class' => 'form-horizontal', 'files' => true]) }}
                     @component('components.form.generator', ['settings'=> $settings])@endcomponent
                     {{ Form::submit($settings['submitText'], array_merge(['class' => 'btn btn-primary btn-block'], $settings['submitAttributes'] ?? [])) }}

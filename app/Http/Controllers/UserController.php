@@ -32,7 +32,6 @@ class UserController extends Controller
       })->orderByDESC('id')->paginate(7);
     } else
       $data = $this->model->orderByDESC('id')->paginate(7);
-    
     return view('admin.user.index', compact('data'));
   }
   

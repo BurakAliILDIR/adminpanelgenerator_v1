@@ -38,7 +38,7 @@ class PermissionController extends Controller
   {
     $model = $this->model;
     $roles = Role::pluck('name', 'id');
-    
+
     return view('admin.permission.create', compact('model', 'roles'));
   }
   
@@ -47,7 +47,7 @@ class PermissionController extends Controller
     $this->model->name = $request->name;
     $this->model->saveOrFail();
     $this->model->syncRoles($request->roles);
-    foreach ($request->roles as $role) {
+    foreach ($request->roles ?? [] as $role) {
       foreach (User::role($role)->get() as $user)
         $user->syncPermissions($user->getPermissionsViaRoles());
     }
@@ -68,6 +68,9 @@ class PermissionController extends Controller
   {
     $model = $this->model->findOrFail($id);
     $roles = Role::pluck('name', 'id');
+    if (($key = array_search('super-admin', $roles->toArray())) !== false) {
+      unset($roles[$key]);
+    }
     return view('admin.permission.edit', compact('model', 'roles'));
   }
   

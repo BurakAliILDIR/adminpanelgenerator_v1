@@ -35,6 +35,7 @@
           @component('components.form.partials.text',
                ['key' => 'name',
                'title' => 'Rol Adı',
+               'attributes' => ['readonly']
           ])@endcomponent
           @component('components.form.partials.multi_checkbox',
           ['key' => 'permissions',

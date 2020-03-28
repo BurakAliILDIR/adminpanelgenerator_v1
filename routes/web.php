@@ -1,10 +1,17 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-  return view('welcome');
+  return \Illuminate\Support\Str::studly('person');
+  
 });
+
+Auth::routes(['verify' => true]);
+
+Route::get('/home', 'HomeController@index')->name('home');
+
 
 Route::post('/imageUpload/{id}/{collection}/{path}', 'ImageController@imageUpload')->name('imageUpload');
 Route::delete('deleteImage', 'ImageController@deleteImage')->name('deleteImage');
@@ -18,7 +25,8 @@ Route::prefix('roller')->group(function () {
   Route::post('/', 'RoleController@store')->name('role.store');
   Route::delete('/', 'RoleController@destroy')->name('role.destroy');
 });
-Route::prefix('kullanicilar')->group(function () {
+
+Route::prefix('kullanicilar')->middleware(['auth' => 'verified'])->group(function () {
   Route::get('/', 'UserController@index')->name('user.index');
   Route::get('/ekle', 'UserController@create')->name('user.create');
   Route::get('/{id}', 'UserController@show')->name('user.show');
@@ -37,3 +45,4 @@ Route::prefix('izinler')->group(function () {
   Route::post('/', 'PermissionController@store')->name('permission.store');
   Route::delete('/', 'PermissionController@destroy')->name('permission.destroy');
 });
+

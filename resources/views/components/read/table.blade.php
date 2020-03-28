@@ -13,7 +13,7 @@ $data = $settings['data'];
     <header class="header bg-white b-b clearfix">
       <div class="row m-t-sm">
         <div class="col-sm-7 m-b-xs">
-          @can(class_basename($model).'create')
+          @can(class_basename($model).'.create')
             <a href="{{ route($route['create']) }}"
                class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> Yeni Kayıt</a>
           @endcan
@@ -52,7 +52,7 @@ $data = $settings['data'];
           <table class="table table-striped m-b-none">
             <thead>
             <tr>
-              @can(class_basename($model).'delete')
+              @can(class_basename($model).'.delete')
                 <th width="5">
                   <button type="button" id="multiple_delete"
                           data-url="{{ route($route['delete']) }}"
@@ -66,10 +66,10 @@ $data = $settings['data'];
                   <th>{{ $val['title'] }}</th>
                 @endif
               @endforeach
-              @can(class_basename($model).'detail')
+              @can(class_basename($model).'.detail')
                 <th width="5"></th>
               @endcan
-              @can(class_basename($model).'update')
+              @can(class_basename($model).'.update')
                 <th width="5"></th>
               @endcan
             </tr>
@@ -77,7 +77,7 @@ $data = $settings['data'];
             <tbody>
             @foreach($data as $upper_val)
               <tr>
-                @can(class_basename($model).'delete')
+                @can(class_basename($model).'.delete')
                   <td>
                     <div class="checkbox">
                       <label class="checkbox-custom" id="{{ $upper_val['id'] }}">
@@ -94,7 +94,7 @@ $data = $settings['data'];
                     @component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
                   @endif
                 @endforeach
-                @can(class_basename($model).'detail')
+                @can(class_basename($model).'.detail')
                   <td>
                     <a class="btn btn-sm btn-icon btn-warning btn-rounded"
                        href="{{ route($route['show'], ((string)$upper_val['id'])) }}">
@@ -102,7 +102,7 @@ $data = $settings['data'];
                     </a>
                   </td>
                 @endcan
-                @can(class_basename($model).'update')
+                @can(class_basename($model).'.update')
                   <td>
                     <a class="btn btn-sm btn-icon btn-info btn-rounded"
                        href="{{ route($route['edit'], $upper_val['id']) }}">

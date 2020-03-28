@@ -3,5 +3,9 @@
     "User": true,
     "Blog": true,
     "Role": true,
-    "Permission": true
+    "Permission": true,
+    "Deneme": true,
+    "Category": true,
+    "Vahiy": true,
+    "Person": true
 }

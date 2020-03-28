@@ -28,6 +28,7 @@
         </header>
         <div class="panel-body">
           @component('components.alert.alert_messages')@endcomponent
+          @component('components.alert.error_messages')@endcomponent
           {{ Form::model($model, ['route' => ['user.store'], 'class' => 'form-horizontal', 'files' => true]) }}
           @component('components.form.partials.text',
                ['key' => 'name',
