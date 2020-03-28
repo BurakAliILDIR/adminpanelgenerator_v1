@@ -51,9 +51,9 @@ return [
       //'edit-request' => ['STUDLY_NAME', 'MODULE_NAMESPACE'],
       'routes/web' => ['LOWER_NAME', 'STUDLY_NAME'],
       'routes/api' => ['LOWER_NAME'],
-// TODO 3: Permission'ların create özelliği ortadan kalkmalı.
-// TODO 4: Eğer module silinme durumunda otomatik olarak permissionları da silinebilecekse delete'leri de kalkabilir. 
-// TODO 5: Eğer create kaldırılırsa permission.store'daki user'a izin aktarma işlemi de beraberinde gelmeli.
+      // TODO 1: Module silme komutu yazılacak.
+      // where ile Blog.index, Blog.create, olarak aranıp silinecek. Name den gelen isim ile bulacak.
+      //foreach'da dönerek alan dizileri üzerinden tek tek silinecek. 
       'views/index' => ['STUDLY_NAME'],
       'views/show' => ['STUDLY_NAME'],
       'views/create' => ['STUDLY_NAME'],
