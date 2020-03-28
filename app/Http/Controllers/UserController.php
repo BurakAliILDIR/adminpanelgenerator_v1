@@ -112,7 +112,7 @@ class UserController extends Controller
     $this->model->phone = $request->phone;
     $this->model->gender = $request->gender;
     $this->model->date_of_birth = \Carbon\Carbon::parse($request->date_of_birth)->format('Y-m-d');
-    $this->model->confirm = $request->confirm ?? 0;
+    $this->model->confirm = $request->confirm;
     $this->insertToSingleMedia($request, 'profile');
     $this->model->saveOrFail();
   }

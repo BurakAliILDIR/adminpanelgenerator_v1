@@ -83,6 +83,12 @@
           'checked' => $model->roles()->get(),
           'title' => 'Roller',
           ])@endcomponent
+            @component('components.form.partials.radio',
+                       ['key' => 'confirm',
+                       'items' => [1 => 'Aktif', 0 => 'Pasif '],
+                       'checked' => $model->confirm,
+                       'title' => 'Hesap Durumu',
+            ])@endcomponent
           {{ Form::submit('Kaydet', array_merge(['class' => 'btn btn-info btn-block'])) }}
           {!! Form::close() !!}
         </div>

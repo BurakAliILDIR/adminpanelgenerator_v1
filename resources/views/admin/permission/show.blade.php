@@ -22,7 +22,7 @@
               <i class="fa fa-edit"></i>
               Bu Kaydı Düzenle
             </a>
-            <form action="{{ route('permission.destroy') }}" method="post"
+            {{--<form action="{{ route('permission.destroy') }}" method="post"
                   style="display: inline-block;">
               @method('DELETE') @csrf
               <input type="hidden" name="id" value="{{ $model['id'] }}">
@@ -32,7 +32,7 @@
                 <i class="fa fa-trash"></i>
                 Bu Kaydı Sil
               </button>
-            </form>
+            </form>--}}
           </div>
         </div>
       </div>

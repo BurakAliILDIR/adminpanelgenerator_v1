@@ -12,8 +12,8 @@
       <header class="header bg-white b-b clearfix">
         <div class="row m-t-sm">
           <div class="col-sm-7 m-b-xs">
-            <a href="{{ route('permission.create') }}"
-               class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> Yeni İzin</a>
+            {{--<a href="{{ route('permission.create') }}"
+               class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> Yeni İzin</a>--}}
           </div>
           <div class="col-sm-5 m-b-xs">
             <?php $ara = \request()->input('ara'); ?>
@@ -49,13 +49,13 @@
             <table class="table table-striped m-b-none">
               <thead>
               <tr>
-                <th width="5">
+                {{--<th width="5">
                   <button type="button" id="multiple_delete"
                           data-url="{{ route('permission.destroy') }}"
                           class="btn btn-xs btn-danger btn-rounded"
                           title="Seçili Kayıtları Sil"><i class="fa fa-trash-o"></i>
                   </button>
-                </th>
+                </th>--}}
                 <th>İzin Adı</th>
                 <th>Eklenme Tarihi</th>
                 <th>Son Düzenlenme Tarihi</th>
@@ -66,7 +66,7 @@
               <tbody>
               @foreach($data as $row)
                 <tr>
-                  <td>
+                  {{--<td>
                     <div class="checkbox">
                       <label class="checkbox-custom" id="{{ $row['id'] }}">
                         <input type="checkbox" name="checked[]"
@@ -75,7 +75,7 @@
                         <i class="fa fa-fw fa-square-o"></i>
                       </label>
                     </div>
-                  </td>
+                  </td>--}}
                   <td>{!! $row->name !!}</td>
                   <td>{!! $row->created_at !!}</td>
                   <td>{!! $row->updated_at !!}</td>

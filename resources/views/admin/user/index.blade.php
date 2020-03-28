@@ -59,9 +59,6 @@
                 <th>Ad</th>
                 <th>Soyad</th>
                 <th>E-posta</th>
-                <th>Cinsiyet</th>
-                <th>Telefon</th>
-                <th>Doğum Tarihi</th>
                 <th width="5"></th>
                 <th width="5"></th>
               </tr>
@@ -82,9 +79,6 @@
                   <td>{!! $row->name !!}</td>
                   <td>{!! $row->surname !!}</td>
                   <td>{!! $row->email !!}</td>
-                  <td>{!! $row->gender !!}</td>
-                  <td>{!! $row->phone !!}</td>
-                  <td>{!! $row->date_of_birth !!}</td>
                   <td>
                     <a class="btn btn-sm btn-icon btn-warning btn-rounded"
                        href="{{ route('user.show', $row['id']) }}">

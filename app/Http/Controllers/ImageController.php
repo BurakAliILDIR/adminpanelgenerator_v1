@@ -26,11 +26,10 @@ class ImageController extends Controller
   
   public function deleteImage(Request $request)
   {
-    $toDeleteIds = $request->mediaTodelete;
-    if (count($toDeleteIds)) {
+    if ($toDeleteIds = $request->mediaTodelete) {
       Media::whereIn('id', $toDeleteIds)->delete();
+      session()->flash('danger', 'Seçili resimler silindi.');
     }
-    session()->flash('danger', 'Seçili resimler silindi.');
     return redirect()->back();
   }
 }
