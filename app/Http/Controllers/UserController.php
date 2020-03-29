@@ -97,9 +97,9 @@ class UserController extends Controller
         $back = $indexURL;
       return redirect($back);
     }
-    $models = User::whereIn('id', $request->checked);
+    $models = $this->model::whereIn('id', $request->checked);
     session()->flash('danger', 'Seçili kullanıcılar silindi.');
-    $models->delete();
+    return $models->delete();
   }
   
   // store ve update fonksiyonları için ortak model doldurma.
