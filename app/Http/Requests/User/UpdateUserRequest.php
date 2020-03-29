@@ -10,12 +10,12 @@ class UpdateUserRequest extends FormRequest
   public function rules()
   {
     return [
-      'name' => 'required',
-      'surname' => 'required',
+      'name' => '',
+      'surname' => '',
       //'email' => 'unique:users|email|required',
       //'password' => '',
-      'bio' => 'string',
-      'phone' => 'string',
+      'bio' => '',
+      'phone' => 'phone:US,TR,GB', // ISO 3166-1 alpha-2 code country
       'gender' => 'string',
       'date_of_birth' => 'string',
       'confirm' => '',

@@ -32,7 +32,7 @@
 <footer id="footer">
   <div class="text-center padder">
     <p>
-      <small>TheNobleBrain<br>&copy; 2020</small>
+      <small> {{ __('All rights reserved.') }} TheNobleBrain<br>&copy; 2020</small>
     </p>
   </div>
 </footer>

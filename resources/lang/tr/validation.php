@@ -115,6 +115,7 @@ return [
   'uploaded' => ':attribute yüklemesi başarısız.',
   'url' => ':attribute biçimi geçersiz.',
   'uuid' => ':attribute bir UUID formatına uygun olmalı.',
+  'phone' => ':attribute alanı geçersiz bir sayı içeriyor.',
   
   /*
   |--------------------------------------------------------------------------

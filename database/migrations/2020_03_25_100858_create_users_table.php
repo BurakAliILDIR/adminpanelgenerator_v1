@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
       $table->date('date_of_birth')->nullable()->index();
       $table->boolean('confirm')->default(0)->index();
       $table->dateTime('email_verified_at')->nullable();
+      $table->rememberToken();
       $table->timestamps();
       $table->softDeletes();
     });

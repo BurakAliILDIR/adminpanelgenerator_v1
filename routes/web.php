@@ -1,11 +1,19 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-  return redirect()->route('user.index');
   
+  return redirect()->route('user.index');
+});
+
+
+Route::get('/a', function () {
+  Auth::logout();
+
+  return redirect()->route('login');
 });
 
 Auth::routes(['verify' => true]);

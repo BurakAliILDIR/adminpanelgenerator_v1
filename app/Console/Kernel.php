@@ -11,9 +11,9 @@ class Kernel extends ConsoleKernel
    * Uygulamanız tarafından sağlanan Artisan komutları.
    */
   protected $commands = [
-    // ÖZelleştirilmiş komutlar bu şekilde eklenir.
+    // Özelleştirilmiş komutlar bu şekilde eklenir.
     Commands\CreateModule::class,
-    Commands\CreateRequest::class,
+    Commands\RemoveModule::class,
   ];
   
   /**

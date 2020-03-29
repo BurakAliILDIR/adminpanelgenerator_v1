@@ -85,7 +85,7 @@
           ])@endcomponent
             @component('components.form.partials.radio',
                        ['key' => 'confirm',
-                       'items' => [1 => 'Aktif', 0 => 'Pasif '],
+                       'items' => [1 => 'Aktif', 0 => 'Pasif'],
                        'checked' => $model->confirm,
                        'title' => 'Hesap Durumu',
             ])@endcomponent

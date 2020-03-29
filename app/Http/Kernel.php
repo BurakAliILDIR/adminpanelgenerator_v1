@@ -7,8 +7,8 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 class Kernel extends HttpKernel
 {
   /**
-   * The application's global HTTP middleware stack.
-   * These middleware are run during every request to your application.
+   * Uygulamanın global HTTP ara katman yığını.
+   * Bu ara katman yazılımı, uygulamanıza her istekte çalıştırılır.
    * @var array
    */
   protected $middleware = [
@@ -18,10 +18,11 @@ class Kernel extends HttpKernel
     \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
     \App\Http\Middleware\TrimStrings::class,
     \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+
   ];
   
   /**
-   * The application's route middleware groups.
+   * Uygulamanın yol ara katman grupları.
    * @var array
    */
   protected $middlewareGroups = [
@@ -42,8 +43,8 @@ class Kernel extends HttpKernel
   ];
   
   /**
-   * The application's route middleware.
-   * These middleware may be assigned to groups or used individually.
+   * Uygulamanın rota ara katman yazılımı.
+   * Bu ara katman yazılımı gruplara atanabilir veya ayrı ayrı kullanılabilir.
    * @var array
    */
   protected $routeMiddleware = [
