@@ -41,7 +41,7 @@ Route::prefix('kullanicilar')->middleware(['auth' => 'verified'])->group(functio
   Route::get('/{id}', 'UserController@show')->name('user.show');
   Route::get('/{id}/duzenle', 'UserController@edit')->name('user.edit');
   Route::put('/{id}', 'UserController@update')->name('user.update');
-  Route::delete('/', 'UserController@destroy')->name('user.destroy');
+  Route::delete('/', 'UserController@destroy')->name('user.destroy')->middleware('doNotCacheResponse');
 });
 
 Route::prefix('izinler')->group(function () {

@@ -84,7 +84,6 @@ class UserController extends Controller
     $this->model->syncRoles($request->roles);
     $this->model->syncPermissions($this->model->getPermissionsViaRoles());
     
-    
     session()->flash('info', 'Kullanıcı başarıyla güncellendi.');
     return redirect()->back();
   }
@@ -100,7 +99,7 @@ class UserController extends Controller
     }
     $models = User::whereIn('id', $request->checked);
     session()->flash('danger', 'Seçili kullanıcılar silindi.');
-    return $models->delete();
+    $models->delete();
   }
   
   // store ve update fonksiyonları için ortak model doldurma.
@@ -112,7 +111,7 @@ class UserController extends Controller
     $this->model->phone = $request->phone;
     $this->model->gender = $request->gender;
     $this->model->date_of_birth = \Carbon\Carbon::parse($request->date_of_birth)->format('Y-m-d');
-    $this->model->confirm = $request->confirm;
+    $this->model->confirm = $request->confirm ?? 1;
     $this->insertToSingleMedia($request, 'profile');
     $this->model->saveOrFail();
   }
