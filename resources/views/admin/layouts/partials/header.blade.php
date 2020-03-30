@@ -133,7 +133,10 @@
         </li>
         <li class="divider"></li>
         <li>
-          <a href="modal.lockme.html" data-toggle="ajaxModal">Logout</a>
+          <a href="{{ route('logout') }}"
+             onclick="event.preventDefault();document.getElementById('logout-form').submit();">Çıkış</a>
+          {{ Form::open(['route' => ['logout'], 'style' => 'display: none;', 'id' => 'logout-form']) }}
+          {!! Form::close() !!}
         </li>
       </ul>
     </li>

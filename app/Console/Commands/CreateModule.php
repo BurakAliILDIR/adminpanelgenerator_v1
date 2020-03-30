@@ -24,6 +24,20 @@ class CreateModule extends Command
   
   public function handle()
   {
+  
+//    $Folders = [
+//      "deneme_config" => ["path" => "DenemeConfig"],
+//      "deneme_console" => ["path" => "DenemeConsole"]
+//    ];
+//    $Modul = Module::find($Name);
+//    foreach ($Folders as $key => $folder){
+//      $Path = $Modul->getPath() . "/" . $folder["path"];
+//        dump($Path);
+//        File::makeDirectory($Path);
+////        Storage::makeDirectory($Path);
+//    }
+    
+    
     Artisan::call('cache:forget spatie.permission.cache');
     
     // girilen değeri alma.
