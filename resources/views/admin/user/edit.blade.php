@@ -50,19 +50,22 @@
           @component('components.form.partials.email',
                ['key' => 'email',
                'title' => 'E-posta',
-               'attributes' => ['readonly']
           ])@endcomponent
-          @component('components.form.partials.textarea',
-               ['key' => 'bio',
-               'title' => 'Hakkında',
+          @component('components.form.partials.password',
+               ['key' => 'password',
+               'title' => 'Parola',
           ])@endcomponent
-          @component('components.form.partials.text',
+          @component('components.form.partials.password',
+               ['key' => 'password_confirmation',
+               'title' => 'Parola Tekrar',
+          ])@endcomponent
+          @component('components.form.partials.number',
                ['key' => 'phone',
                'title' => 'Telefon',
           ])@endcomponent
           @component('components.form.partials.radio',
                  ['key' => 'gender',
-                 'items' => ['Bay', 'Bayan', 'Belirtmek istemiyorum'],
+                 'items' => ['Bay' => 'Bay', 'Bayan' => 'Bayan'],
                  'checked' => $model->gender,
                  'title' => 'Cinsiyet',
           ])@endcomponent
@@ -83,12 +86,16 @@
           'checked' => $model->roles()->get(),
           'title' => 'Roller',
           ])@endcomponent
-            @component('components.form.partials.radio',
-                       ['key' => 'confirm',
-                       'items' => [1 => 'Aktif', 0 => 'Pasif'],
-                       'checked' => $model->confirm,
-                       'title' => 'Hesap Durumu',
-            ])@endcomponent
+          @component('components.form.partials.radio',
+                     ['key' => 'confirm',
+                     'items' => [1 => 'Aktif', 0 => 'Pasif'],
+                     'checked' => $model->confirm,
+                     'title' => 'Hesap Durumu',
+          ])@endcomponent
+          @component('components.form.partials.textarea',
+                 ['key' => 'bio',
+                 'title' => 'Hakkımda',
+          ])@endcomponent
           {{ Form::submit('Kaydet', array_merge(['class' => 'btn btn-info btn-block'])) }}
           {!! Form::close() !!}
         </div>

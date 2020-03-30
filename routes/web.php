@@ -24,6 +24,15 @@ Route::prefix('image')->middleware(['verified'])->group(function () {
   Route::delete('delete/{class_name}', 'ImageController@imageDelete')->name('imageDelete');
 });
 
+Route::prefix('profil')->middleware(['verified'])->group(function () {
+  Route::get('/', 'ProfileController@index')->name('profile.index');
+  Route::get('/duzenle', 'ProfileController@edit')->name('profile.edit');
+  Route::put('/', 'ProfileController@update')->name('profile.update');
+  Route::post('/image-upload/{collection}', 'ProfileController@imageUpload')->name('profileImageUpload');
+  Route::delete('image-delete', 'ProfileController@imageDelete')->name('profileImageDelete');
+});
+
+
 Route::prefix('roller')->middleware(['verified'])->group(function () {
   Route::get('/', 'RoleController@index')->middleware('permission:Role.index')->name('role.index');
   Route::get('/ekle', 'RoleController@create')->middleware('permission:Role.create')->name('role.create');

@@ -1,5 +1,5 @@
 @extends('admin.layouts.master')
-@section('title', 'Kullanıcı Ekle')
+@section('title', 'Profil Düzenle')
 @section('css')
   <!-- datepicker -->
   <link href="/admin-custom-template/datepicker/bootstrap-datepicker.css" rel="stylesheet">
@@ -17,11 +17,11 @@
             <div class="col-md-6">
               <div class="m-t">
                 <a class="btn btn-xs btn-default btn-rounded "
-                   href="{{ route('user.index') }}">
+                   href="{{ route('profile.index') }}">
                   <i class="fa fa-arrow-left"></i>
-                  Tüm Kayıtlara Dön
+                  Profile Geri Dön
                 </a>
-                <span class="m-l">Kullanıcı Ekle</span>
+                <span class="m-l">{{ 'Profil Düzenle' }}</span>
               </div>
             </div>
           </div>
@@ -29,11 +29,10 @@
         <div class="panel-body">
           @component('components.alert.alert_messages')@endcomponent
           @component('components.alert.error_messages')@endcomponent
-          {{ Form::model($model, ['route' => ['user.store'], 'class' => 'form-horizontal', 'files' => true]) }}
+          {{ Form::model($model, ['route' => ['profile.update'],  'method' => 'put', 'class' => 'form-horizontal', 'files' => true]) }}
           @component('components.form.partials.text',
                ['key' => 'name',
                'title' => 'Ad',
-               'attributes' => ['autofocus']
           ])@endcomponent
           @component('components.form.partials.text',
                ['key' => 'surname',
@@ -51,38 +50,32 @@
                ['key' => 'password_confirmation',
                'title' => 'Parola Tekrar',
           ])@endcomponent
-          @component('components.form.partials.text',
+          @component('components.form.partials.number',
                ['key' => 'phone',
                'title' => 'Telefon',
           ])@endcomponent
           @component('components.form.partials.radio',
                  ['key' => 'gender',
                  'items' => ['Bay' => 'Bay', 'Bayan' => 'Bayan'],
-                 'checked' => null,
+                 'checked' => $model->gender,
                  'title' => 'Cinsiyet',
           ])@endcomponent
           @component('components.form.partials.date',
                ['key' => 'date_of_birth',
                'title' => 'Doğum Tarihi',
-               'value' => null,
+               'value' => $model->date_of_birth,
           ])@endcomponent
           @component('components.form.partials.image',
           ['key' => 'profile',
           'type' => 'image',
-          'value' => '',
+          'value' => $model->getFirstMediaUrl('profile'),
           'title' => 'Profil Fotoğrafı',
           ])@endcomponent
-          @component('components.form.partials.multi_checkbox',
-          ['key' => 'roles',
-          'value' => $roles,
-          'checked' => Collect([]),
-          'title' => 'Roller',
-          ])@endcomponent
           @component('components.form.partials.textarea',
-               ['key' => 'bio',
-               'title' => 'Hakkımda',
-          ])@endcomponent
-          {{ Form::submit("Ekle", array_merge(['class' => 'btn btn-primary btn-block'])) }}
+         ['key' => 'bio',
+         'title' => 'Hakkımda',
+         ])@endcomponent
+          {{ Form::submit('Kaydet', array_merge(['class' => 'btn btn-info btn-block'])) }}
           {!! Form::close() !!}
         </div>
       </section>

@@ -45,12 +45,10 @@ class UserController extends Controller
   
   public function store(CreateUserRequest $request)
   {
-    $this->model->email = $request->email;
-    $this->model->password = Hash::make($request->password);
     $this->saveModelFilling($request);
     $this->model->assignRole($request->roles);
     $this->model->syncPermissions($this->model->getPermissionsViaRoles());
-
+    
     session()->flash('success', 'Kayıt başarıyla eklendi.');
     return redirect()->back();
   }
@@ -107,6 +105,8 @@ class UserController extends Controller
   {
     $this->model->name = $request->name;
     $this->model->surname = $request->surname;
+    $this->model->email = $request->email;
+    $this->model->password = Hash::make($request->password);
     $this->model->bio = $request->bio;
     $this->model->phone = $request->phone;
     $this->model->gender = $request->gender;

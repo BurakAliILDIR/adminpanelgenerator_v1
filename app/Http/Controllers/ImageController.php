@@ -31,7 +31,6 @@ class ImageController extends Controller
       throw UnauthorizedException::forPermissions([$permission]);
   }
   
-  // class name gönderilip permission kontrolü yapılacak.
   public function imageDelete(Request $request, $class_name)
   {
     $permission = $class_name . '.imageDelete';

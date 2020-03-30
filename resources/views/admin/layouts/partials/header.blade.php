@@ -120,7 +120,7 @@
           <a href="#">Settings</a>
         </li>
         <li>
-          <a href="profile.html">Profile</a>
+          <a href="{{ route('profile.index') }}">Profile</a>
         </li>
         <li>
           <a href="#">

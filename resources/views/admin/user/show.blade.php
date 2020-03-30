@@ -77,9 +77,6 @@
                   <small class="text-uc text-muted">Durum : </small>
                   <span>{!! $model['confirm'] ? 'Aktif' : 'Pasif' !!}</span>
                   <div class="line"></div>
-                  <small class="text-uc text-muted">Hakkında : </small>
-                  <span>{!! $model['bio'] ?? '-' !!}</span>
-                  <div class="line"></div>
                   <small class="text-uc text-muted">E-posta Onayı : </small>
                   <span>{!! $model['email_verified_at'] ? \Carbon\Carbon::parse($model['email_verified_at'])->format('d/m/Y H:i:s') : '-' !!}</span>
                   <div class="line"></div>
@@ -88,6 +85,9 @@
                   <div class="line"></div>
                   <small class="text-uc text-muted">Son Düzenleme Tarihi : </small>
                   <span>{!! \Carbon\Carbon::parse($model['updated_at'])->format('d/m/Y H:i:s') !!}</span>
+                  <div class="line"></div>
+                  <small class="text-uc text-muted">Hakkımda : </small>
+                  <span>{!! $model['bio'] ?? '-' !!}</span>
                   <div class="line"></div>
                 </div>
               </div>
