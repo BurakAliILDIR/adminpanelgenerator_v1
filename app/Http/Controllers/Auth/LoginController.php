@@ -45,4 +45,12 @@ class LoginController extends Controller
   {
     $this->middleware('guest')->except('logout');
   }
+  
+  protected function validateLogin(Request $request)
+  {
+    $request->validate([
+      $this->username() => 'required|string|max:255',
+      'password' => 'required|string|min:8',
+    ]);
+  }
 }

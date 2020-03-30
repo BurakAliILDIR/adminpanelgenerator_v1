@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
     // Özelleştirilmiş komutlar bu şekilde eklenir.
     Commands\CreateModule::class,
     Commands\RemoveModule::class,
+    Commands\BuildProject::class,
   ];
   
   /**

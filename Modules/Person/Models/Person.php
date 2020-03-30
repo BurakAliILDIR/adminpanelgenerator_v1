@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\Blog\Models;
+namespace Modules\Person\Models;
 
 use App\Traits\MediaUploads\MediaUploads;
 use App\Traits\ModelTraits\Relations;
@@ -12,11 +12,11 @@ use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
-class Blog extends Model implements HasMedia
+class Person extends Model implements HasMedia
 {
   use Relations, UUID, SourceSettings, MediaUploads, HasSlug, SoftDeletes;
 
-  protected $table = 'Blog';
+  protected $table = 'Person';
   
   protected $keyType = 'string';
 
@@ -24,7 +24,7 @@ class Blog extends Model implements HasMedia
 
   protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_at'];
   
-  private $path = 'Modules\Blog\Source\Source.json';
+  private $path = 'Modules\Person\Source\Source.json';
   
   public function getSlugOptions() : SlugOptions
   {

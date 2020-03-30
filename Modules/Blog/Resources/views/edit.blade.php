@@ -48,6 +48,8 @@
   </div>
 @endsection
 @section('js')
+  <!-- sadece rakam kısıtlaması -->
+  <script src="/admin-custom-template/form/only_number.js"></script>
   <!-- datetimepicker -->
   <script src="/admin-custom-template/datetimepicker/moment.min.js" type="text/javascript"></script>
   <script type="text/javascript" src="/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.js"></script>

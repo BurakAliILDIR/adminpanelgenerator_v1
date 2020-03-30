@@ -25,11 +25,10 @@ class CreateModule extends Command
   public function handle()
   {
     Artisan::call('cache:forget spatie.permission.cache');
-  
+    
     // girilen değeri alma.
     $name = $this->argument('name');
     // gelen tüm değerleri array olarak alma
-    // $arguments = $this->arguments();
     if ( !Module::find($name)) {
       Artisan::call('module:make ' . $name);
       Artisan::call('module:make-model ' . $name . ' ' . $name);
@@ -41,11 +40,13 @@ class CreateModule extends Command
       // eğer daha önceden tablo oluşturulmuşsa migrate etme.
       if ( !Schema::hasTable($name)) {
         Artisan::call('module:migrate ' . $name);
-        
-        $permissions = ['index', 'detail', 'create', 'update', 'delete'];
-        foreach ($permissions as $permission) {
-          (new Permission)->create(['name' => $name . '.' . $permission]);
-        }
+      }
+    }
+    $permissions = ['index', 'detail', 'create', 'update', 'delete', 'imageUpload', 'imageDelete'];
+    foreach ($permissions as $permission) {//
+      $p_name = $name . '.' . $permission;
+      if ( !Permission::where('name', $p_name)->exists()) {
+        (new Permission)->create(['name' => $p_name]);
       }
     }
   }

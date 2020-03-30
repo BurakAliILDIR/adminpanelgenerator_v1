@@ -2,25 +2,26 @@
 $fields = $settings['fields'];
 $model = $settings['model'];
 $route = $settings['route'];
+$class_name = class_basename($model);
 ?>
 
 <section class="vbox">
   <header class="header bg-white b-b b-light">
     <div class="row">
       <div class="col-md-6">
-        {{--@can(class_basename($model).'.index')--}}
-          <div class="m-t">
-            <a class="btn btn-xs btn-default btn-rounded " href="{{ route($route['index']) }}">
-              <i class="fa fa-arrow-left"></i>
-              Tüm Kayıtlara Dön
-            </a>
-            <span class="m-l">{{ $settings['title'] }}</span>
-          </div>
+        {{--@can($class_name.'.index')--}}
+        <div class="m-t">
+          <a class="btn btn-xs btn-default btn-rounded " href="{{ route($route['index']) }}">
+            <i class="fa fa-arrow-left"></i>
+            Tüm Kayıtlara Dön
+          </a>
+          <span class="m-l">{{ $settings['title'] }}</span>
+        </div>
         {{--@endcan--}}
       </div>
       <div class="col-md-6">
         <div class="m-t m-r pull-right">
-          @can(class_basename($model).'.update')
+          @can($class_name.'.update')
 
             <a class="btn btn-xs btn-info btn-rounded "
                href="{{ route($route['edit'], $model['id']) }}">
@@ -28,7 +29,7 @@ $route = $settings['route'];
               Bu Kaydı Düzenle
             </a>
           @endcan
-          @can(class_basename($model).'.delete')
+          @can($class_name.'.delete')
             <form action="{{ route($route['delete']) }}" method="post"
                   style="display: inline-block;">
               @method('DELETE') @csrf
@@ -186,12 +187,13 @@ $route = $settings['route'];
         </section>
       </aside>
       <aside class="col-md-3 b-l">
-        @can('Image.upload')
-          <section class="vbox">
-            <section class="scrollable">
-              <div class="wrapper-md">
-                @foreach($fields as $key => $val)
-                  @if($val[$settings['operation']] && @$val['multiple'] && $val['type'] === 'multi_image')
+
+        <section class="vbox">
+          <section class="scrollable">
+            <div class="wrapper-md">
+              @foreach($fields as $key => $val)
+                @if($val[$settings['operation']] && @$val['multiple'] && $val['type'] === 'multi_image')
+                  @can(class_basename($model) . '.imageUpload')
                     <p>{{ $val['title'] . ' : Yükleme Alanı' }}</p>
                     <section class="panel panel-default">
                       <form
@@ -200,76 +202,79 @@ $route = $settings['route'];
                         @csrf
                       </form>
                     </section>
-                    @if(($images = $model->getMedia($key))->count())
-                      <?php if (auth()->check()) $hasDeletePermission = auth()->user()->can('Image.delete'); ?>
-                      @component('components.alert.alert_messages')@endcomponent
-                      @if($hasDeletePermission ?? false)
-                        <form action="{{ route('deleteImage') }}" method="post">
-                          @Csrf @method('DELETE')
+                  @endcan
+
+                  @if(($images = $model->getMedia($key))->count())
+                    <?php if (auth()->check()) $imageDeletePermission = auth()->user()->can($class_name . '.imageDelete');?>
+                    @component('components.alert.alert_messages')@endcomponent
+                    @if($imageDeletePermission)
+                      <form action="{{ route('imageDelete', $class_name) }}" method="post">
+                        @Csrf @method('DELETE')
+                        @endif
+                        <p>
+                          {{ $val['title'] }}
+                          {{-- TODO : eğer seçili resim varsa formu gönderebilsin. --}}
+                          @if($imageDeletePermission)
+                            <button class="btn btn-danger pull-right btn-xs btn-rounded"
+                                    onclick="return confirm('Seçili resimleri silmek istediğinize emin misiniz?');">
+                              <i class="fa fa-trash"></i> Seçili Resimleri Sil
+                            </button>
                           @endif
-                          <p>
-                            {{ $val['title'] }}
-                            {{-- TODO : eğer seçili resim varsa formu gönderebilsin. --}}
-                            @if($hasDeletePermission ?? false)
-                              <button class="btn btn-danger pull-right btn-xs btn-rounded"
-                                      onclick="return confirm('Seçili resimleri silmek istediğinize emin misiniz?');">
-                                <i class="fa fa-trash"></i> Seçili Resimleri Sil
-                              </button>
-                            @endif
-                          </p>
-                          <section class="panel panel-default">
-                            <div class="tz-gallery">
-                              <style>.checkbox-custom > i.checked:before {
-                                  color: #fb6b5b;
-                                }</style>
-                              @foreach($images as $order => $image)
-                                @if(!($order % 2))
-                                  <div class="row">
-                                    @endif
-                                    <div class="col-sm-12 col-md-6">
-                                      <section class="panel panel-default m-t">
+                        </p>
+                        <section class="panel panel-default">
+                          <div class="tz-gallery">
+                            <style>.checkbox-custom > i.checked:before {
+                                color: #fb6b5b;
+                              }</style>
+                            @foreach($images as $order => $image)
+                              @if(!($order % 2))
+                                <div class="row">
+                                  @endif
+                                  <div class="col-sm-12 col-md-6">
+                                    <section class="panel panel-default m-t">
+                                      <div class="row">
+                                        <div class="col-md-12">
+                                          <a class="lightbox"
+                                             href="{{ $image->getUrl('big') }}">
+                                            <img src="{{ $image->getUrl('card') }}" alt="{{ $image->name }}">
+                                          </a>
+                                        </div>
+                                      </div>
+                                      @if($imageDeletePermission)
                                         <div class="row">
                                           <div class="col-md-12">
-                                            <a class="lightbox"
-                                               href="{{ $image->getUrl('big') }}">
-                                              <img src="{{ $image->getUrl('card') }}" alt="{{ $image->name }}">
-                                            </a>
+                                            <footer class="bg-light lter">
+                                              <ul class="nav nav-pills nav-sm">
+                                                <div class="checkbox m-l">
+                                                  <label class="checkbox-custom center-block">
+                                                    <input type="checkbox" name='mediaTodelete[]'
+                                                           value="{{$image->id}}">
+                                                    <i class="fa fa-fw fa-square-o"></i>
+                                                    Sil
+                                                  </label>
+                                                </div>
+                                              </ul>
+                                            </footer>
                                           </div>
                                         </div>
-                                        @if($hasDeletePermission ?? false)
-                                          <div class="row">
-                                            <div class="col-md-12">
-                                              <footer class="bg-light lter">
-                                                <ul class="nav nav-pills nav-sm">
-                                                  <div class="checkbox m-l">
-                                                    <label class="checkbox-custom center-block">
-                                                      <input type="checkbox" name='mediaTodelete[]'
-                                                             value="{{$image->id}}">
-                                                      <i class="fa fa-fw fa-square-o"></i>
-                                                      Sil
-                                                    </label>
-                                                  </div>
-                                                </ul>
-                                              </footer>
-                                            </div>
-                                          </div>
-                                        @endif
-                                      </section>
-                                    </div>
-                                    @if($order % 2)
+                                      @endif
+                                    </section>
                                   </div>
-                                @endif
-                              @endforeach
-                            </div>
-                          </section>
-                        </form>
-                      @endif
+                                  @if($order % 2)
+                                </div>
+                              @endif
+                            @endforeach
+                          </div>
+                        </section>
+                        @if($imageDeletePermission)
+                      </form>
                     @endif
-                    @endforeach
-              </div>
-            </section>
+                  @endif
+                @endif
+              @endforeach
+            </div>
           </section>
-        @endcan
+        </section>
       </aside>
     </section>
   </section>

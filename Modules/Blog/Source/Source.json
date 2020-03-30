@@ -1,0 +1,82 @@
+{
+  "paginate": 7,
+  "slugs": ["ad"],
+  "titles": {
+    "index": "Blog Listesi",
+    "show": "Blog Detay",
+    "create": "Blog Ekle",
+    "edit": "Blog Düzenle"
+  },
+  "routes": {
+    "index": "blog.index",
+    "create": "blog.create",
+    "store": "blog.store",
+    "show": "blog.show",
+    "edit": "blog.edit",
+    "update": "blog.update",
+    "delete": "blog.destroy"
+  },
+  "searchable": [],
+  "fields": {
+    "id": {
+      "type": "hidden",
+      "title": "Kimlik",
+      "value": "",
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": false
+    },
+    "ad": {
+      "type": "text",
+      "title": "Ad",
+      "value": "",
+      "attributes": {},
+      "rules": [
+        "required"
+      ],
+      "multiple": false,
+      "create": true,
+      "update": true,
+      "list": true,
+      "detail": true
+    },
+    "resimler": {
+      "type": "multi_image",
+      "title": "Resimler",
+      "count": 10,
+      "attributes": {},
+      "multiple": true,
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": true
+    },
+    "created_at": {
+      "type": "datetime",
+      "title": "Eklenme Tarihi",
+      "name": "created_at",
+      "rules": [
+        "required"
+      ],
+      "multiple": false,
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": true
+    },
+    "updated_at": {
+      "type": "datetime",
+      "title": "Son Düzenlenme Tarihi",
+      "name": "updated_at",
+      "rules": [
+        "required"
+      ],
+      "multiple": false,
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": false
+    }
+  }
+}

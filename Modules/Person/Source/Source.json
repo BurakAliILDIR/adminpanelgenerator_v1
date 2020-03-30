@@ -1,0 +1,58 @@
+{
+  "paginate": 7,
+  "slugs": [],
+  "titles": {
+    "index": "Person Listesi",
+    "show": "Person Detay",
+    "create": "Person Ekle",
+    "edit": "Person Düzenle"
+  },
+  "routes": {
+    "index": "person.index",
+    "create": "person.create",
+    "store": "person.store",
+    "show": "person.show",
+    "edit": "person.edit",
+    "update": "person.update",
+    "delete": "person.destroy"
+  },
+  "searchable": [],
+  "fields": {
+    "id": {
+      "type": "hidden",
+      "title": "Kimlik",
+      "value": "",
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": false
+    },
+    
+    "created_at": {
+      "type": "datetime",
+      "title": "Eklenme Tarihi",
+      "name": "created_at",
+      "rules": [
+        "required"
+      ],
+      "multiple": false,
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": true
+    },
+    "updated_at": {
+      "type": "datetime",
+      "title": "Son Düzenlenme Tarihi",
+      "name": "updated_at",
+      "rules": [
+        "required"
+      ],
+      "multiple": false,
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": false
+    }
+  }
+}

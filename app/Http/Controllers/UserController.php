@@ -50,7 +50,7 @@ class UserController extends Controller
     $this->saveModelFilling($request);
     $this->model->assignRole($request->roles);
     $this->model->syncPermissions($this->model->getPermissionsViaRoles());
-  // TODO : role veya izine save uygulandığında o izindeki veya roldeki kullanıcılar çekilip üst satırdaki kod çalışacak.
+
     session()->flash('success', 'Kayıt başarıyla eklendi.');
     return redirect()->back();
   }

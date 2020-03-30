@@ -155,12 +155,5 @@ return [
   |
   */
   
-  'attributes' => [
-    'name' => 'Ad',
-    'surname' => 'Soyad',
-    'email' => 'E-posta',
-    'password' => 'Parola',
-    'password_confirmation' => 'Parola Tekrar',
-    'condition_acceptance' => 'Kullanım şartları',
-  ],
+  'attributes' => [],
 ];
