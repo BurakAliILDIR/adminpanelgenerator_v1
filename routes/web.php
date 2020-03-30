@@ -18,6 +18,7 @@ Route::get('/a', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 
 Route::post('/imageUpload/{id}/{collection}/{path}', 'ImageController@imageUpload')->name('imageUpload');
