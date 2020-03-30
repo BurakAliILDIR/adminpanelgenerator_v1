@@ -13,7 +13,8 @@ return [
   kapatmak için:
    'active' => false
   */
-  'active' => env('LADA_CACHE_ACTIVE', true),
+   'active' => env('LADA_CACHE_ACTIVE', true),
+
   
   /*
   |--------------------------------------------------------------------------
@@ -36,7 +37,7 @@ return [
   | 
   |
   */
-  'expiration-time' => null,
+  'expiration-time' => 86400,
   
   /*
   |--------------------------------------------------------------------------
@@ -85,6 +86,8 @@ return [
   | 
   |
   */
-  'exclude-tables' => [],
+  'exclude-tables' => [
+    'roles', 'permissions', 'role_has_permissions', 'model_has_roles', 'model_has_permissions'
+  ],
 
 ];

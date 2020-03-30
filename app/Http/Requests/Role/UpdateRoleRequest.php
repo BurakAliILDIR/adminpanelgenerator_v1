@@ -10,7 +10,7 @@ class UpdateRoleRequest extends FormRequest
   public function rules()
   {
     return [
-      'name' => 'required',
+      'name' => 'required|unique:roles,name,' . $this->id,
     ];
   }
   
@@ -20,5 +20,5 @@ class UpdateRoleRequest extends FormRequest
       'name' => 'Rol adı',
     ];
   }
-
+  
 }

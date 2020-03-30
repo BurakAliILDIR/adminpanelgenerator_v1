@@ -22,6 +22,7 @@
     "laravel/ui": "^2.0",
     "laravelcollective/html": "^6.1",
     "nwidart/laravel-modules": "^6.2",
+    "predis/predis": "^1.1",
     "propaganistas/laravel-phone": "^4.2",
     "rap2hpoutre/laravel-log-viewer": "^1.4",
     "spatie/laravel-medialibrary": "^7.0.0",

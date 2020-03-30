@@ -16,7 +16,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
-  use Notifiable, Relations, UUID, HasRoles, SourceSettings, MediaUploads, CustomModelTools, \Spiritix\LadaCache\Database\LadaCacheTrait, SoftDeletes;
+  use Notifiable, Relations, UUID, HasRoles, SourceSettings, MediaUploads, CustomModelTools, SoftDeletes;
   
   private $path = 'App\Source\User.json';
   
