@@ -1,6 +1,6 @@
 {
   "paginate": 7,
-  "slugs": [],
+  "slugs": ["ad"],
   "titles": {
     "index": "Person Listesi",
     "show": "Person Detay",
@@ -27,7 +27,20 @@
       "list": false,
       "detail": false
     },
-    
+    "ad": {
+      "type": "text",
+      "title": "Ad",
+      "value": "",
+      "attributes": {},
+      "rules": [
+        "required"
+      ],
+      "multiple": false,
+      "create": true,
+      "update": true,
+      "list": true,
+      "detail": true
+    },
     "created_at": {
       "type": "datetime",
       "title": "Eklenme Tarihi",
