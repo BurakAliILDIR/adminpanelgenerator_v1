@@ -25,6 +25,7 @@
     @endforeach
     @break
     @case('multi_checkbox')
+    @case('multi_select')
     @foreach($upper_val->relation($lower_val['relationship'])->get() as $val)
       @foreach($lower_val['relationship']['fields'] as $v)
         {{ $val[$v] }}

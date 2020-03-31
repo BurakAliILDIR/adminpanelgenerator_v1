@@ -1,6 +1,6 @@
-<div class="form-check">
+<div class="form-check m-b">
   {{ Form::label($key, $title, ['class' => 'col-sm-2 control-label']) }}
-  <div class="col-sm-10 @error($key) is-invalid @enderror">
+  <div class="col-sm-10 m-b @error($key) is-invalid @enderror">
     @foreach($items as $item_key => $item)
       <div class="radio">
         <label class="radio-custom">

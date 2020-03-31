@@ -20,7 +20,8 @@
       ])@endcomponent
       @break
       @case('multi_checkbox')
-      @component('components.form.partials.multi_checkbox',
+      @case('multi_select')
+      @component('components.form.partials.' . $field['type'],
                 ['key' => $key,
                 'value' => $settings['plucks'][$key] ?? $value,
                 'checked' => $model->relation($field['relationship'])->get(),

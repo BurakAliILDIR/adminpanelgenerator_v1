@@ -1,5 +1,6 @@
 @extends('admin.layouts.master')
 @section('title', 'Rol Düzenle')
+<link href="/plugins/select2/css/select2.min.css" rel="stylesheet" />
 @section('css')
 @endsection
 @section('content')
@@ -36,7 +37,7 @@
                ['key' => 'name',
                'title' => 'Rol Adı',
           ])@endcomponent
-          @component('components.form.partials.multi_checkbox',
+          @component('components.form.partials.multi_select',
           ['key' => 'permissions',
           'value' => $permissions,
           'checked' => $model->permissions()->get(),
@@ -49,4 +50,5 @@
   </div>
 @endsection
 @section('js')
+  <script src="/plugins/select2/js/select2.min.js"></script>
 @endsection

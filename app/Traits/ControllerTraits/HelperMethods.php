@@ -11,8 +11,12 @@ Trait HelperMethods
   {
     foreach ($fields as $key => $field) {
       if ( !$field[$operation_type]) continue;
-      if ($field['type'] === 'multi_checkbox')
-        $this->model->relation($field['relationship'])->sync($request[$key]);
+      switch ($field['type']) {
+        case 'multi_select':
+        case 'multi_checkbox':
+          $this->model->relation($field['relationship'])->sync($request[$key]);
+          break;
+      }
     }
   }
   

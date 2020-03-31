@@ -1,6 +1,7 @@
 @extends('admin.layouts.master')
 @section('title', 'Kullanıcı Ekle')
 @section('css')
+  <link href="/plugins/select2/css/select2.min.css" rel="stylesheet" />
   <!-- datepicker -->
   <link href="/admin-custom-template/datepicker/bootstrap-datepicker.css" rel="stylesheet">
   <!-- datetimepicker -->
@@ -72,7 +73,7 @@
           'value' => '',
           'title' => 'Profil Fotoğrafı',
           ])@endcomponent
-          @component('components.form.partials.multi_checkbox',
+          @component('components.form.partials.multi_select',
           ['key' => 'roles',
           'value' => $roles,
           'checked' => Collect([]),
@@ -90,9 +91,15 @@
   </div>
 @endsection
 @section('js')
+  <script src="/plugins/select2/js/select2.min.js"></script>
   <!-- datetimepicker -->
   <script src="/admin-custom-template/datetimepicker/moment.min.js" type="text/javascript"></script>
   <script type="text/javascript" src="/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.js"></script>
   <!-- datepicker -->
   <script type="text/javascript" src="/admin-custom-template/datepicker/bootstrap-datepicker.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.js-example-basic-single').select2();
+    });
+  </script>
 @endsection

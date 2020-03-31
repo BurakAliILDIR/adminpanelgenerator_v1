@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc81c1e6e6244f11e265b643c5c62d51",
+    "content-hash": "7fc7ef6f91187fd29808cb54691edd7a",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3761,6 +3761,71 @@
             "time": "2019-12-15T18:52:09+00:00"
         },
         {
+            "name": "spiritix/lada-cache",
+            "version": "v5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spiritix/lada-cache.git",
+                "reference": "12632fc2084c945a30ef4a7fa8dcb864a1a6ced2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spiritix/lada-cache/zipball/12632fc2084c945a30ef4a7fa8dcb864a1a6ced2",
+                "reference": "12632fc2084c945a30ef4a7fa8dcb864a1a6ced2",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^7.0",
+                "illuminate/redis": "^7.0",
+                "illuminate/support": "^7.0",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "barryvdh/laravel-debugbar": "^3.2",
+                "mockery/mockery": "^1.3",
+                "orchestra/testbench": "^5.1",
+                "phpunit/phpunit": "^8.0"
+            },
+            "suggest": {
+                "barryvdh/laravel-debugbar": "Provides debug information about the cache"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spiritix\\LadaCache\\LadaCacheServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spiritix\\LadaCache\\": "src/Spiritix/LadaCache/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Isler",
+                    "email": "mi@matthias-isler.ch"
+                }
+            ],
+            "description": "A Redis based, automated and scalable database caching layer for Laravel",
+            "keywords": [
+                "cache",
+                "caching",
+                "database",
+                "eloquent",
+                "laravel",
+                "model",
+                "php",
+                "redis"
+            ],
+            "time": "2020-03-18T13:16:37+00:00"
+        },
+        {
             "name": "swiftmailer/swiftmailer",
             "version": "v6.2.3",
             "source": {
@@ -6758,16 +6823,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.5.2",
+            "version": "8.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "018b6ac3c8ab20916db85fa91bf6465acb64d1e0"
+                "reference": "67750516bc02f300e2742fed2f50177f8f37bedf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/018b6ac3c8ab20916db85fa91bf6465acb64d1e0",
-                "reference": "018b6ac3c8ab20916db85fa91bf6465acb64d1e0",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/67750516bc02f300e2742fed2f50177f8f37bedf",
+                "reference": "67750516bc02f300e2742fed2f50177f8f37bedf",
                 "shasum": ""
             },
             "require": {
@@ -6837,7 +6902,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2020-01-08T08:49:49+00:00"
+            "time": "2020-03-31T08:52:04+00:00"
         },
         {
             "name": "scrivo/highlight.php",

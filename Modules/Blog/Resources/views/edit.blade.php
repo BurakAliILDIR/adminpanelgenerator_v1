@@ -1,7 +1,9 @@
 @extends('admin.layouts.master')
 @section('title', $settings['title'])
 @section('css')
-  <!-- datepicker -->
+  <link href="/plugins/select2/css/select2.min.css" rel="stylesheet" />
+
+<!-- datepicker -->
   <link href="/admin-custom-template/datepicker/bootstrap-datepicker.css" rel="stylesheet">
   <!-- datetimepicker -->
   <link href="/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
@@ -48,6 +50,7 @@
   </div>
 @endsection
 @section('js')
+  <script src="/plugins/select2/js/select2.min.js"></script>
   <!-- sadece rakam kısıtlaması -->
   <script src="/admin-custom-template/form/only_number.js"></script>
   <!-- datetimepicker -->
@@ -55,4 +58,9 @@
   <script type="text/javascript" src="/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.js"></script>
   <!-- datepicker -->
   <script type="text/javascript" src="/admin-custom-template/datepicker/bootstrap-datepicker.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.js-example-basic-single').select2();
+    });
+  </script>
 @endsection

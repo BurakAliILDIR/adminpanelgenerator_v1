@@ -8,7 +8,10 @@ use App\Models\User;
 use App\Traits\ControllerTraits\HelperMethods;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
+use SebastianBergmann\Environment\Console;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -30,8 +33,23 @@ class UserController extends Controller
         foreach ($conditions as $column)
           $query->orWhere($column, 'like', '%' . $search . '%');
       })->orderByDESC('id')->paginate(7);
-    } else
+    } else {
       $data = $this->model->orderByDESC('id')->paginate(7);
+      Redis::set('name', 'Taylor');
+      $values = Redis::lrange('names', 5, 10);
+  dd(Redis::getName());
+      Redis::command('get', 'User');
+      $val = Redis::lrange('user', 5, 10);
+      dd($val);
+      Redis::pipeline(function ($pipe) use ($data) {
+        foreach ($data as $datum) {
+          $pipe->set("User:$datum->id", $datum);
+        }
+      });
+      
+      dd(Redis::get('User:child'));
+      
+    }
     return view('admin.user.index', compact('data'));
   }
   
@@ -43,8 +61,9 @@ class UserController extends Controller
     return view('admin.user.create', compact('model', 'roles'));
   }
   
-  public function store(CreateUserRequest $request)
+  public function store(Request $request)
   {
+    dd($request->all());
     $this->saveModelFilling($request);
     $this->model->assignRole($request->roles);
     $this->model->syncPermissions($this->model->getPermissionsViaRoles());

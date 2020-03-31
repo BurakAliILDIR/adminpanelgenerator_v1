@@ -11,9 +11,9 @@ return [
   | Bu hata ayıklama amaçları için yararlı olabilir.
   |                                                            
   kapatmak için:
-   'active' => env('LADA_CACHE_ACTIVE', true),
-  */
   'active' => false,
+  */
+   'active' => env('LADA_CACHE_ACTIVE', true),
   
   
   /*
@@ -86,6 +86,8 @@ return [
   | 
   |
   */
-  'exclude-tables' => [],
+  'exclude-tables' => [
+    'roles'
+  ],
 
 ];

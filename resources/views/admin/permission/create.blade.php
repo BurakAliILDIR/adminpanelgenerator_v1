@@ -1,5 +1,6 @@
 @extends('admin.layouts.master')
 @section('title', 'İzin Ekle')
+<link href="/plugins/select2/css/select2.min.css" rel="stylesheet" />
 @section('css')
 @endsection
 @section('content')
@@ -29,7 +30,7 @@
                'title' => 'İzin Adı',
                'attributes' => ['autofocus']
           ])@endcomponent
-          @component('components.form.partials.multi_checkbox',
+          @component('components.form.partials.multi_select',
           ['key' => 'roles',
           'value' => $roles,
           'checked' => Collect([]),
@@ -43,4 +44,5 @@
   </div>
 @endsection
 @section('js')
+  <script src="/plugins/select2/js/select2.min.js"></script>
 @endsection
