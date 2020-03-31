@@ -14,7 +14,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class $CLASS$ extends Model implements HasMedia
 {
-  use Relations, UUID, SourceSettings, MediaUploads, HasSlug, \Spiritix\LadaCache\Database\LadaCacheTrait, SoftDeletes;
+  use Relations, UUID, SourceSettings, MediaUploads, HasSlug, SoftDeletes;
 
   protected $table = '$CLASS$';
   

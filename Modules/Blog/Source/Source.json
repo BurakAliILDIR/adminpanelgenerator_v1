@@ -31,7 +31,7 @@
       "type": "text",
       "title": "Ad",
       "value": "",
-      "attributes": {},
+      "attributes": {"autofocus" : "true"},
       "rules": [
         "required"
       ],

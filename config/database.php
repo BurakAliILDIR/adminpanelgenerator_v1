@@ -121,13 +121,19 @@ return [
   'redis' => [
     
     'client' => env('REDIS_CLIENT', 'predis'),
+  
+    'options' => [
+      'cluster' => env('REDIS_CLUSTER', 'redis'),
+    ],
     
-    'default' => [
-      'host' => env('REDIS_HOST', 'localhost'),
-      'password' => env('REDIS_PASSWORD', null),
-      'port' => env('REDIS_PORT', 6379),
-      'database' => 0,
-      'read_write_timeout' => 60,
+    'clusters' => [
+      'default' => [
+        'host' => env('REDIS_HOST', 'localhost'),
+        'password' => env('REDIS_PASSWORD', null),
+        'port' => env('REDIS_PORT', 6379),
+        'database' => 0,
+        'read_write_timeout' => 60,
+      ],
     ],
     
     'cache' => [

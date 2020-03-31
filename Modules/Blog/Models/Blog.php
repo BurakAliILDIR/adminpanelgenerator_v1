@@ -8,13 +8,14 @@ use App\Traits\ModelTraits\SourceSettings;
 use App\Traits\ModelTraits\UUID;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Artisan;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 class Blog extends Model implements HasMedia
 {
-  use Relations, UUID, SourceSettings, MediaUploads, \Spiritix\LadaCache\Database\LadaCacheTrait, HasSlug, SoftDeletes;
+  use Relations, UUID, SourceSettings, MediaUploads, HasSlug, SoftDeletes;
 
   protected $table = 'Blog';
   

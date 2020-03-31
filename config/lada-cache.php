@@ -1,5 +1,5 @@
 <?php
-
+// TODO : LadaCache paket devre dışı bırakılmıştır.
 return [
   
   /*
@@ -11,10 +11,10 @@ return [
   | Bu hata ayıklama amaçları için yararlı olabilir.
   |                                                            
   kapatmak için:
-   'active' => false
-  */
    'active' => env('LADA_CACHE_ACTIVE', true),
-
+  */
+  'active' => false,
+  
   
   /*
   |--------------------------------------------------------------------------
@@ -25,7 +25,7 @@ return [
   | Üretimde bu değeri değiştirmeyin, beklenmedik davranışlara neden olacaktır.
   |
   */
-  'prefix' => 'lada:',
+  'prefix' => 'redis:',
   
   /*
   |--------------------------------------------------------------------------
@@ -37,7 +37,7 @@ return [
   | 
   |
   */
-  'expiration-time' => 86400,
+  'expiration-time' => 3600,
   
   /*
   |--------------------------------------------------------------------------
@@ -86,8 +86,6 @@ return [
   | 
   |
   */
-  'exclude-tables' => [
-    'roles', 'permissions', 'role_has_permissions', 'model_has_roles', 'model_has_permissions'
-  ],
+  'exclude-tables' => [],
 
 ];
