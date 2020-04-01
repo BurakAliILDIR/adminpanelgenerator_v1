@@ -34,21 +34,14 @@ class UserController extends Controller
           $query->orWhere($column, 'like', '%' . $search . '%');
       })->orderByDESC('id')->paginate(7);
     } else {
-      $data = $this->model->orderByDESC('id')->paginate(7);
-      Redis::set('name', 'Taylor');
-      $values = Redis::lrange('names', 5, 10);
-  dd(Redis::getName());
-      Redis::command('get', 'User');
-      $val = Redis::lrange('user', 5, 10);
-      dd($val);
-      Redis::pipeline(function ($pipe) use ($data) {
-        foreach ($data as $datum) {
-          $pipe->set("User:$datum->id", $datum);
-        }
-      });
+      $model_key = 'User';
+      $page = (\request()->get('page') ?? 1);
+      $prefix = config('cache.prefix') . ":$model_key:$page";
       
-      dd(Redis::get('User:child'));
-      
+      if ( !($data = unserialize(Redis::get($prefix)))) {
+        $data = $this->model->orderByDESC('id')->paginate(7);
+        Redis::set($prefix, serialize($data), 'EX', 3600);
+      }
     }
     return view('admin.user.index', compact('data'));
   }

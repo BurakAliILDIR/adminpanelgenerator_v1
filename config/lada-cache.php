@@ -1,5 +1,7 @@
 <?php
 // TODO : LadaCache paket devre dışı bırakılmıştır.
+use Illuminate\Support\Str;
+
 return [
   
   /*
@@ -25,7 +27,7 @@ return [
   | Üretimde bu değeri değiştirmeyin, beklenmedik davranışlara neden olacaktır.
   |
   */
-  'prefix' => 'redis:',
+  'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_cache:'),
   
   /*
   |--------------------------------------------------------------------------
@@ -86,8 +88,6 @@ return [
   | 
   |
   */
-  'exclude-tables' => [
-    'roles'
-  ],
+  'exclude-tables' => [],
 
 ];
