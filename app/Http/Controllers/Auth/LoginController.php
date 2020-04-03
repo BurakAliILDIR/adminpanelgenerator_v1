@@ -30,7 +30,7 @@ class LoginController extends Controller
   
   protected function authenticated(Request $request, $user)
   {
-    if ($user->email_verified_at && !$user->confirm) {
+    if (!$user->confirm) {
       Auth::logout();
       session()->flash('danger', 'Giriş yapabilmeniz için hesabınızın yönetici tarafından aktif edilmesi gerekmektedir.');
       return redirect()->route('login');

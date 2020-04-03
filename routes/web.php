@@ -5,9 +5,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-  $visits = Illuminate\Support\Facades\Redis::incr('visits');
-
-  return redirect()->route('user.index');
+  if (Auth::id())
+    return redirect()->route('user.index');
+  return redirect()->route('login');
 });
 
 Route::get('/a', function () {

@@ -34,14 +34,7 @@ class UserController extends Controller
           $query->orWhere($column, 'like', '%' . $search . '%');
       })->orderByDESC('id')->paginate(7);
     } else {
-      $model_key = 'User';
-      $page = (\request()->get('page') ?? 1);
-      $prefix = config('cache.prefix') . ":$model_key:$page";
-      
-      if ( !($data = unserialize(Redis::get($prefix)))) {
-        $data = $this->model->orderByDESC('id')->paginate(7);
-        Redis::set($prefix, serialize($data), 'EX', 3600);
-      }
+      $data = $this->model->orderByDESC('id')->paginate(7);
     }
     return view('admin.user.index', compact('data'));
   }
@@ -49,14 +42,13 @@ class UserController extends Controller
   public function create()
   {
     $model = $this->model;
-    $roles = Role::pluck('name', 'id');
-    
+    $roles = $this->getRoles();
+  
     return view('admin.user.create', compact('model', 'roles'));
   }
   
-  public function store(Request $request)
+  public function store(CreateUserRequest $request)
   {
-    dd($request->all());
     $this->saveModelFilling($request);
     $this->model->assignRole($request->roles);
     $this->model->syncPermissions($this->model->getPermissionsViaRoles());
@@ -82,7 +74,7 @@ class UserController extends Controller
   public function edit($id)
   {
     $model = User::findOrFail($id);
-    $roles = Role::pluck('name', 'id');
+    $roles = $this->getRoles();
     
     return view('admin.user.edit', compact('model', 'roles'));
   }
@@ -107,9 +99,8 @@ class UserController extends Controller
         $back = $indexURL;
       return redirect($back);
     }
-    $models = $this->model::whereIn('id', $request->checked);
+    $this->model::where('id', $request->checked)->delete();
     session()->flash('danger', 'Seçili kullanıcılar silindi.');
-    return $models->delete();
   }
   
   // store ve update fonksiyonları için ortak model doldurma.
@@ -118,13 +109,26 @@ class UserController extends Controller
     $this->model->name = $request->name;
     $this->model->surname = $request->surname;
     $this->model->email = $request->email;
-    $this->model->password = Hash::make($request->password);
     $this->model->bio = $request->bio;
     $this->model->phone = $request->phone;
     $this->model->gender = $request->gender;
     $this->model->date_of_birth = \Carbon\Carbon::parse($request->date_of_birth)->format('Y-m-d');
     $this->model->confirm = $request->confirm ?? 1;
+    if ($request->password)
+      $this->model->password = Hash::make($request->password);
     $this->insertToSingleMedia($request, 'profile');
     $this->model->saveOrFail();
+  }
+  
+  /**
+   * @return mixed
+   */
+  private function getRoles()
+  {
+    $roles = Role::pluck('name', 'id');
+    if (($key = array_search('super-admin', $roles->toArray())) !== false) {
+      unset($roles[$key]);
+    }
+    return $roles;
   }
 }

@@ -15,7 +15,7 @@ class UpdateUserRequest extends FormRequest
       'email' => 'required|email|unique:users,email,' . $this->id,
       'password' => 'nullable|min:8|confirmed|string',
       'bio' => 'nullable',
-      'phone' => 'nullable|phone:US,TR,GB', // ISO 3166-1 alpha-2 code country
+      'phone' => 'nullable|phone:TR,AUTO', // ISO 3166-1 alpha-2 code country
       'gender' => 'string',
       'date_of_birth' => 'date',
       'confirm' => 'boolean',

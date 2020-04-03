@@ -23,13 +23,15 @@ class RoleController extends Controller
   {
     $data = null;
     if ($search = \request()->input('ara')) {
-      $conditions = ['name'];
-      $data = $this->model->where(function ($query) use ($conditions, $search) {
-        foreach ($conditions as $column)
-          $query->orWhere($column, 'like', '%' . $search . '%');
-      })->orderByDESC('id')->paginate(7);
+      $data = $this->model->where('name', 'like', '%' . $search . '%')->orderByDESC('id')->paginate(7);
     } else
       $data = $this->model->orderByDESC('id')->paginate(7);
+    foreach ($data as $key => $val) {
+      if ($val['name'] === 'super-admin') {
+        unset($data[$key]);
+        break;
+      }
+    }
     
     return view('admin.role.index', compact('data'));
   }
@@ -47,7 +49,7 @@ class RoleController extends Controller
     $this->model->name = $request->name;
     $this->model->saveOrFail();
     $this->model->syncPermissions($request->permissions);
-
+    
     session()->flash('success', 'Rol başarıyla eklendi.');
     return redirect()->back();
   }
@@ -55,14 +57,24 @@ class RoleController extends Controller
   public function show($id)
   {
     $model = $this->model->findOrFail($id);
+    $this->isSuperAdmin($model->name);
     $users = User::role($model->name)->paginate(7);
     $permissions = $model->permissions()->paginate(7);
     return view('admin.role.show', compact('model', 'users', 'permissions'));
+    
+  }
+  
+  private function isSuperAdmin($role)
+  {
+    if ($role === 'super-admin')
+      abort(404);
   }
   
   public function edit($id)
   {
     $model = $this->model->findOrFail($id);
+    $this->isSuperAdmin($model->name);
+    
     $permissions = Permission::pluck('name', 'id');
     
     return view('admin.role.edit', compact('model', 'permissions'));
@@ -71,6 +83,8 @@ class RoleController extends Controller
   public function update(UpdateRoleRequest $request, $id)
   {
     $this->model = $this->model->findOrFail($id);
+    $this->isSuperAdmin($this->model->name);
+    
     $this->model->name = $request->name;
     $this->model->saveOrFail();
     $this->model->syncPermissions($request->permissions);
@@ -85,15 +99,19 @@ class RoleController extends Controller
   
   public function destroy(Request $request)
   {
-    if (($id = $request->id) && ($back = $request->back)) {
+    $this->model = $this->model->first('super-admin');
+    if (($id = $request->id) && ($back = $request->back) && ($request->id !== $this->model->id)) {
       $this->model->destroy($id);
       session()->flash('danger', 'Rol silindi.');
       if (($indexURL = route('role.index')) !== $back)
         $back = $indexURL;
       return redirect($back);
     }
-    $models = $this->model->whereIn('id', $request->checked);
-    session()->flash('danger', 'Seçili roller silindi.');
-    return $models->delete();
+    if (($selected = $request->checked)->contains($this->model->id)) {
+      $models = $this->model->whereIn('id', $selected);
+      session()->flash('danger', 'Seçili roller silindi.');
+      return $models->delete();
+    }
+    return redirect($back);
   }
 }

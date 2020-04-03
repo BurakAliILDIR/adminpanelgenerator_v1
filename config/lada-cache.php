@@ -1,5 +1,5 @@
 <?php
-// TODO : LadaCache paket devre dışı bırakılmıştır.
+// TODO : LadaCache paket devre dışı bırakılmıştır. Sebebi: Arama sorgusu çalıştırırken bütün cache'deki dataları getiriyor.
 use Illuminate\Support\Str;
 
 return [
@@ -13,10 +13,10 @@ return [
   | Bu hata ayıklama amaçları için yararlı olabilir.
   |                                                            
   kapatmak için:
-  'active' => false,
+  'active' => env('LADA_CACHE_ACTIVE', true),
+
   */
-   'active' => env('LADA_CACHE_ACTIVE', true),
-  
+  'active' => env('LADA_CACHE_ACTIVE', true),
   
   /*
   |--------------------------------------------------------------------------
@@ -36,7 +36,6 @@ return [
   |
   | Varsayılan olarak, bu değer null olarak ayarlanırsa, önbelleğe alınan öğelerin süresi asla dolmaz.
   | Ölü verilerden korkuyorsanız veya disk alanını önemsiyorsanız, bu değeri 604800 (7 gün) gibi bir değere ayarlamak iyi bir fikir olabilir.
-  | 
   |
   */
   'expiration-time' => 3600,
@@ -50,7 +49,6 @@ return [
   | Bu, önbelleğe daha düşük bir ayrıntı düzeyi kullanmasını söyler ve bir veritabanı sorgusu için etiketleri oluştururken
   | satır birincil anahtarlarını dikkate almaz. Bu, önbelleğin verimliliğini önemli ölçüde azaltacağından,
   | üretim ortamında yapılması önerilmez.
-  | 
   |
   */
   'consider-rows' => true,
@@ -65,11 +63,9 @@ return [
   | Daha sonra sorgu burada belirtilmeyen bir tablo içerdiğinde önbelleğe alınmaz. Bu özelliği etkinleştirdiyseniz,
   | "exclude-tables" değeri göz ardı edilir ve hiçbir etkisi olmaz.
   | 
-  |
   | Yapılandırmadaki sabit kodlama tablosu isimleri yerine, iyi bir
   | Aşağıdaki örnekte olduğu gibi yeni bir model örneği başlatma ve tablo adını oradan alma alıştırması:
   | 
-  |
   | 'include-tables' => [
   |     (new \App\Models\User())->getTable(),
   |     (new \App\Models\Post())->getTable(),
@@ -85,9 +81,7 @@ return [
   |
   | Bazı tablolar hariç tüm tabloları önbelleğe almak istiyorsanız, bunları bu diziye koyun.
   | Bir sorgu burada belirtilen en az bir etiket içerdiğinde önbelleğe alınmaz.
-  | 
   |
   */
   'exclude-tables' => [],
-
 ];

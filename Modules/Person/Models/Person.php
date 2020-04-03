@@ -14,7 +14,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class Person extends Model implements HasMedia
 {
-  use Relations, UUID, SourceSettings, MediaUploads, \Spiritix\LadaCache\Database\LadaCacheTrait, HasSlug, SoftDeletes;
+  use Relations, UUID, SourceSettings, MediaUploads, HasSlug, SoftDeletes;
 
   protected $table = 'Person';
   
