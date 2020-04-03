@@ -106,7 +106,7 @@
           <div class="col-md-3 hidden-sm">
             <p class="text-muted m-t text-right">
               {{$data->firstItem() ? 'Gösterimde olan: ' . $data->firstItem() . ' - ' . $data->lastItem() . ' |' : '' }}
-              {{ ($total = $data->total()) !== 0 ? 'Toplam kayıt: '. $total : 'Kayıt bulunmamaktadır.' }}</p>
+              {{ ($total = $data->total()) !== 1 ? 'Toplam kayıt: '. ($total - 1) : 'Kayıt bulunmamaktadır.' }}</p>
           </div>
         </div>
       </footer>

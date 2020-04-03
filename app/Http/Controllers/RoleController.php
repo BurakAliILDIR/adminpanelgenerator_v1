@@ -64,12 +64,6 @@ class RoleController extends Controller
     
   }
   
-  private function isSuperAdmin($role)
-  {
-    if ($role === 'super-admin')
-      abort(404);
-  }
-  
   public function edit($id)
   {
     $model = $this->model->findOrFail($id);
@@ -99,7 +93,7 @@ class RoleController extends Controller
   
   public function destroy(Request $request)
   {
-    $this->model = $this->model->first('super-admin');
+    $this->model = $this->model->where('name', 'super-admin')->first();
     if (($id = $request->id) && ($back = $request->back) && ($request->id !== $this->model->id)) {
       $this->model->destroy($id);
       session()->flash('danger', 'Rol silindi.');
@@ -113,5 +107,12 @@ class RoleController extends Controller
       return $models->delete();
     }
     return redirect($back);
+  }
+  
+  // eğer erişilmeye çalışan rol super-admin ise engelle.
+  private function isSuperAdmin($role)
+  {
+    if ($role === 'super-admin')
+      abort(404);
   }
 }
