@@ -35,7 +35,7 @@ return [
   |--------------------------------------------------------------------------
   |
   | Varsayılan olarak, bu değer null olarak ayarlanırsa, önbelleğe alınan öğelerin süresi asla dolmaz.
-  | Ölü verilerden korkuyorsanız veya disk alanını önemsiyorsanız, bu değeri 604800 (7 gün) gibi bir değere ayarlamak iyi bir fikir olabilir.
+  | Ölü verilerden korkuyorsanız veya disk alanını önemsiyorsanız, bu değeri 604800 (7 gün = 3600 * 24 * 7) gibi bir değere ayarlamak iyi bir fikir olabilir.
   |
   */
   'expiration-time' => 3600,

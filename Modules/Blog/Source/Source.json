@@ -1,6 +1,8 @@
 {
   "paginate": 7,
-  "slugs": ["ad"],
+  "slugs": [
+    "ad"
+  ],
   "titles": {
     "index": "Blog Listesi",
     "show": "Blog Detay",
@@ -16,7 +18,9 @@
     "update": "blog.update",
     "delete": "blog.destroy"
   },
-  "searchable": [],
+  "searchable": [
+    "ad"
+  ],
   "fields": {
     "id": {
       "type": "hidden",
@@ -31,7 +35,9 @@
       "type": "text",
       "title": "Ad",
       "value": "",
-      "attributes": {"autofocus" : "true"},
+      "attributes": {
+        "autofocus": "true"
+      },
       "rules": [
         "required"
       ],

@@ -5,8 +5,6 @@ namespace Modules\Blog\Http\Controllers;
 use App\Traits\ControllerTraits\HelperMethods;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Modules\Blog\Models\Blog;
 use Modules\Blog\Http\Requests\CreateBlogRequest;
@@ -36,7 +34,7 @@ class BlogController extends Controller
       })->orderByDESC('id')->paginate($paginate);
     } else
       $data = $this->model->orderByDESC('id')->paginate($paginate);
-    
+
     $settings = [
       'operation' => 'list',
       'title' => $this->jsonSettings['titles']['index'],

@@ -8,10 +8,6 @@ use App\Models\User;
 use App\Traits\ControllerTraits\HelperMethods;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Str;
-use SebastianBergmann\Environment\Console;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -43,7 +39,7 @@ class UserController extends Controller
   {
     $model = $this->model;
     $roles = $this->getRoles();
-  
+    
     return view('admin.user.create', compact('model', 'roles'));
   }
   
@@ -119,16 +115,13 @@ class UserController extends Controller
     $this->insertToSingleMedia($request, 'profile');
     $this->model->saveOrFail();
   }
-  
-  /**
-   * @return mixed
-   */
+
+  // super-admin rolünü filtreliyor ve formlarda görülmesini engelliyor.
   private function getRoles()
   {
     $roles = Role::pluck('name', 'id');
-    if (($key = array_search('super-admin', $roles->toArray())) !== false) {
+    if (($key = array_search('super-admin', $roles->toArray())) !== false)
       unset($roles[$key]);
-    }
     return $roles;
   }
 }
