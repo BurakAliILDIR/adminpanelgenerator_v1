@@ -182,7 +182,7 @@ return [
   | Caching
   |--------------------------------------------------------------------------
   |
-  | Here is the config for setting up caching feature.
+  | İşte önbellekleme özelliğini ayarlamak için yapılandırma.
   |
   */
   'cache' => [
@@ -192,9 +192,8 @@ return [
   ],
   /*
   |--------------------------------------------------------------------------
-  | Choose what laravel-modules will register as custom namespaces.
-  | Setting one to false will require you to register that part
-  | in your own Service Provider class.
+  | Hangi laravel modüllerinin özel ad alanları olarak kaydedileceğini seçin.
+  | Birini false olarak ayarlamak, bu bölümü kendi Servis Sağlayıcı sınıfınıza kaydetmenizi gerektirir.
   |--------------------------------------------------------------------------
   */
   'register' => [
@@ -212,9 +211,8 @@ return [
   | Activators
   |--------------------------------------------------------------------------
   |
-  | You can define new types of activators here, file, database etc. The only
-  | required parameter is 'class'.
-  | The file activator will store the activation status in storage/installed_modules
+  | Burada yeni tip aktivatörler, dosya, veritabanı vb. Tanımlayabilirsiniz. Gerekli olan tek parametre 'sınıf'tır.
+  | Dosya aktivatörü aktivasyon durumunu storage/installed_modules depolar
   */
   'activators' => [
     'file' => [

@@ -1,0 +1,13 @@
+{
+    "name": "Deneme",
+    "alias": "deneme",
+    "description": "",
+    "keywords": [],
+    "order": 0,
+    "providers": [
+        "Modules\\Deneme\\Providers\\DenemeServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

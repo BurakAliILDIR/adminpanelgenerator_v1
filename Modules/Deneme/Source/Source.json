@@ -1,22 +1,22 @@
 {
   "paginate": 7,
-  "slugs": ["ad"],
+  "slugs": [],
   "titles": {
-    "index": "Person Listesi",
-    "show": "Person Detay",
-    "create": "Person Ekle",
-    "edit": "Person Düzenle"
+    "index": "Deneme Listesi",
+    "show": "Deneme Detay",
+    "create": "Deneme Ekle",
+    "edit": "Deneme Düzenle"
   },
   "routes": {
-    "index": "person.index",
-    "create": "person.create",
-    "store": "person.store",
-    "show": "person.show",
-    "edit": "person.edit",
-    "update": "person.update",
-    "delete": "person.destroy"
+    "index": "deneme.index",
+    "create": "deneme.create",
+    "store": "deneme.store",
+    "show": "deneme.show",
+    "edit": "deneme.edit",
+    "update": "deneme.update",
+    "delete": "deneme.destroy"
   },
-  "searchable": ["ad"],
+  "searchable": [],
   "fields": {
     "id": {
       "type": "hidden",
@@ -27,20 +27,7 @@
       "list": false,
       "detail": false
     },
-    "ad": {
-      "type": "text",
-      "title": "Ad",
-      "value": "",
-      "attributes": {},
-      "rules": [
-        "required"
-      ],
-      "multiple": false,
-      "create": true,
-      "update": true,
-      "list": true,
-      "detail": true
-    },
+    
     "created_at": {
       "type": "datetime",
       "title": "Eklenme Tarihi",

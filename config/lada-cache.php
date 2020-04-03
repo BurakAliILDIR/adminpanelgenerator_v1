@@ -1,6 +1,4 @@
 <?php
-// TODO : LadaCache paket devre dışı bırakılmıştır. Sebebi: Arama sorgusu çalıştırırken bütün cache'deki dataları getiriyor.
-use Illuminate\Support\Str;
 
 return [
   
@@ -27,7 +25,7 @@ return [
   | Üretimde bu değeri değiştirmeyin, beklenmedik davranışlara neden olacaktır.
   |
   */
-  'prefix' => env('CACHE_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_cache:'),
+  'prefix' => env('CACHE_PREFIX', Illuminate\Support\Str::slug(env('APP_NAME', 'laravel'), '_') . '_cache:'),
   
   /*
   |--------------------------------------------------------------------------

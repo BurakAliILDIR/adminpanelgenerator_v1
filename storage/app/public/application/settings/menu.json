@@ -1,0 +1,14 @@
+{
+  "Deneme": {
+    "title": "Satış İşlemleri",
+    "icon": "columns"
+  },
+  "Blog": {
+    "title": "Blog",
+    "icon": "flask"
+  },
+  "Person": {
+    "title": "İnsan Kaynakları",
+    "icon": "angle-up"
+  }
+}
