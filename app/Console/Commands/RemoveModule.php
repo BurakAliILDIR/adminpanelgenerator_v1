@@ -41,9 +41,9 @@ class RemoveModule extends Command
     // burada bu json dosyasına gelen $name e göre menü alanı silinecek. Aşağıdaki kodlar eklemeden alınmıştır.
     $menu_path = storage_path('app\public\application\settings\menu.json');
     $data = json_decode(file_get_contents($menu_path), true);
-    array_push($data, ['name' => $name, 'title' => $name, 'icon' => null]);
+    foreach ($data as $key => $val) {
+      if ($val['name'] === $name) unset($data[$key]);
+    }
     file_put_contents($menu_path, json_encode($data));
-    
-    
   }
 }
