@@ -24,7 +24,7 @@ class CreateModule extends Command
   
   public function handle()
   {
-  
+
 //    $Folders = [
 //      "deneme_config" => ["path" => "DenemeConfig"],
 //      "deneme_console" => ["path" => "DenemeConsole"]
@@ -63,5 +63,11 @@ class CreateModule extends Command
         (new Permission)->create(['name' => $p_name]);
       }
     }
+    
+    // burada bu json dosyasına gelen $name e göre yeni bir satır keyi eklenecek.
+    $menu_path = storage_path('app\public\application\settings\menu.json');
+    $data = json_decode(file_get_contents($menu_path), true);
+    array_push($data, ['name' => $name, 'title' => $name, 'icon' => null]);
+    file_put_contents($menu_path, json_encode($data));
   }
 }

@@ -1,0 +1,58 @@
+{
+  "paginate": 7,
+  "slugs": [],
+  "titles": {
+    "index": "Deneme2 Listesi",
+    "show": "Deneme2 Detay",
+    "create": "Deneme2 Ekle",
+    "edit": "Deneme2 Düzenle"
+  },
+  "routes": {
+    "index": "deneme2.index",
+    "create": "deneme2.create",
+    "store": "deneme2.store",
+    "show": "deneme2.show",
+    "edit": "deneme2.edit",
+    "update": "deneme2.update",
+    "delete": "deneme2.destroy"
+  },
+  "searchable": [],
+  "fields": {
+    "id": {
+      "type": "hidden",
+      "title": "Kimlik",
+      "value": "",
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": false
+    },
+    
+    "created_at": {
+      "type": "datetime",
+      "title": "Eklenme Tarihi",
+      "name": "created_at",
+      "rules": [
+        "required"
+      ],
+      "multiple": false,
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": true
+    },
+    "updated_at": {
+      "type": "datetime",
+      "title": "Son Düzenlenme Tarihi",
+      "name": "updated_at",
+      "rules": [
+        "required"
+      ],
+      "multiple": false,
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": false
+    }
+  }
+}

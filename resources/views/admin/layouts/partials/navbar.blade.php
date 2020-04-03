@@ -64,16 +64,15 @@
               \Illuminate\Support\Facades\Redis::set($menus_path, serialize($menus));
             }
             ?>
-            @foreach($menus as $key => $val)
-              @can($key.'.index')
-              <li>
-                <a href="{{ route(strtolower($key).'.index') }}">
-                  <i class="fa fa-{{ $val['icon'] }} icon">
-                    <b class="bg-info"></b>
-                  </i>
-                  <span>{!! $val['title'] !!}</span>
-                </a>
-              </li>
+            @foreach($menus as $val)
+              <?php $menu_name = $val['name']; $menu_icon = $val['icon']; $menu_title = $val['title'];  ?>
+              @can($menu_name . '.index')
+                <li>
+                  <a href="{{ route(strtolower($menu_name).'.index') }}">
+                    <i class="fa fa-{{ $menu_icon ?? 'angle-right' }} icon"><b class="bg-info"></b></i>
+                    <span>{!! $menu_title !!}</span>
+                  </a>
+                </li>
               @endcan
             @endforeach
             {{--<li class="active">

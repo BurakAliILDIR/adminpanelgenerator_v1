@@ -23,7 +23,7 @@ class RemoveModule extends Command
   public function handle()
   {
     Artisan::call('cache:forget spatie.permission.cache');
-  
+    
     // girilen değeri alma.
     $name = $this->argument('name');
     if (($module = Module::find($name))) {
@@ -32,13 +32,18 @@ class RemoveModule extends Command
         Artisan::call('module:migrate-reset ' . $name);
         
         $permissions = ['index', 'detail', 'create', 'update', 'delete'];
-        foreach ($permissions as $permission) {
-          (new Permission)->where(['name' => $name . '.' . $permission])->sharedLock()->delete();
-        }
+        foreach ($permissions as $permission) (new Permission)->where(['name' => $name . '.' . $permission])->sharedLock()->delete();
         
         $module->delete();
       }
     }
+    
+    // burada bu json dosyasına gelen $name e göre menü alanı silinecek. Aşağıdaki kodlar eklemeden alınmıştır.
+    $menu_path = storage_path('app\public\application\settings\menu.json');
+    $data = json_decode(file_get_contents($menu_path), true);
+    array_push($data, ['name' => $name, 'title' => $name, 'icon' => null]);
+    file_put_contents($menu_path, json_encode($data));
+    
     
   }
 }
