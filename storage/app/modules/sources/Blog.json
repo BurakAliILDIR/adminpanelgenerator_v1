@@ -1,13 +1,13 @@
 {
-  "paginate": 7,
+  "paginate": "7",
   "slugs": [
     "ad"
   ],
   "titles": {
-    "index": "Blog Listesi",
+    "index": "Blog Listele",
     "show": "Blog Detay",
     "create": "Blog Ekle",
-    "edit": "Blog Düzenle"
+    "edit": "Blog D\u00fczenle"
   },
   "routes": {
     "index": "blog.index",
@@ -50,11 +50,10 @@
     "count_id": {
       "id": "count_id",
       "type": "select",
-      "title": "Öylesine",
+      "title": "\u00d6ylesine",
       "name": "count_id",
       "value": null,
-      "rules": [
-      ],
+      "rules": [],
       "multiple": false,
       "relationship": {
         "type": "hasOne",
@@ -71,7 +70,7 @@
           "buy_price"
         ]
       },
-      "attributes": {},
+      "attributes": [],
       "create": true,
       "update": true,
       "list": true,
@@ -81,7 +80,7 @@
       "type": "multi_image",
       "title": "Resimler",
       "count": 10,
-      "attributes": {},
+      "attributes": [],
       "multiple": true,
       "create": false,
       "update": false,
@@ -103,7 +102,7 @@
     },
     "updated_at": {
       "type": "datetime",
-      "title": "Son Düzenlenme Tarihi",
+      "title": "D\u00fczenlenme Tarihi",
       "name": "updated_at",
       "rules": [
         "required"

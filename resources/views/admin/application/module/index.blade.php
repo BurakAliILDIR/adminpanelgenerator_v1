@@ -10,7 +10,7 @@
         <div class="row m-t-sm">
           <div class="col-sm-7 m-b-xs">
             <a href="{{ route('modules.create') }}"
-               class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> Yeni Kullanıcı</a>
+               class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> Yeni Modül</a>
           </div>
 
         </div>
@@ -34,9 +34,9 @@
                 <tr>
                   <td>{!! $row->getName() !!}</td>
                   <td>
-                    <a class="btn btn-sm btn-icon btn-warning btn-rounded"
+                    <a class="btn btn-sm btn-warning btn-rounded"
                        href="{{ route('modules.show', $module_name) }}">
-                      <i class="fa fa-search"></i>
+                      <i class="fa fa-search"></i> Alanlar
                     </a>
                   </td>
                   <td>
@@ -46,13 +46,14 @@
                     </a>
                   </td>
                   <td>
-                    <a class="btn btn-sm btn-icon btn-danger btn-rounded"
-                       onclick="if(confirm('{{ $module_name }} modülünü silmek istediğinize emin misiniz?\nUYARI: Daha önce yaptığınız bütün çalışmalarınız kaybolacaktır.')){
-                         event.preventDefault();document.getElementById('{{ 'delete'.$module_name }}').submit();}">
-                      <i class="fa fa-trash"></i>
-                    </a>
-                    {{ Form::open(['route' => ['modules.destroy', $module_name], 'style' => 'display: none;', 'id' => 'delete'.$module_name, 'method' => 'delete']) }}
-                    {!! Form::close() !!}
+                    <form action="{{ route('modules.destroy', $module_name) }}" method="post"
+                          style="display: inline-block;">
+                      @method('DELETE') @csrf
+                      <button type="submit" class="btn btn-sm btn-danger btn-rounded"
+                              onclick="return confirm('{{ $module_name }} modülünü silmek istediğinize emin misiniz?\n\nUYARI: Daha önce yaptığınız bütün çalışmalarınız kaybolacaktır.')">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </form>
                   </td>
                 </tr>
               @endforeach

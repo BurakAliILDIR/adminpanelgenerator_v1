@@ -15,6 +15,13 @@ Auth::routes(['verify' => true]);
 Route::prefix('application')->middleware(['verified', 'permission:Application.Settings'])->group(function () {
   Route::resource('modules', 'Application\ModuleController');
   Route::get('loglar', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs');
+  // Module içindeki alanların route ları. 
+  Route::get('fields', 'Application\FieldController@create')->name('fields.create');
+  Route::post('fields/{module}', 'Application\FieldController@store')->name('fields.store');
+  Route::get('fields/{module}/{key}', 'Application\FieldController@show')->name('fields.show');
+  Route::get('fields/{module}/{key}/duzenle', 'Application\FieldController@edit')->name('fields.edit');
+  Route::put('fields/{module}/{key}', 'Application\FieldController@update')->name('fields.update');
+  Route::delete('fields/{module}/{key}', 'Application\FieldController@destroy')->name('fields.destroy');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

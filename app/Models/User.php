@@ -19,7 +19,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
   use Notifiable, Relations, UUID, HasRoles, SourceSettings, MediaUploads, CustomModelTools, SoftDeletes;
   
-  private $path = 'App\Source\User.json';
+  private $source = 'User.json';
   
   // kendi media ayar dizisini kullanacağı için. CustomModelTools ile beraber kullanılır.
   private $customMediaUploads = true;

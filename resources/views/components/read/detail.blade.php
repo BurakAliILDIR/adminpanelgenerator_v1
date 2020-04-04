@@ -30,16 +30,17 @@ $class_name = class_basename($model);
             </a>
           @endcan
           @can($class_name.'.delete')
-            <a class="btn btn-xs  btn-danger btn-rounded"
-               onclick="if(confirm('Kaydı silmek istediğinize emin misiniz?')){
-                 event.preventDefault();document.getElementById('{{ 'delete'.$model['id'] }}').submit();}">
-              <i class="fa fa-trash"></i>
-              Bu Kaydı Sil
-            </a>
-            {{ Form::open(['route' => [$route['delete']], 'style' => 'display: none;', 'id'=> 'delete'.$model['id'], 'method' => 'delete']) }}
-            <input type="hidden" name="id" value="{{ $model['id'] }}">
-            <input type="hidden" name="back" value="{{ URL::previous() }}">
-            {!! Form::close() !!}
+            <form action="{{ route($route['delete']) }}" method="post"
+                  style="display: inline-block;">
+              @method('DELETE') @csrf
+              <input type="hidden" name="id" value="{{ $model['id'] }}">
+              <input type="hidden" name="back" value="{{ URL::previous() }}">
+              <button type="submit" class="btn btn-xs btn-danger btn-rounded"
+                      onclick="return confirm('Kaydı silmek istediğinize emin misiniz?')">
+                <i class="fa fa-trash"></i>
+                Bu Kaydı Sil
+              </button>
+            </form>
           @endcan
         </div>
       </div>

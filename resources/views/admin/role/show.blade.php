@@ -28,7 +28,7 @@
               <input type="hidden" name="id" value="{{ $model['id'] }}">
               <input type="hidden" name="back" value="{{ URL::previous() }}">
               <button type="submit" class="btn btn-xs btn-danger btn-rounded"
-                      onclick="confirm('Kaydı silmek istediğinize emin misiniz?')">
+                      onclick="return confirm('Kaydı silmek istediğinize emin misiniz?')">
                 <i class="fa fa-trash"></i>
                 Bu Kaydı Sil
               </button>

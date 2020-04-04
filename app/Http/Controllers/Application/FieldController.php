@@ -7,20 +7,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Nwidart\Modules\Facades\Module;
 
-class ModuleController extends Controller
+class FieldController extends Controller
 {
-  public function index()
-  {
-    $data = Module::all();
-    return view('admin.application.module.index', compact('data'));
-  }
-  
-  public function create()
+  public function create($module_name)
   {
     return view('admin.application.module.create');
   }
   
-  public function store(Request $request)
+  public function store(Request $request, $module_name)
   {
     Artisan::call("module:create $request->name");
     
@@ -28,27 +22,27 @@ class ModuleController extends Controller
     return redirect()->route('modules.index');
   }
   
-  public function show($name)
+  public function show($module_name, $key)
   {
-    $module = Module::findOrFail($name);
-    $path = storage_path("app\modules\sources\\$name.json");
+    $module = Module::findOrFail($module_name);
+    $path = storage_path("app\modules\sources\\$module_name.json");
     $fields = json_decode(file_get_contents($path), true)['fields'];
     return view('admin.application.field.index', compact('module', 'fields'));
   }
   
-  public function edit($name)
+  public function edit($module_name, $key)
   {
     // TODO burada temel module özellikleri düzenlenecek. Fields lar için ayrı bir pencere açılacak
-    $path = storage_path("app\modules\sources\\$name.json");
+    $path = storage_path("app\modules\sources\\$module_name.json");
     $source = json_decode(file_get_contents($path), true);
     return view('admin.application.module.edit', compact('source', 'name'));
   }
   
-  public function update(Request $request, $name)
+  public function update(Request $request, $module_name, $key)
   {
-    $path = storage_path("app\modules\sources\\$name.json");
+    $path = storage_path("app\modules\sources\\$module_name.json");
     $source = json_decode(file_get_contents($path), true);
-
+    
     $source['paginate'] = $request->paginate;
     $source['searchable'] = $request->searchable;
     $source['slugs'] = $request->slugs;
@@ -64,11 +58,16 @@ class ModuleController extends Controller
     return redirect()->back();
   }
   
-  public function destroy($name)
+  public function destroy($module_name, $key)
   {
-    // TODO : Modülün json dosyasını oluşturmak için bir yol bulunacak. 
-    Artisan::call("module:remove $name");
-    session()->flash('danger', "$name modülü silindi.");
+    $path = storage_path("app\modules\sources\\$module_name.json");
+    $source = json_decode(file_get_contents($path), true);
+    $fields = $source['fields'];
+    unset($fields[$key]);
+    $source['fields'] = $fields;
+    file_put_contents($path, json_encode($source));
+  
+    session()->flash('danger', "$module_name modülündeki $key alanı silindi.");
     return redirect()->back();
   }
 }
