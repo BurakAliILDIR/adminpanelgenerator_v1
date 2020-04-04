@@ -25,7 +25,7 @@ class Blog extends Model implements HasMedia
 
   protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_at'];
   
-  private $path = 'Modules\Blog\Source\Source.json';
+  private $source = 'Blog.json';
   
   public function getSlugOptions() : SlugOptions
   {

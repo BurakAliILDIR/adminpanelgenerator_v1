@@ -26,6 +26,7 @@
     "propaganistas/laravel-phone": "^4.2",
     "rap2hpoutre/laravel-log-viewer": "^1.4",
     "spatie/laravel-medialibrary": "^7.0.0",
+    "spatie/laravel-menu": "^3.5",
     "spatie/laravel-permission": "^3.11",
     "spatie/laravel-searchable": "^1.6",
     "spatie/laravel-sluggable": "^2.4",

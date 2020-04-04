@@ -10,16 +10,14 @@ Route::get('/', function () {
   return redirect()->route('login');
 });
 
-Route::get('/a', function () {
-  Auth::logout();
-  
-  return redirect()->route('login');
-});
-
 Auth::routes(['verify' => true]);
 
+Route::prefix('application')->middleware(['verified', 'permission:Application.Settings'])->group(function () {
+  Route::resource('modules', 'Application\ModuleController');
+  Route::get('loglar', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs');
+});
+
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 Route::prefix('image')->middleware(['verified'])->group(function () {
   Route::post('/upload/{id}/{collection}/{path}', 'ImageController@imageUpload')->name('imageUpload');
@@ -33,7 +31,6 @@ Route::prefix('profil')->middleware(['verified'])->group(function () {
   Route::post('/image-upload/{collection}', 'ProfileController@imageUpload')->name('profileImageUpload');
   Route::delete('image-delete', 'ProfileController@imageDelete')->name('profileImageDelete');
 });
-
 
 Route::prefix('roller')->middleware(['verified'])->group(function () {
   Route::get('/', 'RoleController@index')->middleware('permission:Role.index')->name('role.index');
@@ -57,11 +54,8 @@ Route::prefix('kullanicilar')->middleware(['verified'])->group(function () {
 
 Route::prefix('izinler')->middleware(['verified'])->group(function () {
   Route::get('/', 'PermissionController@index')->middleware('permission:Permission.index')->name('permission.index');
-  //Route::get('/ekle', 'PermissionController@create')->name('permission.create');
-  //Route::post('/', 'PermissionController@store')->name('permission.store');
   Route::get('/{id}', 'PermissionController@show')->middleware('permission:Permission.detail')->name('permission.show');
   Route::get('/{id}/duzenle', 'PermissionController@edit')->middleware('permission:Permission.update')->name('permission.edit');
   Route::put('/{id}', 'PermissionController@update')->middleware('permission:Permission.update')->name('permission.update');
-  //Route::delete('/', 'PermissionController@destroy')->name('permission.destroy');
 });
 

@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Traits\ConsoleTraits\ModuleCommandHelpers;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Storage;
 use Nwidart\Modules\Facades\Module;
 use Spatie\Permission\Models\Permission;
 
@@ -36,14 +36,16 @@ class RemoveModule extends Command
         
         $module->delete();
       }
+      
+      // burada bu json dosyasına gelen $name e göre menü alanı silinecek. önce cache i temizle.
+      \Illuminate\Support\Facades\Redis::del(config('cache.prefix') . ':menus');
+      $menu_path = storage_path('app\public\application\settings\menu.json');
+      $data = json_decode(file_get_contents($menu_path), true);
+      foreach ($data as $key => $val) if ($val['name'] === $name) unset($data[$key]);
+      
+      file_put_contents($menu_path, json_encode($data));
+      
+      Storage::delete("modules/sources/$name.json");
     }
-    
-    // burada bu json dosyasına gelen $name e göre menü alanı silinecek. Aşağıdaki kodlar eklemeden alınmıştır.
-    $menu_path = storage_path('app\public\application\settings\menu.json');
-    $data = json_decode(file_get_contents($menu_path), true);
-    foreach ($data as $key => $val) {
-      if ($val['name'] === $name) unset($data[$key]);
-    }
-    file_put_contents($menu_path, json_encode($data));
   }
 }

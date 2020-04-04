@@ -1,6 +1,5 @@
 {
     "Sales": true,
     "Blog": true,
-    "Person": true,
-    "Deneme": true
+    "Person": true
 }

@@ -24,7 +24,7 @@ class Person extends Model implements HasMedia
 
   protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_at'];
   
-  private $path = 'Modules\Person\Source\Source.json';
+  private $source = 'Person.json';
   
   public function getSlugOptions() : SlugOptions
   {

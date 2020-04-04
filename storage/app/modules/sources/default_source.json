@@ -1,22 +1,26 @@
 {
   "paginate": 7,
-  "slugs": [],
+  "slugs": [
+    "name"
+  ],
   "titles": {
-    "index": "Deneme Listesi",
-    "show": "Deneme Detay",
-    "create": "Deneme Ekle",
-    "edit": "Deneme Düzenle"
+    "index": " Listesi",
+    "show": " Detay",
+    "create": " Ekle",
+    "edit": " Düzenle"
   },
   "routes": {
-    "index": "deneme.index",
-    "create": "deneme.create",
-    "store": "deneme.store",
-    "show": "deneme.show",
-    "edit": "deneme.edit",
-    "update": "deneme.update",
-    "delete": "deneme.destroy"
+    "index": ".index",
+    "create": ".create",
+    "store": ".store",
+    "show": ".show",
+    "edit": ".edit",
+    "update": ".update",
+    "delete": ".destroy"
   },
-  "searchable": [],
+  "searchable": [
+    "name"
+  ],
   "fields": {
     "id": {
       "type": "hidden",
@@ -27,7 +31,22 @@
       "list": false,
       "detail": false
     },
-    
+    "name": {
+      "type": "text",
+      "title": "Ad",
+      "value": "",
+      "attributes": {
+        "autofocus": "true"
+      },
+      "rules": [
+        "required"
+      ],
+      "multiple": false,
+      "create": true,
+      "update": true,
+      "list": true,
+      "detail": true
+    },
     "created_at": {
       "type": "datetime",
       "title": "Eklenme Tarihi",
@@ -43,7 +62,7 @@
     },
     "updated_at": {
       "type": "datetime",
-      "title": "Son Düzenlenme Tarihi",
+      "title": "Düzenlenme Tarihi",
       "name": "updated_at",
       "rules": [
         "required"

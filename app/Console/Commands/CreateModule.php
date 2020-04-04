@@ -24,26 +24,14 @@ class CreateModule extends Command
   
   public function handle()
   {
-
-//    $Folders = [
-//      "deneme_config" => ["path" => "DenemeConfig"],
-//      "deneme_console" => ["path" => "DenemeConsole"]
-//    ];
-//    $Modul = Module::find($Name);
-//    foreach ($Folders as $key => $folder){
-//      $Path = $Modul->getPath() . "/" . $folder["path"];
-//        dump($Path);
-//        File::makeDirectory($Path);
-////        Storage::makeDirectory($Path);
-//    }
-    
-    
     Artisan::call('cache:forget spatie.permission.cache');
     
     // girilen değeri alma.
     $name = $this->argument('name');
     // gelen tüm değerleri array olarak alma
     if ( !Module::find($name)) {
+      // kaynak dosyası oluşturur.
+      $this->source_generator($name);
       Artisan::call('module:make ' . $name);
       Artisan::call('module:make-model ' . $name . ' ' . $name);
       Artisan::call('module:make-migration create_' . $name . '_table ' . $name);
@@ -52,22 +40,49 @@ class CreateModule extends Command
       Artisan::call('module:make-request Update' . $name . 'Request ' . $name);
       
       // eğer daha önceden tablo oluşturulmuşsa migrate etme.
-      if ( !Schema::hasTable($name)) {
-        Artisan::call('module:migrate ' . $name);
+      if ( !Schema::hasTable($name)) Artisan::call('module:migrate ' . $name);
+      
+      $permissions = ['index', 'detail', 'create', 'update', 'delete', 'imageUpload', 'imageDelete'];
+      foreach ($permissions as $permission) {
+        $p_name = $name . '.' . $permission;
+        if ( !Permission::where('name', $p_name)->exists()) (new Permission)->create(['name' => $p_name]);
       }
+      
+      // burada bu json dosyasına gelen $name e göre yeni bir satır keyi eklenecek.
+      // Önce cache i temizle.
+      \Illuminate\Support\Facades\Redis::del(config('cache.prefix') . ':menus');
+      
+      $menu_path = storage_path('app\public\application\settings\menu.json');
+      $data = json_decode(file_get_contents($menu_path), true);
+      array_push($data, ['name' => $name, 'title' => $name, 'icon' => null]);
+      file_put_contents($menu_path, json_encode($data));
     }
-    $permissions = ['index', 'detail', 'create', 'update', 'delete', 'imageUpload', 'imageDelete'];
-    foreach ($permissions as $permission) {//
-      $p_name = $name . '.' . $permission;
-      if ( !Permission::where('name', $p_name)->exists()) {
-        (new Permission)->create(['name' => $p_name]);
-      }
-    }
-    
-    // burada bu json dosyasına gelen $name e göre yeni bir satır keyi eklenecek.
-    $menu_path = storage_path('app\public\application\settings\menu.json');
-    $data = json_decode(file_get_contents($menu_path), true);
-    array_push($data, ['name' => $name, 'title' => $name, 'icon' => null]);
-    file_put_contents($menu_path, json_encode($data));
+  }
+  
+  /**
+   * @param $name
+   * Burada oluşan yeni module için default bir source.json dosyası oluşuyor.
+   */
+  private function source_generator($name) : void
+  {
+    $source_path = storage_path('app\modules\sources');
+    $default_source = json_decode(file_get_contents($source_path . '\default_source.json'), true);
+    $default_source['titles'] = [
+      'index' => "$name Listele",
+      'show' => "$name Detay",
+      'create' => "$name Ekle",
+      'edit' => "$name Düzenle",
+    ];
+    $lower_name = strtolower($name);
+    $default_source['routes'] = [
+      "index" => "$lower_name.index",
+      "create" => "$lower_name.create",
+      "store" => "$lower_name.store",
+      "show" => "$lower_name.show",
+      "edit" => "$lower_name.edit",
+      "update" => "$lower_name.update",
+      "delete" => "$lower_name.destroy",
+    ];
+    file_put_contents("$source_path\\$name.json", json_encode($default_source));
   }
 }

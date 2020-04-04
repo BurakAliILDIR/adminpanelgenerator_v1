@@ -25,38 +25,76 @@
         <!-- nav -->
         <nav class="nav-primary hidden-xs">
           <ul class="nav">
-            <li class="">
-              <a class="">
-                <i class="fa fa-user icon">
-                  <b class="bg-danger"></b>
-                </i>
-                <span class="pull-right">
+            <?php $auth_user = auth()->user(); ?>
+            @can('Application.Settings')
+              <li class="">
+                <a class="">
+                  <i class="fa fa-steam icon">
+                    <b class="bg-danger"></b>
+                  </i>
+                  <span class="pull-right">
                           <i class="fa fa-angle-down text"></i>
                           <i class="fa fa-angle-up text-active"></i>
                         </span>
-                <span>Kullanıcı İşlemleri</span>
-              </a>
-              <ul class="nav lt">
-                <li>
-                  <a href="{{ route('user.index') }}">
-                    <i class="fa fa-angle-right"></i>
-                    <span>Kullanıcılar</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('role.index') }}">
-                    <i class="fa fa-angle-right"></i>
-                    <span>Roller</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('permission.index') }}">
-                    <i class="fa fa-angle-right"></i>
-                    <span>İzinler</span>
-                  </a>
-                </li>
-              </ul>
-            </li>
+                  <span>Uygulama İşlemleri</span>
+                </a>
+                <ul class="nav lt">
+                  <li>
+                    <a href="{{ route('modules.index') }}">
+                      <i class="fa fa-angle-right"></i>
+                      <span>Modüller</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="{{ route('logs') }}">
+                      <i class="fa fa-angle-right"></i>
+                      <span>Loglar</span>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+            @endif
+            @if($auth_user->can('Role.index') || $auth_user->can('Permission.index') || $auth_user->can('User.index'))
+              <li class="">
+                <a class="">
+                  <i class="fa fa-user icon">
+                    <b class="bg-danger"></b>
+                  </i>
+                  <span class="pull-right">
+                          <i class="fa fa-angle-down text"></i>
+                          <i class="fa fa-angle-up text-active"></i>
+                        </span>
+                  <span>Kullanıcı İşlemleri</span>
+                </a>
+                <ul class="nav lt">
+                  @can('User.index')
+                    <li>
+                      <a href="{{ route('user.index') }}">
+                        <i class="fa fa-angle-right"></i>
+                        <span>Kullanıcılar</span>
+                      </a>
+                    </li>
+                  @endcan
+                  @can('Role.index')
+                    <li>
+                      <a href="{{ route('role.index') }}">
+                        <i class="fa fa-angle-right"></i>
+                        <span>Roller</span>
+                      </a>
+                    </li>
+                  @endcan
+                  @can('Permission.index')
+                    <li>
+                      <a href="{{ route('permission.index') }}">
+                        <i class="fa fa-angle-right"></i>
+                        <span>İzinler</span>
+                      </a>
+                    </li>
+                  @endcan
+                </ul>
+              </li>
+            @endif
             <?php
             $menus_path = config('cache.prefix') . ':menus';
             if ( !($menus = unserialize(\Illuminate\Support\Facades\Redis::get($menus_path)))) {
