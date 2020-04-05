@@ -32,35 +32,26 @@ class CreateModule extends Command
     if ( !Module::find($name)) {
       // kaynak dosyası oluşturur.
       $this->source_generator($name);
+      
       Artisan::call('module:make ' . $name);
       Artisan::call('module:make-model ' . $name . ' ' . $name);
       Artisan::call('module:make-migration create_' . $name . '_table ' . $name);
-      // php artisan module:make-migration create_posts_table Blog
       Artisan::call('module:make-request Create' . $name . 'Request ' . $name);
       Artisan::call('module:make-request Update' . $name . 'Request ' . $name);
       
       // eğer daha önceden tablo oluşturulmuşsa migrate etme.
       if ( !Schema::hasTable($name)) Artisan::call('module:migrate ' . $name);
       
-      $permissions = ['index', 'detail', 'create', 'update', 'delete', 'imageUpload', 'imageDelete'];
-      foreach ($permissions as $permission) {
-        $p_name = $name . '.' . $permission;
-        if ( !Permission::where('name', $p_name)->exists()) (new Permission)->create(['name' => $p_name]);
-      }
+      $this->permission_generator($name);
       
       // burada bu json dosyasına gelen $name e göre yeni bir satır keyi eklenecek.
-      // Önce cache i temizle.
-      \Illuminate\Support\Facades\Redis::del(config('cache.prefix') . ':menus');
-      
-      $menu_path = storage_path('app\public\application\settings\menu.json');
-      $data = json_decode(file_get_contents($menu_path), true);
-      array_push($data, ['name' => $name, 'title' => $name, 'icon' => null]);
-      file_put_contents($menu_path, json_encode($data));
+      $this->menu_generator($name);
     }
   }
   
   /**
    * @param $name
+   * 
    * Burada oluşan yeni module için default bir source.json dosyası oluşuyor.
    */
   private function source_generator($name) : void
@@ -84,5 +75,34 @@ class CreateModule extends Command
       "delete" => "$lower_name.destroy",
     ];
     file_put_contents("$source_path\\$name.json", json_encode($default_source));
+  }
+  
+  /**
+   * @param $name
+   * 
+   * Permission ları oluşturur.
+   */
+  private function permission_generator($name) : void
+  {
+    $permissions = ['index', 'detail', 'create', 'update', 'delete', 'imageUpload', 'imageDelete'];
+    foreach ($permissions as $permission) {
+      $p_name = $name . '.' . $permission;
+      if ( !Permission::where('name', $p_name)->exists()) (new Permission)->create(['name' => $p_name]);
+    }
+  }
+  
+  /**
+   * @param $name
+   *
+   * Menuyü oluşturup json dosyasına yazar.
+   */
+  private function menu_generator($name) : void 
+  {
+    \Illuminate\Support\Facades\Redis::del(config('cache.prefix') . ':menus');
+    
+    $menu_path = storage_path('app\public\application\settings\menu.json');
+    $data = json_decode(file_get_contents($menu_path), true);
+    array_push($data, ['name' => $name, 'title' => $name, 'icon' => null]);
+    file_put_contents($menu_path, json_encode($data));
   }
 }
