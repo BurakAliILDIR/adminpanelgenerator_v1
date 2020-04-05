@@ -4,14 +4,22 @@
 @section('css')
 @endsection
 @section('content')
-  <h3>{{ $module_name }} Alanları</h3>
+  <div class="m-t">
+    <a class="btn btn-sm btn-default btn-rounded" href="{{ route('modules.index') }}">
+      <i class="fa fa-arrow-left"></i>
+      Tüm Modüllere Dön
+    </a>
+    <h3>{{ $module_name }} Alanları</h3>
+  </div>
   <aside>
     <section class="vbox">
       <header class="header bg-white b-b clearfix">
         <div class="row m-t-sm">
           <div class="col-sm-7 m-b-xs">
-            <a href="{{ route('fields.create') }}"
-               class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> Yeni {{ $module->getName() }} Alanı</a>
+            <a href="{{ route('fields.create', $module_name) }}"
+               class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> Alan Ekle</a>
+            <a href="{{ route('fields.create', [$module_name, true]) }}"
+               class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> İlişkili Alan Ekle</a>
           </div>
         </div>
       </header>
@@ -43,7 +51,8 @@
                   <td>
                     <div class="checkbox">
                       <label class="checkbox-custom">
-                        <input type="checkbox" {{ $val['list'] ? 'checked' : '' }} onclick="this.checked=!this.checked;">
+                        <input type="checkbox"
+                               {{ $val['list'] ? 'checked' : '' }} onclick="this.checked=!this.checked;">
                         <i class="fa fa-fw fa-square-o"></i>
                       </label>
                     </div>
@@ -51,7 +60,8 @@
                   <td>
                     <div class="checkbox">
                       <label class="checkbox-custom">
-                        <input type="checkbox" {{ $val['detail'] ? 'checked' : '' }} onclick="this.checked=!this.checked;">
+                        <input type="checkbox"
+                               {{ $val['detail'] ? 'checked' : '' }} onclick="this.checked=!this.checked;">
                         <i class="fa fa-fw fa-square-o"></i>
                       </label>
                     </div>
@@ -59,7 +69,8 @@
                   <td>
                     <div class="checkbox">
                       <label class="checkbox-custom">
-                        <input type="checkbox" {{ $val['create'] ? 'checked' : '' }} onclick="this.checked=!this.checked;">
+                        <input type="checkbox"
+                               {{ $val['create'] ? 'checked' : '' }} onclick="this.checked=!this.checked;">
                         <i class="fa fa-fw fa-square-o"></i>
                       </label>
                     </div>
@@ -67,7 +78,8 @@
                   <td>
                     <div class="checkbox">
                       <label class="checkbox-custom">
-                        <input type="checkbox" {{ $val['update'] ? 'checked' : '' }} onclick="this.checked=!this.checked;">
+                        <input type="checkbox"
+                               {{ $val['update'] ? 'checked' : '' }} onclick="this.checked=!this.checked;">
                         <i class="fa fa-fw fa-square-o"></i>
                       </label>
                     </div>
@@ -85,14 +97,15 @@
                     </a>
                   </td>
                   <td>
-                    <form action="{{ route('fields.destroy', [$module_name, $key]) }}" method="post"
-                          style="display: inline-block;">
-                      @method('DELETE') @csrf
-                      <button type="submit" class="btn btn-sm btn-danger btn-rounded"
-                              onclick="return confirm('{{ $val['title'] }} alanını silmek istediğinize emin misiniz?')">
-                        <i class="fa fa-trash"></i>
-                      </button>
-                    </form>
+                    @if($key !== 'id' && $key !== 'created_at' && $key !== 'updated_at')
+                      <form action="{{ route('fields.destroy', [$module_name, $key]) }}" method="post" class="inline">
+                        @method('DELETE') @csrf
+                        <button type="submit" class="btn btn-sm btn-danger btn-rounded"
+                                onclick="return confirm('{{ $val['title'] }} alanını silmek istediğinize emin misiniz?')">
+                          <i class="fa fa-trash"></i>
+                        </button>
+                      </form>
+                    @endif
                   </td>
                 </tr>
               @endforeach

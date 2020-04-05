@@ -30,8 +30,7 @@ $class_name = class_basename($model);
             </a>
           @endcan
           @can($class_name.'.delete')
-            <form action="{{ route($route['delete']) }}" method="post"
-                  style="display: inline-block;">
+            <form action="{{ route($route['delete']) }}" method="post" class="inline">
               @method('DELETE') @csrf
               <input type="hidden" name="id" value="{{ $model['id'] }}">
               <input type="hidden" name="back" value="{{ URL::previous() }}">

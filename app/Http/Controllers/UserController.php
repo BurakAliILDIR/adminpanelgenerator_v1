@@ -120,7 +120,7 @@ class UserController extends Controller
   private function getRoles()
   {
     $roles = Role::pluck('name', 'id');
-    if (($key = array_search('super-admin', $roles->toArray())) !== false)
+    if (($key = in_array('super-admin', $roles->toArray())) !== false)
       unset($roles[$key]);
     return $roles;
   }

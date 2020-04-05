@@ -44,7 +44,7 @@ class $CLASS$ extends Migration
             $table->uuid($key)->nullable()->index();
             break;
           case 'textarea':
-            $rows = @$field['attributes']['rows'];
+            $rows = @$field['attributes']['rows'] ?? 5;
             if ($rows < 5) $table->text($key)->nullable();
             else if ($rows === 5) $table->mediumText($key)->nullable();
             else $table->longText($key)->nullable();   

@@ -46,8 +46,7 @@
                     </a>
                   </td>
                   <td>
-                    <form action="{{ route('modules.destroy', $module_name) }}" method="post"
-                          style="display: inline-block;">
+                    <form action="{{ route('modules.destroy', $module_name) }}" method="post" class="inline">
                       @method('DELETE') @csrf
                       <button type="submit" class="btn btn-sm btn-danger btn-rounded"
                               onclick="return confirm('{{ $module_name }} modülünü silmek istediğinize emin misiniz?\n\nUYARI: Daha önce yaptığınız bütün çalışmalarınız kaybolacaktır.')">

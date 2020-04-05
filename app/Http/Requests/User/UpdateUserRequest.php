@@ -12,7 +12,7 @@ class UpdateUserRequest extends FormRequest
     return [
       'name' => 'nullable',
       'surname' => 'nullable',
-      'email' => 'required|email|unique:users,email,' . $this->id,
+      'email' => 'required|email:rfc,dns,strict,spoof,filter|unique:users,email,' . $this->id,
       'password' => 'nullable|min:8|confirmed|string',
       'bio' => 'nullable',
       'phone' => 'nullable|phone:TR,AUTO', // ISO 3166-1 alpha-2 code country

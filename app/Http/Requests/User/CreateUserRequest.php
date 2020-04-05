@@ -11,7 +11,7 @@ class CreateUserRequest extends FormRequest
     return [
       'name' => 'nullable',
       'surname' => 'nullable',
-      'email' => 'required|email|unique:users,email',
+      'email' => 'required|email:rfc,dns,strict,spoof,filter|unique:users,email',
       'password' => 'required|min:8|confirmed|string',
       'bio' => 'nullable',
       'phone' => 'nullable|phone:TR,AUTO', // ISO 3166-1 alpha-2 code country

@@ -12,7 +12,7 @@
               <i class="fa fa-arrow-left"></i>
               Tüm Kayıtlara Dön
             </a>
-            <span class="m-l">{{ 'Rol Detay' }}</span>
+            <span class="m-l">Rol Detay</span>
           </div>
         </div>
         <div class="col-md-6">
@@ -22,8 +22,7 @@
               <i class="fa fa-edit"></i>
               Bu Kaydı Düzenle
             </a>
-            <form action="{{ route('role.destroy') }}" method="post"
-                  style="display: inline-block;">
+            <form action="{{ route('role.destroy') }}" method="post" class="inline">
               @method('DELETE') @csrf
               <input type="hidden" name="id" value="{{ $model['id'] }}">
               <input type="hidden" name="back" value="{{ URL::previous() }}">

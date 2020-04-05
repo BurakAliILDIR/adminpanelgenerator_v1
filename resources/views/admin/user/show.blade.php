@@ -28,8 +28,7 @@
               <i class="fa fa-edit"></i>
               Bu Kaydı Düzenle
             </a>
-            <form action="{{ route('user.destroy') }}" method="post"
-                  style="display: inline-block;">
+            <form action="{{ route('user.destroy') }}" method="post" class="inline">
               @method('DELETE') @csrf
               <input type="hidden" name="id" value="{{ $model['id'] }}">
               <input type="hidden" name="back" value="{{ URL::previous() }}">
