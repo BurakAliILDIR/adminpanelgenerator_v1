@@ -53,17 +53,17 @@ $class_name = class_basename($model);
             <div class="wrapper-lg">
               <div class="clearfix m-b">
                 @foreach($fields as $key => $val)
-                  @if($val[$settings['operation']] && $val['type'] === 'image')
+                  @if($val[$settings['operation']] && $val['type'] === 'image' && (($image = $model->getFirstMediaUrl($key)) !== '' || @$val['value']))
                     <span class="pull-left thumb m-r">
                     <img
-                      src="{{ $model->getFirstMediaUrl($key) === '' ? \Illuminate\Support\Facades\Storage::url('/application/defaults/' . $val['value']) : $model->getFirstMediaUrl($key) }}">
+                      src="{{ $image !== '' ? $image :  \Illuminate\Support\Facades\Storage::url('application/defaults/'.$val['value']) }}">
                     </span>
                   @endif
                 @endforeach
               </div>
               <div style="word-break: break-all">
                 @foreach($fields as $key => $val)
-                  @if($val[$settings['operation']] && !(@$val['multiple'] ?? true))
+                  @if($val[$settings['operation']] && !(@$val['multiple']))
                     @switch($val['type'])
                       @case('text')
                       @case('email')
@@ -88,14 +88,9 @@ $class_name = class_basename($model);
                       <div class="line"></div>
                       @break
                       @case('select')
-                      <?php $relation_infos = $val['relationship'] ?>
+                      <?php $relation_infos = @$val['relationship'] ?>
                       <small class="text-uc text-muted">{{ $val['title'] }} : </small>
-                      @foreach($relation_infos['fields'] as $v)
-                        {{ $model->relation($relation_infos)->first()[$v] ?? '-' }}
-                        @if(!$loop->last)
-                          {{ ' - ' }}
-                        @endif
-                      @endforeach
+                      {{ $relation_infos ? $model->relation($relation_infos)->first()[$relation_infos['field']] : $model[$key] }}
                       <div class="line"></div>
                       @break
                       @case('date')
@@ -121,7 +116,7 @@ $class_name = class_basename($model);
           <header class="header bg-light bg-gradient">
             <ul class="nav nav-tabs nav-white">
               @foreach($fields as $key => $val)
-                @if(($val[$settings['operation']]) && @$val['multiple'] && $val['type'] !== 'multi_image')
+                @if(($val[$settings['operation']]) && (@$val['multiple'] ?? true) && $val['type'] !== 'multi_image')
                   <li id="{{ $key }}Leaf">
                     <a href="#{{ $key }}" id="{{ $key }}A" data-toggle="tab"
                        onclick="setLeaf('{{ $key }}')">
@@ -136,7 +131,7 @@ $class_name = class_basename($model);
             <section class="scrollable">
               <div class="tab-content">
                 @foreach($fields as $key => $val)
-                  @if(($val[$settings['operation']]) && @$val['multiple'] && $val['type'] !== 'multi_image')
+                  @if(($val[$settings['operation']]) && (@$val['multiple'] ?? true) && $val['type'] !== 'multi_image')
                     <?php $relation_infos = $val['relationship'] ?>
                     <div class="tab-pane" id="{{ $key }}Page">
                       <section class="scrollable wrapper-md w-f">

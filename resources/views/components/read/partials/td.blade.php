@@ -2,8 +2,8 @@
   @switch($lower_val['type'])
     @case('image')
     <img
-      src="{{ $upper_val->getFirstMediaUrl($lower_key) === "" ? \Illuminate\Support\Facades\Storage::url('/application/defaults/'.$lower_val['value']) : $upper_val->getFirstMediaUrl($lower_key) }}"
-      width="61">
+      src="{{ $upper_val->getFirstMediaUrl($lower_key) === "" ? @$lower_val['value'] ? \Illuminate\Support\Facades\Storage::url('/application/defaults/'.$lower_val['value']) : null : $upper_val->getFirstMediaUrl($lower_key) }}"
+      width="66">
     @break
     @case('file')
     @if(($file = $upper_val->getFirstMediaUrl($lower_key)) !== '')
@@ -17,12 +17,7 @@
     @endif
     @break
     @case('select')
-    @foreach($lower_val['relationship']['fields'] as $v)
-      {{ $upper_val->relation($lower_val['relationship'])->first()[$v] ?? '-' }}
-      @if(!$loop->last)
-        {{ ' - ' }}
-      @endif
-    @endforeach
+      {{ @$upper_val->relation(@$lower_val['relationship']) ? @$upper_val->relation(@$lower_val['relationship'])->first()[$lower_val['relationship']['field']] ?? '-' : $upper_val[$lower_key] }}
     @break
     @case('multi_checkbox')
     @case('multi_select')

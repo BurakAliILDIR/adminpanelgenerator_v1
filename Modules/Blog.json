@@ -38,7 +38,7 @@
       "rules": [
         "required"
       ],
-      "multiple": false,
+      
       "create": true,
       "update": true,
       "list": true,
@@ -52,7 +52,7 @@
       "rules": [
         "required"
       ],
-      "multiple": false,
+      
       "create": true,
       "update": true,
       "list": true,
@@ -69,7 +69,7 @@
         "required",
         "min:10"
       ],
-      "multiple": false,
+      
       "create": true,
       "update": true,
       "list": false,
@@ -83,7 +83,7 @@
       "rules": [
         "required"
       ],
-      "multiple": false,
+      
       "create": true,
       "update": true,
       "list": true,
@@ -102,7 +102,7 @@
       "rules": [
         "required"
       ],
-      "multiple": false,
+      
       "create": true,
       "update": true,
       "list": true,
@@ -116,7 +116,7 @@
       "rules": [
         "file"
       ],
-      "multiple": false,
+      
       "create": true,
       "update": true,
       "list": true,
@@ -130,7 +130,7 @@
       "rules": [
         "mimes:jpeg,jpg,png"
       ],
-      "multiple": false,
+      
       "create": true,
       "update": true,
       "list": false,
@@ -185,7 +185,7 @@
       "rules": [
         "accepted"
       ],
-      "multiple": false,
+      
       "create": true,
       "update": true,
       "list": false,
@@ -195,11 +195,9 @@
       "id": "count_id",
       "type": "select",
       "title": "Öylesine",
-      "name": "count_id",
       "value": null,
-      "rules": [
-      ],
-      "multiple": false,
+      "rules": [],
+      
       "relationship": {
         "type": "hasOne",
         "model": "Modules\\Sales\\Entities\\SaleInfo",
@@ -227,7 +225,7 @@
       "rules": [
         "required"
       ],
-      "multiple": false,
+      
       "create": true,
       "update": true,
       "list": true,
@@ -240,7 +238,7 @@
       "rules": [
         "required"
       ],
-      "multiple": false,
+      
       "create": true,
       "update": true,
       "list": false,
@@ -253,7 +251,7 @@
       "rules": [
         "required"
       ],
-      "multiple": false,
+      
       "create": false,
       "update": false,
       "list": false,
@@ -266,7 +264,7 @@
       "rules": [
         "required"
       ],
-      "multiple": false,
+      
       "create": false,
       "update": false,
       "list": false,

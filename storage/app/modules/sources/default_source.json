@@ -71,7 +71,7 @@
       "create": false,
       "update": false,
       "list": false,
-      "detail": false
+      "detail": true
     }
   }
 }

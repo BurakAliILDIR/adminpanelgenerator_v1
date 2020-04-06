@@ -25,43 +25,44 @@
           @component('components.alert.alert_messages')@endcomponent
           @component('components.alert.error_messages')@endcomponent
           {{ Form::open(['route' => ['fields.store', $module_name, false], 'class' => 'form-horizontal', 'files' => true]) }}
-          @component('components.form.partials.text',
-          ['key' => 'name',
-          'title' => 'Ad',
-          'attributes'=> ['autofocus', 'required']
+          @component('components.form.partials.select',
+          ['key' => 'type',
+          'title' => 'Tip',
+          'items' => $types,
+          'selected' => null,
+          'attributes' => ['required'],
           ])@endcomponent
           @component('components.form.partials.text',
           ['key' => 'title',
           'title' => 'Başlık',
           'attributes'=> ['required']
           ])@endcomponent
-          <small>Kimlik (id = 0) alanından kaç sıra sonraya eklensin?</small><br><br>
+          @component('components.form.partials.text',
+          ['key' => 'name',
+          'title' => 'Ad',
+          'attributes'=> ['autofocus', 'required']
+          ])@endcomponent
           @component('components.form.partials.number',
           ['key' => 'order',
           'title' => 'Sıra',
           'attributes'=> ['required']          
           ])@endcomponent
-          @component('components.form.partials.select',
-          ['key' => 'type',
-          'title' => 'Tip',
-          'value' => [
-          'text' => 'Text',
-          'number' => 'Numeric',
-          'textarea' => 'Textarea',
-          'radio' => 'Radio Button',
-          'checkbox' => 'CheckBox (true, false)',
-          'select' => 'Select',
-          'date' => 'Date (dd.mm.yyyy)',
-          'datetime' => 'DateTime (dd.mm.yyyy h:i:s)',
-          'image' => 'Image',
-          'multi_image' => 'Multi Image',
-          'file' => 'File',
-          'email' => 'E-mail',
-          'hidden' => 'Hidden',
-          'password' => 'Secret',
-          ],
-          'selected' => null,
-          'attributes' => ['required'],
+
+          <small>
+            <u>Eğer tip aşağıdaki seçeneklerden biriyse;</u> <br>
+            <u>Radio:</u> Hangi seçenekler arasında seçim yapılacağını yazın. | işareti ile ayırarak (boşluk
+            olmadan).<br>
+            <u>Select:</u> Hangi seçenekler arasında seçim yapılacağını yazın. | işareti ile ayırarak (boşluk
+            olmadan).<br>
+            <u>CheckBox:</u> Kutucuğun yanında yazacak yazıyı yazın.<br>
+            <u>Image:</u> "avatar.jpg" varsayılan değerlerinden bir tanesini yazın.<br>
+            <u>Multi Image:</u> En fazla bulunabilecek resim sayısını yazınız. (Boş bıraklırsa sınırsız resim
+            bulundurabilir.)<br>
+          </small>
+          <br>
+          @component('components.form.partials.text',
+               ['key' => 'values',
+               'title' => 'Değerler',
           ])@endcomponent
           <div class="form-check m-b">
             {{ Form::label('rules', 'Kurallar', ['class' => 'col-sm-2 control-label']) }}
@@ -99,6 +100,7 @@
             </div>
           </div>
           <div class="line line-dashed line-lg pull-in"></div>
+          <small>Multi Image: Sadece "detail" görünümü seçilmelidir.</small><br><br>
           <div class="form-check m-b">
             {{ Form::label('pages', 'Görünüm', ['class' => 'col-sm-2 control-label']) }}
             <div class="col-sm-10 m-b @error('pages[]') is-invalid @enderror">
@@ -117,27 +119,13 @@
             </div>
           </div>
           <div class="line line-dashed line-lg pull-in"></div>
-          <small>
-            Radio: Hangi seçenekler arasında seçim yapılacağını yazın. | işareti ile ayırarak (boşluk olmadan).<br>
-            Select: Hangi seçenekler arasında seçim yapılacağını yazın. | işareti ile ayırarak (boşluk olmadan).<br>
-            CheckBox: Kutucuğun yanında yazacak yazıyı yazın.<br>
-            Image: "avatar.jpg" varsayılan değerlerinden bir tanesini yazın.<br>
-            Multi Image: En fazla bulunabilecek resim sayısını yazınız. (Boş bıraklırsa sınırsız resim
-            bulundurabilir.)<br>
-          </small>
-          <br>
-          @component('components.form.partials.text',
-               ['key' => 'values',
-               'title' => 'Değerler',
-          ])@endcomponent
-
           {{ Form::submit("Ekle", array_merge(['class' => 'btn btn-primary btn-block'])) }}
           {!! Form::close() !!}
         </div>
       </section>
     </div>
   </div>
-  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <div style="height: 300px;"></div>
 @endsection
 @section('js')
   <script src="/plugins/select2/js/select2.min.js"></script>

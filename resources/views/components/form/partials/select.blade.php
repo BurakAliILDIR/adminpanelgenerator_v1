@@ -5,7 +5,7 @@
     @foreach($attributes as $key => $val)
       {{ $key . '="' . $val .'"' }}
       @endforeach>
-      @foreach($value as $key => $val)
+      @foreach($items as $key => $val)
         <option {{ $selected == $key ? 'selected="selected"' : '' }} value="{{ $key }}">{{ $val }}</option>
       @endforeach
     </select>
@@ -20,7 +20,7 @@
 <div class="form-group">
   {{ Form::label($key, $title, ['class' => 'col-sm-2 control-label']) }}
   <div class="col-sm-10 @error($key) is-invalid @enderror">
-    {{ Form::select($key, $value, $selected, ['placeholder' => $title.' seçiniz...', 'class' => 'form-control m-b'], $attributes ?? []) }}
+    {{ Form::select($key, $items, $selected, ['placeholder' => $title.' seçiniz...', 'class' => 'form-control m-b'], $attributes ?? []) }}
     @error($key)
     <div class="label bg-danger">{{ $message }}</div>
     @enderror

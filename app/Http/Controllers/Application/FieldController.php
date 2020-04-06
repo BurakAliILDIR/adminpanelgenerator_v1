@@ -11,15 +11,29 @@ class FieldController extends Controller
 {
   public function create($module_name, $related = false)
   {
-    if ($related) {
-      
-    } else {
-      
-    }
-    $rules = ['required', 'accepted', 'alpha', 'alpha_num', 'array', 'boolean', 'image', 'email', 'nullable', 'file', 'string', 'phone:TR,AUTO'];
+    $rules = ['required', 'accepted', 'alpha', 'alpha_num', 'array', 'boolean', 'image', 'email', 'nullable', 'file', 'string', 'numeric', 'date',
+      'url', 'phone:TR,AUTO'];
     $attributes = ['required' => 'required', 'autofocus' => 'autofocus', 'disabled' => 'disabled'];
     $pages = ['list', 'detail', 'create', 'update'];
-    return view('admin.application.field.create', compact('module_name', 'pages', 'rules', 'attributes'));
+    if ($related) {
+      $types = ['multi_select' => 'Multi Select', 'multi_checkbox' => 'Multi CheckBox',];
+      $relationships = ['hasOne' => 'HasOne', 'hasMany' => 'HasMany', 'belongsTo' => 'BelongsTo', 'belongsToMany' => 'BelongsToMany',];
+      $models['App\\Models\\User.php'] = 'User';
+      foreach (Module::all() as $module) {
+        $m_name = $module->getName();
+        $m_path = "Modules\\$m_name\\Models\\$m_name.php";
+        $models[$m_path] = $m_name;
+      }
+      return view('admin.application.field.related_create', compact('module_name', 'pages', 'rules', 'attributes', 'types', 'models', 'relationships'));
+    } else {
+      $types = ['text' => 'Text', 'number' => 'Numeric', 'textarea' => 'Textarea', 'radio' => 'Radio Button', 'checkbox' => 'CheckBox (true, false)',
+        'select' => 'Select', 'date' => 'Date (dd.mm.yyyy)', 'datetime' => 'DateTime (dd.mm.yyyy h:i:s)', 'image' => 'Image',
+        'multi_image' => 'Multi Image', 'file' => 'File', 'email' => 'E-mail', 'hidden' => 'Hidden', 'password' => 'Secret',
+      ];
+      return view('admin.application.field.create', compact('module_name', 'pages', 'rules', 'attributes', 'types'));
+      
+    }
+    
   }
   
   public function store(Request $request, $module_name, $related = false)
@@ -29,7 +43,6 @@ class FieldController extends Controller
       'title' => $request['title'],
       'rules' => $request['rules'] ?? [],
       'attributes' => $request['attributes'] ?? [],
-      'multiple' => false,
       'list' => in_array('list', $request['pages'] ?? []),
       'detail' => in_array('detail', $request['pages'] ?? []),
       'create' => in_array('create', $request['pages'] ?? []),
@@ -43,14 +56,13 @@ class FieldController extends Controller
           $eleman['value'] = $request['values'];
           break;
         case 'multi_image':
-          $eleman['count'] = $request['values'];
+          $eleman['count'] = $request['values'] ?? 100000000000000000;
           $eleman['multiple'] = true;
           break;
         case 'radio':
-          $eleman['items'] = explode("|", $request['values']);;
-          break;
         case 'select':
-          $eleman['value'] = explode("|", $request['values']);;
+          foreach (explode("|", $request['values']) as $item) $dizi[$item] = $item;
+          $eleman['items'] = $dizi;
           break;
         case 'checkbox':
           $eleman['label'] = $request['values'];
@@ -118,7 +130,7 @@ class FieldController extends Controller
     $source['fields'] = $fields;
     file_put_contents($path, json_encode($source));
     
-    session()->flash('danger', "$module_name modülündeki $key alanı silindi.");
+    session()->flash('danger', "$module_name modülündeki \"$key\" alanı silindi.");
     return redirect()->route('modules.show', $module_name);
   }
 }

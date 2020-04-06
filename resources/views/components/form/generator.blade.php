@@ -6,6 +6,7 @@
     <?php
     $title = @$field['title'];
     $value = @$field['value'];
+    $items = @$field['items'];
     $attributes = @$field['attributes'];
     ?>
 
@@ -13,7 +14,7 @@
       @case('radio')
       @component('components.form.partials.radio',
                  ['key' => $key,
-                 'items' => $field['items'],
+                 'items' => $items,
                  'checked' => $model[$key],
                  'title' => $title,
                  'attributes' => $attributes,
@@ -23,7 +24,7 @@
       @case('multi_select')
       @component('components.form.partials.' . $field['type'],
                 ['key' => $key,
-                'value' => $settings['plucks'][$key] ?? $value,
+                'value' => $settings['plucks'][$key],
                 'checked' => $model->relation($field['relationship'])->get(),
                 'title' => $title,
                 'attributes' => $attributes,
@@ -42,8 +43,8 @@
       @component('components.form.partials.select',
                  ['key' => $key,
                  'title' => $title,
-                 'value' => $value ?? $settings['plucks'][$key],
-                 'selected' => $model[$field['relationship']['keys']['otherKey']],
+                 'items' => $items ?? $settings['plucks'][$key],
+                 'selected' => $model[@$field['relationship']['keys']['otherKey']] ?? $model[$key],
                  'attributes' => $attributes,
       ])@endcomponent
       @break
@@ -53,6 +54,7 @@
                  'title' => $title,
                  'attributes' => $attributes,
       ])@endcomponent
+      @break
       @case('date')
       @case('datetime')
       @component('components.form.partials.' . $field['type'],
