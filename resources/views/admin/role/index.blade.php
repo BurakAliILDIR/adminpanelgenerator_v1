@@ -53,7 +53,7 @@
                   <button type="button" id="multiple_delete"
                           data-url="{{ route('role.destroy') }}"
                           class="btn btn-xs btn-danger btn-rounded"
-                          title="Seçili Kayıtları Sil"><i class="fa fa-trash-o"></i>
+                          title="Seçili Rolleri Sil"><i class="fa fa-trash-o"></i>
                   </button>
                 </th>
                 <th>Rol Adı</th>
@@ -106,7 +106,7 @@
           <div class="col-md-3 hidden-sm">
             <p class="text-muted m-t text-right">
               {{$data->firstItem() ? 'Gösterimde olan: ' . $data->firstItem() . ' - ' . $data->lastItem() . ' |' : '' }}
-              {{ ($total = $data->total()) !== 1 ? 'Toplam kayıt: '. ($total - 1) : 'Kayıt bulunmamaktadır.' }}</p>
+              {{ ($total = $data->total()) !== 1 ? 'Toplam rol: '. ($total - 1) : 'Rol bulunmamaktadır.' }}</p>
           </div>
         </div>
       </footer>

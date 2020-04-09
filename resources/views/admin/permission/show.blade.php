@@ -10,7 +10,7 @@
           <div class="m-t">
             <a class="btn btn-xs btn-default btn-rounded " href="{{ route('permission.index') }}">
               <i class="fa fa-arrow-left"></i>
-              Tüm Kayıtlara Dön
+              Tüm İzinlere Dön
             </a>
             <span class="m-l">{{ 'İzin Detay' }}</span>
           </div>
@@ -20,7 +20,7 @@
             <a class="btn btn-xs btn-info btn-rounded "
                href="{{ route('permission.edit', $model['id']) }}">
               <i class="fa fa-edit"></i>
-              Bu Kaydı Düzenle
+              Bu İzini Düzenle
             </a>
             {{--<form action="{{ route('permission.destroy') }}" method="post"
                   style="display: inline-block;">
@@ -50,7 +50,7 @@
                   <small class="text-uc text-muted">Eklenme Tarihi : </small>
                   <span>{!! \Carbon\Carbon::parse($model['created_at'])->format('d/m/Y H:i:s') !!}</span>
                   <div class="line"></div>
-                  <small class="text-uc text-muted">Son Düzenleme Tarihi : </small>
+                  <small class="text-uc text-muted">Düzenleme Tarihi : </small>
                   <span>{!! \Carbon\Carbon::parse($model['updated_at'])->format('d/m/Y H:i:s') !!}</span>
                   <div class="line"></div>
                 </div>

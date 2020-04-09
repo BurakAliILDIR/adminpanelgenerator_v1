@@ -29,7 +29,8 @@ class CreateModule extends Command
     // girilen değeri alma.
     $name = $this->argument('name');
     // gelen tüm değerleri array olarak alma
-    if ( !Module::find($name)) {
+    $alreadyName = ($name !== 'User' && $name !== 'Permission' && $name !== 'Role' && $name !== 'Image' && $name !== 'Profile');
+    if ( !Module::find($name) && $alreadyName) {
       // kaynak dosyası oluşturur.
       $this->source_generator($name);
       
@@ -51,7 +52,6 @@ class CreateModule extends Command
   
   /**
    * @param $name
-   * 
    * Burada oluşan yeni module için default bir source.json dosyası oluşuyor.
    */
   private function source_generator($name) : void
@@ -59,7 +59,7 @@ class CreateModule extends Command
     $source_path = storage_path('app\modules\sources');
     $default_source = json_decode(file_get_contents($source_path . '\default_source.json'), true);
     $default_source['titles'] = [
-      'index' => "$name Listele",
+      'index' => "$name",
       'show' => "$name Detay",
       'create' => "$name Ekle",
       'edit' => "$name Düzenle",
@@ -79,7 +79,6 @@ class CreateModule extends Command
   
   /**
    * @param $name
-   * 
    * Permission ları oluşturur.
    */
   private function permission_generator($name) : void
@@ -93,10 +92,9 @@ class CreateModule extends Command
   
   /**
    * @param $name
-   *
    * Menuyü oluşturup json dosyasına yazar.
    */
-  private function menu_generator($name) : void 
+  private function menu_generator($name) : void
   {
     \Illuminate\Support\Facades\Redis::del(config('cache.prefix') . ':menus');
     

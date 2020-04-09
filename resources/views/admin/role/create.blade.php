@@ -14,7 +14,7 @@
                 <a class="btn btn-xs btn-default btn-rounded "
                    href="{{ route('role.index') }}">
                   <i class="fa fa-arrow-left"></i>
-                  Tüm Kayıtlara Dön
+                  Tüm Rollere Dön
                 </a>
                 <span class="m-l">Rol Ekle</span>
               </div>

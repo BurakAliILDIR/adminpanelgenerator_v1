@@ -84,7 +84,7 @@
             <header class="header bg-light bg-gradient">
               <ul class="nav nav-tabs nav-white">
                 @foreach($fields as $key => $val)
-                  @if(($val['detail']) && @$val['multiple'] && $val['type'] !== 'multi_image')
+                  @if((@$val['detail']) && @$val['multiple'] && $val['type'] !== 'multi_image')
                     <li id="{{ $key }}Leaf">
                       <a href="#{{ $key }}" id="{{ $key }}A" data-toggle="tab"
                          onclick="setLeaf('{{ $key }}')">
@@ -98,7 +98,7 @@
             <section class="scrollable">
               <div class="tab-content">
                 @foreach($fields as $key => $val)
-                  @if(($val['detail']) && @$val['multiple'] && $val['type'] !== 'multi_image')
+                  @if((@$val['detail']) && @$val['multiple'] && $val['type'] !== 'multi_image')
                     <?php $relation_infos = $val['relationship'] ?>
                     <div class="tab-pane" id="{{ $key }}Page">
                       <section class="scrollable wrapper-md w-f">

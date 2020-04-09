@@ -24,23 +24,23 @@
         <div class="panel-body">
           @component('components.alert.alert_messages')@endcomponent
           @component('components.alert.error_messages')@endcomponent
-          {{ Form::open(['route' => ['fields.store', $module_name, false], 'class' => 'form-horizontal', 'files' => true]) }}
+          {{ Form::open(['route' => ['fields.store', $module_name, false], 'class' => 'form-horizontal']) }}
           @component('components.form.partials.select',
           ['key' => 'type',
           'title' => 'Tip',
           'items' => $types,
           'selected' => null,
-          'attributes' => ['required'],
+          'attributes' => ['required' => 'required'],
           ])@endcomponent
           @component('components.form.partials.text',
           ['key' => 'title',
           'title' => 'Başlık',
-          'attributes'=> ['required']
+          'attributes'=> ['required' => 'required']
           ])@endcomponent
           @component('components.form.partials.text',
           ['key' => 'name',
           'title' => 'Ad',
-          'attributes'=> ['autofocus', 'required']
+          'attributes'=> ['required' => 'required']
           ])@endcomponent
           @component('components.form.partials.number',
           ['key' => 'order',
@@ -136,3 +136,33 @@
   </script>
   <script src="/admin-custom-template/form/only_number.js"></script>
 @endsection
+{{--   "users": {
+      "type": "multi_checkbox",
+      "title": "Kullan\u0131c\u0131lar",
+      "relationship": {
+        "type": "belongsToMany",
+        "model": "App\\Models\\User",
+        "keys": {
+          "table": "blog_user",
+          "foreignKey": "blog_id",
+          "otherKey": "user_id"
+        },
+        "pluck": {
+          "display": "name",
+          "value": "id"
+        },
+        "fields": [
+          "name",
+          "surname",
+          "gender"
+        ],
+        "perPage": 3
+      },
+      "attributes": [],
+      "rules": [],
+      "multiple": true,
+      "create": false,
+      "update": true,
+      "list": false,
+      "detail": true
+    },--}}

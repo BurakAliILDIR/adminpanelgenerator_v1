@@ -90,7 +90,16 @@ $class_name = class_basename($model);
                       @case('select')
                       <?php $relation_infos = @$val['relationship'] ?>
                       <small class="text-uc text-muted">{{ $val['title'] }} : </small>
-                      {{ $relation_infos ? $model->relation($relation_infos)->first()[$relation_infos['field']] : $model[$key] }}
+                      @if($relation_infos)
+                        @foreach($relation_infos['fields'] as $v)
+                          {{ $model->relation($relation_infos)->first()[$v] ?? '-' }}
+                          @if(!$loop->last)
+                            {{ ' - ' }}
+                          @endif
+                        @endforeach
+                      @else
+                        <span>{!! $model[$key] !!}</span>
+                      @endif
                       <div class="line"></div>
                       @break
                       @case('date')
@@ -116,7 +125,7 @@ $class_name = class_basename($model);
           <header class="header bg-light bg-gradient">
             <ul class="nav nav-tabs nav-white">
               @foreach($fields as $key => $val)
-                @if(($val[$settings['operation']]) && (@$val['multiple'] ?? true) && $val['type'] !== 'multi_image')
+                @if(($val[$settings['operation']]) && (@$val['multiple']) && $val['type'] !== 'multi_image')
                   <li id="{{ $key }}Leaf">
                     <a href="#{{ $key }}" id="{{ $key }}A" data-toggle="tab"
                        onclick="setLeaf('{{ $key }}')">
@@ -131,20 +140,20 @@ $class_name = class_basename($model);
             <section class="scrollable">
               <div class="tab-content">
                 @foreach($fields as $key => $val)
-                  @if(($val[$settings['operation']]) && (@$val['multiple'] ?? true) && $val['type'] !== 'multi_image')
-                    <?php $relation_infos = $val['relationship'] ?>
+                  @if(($val[$settings['operation']]) && (@$val['multiple']) && $val['type'] !== 'multi_image')
+                    <?php $relation_infos = $val['relationship']; ?>
                     <div class="tab-pane" id="{{ $key }}Page">
                       <section class="scrollable wrapper-md w-f">
-                        @php
-                          $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key);
-                        @endphp
+                        <?php
+                        $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key);
+                        ?>
                         @if($data->count() > 0)
                           <section class="panel panel-default">
                             <div class="table-responsive">
                               <table class="table table-striped m-b-none">
                                 <thead>
                                 <tr>
-                                  @foreach($data[0]->getSettings('fields') as $relation_key => $relation_val)
+                                  @foreach($data->first()->getSettings('fields') as $relation_key => $relation_val)
                                     @foreach($relation_infos['fields'] as $field)
                                       @if($relation_key === $field)
                                         <th>{{ $relation_val['title'] }}</th>
@@ -181,7 +190,6 @@ $class_name = class_basename($model);
         </section>
       </aside>
       <aside class="col-md-3 b-l">
-
         <section class="vbox">
           <section class="scrollable">
             <div class="wrapper-md">

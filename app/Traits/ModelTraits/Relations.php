@@ -17,7 +17,10 @@ Trait Relations
         $result = $this->hasMany($relationship['model'], $relationship['keys']['otherKey'], $relationship['keys']['foreignKey']);
         break;
       case 'belongsTo':
-        $result = $this->belongsTo($relationship['model'], $relationship['keys']['foreignKey'], $relationship['keys']['otherKey']);
+        if ($relationship['keys']['partner'] === 'hasMany')
+          $result = $this->belongsTo($relationship['model'], $relationship['keys']['otherKey'], $relationship['keys']['foreignKey']);
+        else
+          $result = $this->belongsTo($relationship['model'], $relationship['keys']['foreignKey'], $relationship['keys']['otherKey']);
         break;
       case 'belongsToMany':
         $result = $this->belongsToMany($relationship['model'], $relationship['keys']['table'], $relationship['keys']['foreignKey'], $relationship['keys']['otherKey']);

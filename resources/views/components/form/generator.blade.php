@@ -44,7 +44,7 @@
                  ['key' => $key,
                  'title' => $title,
                  'items' => $items ?? $settings['plucks'][$key],
-                 'selected' => $model[@$field['relationship']['keys']['otherKey']] ?? $model[$key],
+                 'selected' => $model[$key],
                  'attributes' => $attributes,
       ])@endcomponent
       @break

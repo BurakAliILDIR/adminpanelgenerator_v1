@@ -53,7 +53,7 @@
                   <button type="button" id="multiple_delete"
                           data-url="{{ route('user.destroy') }}"
                           class="btn btn-xs btn-danger btn-rounded"
-                          title="Seçili Kayıtları Sil"><i class="fa fa-trash-o"></i>
+                          title="Seçili Kullanıcıları Sil"><i class="fa fa-trash-o"></i>
                   </button>
                 </th>
                 <th>Ad</th>
@@ -106,7 +106,7 @@
           <div class="col-md-3 hidden-sm">
             <p class="text-muted m-t text-right">
               {{$data->firstItem() ? 'Gösterimde olan: ' . $data->firstItem() . ' - ' . $data->lastItem() . ' |' : '' }}
-              {{ ($total = $data->total()) !== 0 ? 'Toplam kayıt: '. $total : 'Kayıt bulunmamaktadır.' }}</p>
+              {{ ($total = $data->total()) !== 0 ? 'Toplam kullanıcı: '. $total : 'Kullanıcı bulunmamaktadır.' }}</p>
           </div>
         </div>
       </footer>

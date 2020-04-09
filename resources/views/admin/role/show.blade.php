@@ -10,7 +10,7 @@
           <div class="m-t">
             <a class="btn btn-xs btn-default btn-rounded " href="{{ route('role.index') }}">
               <i class="fa fa-arrow-left"></i>
-              Tüm Kayıtlara Dön
+              Tüm Rollere Dön
             </a>
             <span class="m-l">Rol Detay</span>
           </div>
@@ -20,16 +20,16 @@
             <a class="btn btn-xs btn-info btn-rounded "
                href="{{ route('role.edit', $model['id']) }}">
               <i class="fa fa-edit"></i>
-              Bu Kaydı Düzenle
+              Bu Rolü Düzenle
             </a>
             <form action="{{ route('role.destroy') }}" method="post" class="inline">
               @method('DELETE') @csrf
               <input type="hidden" name="id" value="{{ $model['id'] }}">
               <input type="hidden" name="back" value="{{ URL::previous() }}">
               <button type="submit" class="btn btn-xs btn-danger btn-rounded"
-                      onclick="return confirm('Kaydı silmek istediğinize emin misiniz?')">
+                      onclick="return confirm('Rolü silmek istediğinize emin misiniz?')">
                 <i class="fa fa-trash"></i>
-                Bu Kaydı Sil
+                Bu Rolü Sil
               </button>
             </form>
           </div>
@@ -49,7 +49,7 @@
                   <small class="text-uc text-muted">Eklenme Tarihi : </small>
                   <span>{!! \Carbon\Carbon::parse($model['created_at'])->format('d/m/Y H:i:s') !!}</span>
                   <div class="line"></div>
-                  <small class="text-uc text-muted">Son Düzenleme Tarihi : </small>
+                  <small class="text-uc text-muted">Düzenleme Tarihi : </small>
                   <span>{!! \Carbon\Carbon::parse($model['updated_at'])->format('d/m/Y H:i:s') !!}</span>
                   <div class="line"></div>
                 </div>

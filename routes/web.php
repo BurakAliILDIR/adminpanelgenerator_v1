@@ -22,6 +22,8 @@ Route::prefix('application')->middleware(['verified', 'permission:Application.Se
   Route::get('fields/{module}/{key}/duzenle', 'Application\FieldController@edit')->name('fields.edit');
   Route::put('fields/{module}/{key}', 'Application\FieldController@update')->name('fields.update');
   Route::delete('fields/{module}/{key}', 'Application\FieldController@destroy')->name('fields.destroy');
+  Route::post('fields', 'Application\FieldController@getFields')->name('fields.getFields');
+  
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

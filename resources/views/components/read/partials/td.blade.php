@@ -17,16 +17,29 @@
     @endif
     @break
     @case('select')
-      {{ @$upper_val->relation(@$lower_val['relationship']) ? @$upper_val->relation(@$lower_val['relationship'])->first()[$lower_val['relationship']['field']] ?? '-' : $upper_val[$lower_key] }}
+    @if(@$lower_val['relationship'])
+      @if($lower_val['relationship']['type'] === 'belongsTo' && $lower_val['relationship']['keys']['partner'] === 'hasMany')
+        <small>Tamamı için detay sayfasını ziyaret ediniz.</small>
+      @else
+        @foreach($lower_val['relationship']['fields'] as $v)
+          {{ $upper_val->relation($lower_val['relationship'])->first()[$v] ?? '-' }}
+          @if(!$loop->last)
+            {{ ' - ' }}
+          @endif
+        @endforeach
+      @endif
+    @else
+      {!! $upper_val[$lower_key] !!}
+    @endif
     @break
     @case('multi_checkbox')
     @case('multi_select')
     @foreach($upper_val->relation($lower_val['relationship'])->get() as $val)
       @foreach($lower_val['relationship']['fields'] as $v)
-        {{ $val[$v] }}
-        @if(!$loop->last)
+        @if(!$loop->last && !$loop->first)
           {{ ' - ' }}
         @endif
+        {{ $val[$v] }}
       @endforeach
       @if(!$loop->last)
         {{ ' | ' }}

@@ -1,1 +1,116 @@
-{"paginate":"7","slugs":["ad"],"titles":{"index":"Blog Listele","show":"Blog Detay","create":"Blog Ekle","edit":"Blog D\u00fczenle"},"routes":{"index":"blog.index","create":"blog.create","store":"blog.store","show":"blog.show","edit":"blog.edit","update":"blog.update","delete":"blog.destroy"},"searchable":["ad"],"fields":{"id":{"type":"hidden","title":"Kimlik","create":false,"update":false,"list":false,"detail":false},"textarea":{"type":"textarea","title":"textarea","rules":["required"],"attributes":["required"],"list":true,"detail":true,"create":true,"update":true},"kabul":{"type":"checkbox","title":"Kabul","rules":["accepted"],"attributes":[],"list":true,"detail":true,"create":true,"update":true,"label":"Kabul ederim ki bu program..."},"deneme":{"type":"select","title":"Deneme","rules":["required"],"attributes":[],"list":true,"detail":true,"create":true,"update":true,"items":{"Erkek":"Erkek","K\u0131z":"K\u0131z","Belirtmek \u0130stemiyorum":"Belirtmek \u0130stemiyorum"}},"fotog":{"type":"image","title":"FotoRaf","rules":["image"],"attributes":[],"list":true,"detail":true,"create":true,"update":true,"value":null},"digerfoto":{"type":"image","title":"Di\u011fer FOTO","rules":[],"attributes":[],"list":true,"detail":true,"create":true,"update":true,"value":null},"datiii":{"type":"datetime","title":"Time","rules":["date"],"attributes":[],"list":true,"detail":true,"create":true,"update":true},"multi_foto":{"type":"multi_image","title":"Multi","rules":["image"],"attributes":[],"list":false,"detail":true,"create":false,"update":false,"count":1000000000000000,"multiple":true},"rad":{"type":"radio","title":"RadioButton","rules":["alpha_num"],"attributes":["required"],"list":true,"detail":true,"create":true,"update":true,"items":{"Sen":"Sen","Ben":"Ben","Kim":"Kim"}},"ad":{"type":"text","title":"Ad","attributes":{"autofocus":"true"},"rules":["required"],"create":true,"update":true,"list":true,"detail":true},"yas":{"type":"number","title":"Ya\u015f","rules":["required"],"attributes":["required"],"list":false,"detail":true,"create":true,"update":false},"dateee":{"type":"date","title":"Tarih","rules":["date"],"attributes":[],"list":true,"detail":true,"create":true,"update":true},"created_at":{"type":"datetime","title":"Eklenme Tarihi","name":"created_at","rules":["required"],"create":false,"update":false,"list":false,"detail":true},"updated_at":{"type":"datetime","title":"D\u00fczenlenme Tarihi","name":"updated_at","rules":["required"],"create":false,"update":false,"list":false,"detail":false}}}
+{
+  "paginate": "7",
+  "slugs": [
+    "ad"
+  ],
+  "titles": {
+    "index": "Blog",
+    "show": "Blog Detay",
+    "create": "Blog Ekle",
+    "edit": "Blog D\u00fczenle"
+  },
+  "routes": {
+    "index": "blog.index",
+    "create": "blog.create",
+    "store": "blog.store",
+    "show": "blog.show",
+    "edit": "blog.edit",
+    "update": "blog.update",
+    "delete": "blog.destroy"
+  },
+  "searchable": [
+    "ad"
+  ],
+  "fields": {
+    "id": {
+      "type": "hidden",
+      "title": "Kimlik",
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": false
+    },
+    "ad": {
+      "type": "text",
+      "title": "Ad",
+      "attributes": {
+        "autofocus": "true"
+      },
+      "rules": [
+        "required"
+      ],
+      "create": true,
+      "update": true,
+      "list": true,
+      "detail": true
+    },
+    "blog_id": {
+      "type": "select",
+      "title": "Denemeler",
+      "rules": [
+        "required"
+      ],
+      "list": true,
+      "detail": true,
+      "create": true,
+      "update": true,
+      "relationship": {
+        "model": "Modules\\Deneme\\Models\\Deneme",
+        "type": "hasMany",
+        "keys": {
+          "foreignKey": "blog_id",
+          "otherKey": "id",
+          "partner": "hasMany"
+        },
+        "pluck": {
+          "display": "name",
+          "value": "id"
+        },
+        "fields": [
+          "name",
+          "created_at",
+          "updated_at"
+        ],
+        "perPage": 7
+      }
+    },
+    "blog_resimleri": {
+      "type": "multi_image",
+      "title": "Blog Resimleri",
+      "rules": [
+        "image"
+      ],
+      "attributes": [],
+      "list": false,
+      "detail": true,
+      "create": false,
+      "update": false,
+      "count": 100000000000000000,
+      "multiple": true
+    },
+    "created_at": {
+      "type": "datetime",
+      "title": "Eklenme Tarihi",
+      "name": "created_at",
+      "rules": [
+        "required"
+      ],
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": true
+    },
+    "updated_at": {
+      "type": "datetime",
+      "title": "D\u00fczenlenme Tarihi",
+      "name": "updated_at",
+      "rules": [
+        "required"
+      ],
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": true
+    }
+  }
+}

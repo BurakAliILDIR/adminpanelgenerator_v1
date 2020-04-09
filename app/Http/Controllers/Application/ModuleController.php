@@ -60,7 +60,7 @@ class ModuleController extends Controller
     ];
     
     file_put_contents($path, json_encode($source));
-    session()->flash('success', 'Modül başarıyla düzenlendi.');
+    session()->flash('info', 'Modül başarıyla düzenlendi.');
     return redirect()->back();
   }
   
