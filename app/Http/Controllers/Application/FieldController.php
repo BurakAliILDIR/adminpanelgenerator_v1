@@ -135,15 +135,15 @@ class FieldController extends Controller
           // partner model
           $partner_eleman['type'] = 'select';
           $partner_eleman['relationship']['type'] = 'belongsTo';
-          $partner_eleman['relationship']['keys']['foreignKey'] = 'id';
-          $partner_eleman['relationship']['keys']['otherKey'] = $partner_model_name;
+          $partner_eleman['relationship']['keys']['foreignKey'] = $partner_model_name;
+          $partner_eleman['relationship']['keys']['otherKey'] = 'id';
           $partner_eleman['relationship']['keys']['partner'] = 'hasMany';
           $partner_eleman['multiple'] = true;
           $partner_eleman['relationship']['perPage'] = $request['perPage'] ?? 7;
         } else {
           // bulunduğum model
-          $eleman['relationship']['keys']['foreignKey'] = 'id';
-          $eleman['relationship']['keys']['otherKey'] = $partner_model_name;
+          $eleman['relationship']['keys']['foreignKey'] = $module_name;
+          $eleman['relationship']['keys']['otherKey'] = 'id';
           $eleman['relationship']['keys']['partner'] = 'hasMany';
           $eleman['multiple'] = true;
           $eleman['relationship']['perPage'] = $request['perPage'] ?? 7;
@@ -151,7 +151,7 @@ class FieldController extends Controller
           // partner model
           $partner_eleman['type'] = 'select';
           $partner_eleman['relationship']['type'] = 'hasMany';
-          $partner_eleman['relationship']['keys']['foreignKey'] = $partner_model_name;
+          $partner_eleman['relationship']['keys']['foreignKey'] = $module_name;
           $partner_eleman['relationship']['keys']['otherKey'] = 'id';
         }
       }
