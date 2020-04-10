@@ -44,12 +44,10 @@
       "list": true,
       "detail": true
     },
-    "blog_id": {
+    "Deneme": {
       "type": "select",
-      "title": "Denemeler",
-      "rules": [
-        "required"
-      ],
+      "title": "Deneme",
+      "rules": [],
       "list": true,
       "detail": true,
       "create": true,
@@ -58,35 +56,19 @@
         "model": "Modules\\Deneme\\Models\\Deneme",
         "type": "hasMany",
         "keys": {
-          "foreignKey": "blog_id",
-          "otherKey": "id",
-          "partner": "hasMany"
+          "foreignKey": "Deneme",
+          "otherKey": "id"
         },
         "pluck": {
           "display": "name",
           "value": "id"
         },
         "fields": [
+          "id",
           "name",
-          "created_at",
           "updated_at"
-        ],
-        "perPage": 7
+        ]
       }
-    },
-    "blog_resimleri": {
-      "type": "multi_image",
-      "title": "Blog Resimleri",
-      "rules": [
-        "image"
-      ],
-      "attributes": [],
-      "list": false,
-      "detail": true,
-      "create": false,
-      "update": false,
-      "count": 100000000000000000,
-      "multiple": true
     },
     "created_at": {
       "type": "datetime",

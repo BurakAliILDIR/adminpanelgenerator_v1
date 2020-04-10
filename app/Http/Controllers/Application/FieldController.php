@@ -38,11 +38,10 @@ class FieldController extends Controller
   
   public function store(Request $request, $module_name, $related = false)
   {
-    $key = $request['name'];
-  
     if ($related) {
       $relationship = $request['relationship'];
       $partner = $request['partner'];
+      // bu model
       $eleman = [
         'type' => $request['type'],
         'title' => $request['title'],
@@ -55,8 +54,8 @@ class FieldController extends Controller
           'model' => $request['model'],
           'type' => $relationship,
           'keys' => [
-            'foreignKey' => $request['foreignKey'],
-            'otherKey' => $request['otherKey'],
+            /*'foreignKey' => $request['foreignKey'],
+            'otherKey' => $request['otherKey'],*/
           ],
           'pluck' => [
             'display' => $request['display'],
@@ -66,71 +65,129 @@ class FieldController extends Controller
         ],
       ];
       
+      // karşı model
+      $partner_model = new $request['model'];
+      $partner_model_name = class_basename($partner_model);
+      $partner_eleman = [
+        'type' => '',
+        'title' => $module_name,
+        'rules' => $request['partner_rules'] ?? [],
+        'list' => in_array('list', $request['partner_pages'] ?? []),
+        'detail' => in_array('detail', $request['partner_pages'] ?? []),
+        'create' => in_array('create', $request['partner_pages'] ?? []),
+        'update' => in_array('update', $request['partner_pages'] ?? []),
+        'relationship' => [
+          'model' => "Modules\\$module_name\\Models\\$module_name",
+          'type' => '',
+          'keys' => [],
+          'pluck' => [
+            'display' => $request['partner_display'],
+            'value' => $request['partner_value'],
+          ],
+          'fields' => $request['this_fields'],
+        ],
+      ];
+  
+      $partner_key = $partner_model_name;
+      
+      // teke tek ise:
+      if ($relationship === 'hasOne' || ($relationship === 'belongsTo' && $partner === 'hasOne')) {
+        // bu tabloda bulunacak key.
+        // hasOne ve belongsTo olmasına göre foreignKey ve otherKey alanı değişkenlik gösterecek.
+        // hasOne ise : 1 = karşı | 2 = bu
+        // belongsTo ise : 1 = bu | 2 = karşı
+        if ($relationship == 'hasOne') {
+          // bulunduğum model
+          $eleman['relationship']['keys']['foreignKey'] = 'id';
+          $eleman['relationship']['keys']['otherKey'] = $partner_model_name;
+          
+          // partner model
+          $partner_eleman['type'] = 'select';
+          $partner_eleman['relationship']['type'] = 'belongsTo';
+          $partner_eleman['relationship']['keys']['foreignKey'] = 'id';
+          $partner_eleman['relationship']['keys']['otherKey'] = $partner_model_name;
+          $partner_eleman['relationship']['keys']['partner'] = 'hasOne';
+        } else {
+          // bulunduğum model
+          $eleman['relationship']['keys']['foreignKey'] = 'id';
+          $eleman['relationship']['keys']['otherKey'] = $module_name;
+          $eleman['relationship']['keys']['partner'] = $partner;
+          
+          // partner model
+          $partner_eleman['type'] = 'select';
+          $partner_eleman['relationship']['type'] = 'hasOne';
+          $partner_eleman['relationship']['keys']['foreignKey'] = 'id';
+          $partner_eleman['relationship']['keys']['otherKey'] = $module_name;
+        }
+        $partner_key = $partner_model_name;
+      }
+      
+      // teke çok ise:
+      if ($relationship === 'hasMany' || ($relationship === 'belongsTo' && $partner === 'hasMany')) {
+        // karşı tabloda bulunacak key.
+        // hasMany ise : 1 = karşı | 2 = bu
+        // belongsTo ise : 1 = karşı | 2 = bu
+        if ($relationship == 'hasMany') {
+          // bulunduğum model
+          $eleman['relationship']['keys']['foreignKey'] = $partner_model_name;
+          $eleman['relationship']['keys']['otherKey'] = 'id';
+          
+          // partner model
+          $partner_eleman['type'] = 'select';
+          $partner_eleman['relationship']['type'] = 'belongsTo';
+          $partner_eleman['relationship']['keys']['foreignKey'] = 'id';
+          $partner_eleman['relationship']['keys']['otherKey'] = $partner_model_name;
+          $partner_eleman['relationship']['keys']['partner'] = 'hasMany';
+          $partner_eleman['multiple'] = true;
+          $partner_eleman['relationship']['perPage'] = $request['perPage'] ?? 7;
+        } else {
+          // bulunduğum model
+          $eleman['relationship']['keys']['foreignKey'] = 'id';
+          $eleman['relationship']['keys']['otherKey'] = $partner_model_name;
+          $eleman['relationship']['keys']['partner'] = 'hasMany';
+          $eleman['multiple'] = true;
+          $eleman['relationship']['perPage'] = $request['perPage'] ?? 7;
+  
+          // partner model
+          $partner_eleman['type'] = 'select';
+          $partner_eleman['relationship']['type'] = 'hasMany';
+          $partner_eleman['relationship']['keys']['foreignKey'] = $partner_model_name;
+          $partner_eleman['relationship']['keys']['otherKey'] = 'id';
+        }
+      }
+      
+      // çoka çok ise:
       if ($relationship === 'belongsToMany') {
-        $eleman['relationship']['keys']['table'] = $request['table'];
-      }
-      
-      $isBelongsToOrHasMany = ($relationship === 'belongsTo' && $partner === 'hasMany');
-      if ($partner === 'hasMany' || $isBelongsToOrHasMany) {
-        $key = $eleman['relationship']['keys']['foreignKey'];
-        $eleman['relationship']['keys']['partner'] = $partner;
-      }
-      if ($partner === 'hasOne') {
-        $key = $eleman['relationship']['keys']['otherKey'];
-        $eleman['relationship']['keys']['partner'] = $partner;
-      }
-      
-      if ($relationship === 'belongsToMany' || $isBelongsToOrHasMany) {
+        // 1 = bu | 2 = karşı
+        // 2 = karşı | 2 = bu
+        // bulunduğum model
+        $eleman['relationship']['keys']['foreignKey'] = $partner_model_name;
+        $eleman['relationship']['keys']['otherKey'] = $module_name;
         $eleman['multiple'] = true;
         $eleman['relationship']['perPage'] = $request['perPage'] ?? 7;
+        $eleman['relationship']['keys']['table'] = $module_name . $partner_model_name;
+        
+        // partner model
+        $partner_eleman['type'] = $request['type'];
+        $partner_eleman['relationship']['type'] = 'belongsToMany';
+        $partner_eleman['relationship']['keys']['foreignKey'] = $module_name;
+        $partner_eleman['relationship']['keys']['otherKey'] = $partner_model_name;
+        $partner_eleman['multiple'] = true;
+        $partner_eleman['relationship']['perPage'] = $request['perPage'] ?? 7;
+        $partner_eleman['relationship']['keys']['table'] = $module_name . $partner_model_name;
       }
+//      TODO : belongsTomany için de karşı tarafa yazılması gerekiyor. bu durumda her ihtimal için swich case ile düzenlenmeli.
       
-      // eğer karşı tabloda o anahtarın olmasını mecbur kılmak isteniyorsa.
-      if ($relationship === 'hasOne' || $relationship === 'hasMany' || $isBelongsToOrHasMany) {
-        // karşı tabloya o key eklenmeli. $request['foreignKey'] den gelecek değer ile.
-        $partner_model = new $request['model'];
-        $partner_model_name = class_basename($partner_model);
-        $partner_path = storage_path("app\modules\sources\\$partner_model_name.json");
-        $partner_source = json_decode(file_get_contents($partner_path), true);
-        $partner_eleman = [
-          'type' => 'select',
-          'title' => $module_name,
-          'rules' =>  $request['partner_rules'] ?? [],
-          'list' => in_array('list', $request['partner_pages'] ?? []),
-          'detail' => in_array('detail', $request['partner_pages'] ?? []),
-          'create' => in_array('create', $request['partner_pages'] ?? []),
-          'update' => in_array('update', $request['partner_pages'] ?? []),
-          'relationship' => [
-            'model' => "Modules\\$module_name\\Models\\$module_name",
-            'type' => 'belongsTo',
-            'keys' => [
-              // hasOne varsayılan değerleri
-              'foreignKey' => $request['otherKey'],
-              'otherKey' => $request['foreignKey'],
-              'partner' => 'hasOne',
-            ],
-            'pluck' => [
-              'display' => $request['partner_display'],
-              'value' => $request['partner_value'],
-            ],
-            'fields' => $request['this_fields'],
-          ],
-        ];
-        if ($relationship === 'hasMany' || $relationship === 'belongsTo') {
-          $partner_eleman['relationship']['keys']['foreignKey'] = $request['foreignKey'];
-          $partner_eleman['relationship']['keys']['otherKey'] = $request['otherKey'];
-          $partner_eleman['relationship']['keys']['partner'] = 'hasMany';
-        }
-        
-        $partner_fields = $partner_source['fields'];
-        $partner_count = count($partner_fields);
-        $partner_count = ($request['order'] > $partner_count - 2) ? $partner_count - 2 : $request['order'];
-        
-        // dizi elemanlarının arasına eleman sokuşturmak.
-        $partner_source['fields'] = array_slice($partner_fields, 0, $partner_count, true) + [$key => $partner_eleman] +
-          array_slice($partner_fields, $partner_count, count($partner_fields) - 1, true);
-        file_put_contents($partner_path, json_encode($partner_source));
-      }
+      $partner_path = storage_path("app\modules\sources\\$partner_model_name.json");
+      $partner_source = json_decode(file_get_contents($partner_path), true);
+      
+      $partner_fields = $partner_source['fields'];
+      $partner_count = count($partner_fields);
+      $partner_count = $partner_count - 2;
+      // dizi elemanlarının arasına eleman sokuşturmak.
+      $partner_source['fields'] = array_slice($partner_fields, 0, $partner_count, true) + [$module_name => $partner_eleman] +
+        array_slice($partner_fields, $partner_count, count($partner_fields) - 1, true);
+      file_put_contents($partner_path, json_encode($partner_source));
     } else {
       $eleman = $this->ordinaryFieldFilling($request);
     }
@@ -141,7 +198,7 @@ class FieldController extends Controller
     $count = ($request['order'] > $count - 2) ? $count - 2 : $request['order'];
     
     // dizi elemanlarının arasına eleman sokuşturmak.
-    $source['fields'] = array_slice($fields, 0, $count, true) + [$key => $eleman] +
+    $source['fields'] = array_slice($fields, 0, $count, true) + [$request['name'] ?? $partner_key => $eleman] +
       array_slice($fields, $count, count($fields) - 1, true);
     file_put_contents($path, json_encode($source));
     session()->flash('success', 'Alan başarıyla eklendi.');

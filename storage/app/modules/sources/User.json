@@ -9,43 +9,36 @@
       "type": "text",
       "title": "Ad",
       "detail": true
-
     },
     "surname": {
       "type": "text",
       "title": "Soyad",
       "detail": true
-
     },
     "email": {
       "type": "email",
       "title": "E-posta",
       "detail": true
-
     },
     "bio": {
       "type": "textarea",
       "title": "Hakkımda",
       "detail": true
-
     },
     "phone": {
       "type": "number",
       "title": "Telefon",
       "detail": true
-
     },
     "gender": {
       "type": "radio",
       "title": "Cinsiyet",
       "detail": true
-
     },
     "confirm": {
       "type": "radio",
       "title": "Durum",
       "detail": true
-
     },
     "email_verified_at": {
       "type": "hidden",
@@ -76,7 +69,7 @@
       "list": false,
       "detail": true
     },
-     "resimler": {
+    "resimler": {
       "type": "multi_image",
       "title": "Resimler",
       "count": 10,
@@ -86,32 +79,6 @@
     "profile": {
       "type": "image",
       "title": "Profil Fotoğrafı",
-      "detail": true
-    },
-    "blogs": {
-      "type": "multi_checkbox",
-      "title": "Bloglar",
-      "relationship": {
-        "type": "belongsToMany",
-        "model": "Modules\\Blog\\Models\\Blog",
-        "keys": {
-          "table": "blog_user",
-          "foreignKey": "user_id",
-          "otherKey": "blog_id"
-        },
-        "pluck": {
-          "display": "ad",
-          "value": "id"
-        },
-        "fields": [
-          "ad"
-        ],
-        "perPage": 1
-      },
-      "rules": [
-        "required"
-      ],
-      "multiple": true,
       "detail": true
     }
   }

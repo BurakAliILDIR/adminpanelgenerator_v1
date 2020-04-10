@@ -44,54 +44,19 @@
           'title' => 'İlişki',
           'items' => $relationships,
           ])@endcomponent
+          <small>Çoklu seçim isteniyorsa "BelongsToMany" olmak zorundadır. </small>
           @component('components.form.partials.select',
           ['key' => 'type',
           'title' => 'Tip',
           'items' => $types,
           ])@endcomponent
-          <table class="table table-bordered table-responsive table-hover">
-            <thead>
-            <tr>
-              <th>Tip</th>
-              <th>1. Alan</th>
-              <th>2. Alan</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td>HasOne</td>
-              <td>Karşı Tablo Key</td>
-              <td>Bu Tablo Key</td>
-            </tr>
-            <tr>
-              <td>belongsTo (Karşısı HasOne)</td>
-              <td>Bu Tablodaki Key</td>
-              <td>Karşı Tablo Key</td>
-            </tr>
-            <tr>
-              <td>HasMany</td>
-              <td>Karşı Tablo Key</td>
-              <td>Bu Tablo Key</td>
-            </tr>
-            <tr>
-              <td>belongsTo (Karşısı HasMany)</td>
-              <td>Karşı Tablo Key</td>
-              <td>Bu Tablo Key</td>
-            </tr>
-            <tr>
-              <td>belongsToMany</td>
-              <td>Karşı Tablo Key</td>
-              <td>Bu Tablo Key</td>
-            </tr>
-            </tbody>
-          </table>
           @component('components.form.partials.radio',
                  ['key' => 'partner',
-                 'items' => ['hasOne' => 'HasOne (Tek)', 'hasMany' => 'HasMany (Çok)'],
+                 'items' => ['hasOne' => 'HasOne (Tek)', 'hasMany' => 'HasMany (Karşısı Çok)'],
                  'checked' => null,
                  'title' => 'Karşı Tablo Yapısı',
           ])@endcomponent
-          @component('components.form.partials.text',
+{{--          @component('components.form.partials.text',
           ['key' => 'foreignKey',
           'title' => '1. Alan',
           'attributes'=> ['required' => 'required']
@@ -100,12 +65,12 @@
           ['key' => 'otherKey',
           'title' => '2. Alan',
           'attributes'=> ['required' => 'required']
-          ])@endcomponent
-          <small><u>Eğer belonsToMany ise:</u></small>
+          ])@endcomponent--}}
+{{--          <small><u>Eğer belonsToMany ise:</u></small>
           @component('components.form.partials.text',
           ['key' => 'table',
           'title' => 'Tablo Adı',
-          ])@endcomponent
+          ])@endcomponent--}}
           <small>--- PLUCK ---</small>
           @component('components.form.partials.select',
           ['key' => 'value',
@@ -134,11 +99,11 @@
           ['key' => 'perPage',
           'title' => 'Sayfa Başı Kayıt',
           ])@endcomponent
-          @component('components.form.partials.text',
+{{--          @component('components.form.partials.text',
           ['key' => 'name',
           'title' => 'Ad',
           'attributes'=> [ 'required']
-          ])@endcomponent
+          ])@endcomponent--}}
           @component('components.form.partials.text',
           ['key' => 'title',
           'title' => 'Başlık',
@@ -167,7 +132,6 @@
           <div class="form-check m-b">
             {{ Form::label('pages', 'Görünüm', ['class' => 'col-sm-2 control-label']) }}
             <div class="col-sm-10 m-b">
-
               @foreach($pages as $page)
                 <div class="checkbox">
                   <label class="checkbox-custom center-block">

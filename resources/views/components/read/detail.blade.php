@@ -89,18 +89,22 @@ $class_name = class_basename($model);
                       @break
                       @case('select')
                       <?php $relation_infos = @$val['relationship'] ?>
-                      <small class="text-uc text-muted">{{ $val['title'] }} : </small>
-                      @if($relation_infos)
-                        @foreach($relation_infos['fields'] as $v)
-                          {{ $model->relation($relation_infos)->first()[$v] ?? '-' }}
-                          @if(!$loop->last)
-                            {{ ' - ' }}
+                      @if(@$relation_infos['multiple'] ?? true)
+                        <small class="text-uc text-muted">{{ $val['title'] }} : </small>
+                        @if($relation_infos)
+                          @if(($item = $model->relation($relation_infos)->first()))
+                            @foreach($relation_infos['fields'] as $v)
+                              {{ $item[$v] ?? '-' }}
+                              @if(!$loop->last)
+                                {{ ' - ' }}
+                              @endif
+                            @endforeach
                           @endif
-                        @endforeach
-                      @else
-                        <span>{!! $model[$key] !!}</span>
+                        @else
+                          <span>{!! $model[$key] !!}</span>
+                        @endif
+                        <div class="line"></div>
                       @endif
-                      <div class="line"></div>
                       @break
                       @case('date')
                       <small class="text-uc text-muted">{{ $val['title'] }} : </small>

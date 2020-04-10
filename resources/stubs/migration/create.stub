@@ -41,7 +41,11 @@ class $CLASS$ extends Migration
             else $table->integer($key)->nullable()->index();
             break;
           case 'select':
-            $table->uuid($key)->nullable()->index();
+            if (@($rel = $field['relationship']) && !($rel['type'] === 'belongsToMany') && !($rel['type'] === 'belongsTo' && @$rel['keys']['partner'] === 'hasOne')) {
+              $table->uuid($key)->nullable()->index();
+            } else if ( !$field['relationship']) {
+              $table->string($key)->nullable()->index();
+            }
             break;
           case 'textarea':
             $rows = @$field['attributes']['rows'] ?? 5;

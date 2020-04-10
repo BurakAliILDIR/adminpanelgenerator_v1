@@ -41,13 +41,17 @@ class CreateBlogTable extends Migration
             else $table->integer($key)->nullable()->index();
             break;
           case 'select':
-            $table->uuid($key)->nullable()->index();
+            if (@($rel = $field['relationship']) && !($rel['type'] === 'belongsToMany') && !($rel['type'] === 'belongsTo')) {
+              $table->uuid($key)->nullable()->index();
+            } elseif(!$field['relationship']) {
+              $table->string($key)->nullable()->index();
+            }
             break;
           case 'textarea':
             $rows = @$field['attributes']['rows'];
             if ($rows < 5) $table->text($key)->nullable();
             else if ($rows === 5) $table->mediumText($key)->nullable();
-            else $table->longText($key)->nullable();   
+            else $table->longText($key)->nullable();
             break;
           case 'date':
             $table->date($key)->nullable()->index();

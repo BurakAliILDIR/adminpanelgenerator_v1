@@ -18,11 +18,11 @@
     @break
     @case('select')
     @if(@$lower_val['relationship'])
-      @if($lower_val['relationship']['type'] === 'belongsTo' && $lower_val['relationship']['keys']['partner'] === 'hasMany')
+      @if($lower_val['relationship']['type'] === 'belongsTo' && @$lower_val['relationship']['keys']['partner'] === 'hasMany')
         <small>Tamamı için detay sayfasını ziyaret ediniz.</small>
-      @else
+      @elseif(($item = $upper_val->relation($lower_val['relationship'])->first()))
         @foreach($lower_val['relationship']['fields'] as $v)
-          {{ $upper_val->relation($lower_val['relationship'])->first()[$v] ?? '-' }}
+          {{ (string)$item[$v] }}
           @if(!$loop->last)
             {{ ' - ' }}
           @endif
