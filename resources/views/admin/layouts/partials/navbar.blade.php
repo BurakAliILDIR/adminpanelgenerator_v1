@@ -19,9 +19,7 @@
       </div>
     </header>
     <section class="w-f scrollable">
-      <div class=" " data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px"
-           data-color="#333333">
-
+      <div class=" " data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
         <!-- nav -->
         <nav class="nav-primary hidden-xs">
           <ul class="nav">
@@ -102,13 +100,12 @@
               \Illuminate\Support\Facades\Redis::set($menus_path, serialize($menus));
             }
             ?>
-            @foreach($menus as $val)
-              <?php $menu_name = $val['name']; $menu_icon = $val['icon']; $menu_title = $val['title'];  ?>
-              @can($menu_name . '.index')
+            @foreach($menus as $key => $val)
+              @can($key . '.index')
                 <li>
-                  <a href="{{ route(strtolower($menu_name).'.index') }}">
-                    <i class="fa fa-{{ $menu_icon ?? 'angle-right' }} icon"><b class="bg-info"></b></i>
-                    <span>{!! $menu_title !!}</span>
+                  <a href="{{ route(strtolower($key).'.index') }}">
+                    <i class="fa fa-{{ $val['icon'] ?? 'angle-right' }} icon"><b class="bg-info"></b></i>
+                    <span>{!! $val['title'] !!}</span>
                   </a>
                 </li>
               @endcan

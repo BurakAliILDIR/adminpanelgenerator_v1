@@ -11,9 +11,8 @@ class FieldController extends Controller
 {
   public function create($module_name, $related = false)
   {
-    $rules = ['required', 'accepted', 'alpha', 'alpha_num', 'array', 'boolean', 'image', 'email', 'nullable', 'file', 'string', 'numeric', 'date',
-      'url', 'phone:TR,AUTO'];
-    $attributes = ['required' => 'required', 'autofocus' => 'autofocus', 'disabled' => 'disabled'];
+    $rules = $this->getRules();
+    $attributes = $this->getAttributes();
     $pages = ['list', 'detail', 'create', 'update'];
     if ($related) {
       $types = ['select' => 'Select', 'multi_select' => 'Multi Select', 'multi_checkbox' => 'Multi CheckBox',];
@@ -28,7 +27,7 @@ class FieldController extends Controller
       $this_fields = json_decode(file_get_contents(storage_path("app\modules\sources\\$module_name.json")), true)['fields'];
       return view('admin.application.field.related_create', compact('module_name', 'pages', 'rules', 'attributes', 'types', 'models', 'relationships', 'this_fields'));
     } else {
-      $types = ['text' => 'Text', 'number' => 'Numeric', 'textarea' => 'Textarea', 'radio' => 'Radio Button', 'checkbox' => 'CheckBox (true, false)',
+      $types = ['text' => 'Text', 'number' => 'Integer', 'decimal' => 'Decimal', 'textarea' => 'Textarea', 'radio' => 'Radio Button', 'checkbox' => 'CheckBox (true, false)',
         'select' => 'Select', 'date' => 'Date (dd.mm.yyyy)', 'datetime' => 'DateTime (dd.mm.yyyy h:i:s)', 'image' => 'Image',
         'multi_image' => 'Multi Image', 'file' => 'File', 'email' => 'E-mail', 'hidden' => 'Hidden', 'password' => 'Secret',
       ];
@@ -41,7 +40,7 @@ class FieldController extends Controller
     if ($related) {
       $relationship = $request['relationship'];
       $partner = $request['partner'];
-      // bu model
+      // bu model iskelet
       $eleman = [
         'type' => $request['type'],
         'title' => $request['title'],
@@ -53,19 +52,16 @@ class FieldController extends Controller
         'relationship' => [
           'model' => $request['model'],
           'type' => $relationship,
-          'keys' => [
-            /*'foreignKey' => $request['foreignKey'],
-            'otherKey' => $request['otherKey'],*/
-          ],
+          'keys' => [],
           'pluck' => [
             'display' => $request['display'],
-            'value' => $request['value'],
+            'value' => 'id',
           ],
           'fields' => $request['fields'],
         ],
       ];
       
-      // karşı model
+      // karşı model iskelet
       $partner_model = new $request['model'];
       $partner_model_name = class_basename($partner_model);
       $partner_eleman = [
@@ -82,20 +78,16 @@ class FieldController extends Controller
           'keys' => [],
           'pluck' => [
             'display' => $request['partner_display'],
-            'value' => $request['partner_value'],
+            'value' => 'id',
           ],
           'fields' => $request['this_fields'],
         ],
       ];
-  
+      
       $partner_key = $partner_model_name;
       
       // teke tek ise:
       if ($relationship === 'hasOne' || ($relationship === 'belongsTo' && $partner === 'hasOne')) {
-        // bu tabloda bulunacak key.
-        // hasOne ve belongsTo olmasına göre foreignKey ve otherKey alanı değişkenlik gösterecek.
-        // hasOne ise : 1 = karşı | 2 = bu
-        // belongsTo ise : 1 = bu | 2 = karşı
         if ($relationship == 'hasOne') {
           // bulunduğum model
           $eleman['relationship']['keys']['foreignKey'] = 'id';
@@ -125,8 +117,6 @@ class FieldController extends Controller
       // teke çok ise:
       if ($relationship === 'hasMany' || ($relationship === 'belongsTo' && $partner === 'hasMany')) {
         // karşı tabloda bulunacak key.
-        // hasMany ise : 1 = karşı | 2 = bu
-        // belongsTo ise : 1 = karşı | 2 = bu
         if ($relationship == 'hasMany') {
           // bulunduğum model
           $eleman['relationship']['keys']['foreignKey'] = $partner_model_name;
@@ -147,7 +137,7 @@ class FieldController extends Controller
           $eleman['relationship']['keys']['partner'] = 'hasMany';
           $eleman['multiple'] = true;
           $eleman['relationship']['perPage'] = $request['perPage'] ?? 7;
-  
+          
           // partner model
           $partner_eleman['type'] = 'select';
           $partner_eleman['relationship']['type'] = 'hasMany';
@@ -158,8 +148,6 @@ class FieldController extends Controller
       
       // çoka çok ise:
       if ($relationship === 'belongsToMany') {
-        // 1 = bu | 2 = karşı
-        // 2 = karşı | 2 = bu
         // bulunduğum model
         $eleman['relationship']['keys']['foreignKey'] = $partner_model_name;
         $eleman['relationship']['keys']['otherKey'] = $module_name;
@@ -216,27 +204,25 @@ class FieldController extends Controller
   {
     // TODO burada temel module özellikleri düzenlenecek. Fields lar için ayrı bir pencere açılacak
     $path = storage_path("app\modules\sources\\$module_name.json");
-    $source = json_decode(file_get_contents($path), true);
-    return view('admin.application.module.edit', compact('source', 'name'));
+    $cells = json_decode(file_get_contents($path), true)['fields'][$key];
+    
+    $rules = $this->getRules();
+    $attributes = $this->getAttributes();
+    
+    return view('admin.application.field.edit', compact('cells', 'module_name', 'key', 'rules', 'attributes'));
   }
   
   public function update(Request $request, $module_name, $key)
   {
     $path = storage_path("app\modules\sources\\$module_name.json");
     $source = json_decode(file_get_contents($path), true);
-    
-    $source['paginate'] = $request->paginate;
-    $source['searchable'] = $request->searchable;
-    $source['slugs'] = $request->slugs;
-    $source['titles'] = [
-      'index' => "$request->index",
-      'show' => "$request->show",
-      'create' => "$request->create",
-      'edit' => "$request->edit",
-    ];
-    
+    $eleman = $source['fields'][$key];
+    $eleman['title'] = $request['title'];
+    $eleman['rules'] = $request['rules'];
+    $eleman['attributes'] = $request['attributes'];
+    $source['fields'][$key] = $eleman;
     file_put_contents($path, json_encode($source));
-    session()->flash('success', 'Modül başarıyla düzenlendi.');
+    session()->flash('info', 'Alan başarıyla düzenlendi.');
     return redirect()->back();
   }
   
@@ -298,7 +284,30 @@ class FieldController extends Controller
       case 'checkbox':
         $eleman['label'] = $request['values'];
         break;
+      case 'decimal':
+        $eleman['type'] = 'number';
+        $eleman['decimal'] = true;
+        break;
     }
     return $eleman;
+  }
+  
+  /**
+   * @return array
+   */
+  private function getRules() : array
+  {
+    $rules = ['required', 'accepted', 'alpha', 'alpha_num', 'array', 'boolean', 'image', 'email', 'nullable', 'file', 'string',
+      'integer', 'numeric', 'date', 'url', 'phone:TR,AUTO'];
+    return $rules;
+  }
+  
+  /**
+   * @return array
+   */
+  private function getAttributes() : array
+  {
+    $attributes = ['required' => 'required', 'autofocus' => 'autofocus', 'disabled' => 'disabled'];
+    return $attributes;
   }
 }

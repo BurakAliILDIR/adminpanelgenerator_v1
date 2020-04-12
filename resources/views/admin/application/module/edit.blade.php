@@ -18,9 +18,6 @@
                 <span class="m-l">{{ 'Modül Düzenle' }}</span>
               </div>
             </div>
-            <div class="col-md-6">
-            
-            </div>
           </div>
         </header>
         <div class="panel-body">
@@ -32,6 +29,18 @@
                'title' => 'Listeleme Sayfa Başlık',
                'value' => $source['titles']['index'],
                'attributes' => ['autofocus']
+          ])@endcomponent
+          @component('components.form.partials.text',
+               ['key' => 'menu_title',
+               'title' => 'Menü Başlık',
+               'value' => $menu['title'],
+          ])@endcomponent
+            <small>Icon listesi <a href="https://fontawesome.com/v4.7.0/cheatsheet/"><strong>sitesini ziyaret ediniz.</strong></a><br>
+            Not: Sadece uzantıyı yazınız.</small>
+          @component('components.form.partials.text',
+               ['key' => 'menu_icon',
+               'title' => 'Menü Icon',
+               'value' => $menu['icon'],
           ])@endcomponent
           @component('components.form.partials.text',
                ['key' => 'show',

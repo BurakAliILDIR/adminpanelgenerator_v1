@@ -41,14 +41,19 @@ class ModuleController extends Controller
     // TODO burada temel module özellikleri düzenlenecek. Fields lar için ayrı bir pencere açılacak
     $path = storage_path("app\modules\sources\\$name.json");
     $source = json_decode(file_get_contents($path), true);
-    return view('admin.application.module.edit', compact('source', 'name'));
+  
+    // menü bilgisi getirme
+    $menu_path = storage_path('app\public\application\settings\menu.json');
+    $menu = json_decode(file_get_contents($menu_path), true)[$name];
+    
+    return view('admin.application.module.edit', compact('source', 'name', 'menu'));
   }
   
   public function update(Request $request, $name)
   {
     $path = storage_path("app\modules\sources\\$name.json");
     $source = json_decode(file_get_contents($path), true);
-
+    
     $source['paginate'] = $request->paginate;
     $source['searchable'] = $request->searchable;
     $source['slugs'] = $request->slugs;
@@ -60,6 +65,17 @@ class ModuleController extends Controller
     ];
     
     file_put_contents($path, json_encode($source));
+    
+    
+    // menü güncelleme
+  
+    \Illuminate\Support\Facades\Redis::del(config('cache.prefix') . ':menus');
+  
+    $menu_path = storage_path('app\public\application\settings\menu.json');
+    $menus = json_decode(file_get_contents($menu_path), true);
+    $menus[$name] = ['title' => $request['menu_title'], 'icon' => $request['menu_icon']];
+    file_put_contents($menu_path, json_encode($menus));
+    
     session()->flash('info', 'Modül başarıyla düzenlendi.');
     return redirect()->back();
   }

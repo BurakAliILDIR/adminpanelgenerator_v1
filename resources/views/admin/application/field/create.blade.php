@@ -66,10 +66,7 @@
           ])@endcomponent
           <div class="form-check m-b">
             {{ Form::label('rules', 'Kurallar', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10 m-b @error('rules[]') is-invalid @enderror">
-              @error('rules[]')
-              <div class="label bg-danger">{{ $message }}</div>
-              @enderror
+            <div class="col-sm-10 m-b">
               @foreach($rules as $rule)
                 <div class="checkbox">
                   <label class="checkbox-custom center-block">
@@ -84,10 +81,7 @@
           <div class="line line-dashed line-lg pull-in"></div>
           <div class="form-check m-b">
             {{ Form::label('attributes', 'Özellikler', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10 m-b @error('attributes[]') is-invalid @enderror">
-              @error('attributes[]')
-              <div class="label bg-danger">{{ $message }}</div>
-              @enderror
+            <div class="col-sm-10 m-b">
               @foreach($attributes as $attribute_key => $attribute)
                 <div class="checkbox">
                   <label class="checkbox-custom center-block">
@@ -103,10 +97,7 @@
           <small>Multi Image: Sadece "detail" görünümü seçilmelidir.</small><br><br>
           <div class="form-check m-b">
             {{ Form::label('pages', 'Görünüm', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10 m-b @error('pages[]') is-invalid @enderror">
-              @error('pages[]')
-              <div class="label bg-danger">{{ $message }}</div>
-              @enderror
+            <div class="col-sm-10 m-b">
               @foreach($pages as $page)
                 <div class="checkbox">
                   <label class="checkbox-custom center-block">
@@ -136,33 +127,3 @@
   </script>
   <script src="/admin-custom-template/form/only_number.js"></script>
 @endsection
-{{--   "users": {
-      "type": "multi_checkbox",
-      "title": "Kullan\u0131c\u0131lar",
-      "relationship": {
-        "type": "belongsToMany",
-        "model": "App\\Models\\User",
-        "keys": {
-          "table": "blog_user",
-          "foreignKey": "blog_id",
-          "otherKey": "user_id"
-        },
-        "pluck": {
-          "display": "name",
-          "value": "id"
-        },
-        "fields": [
-          "name",
-          "surname",
-          "gender"
-        ],
-        "perPage": 3
-      },
-      "attributes": [],
-      "rules": [],
-      "multiple": true,
-      "create": false,
-      "update": true,
-      "list": false,
-      "detail": true
-    },--}}

@@ -56,27 +56,7 @@
                  'checked' => null,
                  'title' => 'Karşı Tablo Yapısı',
           ])@endcomponent
-{{--          @component('components.form.partials.text',
-          ['key' => 'foreignKey',
-          'title' => '1. Alan',
-          'attributes'=> ['required' => 'required']
-          ])@endcomponent
-          @component('components.form.partials.text',
-          ['key' => 'otherKey',
-          'title' => '2. Alan',
-          'attributes'=> ['required' => 'required']
-          ])@endcomponent--}}
-{{--          <small><u>Eğer belonsToMany ise:</u></small>
-          @component('components.form.partials.text',
-          ['key' => 'table',
-          'title' => 'Tablo Adı',
-          ])@endcomponent--}}
           <small>--- PLUCK ---</small>
-          @component('components.form.partials.select',
-          ['key' => 'value',
-          'title' => 'Arkadaki Value',
-          'items' => []
-          ])@endcomponent
           @component('components.form.partials.select',
           ['key' => 'display',
           'title' => 'Görünecek Alan',
@@ -99,11 +79,6 @@
           ['key' => 'perPage',
           'title' => 'Sayfa Başı Kayıt',
           ])@endcomponent
-{{--          @component('components.form.partials.text',
-          ['key' => 'name',
-          'title' => 'Ad',
-          'attributes'=> [ 'required']
-          ])@endcomponent--}}
           @component('components.form.partials.text',
           ['key' => 'title',
           'title' => 'Başlık',
@@ -146,17 +121,8 @@
           <div class="line line-dashed line-lg pull-in"></div>
           <small>Aşağıdaki siyah olan alanlar sadece Tip alanı "HasOne", "HasMany" ve ("belongsTo" ve Karşı taraf
             "HasMany") ise doldurulacaktır.</small>
-          <div class="form-group bg-black">
-            {{ Form::label('partner_value', 'Karşı Tarafın Arkadaki Value', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10">
-              <select class="form-control m-b" id="partner_value" name="partner_value" required>
-                <option selected hidden disabled><-- Karşı Tarafın Arkadaki Value Seçiniz --></option>
-                @foreach($this_fields as $key => $val)
-                  <option value="{{ $key }}">{{ $key }}</option>
-                @endforeach
-              </select>
-            </div>
-          </div>
+          <small>--- PLUCK ---</small>
+
           <div class="line line-dashed line-lg pull-in"></div>
           <div class="form-group bg-black">
             {{ Form::label('partner_display', 'Karşı Tarafın Görünecek Alan', ['class' => 'col-sm-2 control-label']) }}
@@ -170,6 +136,7 @@
             </div>
           </div>
           <div class="line line-dashed line-lg pull-in"></div>
+          <small>-----------------</small>
           <div class="form-check m-b">
             {{ Form::label('this_fields', 'Karşı Tarafta Görüntülenebilecek Alanlar', ['class' => 'col-sm-2 control-label']) }}
             <div class="col-sm-10 m-b bg-black">
