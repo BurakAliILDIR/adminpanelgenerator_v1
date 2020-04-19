@@ -12,7 +12,12 @@
             <a href="{{ route('modules.create') }}"
                class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> Yeni Modül</a>
           </div>
-
+          <div class="col-sm-5 m-b-xs">
+            <a href="{{ route('modules.migrate_refresh', null) }}"
+               class="btn btn-sm btn-default pull-right btn-rounded"
+               onclick="return confirm('Sistemi sıfırlamak istediğinize emin misiniz?\n\nUYARI: Bütün verileriniz silinektir.')">
+              <i class="fa fa-refresh"></i> Sistemi Sıfırla</a>
+          </div>
         </div>
       </header>
       <section class="scrollable wrapper-sm w-f">
@@ -26,6 +31,7 @@
                 <th width="5"></th>
                 <th width="5"></th>
                 <th width="5"></th>
+                <th width="5"></th>
               </tr>
               </thead>
               <tbody>
@@ -33,6 +39,13 @@
                 <?php $module_name = $row->getName(); ?>
                 <tr>
                   <td>{!! $row->getName() !!}</td>
+                  <td>
+                    <a class="btn btn-sm btn-default btn-rounded"
+                       href="{{ route('modules.migrate_refresh', $module_name) }}"
+                       onclick="return confirm('{{ $module_name }} modülünü sıfırlamak istediğinize emin misiniz?\n\nUYARI: Bu tablodaki verileriniz silinektir.')">
+                      <i class="fa fa-refresh"></i> Sıfırla
+                    </a>
+                  </td>
                   <td>
                     <a class="btn btn-sm btn-warning btn-rounded"
                        href="{{ route('modules.show', $module_name) }}">

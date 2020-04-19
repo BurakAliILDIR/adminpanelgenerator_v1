@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Application;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Str;
 use Nwidart\Modules\Facades\Module;
 
 class FieldController extends Controller
@@ -173,7 +173,7 @@ class FieldController extends Controller
       $partner_count = count($partner_fields);
       $partner_count = $partner_count - 2;
       // dizi elemanlarının arasına eleman sokuşturmak.
-      $partner_source['fields'] = array_slice($partner_fields, 0, $partner_count, true) + [$module_name => $partner_eleman] +
+      $partner_source['fields'] = array_slice($partner_fields, 0, $partner_count, true) + [Str::studly($module_name) => $partner_eleman] +
         array_slice($partner_fields, $partner_count, count($partner_fields) - 1, true);
       file_put_contents($partner_path, json_encode($partner_source));
     } else {
@@ -186,7 +186,7 @@ class FieldController extends Controller
     $count = ($request['order'] > $count - 2) ? $count - 2 : $request['order'];
     
     // dizi elemanlarının arasına eleman sokuşturmak.
-    $source['fields'] = array_slice($fields, 0, $count, true) + [$request['name'] ?? $partner_key => $eleman] +
+    $source['fields'] = array_slice($fields, 0, $count, true) + [$request['name'] ?? Str::studly($partner_key) => $eleman] +
       array_slice($fields, $count, count($fields) - 1, true);
     file_put_contents($path, json_encode($source));
     session()->flash('success', 'Alan başarıyla eklendi.');

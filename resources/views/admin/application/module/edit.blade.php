@@ -13,7 +13,7 @@
                 <a class="btn btn-xs btn-default btn-rounded "
                    href="{{ route('modules.index') }}">
                   <i class="fa fa-arrow-left"></i>
-                  Tüm Kayıtlara Dön
+                  Tüm Modüllere Dön
                 </a>
                 <span class="m-l">{{ 'Modül Düzenle' }}</span>
               </div>

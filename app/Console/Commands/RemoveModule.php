@@ -41,9 +41,24 @@ class RemoveModule extends Command
       \Illuminate\Support\Facades\Redis::del(config('cache.prefix') . ':menus');
       $menu_path = storage_path('app\public\application\settings\menu.json');
       $data = json_decode(file_get_contents($menu_path), true);
-      foreach ($data as $key => $val) if ($val['name'] === $name) unset($data[$key]);
-      
+      foreach ($data as $key => $val) if ($key === $name) unset($data[$key]);
       file_put_contents($menu_path, json_encode($data));
+      
+      // Silinen modülün diğer json source lardaki ilişkili alanlarını silmektedir.
+      $source = json_decode(file_get_contents(storage_path("app/modules/sources/$name.json")), true);
+      foreach ($source['fields'] as $key => $val) {
+        if (@$val['relationship']) {
+          $json_path = storage_path("app/modules/sources/$key.json");
+          $json = json_decode(file_get_contents($json_path), true);
+          if ($json) {
+            if (($drop_table_name = @$val['relationship']['keys']['table'])) {
+              Schema::dropIfExists($drop_table_name);
+            }
+            unset($json['fields'][$name]);
+            file_put_contents($json_path, json_encode($json));
+          }
+        }
+      }
       
       Storage::delete("modules/sources/$name.json");
     }

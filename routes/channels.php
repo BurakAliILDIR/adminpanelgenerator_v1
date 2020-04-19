@@ -4,13 +4,13 @@ use Illuminate\Support\Facades\Broadcast;
 
 /*
 |--------------------------------------------------------------------------
-| Broadcast Channels
+| Broadcast Channels (Yayın Kanalları)
 |--------------------------------------------------------------------------
 |
-| Here you may register all of the event broadcasting channels that your
-| application supports. The given channel authorization callbacks are
-| used to check if an authenticated user can listen to the channel.
-|
+| Burada uygulamanızın desteklediği tüm olay yayın kanallarını kaydedebilirsiniz. 
+| Verilen kanal yetkilendirme geri çağrıları, kimliği doğrulanmış bir kullanıcının kanalı dinleyip
+| dinlemediğini kontrol etmek için kullanılır.
+| 
 */
 
 Broadcast::channel('App.User.{id}', function ($user, $id) {

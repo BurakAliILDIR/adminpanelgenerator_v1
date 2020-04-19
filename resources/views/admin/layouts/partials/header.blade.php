@@ -1,60 +1,11 @@
 <header class="bg-black navbar-fixed-top header navbar navbar-fixed-top-xs">
-  <div class="navbar-header aside-md">
+  <div class="navbar-header aside-logo">
     <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html">
       <i class="fa fa-bars"></i>
     </a>
-    <a href="#" class="navbar-brand" data-toggle="fullscreen"><img src="/admin-template/images/logo.png"
-                                                                   class="m-r-sm">Notebook</a>
-    <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".nav-user">
-      <i class="fa fa-cog"></i>
-    </a>
+    <a href="#" class="navbar-brand" data-toggle="fullscreen">{{ config('app.name') }}</a>
+
   </div>
-  <ul class="nav navbar-nav hidden-xs">
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle dker" data-toggle="dropdown">
-        <i class="fa fa-building-o"></i>
-        <span class="font-bold">Activity</span>
-      </a>
-      <section class="dropdown-menu aside-xl on animated fadeInLeft no-borders lt">
-        <div class="wrapper lter m-t-n-xs">
-          <a href="#" class="thumb pull-left m-r">
-            <img src="/admin-template/images/avatar.jpg" class="img-circle">
-          </a>
-          <div class="clear">
-            <a href="#"><span class="text-white font-bold">@Mike Mcalidek</span></a>
-            <small class="block">Art Director</small>
-            <a href="#" class="btn btn-xs btn-success m-t-xs">Upgrade</a>
-          </div>
-        </div>
-        <div class="row m-l-none m-r-none m-b-n-xs text-center">
-          <div class="col-xs-4">
-            <div class="padder-v">
-              <span class="m-b-xs h4 block text-white">245</span>
-              <small class="text-muted">Followers</small>
-            </div>
-          </div>
-          <div class="col-xs-4 dk">
-            <div class="padder-v">
-              <span class="m-b-xs h4 block text-white">55</span>
-              <small class="text-muted">Likes</small>
-            </div>
-          </div>
-          <div class="col-xs-4">
-            <div class="padder-v">
-              <span class="m-b-xs h4 block text-white">2,035</span>
-              <small class="text-muted">Photos</small>
-            </div>
-          </div>
-        </div>
-      </section>
-    </li>
-    <li>
-      <div class="m-t m-l">
-        <a href="price.html" class="dropdown-toggle btn btn-xs btn-primary" title="Upgrade"><i
-            class="fa fa-long-arrow-up"></i></a>
-      </div>
-    </li>
-  </ul>
   <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user">
     <li class="hidden-xs">
       <a href="#" class="dropdown-toggle dk" data-toggle="dropdown">
@@ -66,10 +17,12 @@
           <header class="panel-heading b-light bg-light">
             <strong>You have <span class="count">2</span> notifications</strong>
           </header>
+          <?php $auth_user = \Illuminate\Support\Facades\Auth::user(); ?>
           <div class="list-group list-group-alt animated fadeInRight">
             <a href="#" class="media list-group-item">
                   <span class="pull-left thumb-sm">
-                    <img src="/admin-template/images/avatar.jpg" alt="John said" class="img-circle">
+                    <img src="/admin-template/images/avatar.jpg" alt="Mikel"
+                         class="img-circle">
                   </span>
               <span class="media-body block m-b-none">
                     Use awesome animate.css<br>
@@ -110,9 +63,10 @@
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <span class="thumb-sm avatar pull-left">
-              <img src="/admin-template/images/avatar.jpg">
+              <img
+                src="{{ $auth_user->getFirstMediaUrl('profile') === '' ? \Illuminate\Support\Facades\Storage::url('/application/defaults/avatar.jpg') : $auth_user->getFirstMediaUrl('profile') }}">
             </span>
-        John.Smith <b class="caret"></b>
+        {{ "$auth_user->name $auth_user->surname" }} <b class="caret"></b>
       </a>
       <ul class="dropdown-menu animated fadeInRight">
         <span class="arrow top"></span>

@@ -630,6 +630,9 @@ a:hover .caret-white {
   .aside-md {
     width: 220px;
   }
+  .aside-logo {
+    width: 264px;
+  }
   .aside-lg {
     width: 250px;
   }

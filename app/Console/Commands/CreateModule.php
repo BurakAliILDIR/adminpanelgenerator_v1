@@ -2,12 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Traits\ConsoleTraits\ModuleCommandHelpers;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Nwidart\Modules\Facades\Module;
 use Spatie\Permission\Models\Permission;
 
@@ -27,9 +25,9 @@ class CreateModule extends Command
     Artisan::call('cache:forget spatie.permission.cache');
     
     // girilen değeri alma.
-    $name = $this->argument('name');
+    $name = Str::studly($this->argument('name'));
     // gelen tüm değerleri array olarak alma
-    $alreadyName = ($name !== 'User' && $name !== 'Permission' && $name !== 'Role' && $name !== 'Image' && $name !== 'Profile');
+    $alreadyName = ($name !== 'User' && $name !== 'Permission' && $name !== 'Role' && $name !== 'Image' && $name !== 'Profile' && $name !== 'Field' && $name !== 'Module');
     if ( !Module::find($name) && $alreadyName) {
       // kaynak dosyası oluşturur.
       $this->source_generator($name);
