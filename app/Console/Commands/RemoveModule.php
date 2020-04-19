@@ -51,6 +51,7 @@ class RemoveModule extends Command
           $json_path = storage_path("app/modules/sources/$key.json");
           $json = json_decode(file_get_contents($json_path), true);
           if ($json) {
+            // eğer ortak bir tablo varsa (belongsToMany ise) 
             if (($drop_table_name = @$val['relationship']['keys']['table'])) {
               Schema::dropIfExists($drop_table_name);
             }
