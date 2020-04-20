@@ -23,7 +23,7 @@ class PermissionController extends Controller
   public function index()
   {
     $data = null;
-    if ($search = \request()->input('ara')) {
+    if ($search = trim(\request()->input('ara'))) {
       $conditions = ['name'];
       $data = $this->model->where(function ($query) use ($conditions, $search) {
         foreach ($conditions as $column)

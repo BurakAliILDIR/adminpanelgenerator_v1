@@ -6,15 +6,17 @@ use App\Traits\ControllerTraits\HelperMethods;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-use Modules\Blog\Models\Blog;
 use Modules\Blog\Http\Requests\CreateBlogRequest;
 use Modules\Blog\Http\Requests\UpdateBlogRequest;
+use Modules\Blog\Models\Blog;
+use Spatie\Activitylog\Models\Activity;
 
 class BlogController extends Controller
 {
   use HelperMethods;
-  private $model = null;
-  private $jsonSettings = null;
+  
+  private $model;
+  private $jsonSettings;
   
   public function __construct()
   {
@@ -26,7 +28,7 @@ class BlogController extends Controller
   {
     $data = null;
     $paginate = $this->jsonSettings['paginate'];
-    if ($search = \request()->input('ara')) {
+    if ($search = trim(\request()->input('ara'))) {
       $conditions = $this->jsonSettings['searchable'];
       $data = $this->model->where(function ($query) use ($conditions, $search) {
         foreach ($conditions as $column)
@@ -34,7 +36,7 @@ class BlogController extends Controller
       })->orderByDESC('id')->paginate($paginate);
     } else
       $data = $this->model->orderByDESC('id')->paginate($paginate);
-
+    
     $settings = [
       'operation' => 'list',
       'title' => $this->jsonSettings['titles']['index'],
@@ -184,8 +186,10 @@ class BlogController extends Controller
         $back = $indexURL;
       return redirect($back);
     }
-    $models = $this->model->whereIn('id', $request->checked);
+    foreach ($request->checked as $id) {
+      $this->model->destroy($id);
+    }
     session()->flash('danger', 'Seçili kayıtlar silindi.');
-    return $models->delete();
+    return 1;
   }
 }

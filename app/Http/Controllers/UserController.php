@@ -13,7 +13,8 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
   use HelperMethods;
-  private $model = null;
+  
+  private $model;
   
   public function __construct()
   {
@@ -23,8 +24,8 @@ class UserController extends Controller
   public function index()
   {
     $data = null;
-    if ($search = \request()->input('ara')) {
-      $conditions = ['name', 'surname', 'email', 'gender'];
+    if ($search = trim(\request()->input('ara'))) {
+      $conditions = ['id', 'name', 'surname', 'email', 'gender'];
       $data = $this->model->where(function ($query) use ($conditions, $search) {
         foreach ($conditions as $column)
           $query->orWhere($column, 'like', '%' . $search . '%');
@@ -95,8 +96,11 @@ class UserController extends Controller
         $back = $indexURL;
       return redirect($back);
     }
-    $this->model::where('id', $request->checked)->delete();
+    foreach ($request->checked as $id) {
+      $this->model->destroy($id);
+    }
     session()->flash('danger', 'Seçili kullanıcılar silindi.');
+    return 1;
   }
   
   // store ve update fonksiyonları için ortak model doldurma.
@@ -115,7 +119,7 @@ class UserController extends Controller
     $this->insertToSingleMedia($request, 'profile');
     $this->model->saveOrFail();
   }
-
+  
   // super-admin rolünü filtreliyor ve formlarda görülmesini engelliyor.
   private function getRoles()
   {

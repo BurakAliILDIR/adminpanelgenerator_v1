@@ -13,6 +13,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Activitylog\Traits\CausesActivity;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\EloquentSortable\Sortable;
+use Spatie\EloquentSortable\SortableTrait;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -38,7 +40,6 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
   ];
   
   protected static $logUnguarded = true;
-  protected static $logAttributes = ['remember_token', 'password'];
   protected static $submitEmptyLogs = false;
   protected static $logOnlyDirty = true;
 }

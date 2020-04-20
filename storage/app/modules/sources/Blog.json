@@ -19,6 +19,7 @@
     "delete": "blog.destroy"
   },
   "searchable": [
+    "id",
     "ad"
   ],
   "fields": {
@@ -27,8 +28,8 @@
       "title": "ID",
       "create": false,
       "update": false,
-      "list": false,
-      "detail": false
+      "list": true,
+      "detail": true
     },
     "ad": {
       "type": "text",

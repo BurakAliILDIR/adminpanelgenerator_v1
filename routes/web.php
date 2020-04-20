@@ -64,3 +64,4 @@ Route::prefix('izinler')->middleware(['verified'])->group(function () {
   Route::put('/{id}', 'PermissionController@update')->middleware('permission:Permission.update')->name('permission.update');
 });
 
+Route::get('/', 'LogsController@index')->middleware('permission:Logs')->name('Logs');

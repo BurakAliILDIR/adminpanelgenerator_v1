@@ -89,6 +89,14 @@
                       </a>
                     </li>
                   @endcan
+                  @can('Logs')
+                    <li>
+                      <a href="{{ route('Logs') }}">
+                        <i class="fa fa-angle-right"></i>
+                        <span>Etkinlikler</span>
+                      </a>
+                    </li>
+                  @endcan
                 </ul>
               </li>
             @endif

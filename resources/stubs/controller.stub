@@ -13,8 +13,8 @@ use $MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\Update$STUDLY_NAME$Request;
 class $CLASS$ extends Controller
 {
   use HelperMethods;
-  private $model = null;
-  private $jsonSettings = null;
+  private $model;
+  private $jsonSettings;
   
   public function __construct()
   {
@@ -26,7 +26,7 @@ class $CLASS$ extends Controller
   {
     $data = null;
     $paginate = $this->jsonSettings['paginate'];
-    if ($search = \request()->input('ara')) {
+    if ($search = trim(\request()->input('ara'))) {
       $conditions = $this->jsonSettings['searchable'];
       $data = $this->model->where(function ($query) use ($conditions, $search) {
         foreach ($conditions as $column)
@@ -184,8 +184,10 @@ class $CLASS$ extends Controller
         $back = $indexURL;
       return redirect($back);
     }
-    $models = $this->model->whereIn('id', $request->checked);
+    foreach ($request->checked as $id) {
+      $this->model->destroy($id);
+    }
     session()->flash('danger', 'Seçili kayıtlar silindi.');
-    return $models->delete();
+    return 1;
   }
 }

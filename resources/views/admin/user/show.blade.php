@@ -199,12 +199,13 @@
                 @can('Logs')
                   <div class="tab-pane" id="logPage">
                     <section class="scrollable wrapper-md w-f">
-                      @if(($logs = \Illuminate\Support\Facades\Auth::user()->actions)->count())
+                      @if(($logs = Spatie\Activitylog\Models\Activity::latest()->paginate(4))->count())
                         <section class="panel panel-default">
                           <div class="table-responsive">
                             <table class="table table-striped m-b-none">
                               <thead>
                               <tr>
+                                <th>ID</th>
                                 <th>Tip</th>
                                 <th>Yer</th>
                                 <th>Yeni Değerler</th>
@@ -218,10 +219,15 @@
                                 @endphp
                                 @can("$log_model_name.detail")
                                   <tr>
+                                    <td>{{ $row->id }}</td>
                                     <td>{{ $row->description }}</td>
-                                    <td><a
-                                        href="{{ route(strtolower($log_model_name).".show", $row->subject_id) }}"><strong>{!! $log_model_name !!}</strong></a>
-                                    </td>
+                                    <td>
+                                      @if(\Illuminate\Support\Facades\Auth::user()->can("$log_model_name.show") && $row->description !== 'deleted')
+                                        <a
+                                          href="{{ route(strtolower($log_model_name).".show", $row->subject_id) }}"><strong>{!! $log_model_name !!}</strong></a>
+                                      @else
+                                        {{ $log_model_name }}
+                                      @endif</td>
                                     <td>
                                       @foreach($row->properties['attributes'] ?? [] as $key => $val)
                                         {{ "$key: $val" }}
@@ -230,7 +236,7 @@
                                         @endif
                                       @endforeach
                                     </td>
-                                    <td>{{ $row->created_at }}</td>
+                                    <td>{!! \Carbon\Carbon::parse($row->created_at)->format('d/m/Y H:i:s') !!}</td>
                                   </tr>
                                 @endcan
                               @endforeach
@@ -238,6 +244,7 @@
                             </table>
                           </div>
                         </section>
+                        {{ $logs->appends(['logs' => $logs->currentPage()])->links() }}
                       @else
                         <small>Log bulunmamaktadır.</small>
                       @endif

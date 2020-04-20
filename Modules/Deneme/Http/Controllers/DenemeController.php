@@ -13,8 +13,8 @@ use Modules\Deneme\Http\Requests\UpdateDenemeRequest;
 class DenemeController extends Controller
 {
   use HelperMethods;
-  private $model = null;
-  private $jsonSettings = null;
+  private $model;
+  private $jsonSettings;
   
   public function __construct()
   {
@@ -26,7 +26,7 @@ class DenemeController extends Controller
   {
     $data = null;
     $paginate = $this->jsonSettings['paginate'];
-    if ($search = \request()->input('ara')) {
+    if ($search = trim(\request()->input('ara'))) {
       $conditions = $this->jsonSettings['searchable'];
       $data = $this->model->where(function ($query) use ($conditions, $search) {
         foreach ($conditions as $column)

@@ -22,7 +22,7 @@ class RoleController extends Controller
   public function index()
   {
     $data = null;
-    if ($search = \request()->input('ara')) {
+    if ($search = trim(\request()->input('ara'))) {
       $data = $this->model->where('name', 'like', '%' . $search . '%')->orderByDESC('id')->paginate(7);
     } else
       $data = $this->model->orderByDESC('id')->paginate(7);

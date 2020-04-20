@@ -56,6 +56,7 @@
                           title="Seçili Kullanıcıları Sil"><i class="fa fa-trash-o"></i>
                   </button>
                 </th>
+                <th width="20%">ID</th>
                 <th>Ad</th>
                 <th>Soyad</th>
                 <th>E-posta</th>
@@ -76,6 +77,7 @@
                       </label>
                     </div>
                   </td>
+                  <td>{!! $row->id !!}</td>
                   <td>{!! $row->name !!}</td>
                   <td>{!! $row->surname !!}</td>
                   <td>{!! $row->email !!}</td>
