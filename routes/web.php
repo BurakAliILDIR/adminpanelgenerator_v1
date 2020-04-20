@@ -26,8 +26,6 @@ Route::prefix('application')->middleware(['verified', 'permission:Application.Se
   
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
-
 Route::prefix('image')->middleware(['verified'])->group(function () {
   Route::post('/upload/{id}/{collection}/{path}', 'ImageController@imageUpload')->name('imageUpload');
   Route::delete('delete/{class_name}', 'ImageController@imageDelete')->name('imageDelete');

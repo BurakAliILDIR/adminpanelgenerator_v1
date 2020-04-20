@@ -1,11 +1,11 @@
 @extends('admin.layouts.master')
 @section('title', 'Kullanıcı Detay')
 @section('css')
-  {{--Gallery CSS--}}
+  <!--Gallery CSS-->
   <link type="text/css" rel="stylesheet" href="/admin-custom-template/gallery/gallery.css">
-  {{--Gallery Plugins CSS--}}
+  <!--Gallery Plugins CSS-->
   <link type="text/css" rel="stylesheet" href="/plugins/baguettebox/baguettebox.min.css">
-  {{-- Dropzone CSS--}}
+  <!-- Dropzone CSS -->
   <link type="text/css" rel="stylesheet" href="/plugins/dropzone/dropzone.min.css">
 @endsection
 @section('content')
@@ -320,10 +320,10 @@
   <script src="/admin-custom-template/detail/change-leaf.js"></script>
 @endsection
 @section('js')
-  {{-- Gallery JS--}}
+  <!-- Gallery JS-->
   <script type="text/javascript" src="/plugins/baguettebox/baguettebox.min.js"></script>
-  {{-- Gallery Plugins JS--}}
+  <!-- Gallery Plugins JS-->
   <script type="text/javascript" src="/admin-custom-template/gallery/gallery.js"></script>
-  {{-- Dropzone JS--}}
+  <!-- Dropzone JS-->
   <script type="text/javascript" src="/plugins/dropzone/dropzone.min.js"></script>
 @endsection

@@ -1,5 +1,5 @@
 @extends('admin.layouts.master')
-@section('title', 'Kullanıcı Düzenle')
+@section('title', 'Alan Düzenle')
 @section('css')
 @endsection
 @section('content')

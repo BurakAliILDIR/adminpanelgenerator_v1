@@ -1,6 +1,6 @@
 @extends('admin.layouts.master')
 @section('title', 'Rol Düzenle')
-<link href="/plugins/select2/css/select2.min.css" rel="stylesheet" />
+<link href="/plugins/select2/css/select2.min.css" rel="stylesheet"/>
 @section('css')
 @endsection
 @section('content')
