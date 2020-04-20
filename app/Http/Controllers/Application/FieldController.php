@@ -279,6 +279,7 @@ class FieldController extends Controller
     $eleman = [
       'type' => $request['type'],
       'title' => $request['title'],
+      'unit' => $request['unit'],
       'rules' => $request['rules'] ?? [],
       'attributes' => $request['attributes'] ?? [],
       'list' => in_array('list', $request['pages'] ?? []),

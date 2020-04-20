@@ -10,7 +10,7 @@
       <section class="panel panel-default">
         <header class="panel-heading font-bold">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
               <div class="m-t">
                 <a class="btn btn-xs btn-default btn-rounded "
                    href="{{ route('modules.show', $module_name) }}">
@@ -38,7 +38,6 @@
             </div>
           </div>
           <div class="line line-dashed line-lg pull-in"></div>
-
           @component('components.form.partials.select',
           ['key' => 'relationship',
           'title' => 'İlişki',
@@ -62,7 +61,6 @@
           'title' => 'Görünecek Alan',
           'items' => []
           ])@endcomponent
-          <small>-----------------</small>
 
           <div class="form-check m-b">
             {{ Form::label('fields', 'Görüntülenecek Alanlar', ['class' => 'col-sm-2 control-label']) }}
@@ -152,7 +150,6 @@
           <div class="form-check m-b">
             {{ Form::label('partner_pages', 'Karşı Taraf Görünüm', ['class' => 'col-sm-2 control-label']) }}
             <div class="col-sm-10 m-b">
-
               @foreach($pages as $page)
                 <div class="checkbox">
                   <label class="checkbox-custom center-block">

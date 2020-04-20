@@ -1,1 +1,105 @@
-{"paginate":7,"slugs":["name"],"titles":{"index":"Deneme","show":"Deneme Detay","create":"Deneme Ekle","edit":"Deneme D\u00fczenle"},"routes":{"index":"deneme.index","create":"deneme.create","store":"deneme.store","show":"deneme.show","edit":"deneme.edit","update":"deneme.update","delete":"deneme.destroy"},"searchable":["name"],"fields":{"id":{"type":"hidden","title":"Kimlik","value":"","create":false,"update":false,"list":false,"detail":false},"name":{"type":"text","title":"Ad","value":"","attributes":{"autofocus":"true"},"rules":["required"],"create":true,"update":true,"list":true,"detail":true},"created_at":{"type":"datetime","title":"Eklenme Tarihi","name":"created_at","rules":["required"],"create":false,"update":false,"list":false,"detail":true},"updated_at":{"type":"datetime","title":"D\u00fczenlenme Tarihi","name":"updated_at","rules":["required"],"create":false,"update":false,"list":false,"detail":true}}}
+{
+  "paginate": 7,
+  "slugs": [
+    "name"
+  ],
+  "titles": {
+    "index": "Deneme",
+    "show": "Deneme Detay",
+    "create": "Deneme Ekle",
+    "edit": "Deneme D\u00fczenle"
+  },
+  "routes": {
+    "index": "deneme.index",
+    "create": "deneme.create",
+    "store": "deneme.store",
+    "show": "deneme.show",
+    "edit": "deneme.edit",
+    "update": "deneme.update",
+    "delete": "deneme.destroy"
+  },
+  "searchable": [
+    "name"
+  ],
+  "fields": {
+    "id": {
+      "type": "hidden",
+      "title": "ID",
+      "value": "",
+      "create": false,
+      "update": false,
+      "list": true,
+      "detail": false
+    },
+    "Blog": {
+      "type": "multi_select",
+      "title": "Bloglar",
+      "rules": [],
+      "list": true,
+      "detail": true,
+      "create": false,
+      "update": false,
+      "relationship": {
+        "model": "Modules\\Blog\\Models\\Blog",
+        "type": "belongsToMany",
+        "keys": {
+          "foreignKey": "Blog",
+          "otherKey": "Deneme",
+          "table": "DenemeBlog"
+        },
+        "pluck": {
+          "display": "ad",
+          "value": "id"
+        },
+        "fields": [
+          "id",
+          "ad",
+          "kasa",
+          "created_at",
+          "updated_at"
+        ],
+        "perPage": 7
+      },
+      "multiple": true
+    },
+    "name": {
+      "type": "text",
+      "title": "Ad",
+      "value": "",
+      "attributes": {
+        "autofocus": "true"
+      },
+      "rules": [
+        "required"
+      ],
+      "create": true,
+      "update": true,
+      "list": true,
+      "detail": true
+    },
+    "created_at": {
+      "type": "datetime",
+      "title": "Eklenme Tarihi",
+      "name": "created_at",
+      "rules": [
+        "required"
+      ],
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": true
+    },
+    "updated_at": {
+      "type": "datetime",
+      "title": "D\u00fczenlenme Tarihi",
+      "name": "updated_at",
+      "rules": [
+        "required"
+      ],
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": true
+    }
+  }
+}

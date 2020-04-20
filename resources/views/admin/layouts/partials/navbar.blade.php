@@ -28,7 +28,7 @@
               <li class="">
                 <a class="">
                   <i class="fa fa-steam icon">
-                    <b class="bg-danger"></b>
+                    <b class="bg-warning"></b>
                   </i>
                   <span class="pull-right">
                           <i class="fa fa-angle-down text"></i>
@@ -44,12 +44,11 @@
                     </a>
                   </li>
                   <li>
-                    <a href="{{ route('logs') }}">
+                    <a href="{{ \Illuminate\Support\Facades\URL::to('loglar') }}">
                       <i class="fa fa-angle-right"></i>
-                      <span>Loglar</span>
+                      <span>Hata Logları</span>
                     </a>
                   </li>
-
                 </ul>
               </li>
             @endif
@@ -104,7 +103,7 @@
               @can($key . '.index')
                 <li>
                   <a href="{{ route(strtolower($key).'.index') }}">
-                    <i class="fa fa-{{ $val['icon'] ?? 'angle-right' }} icon"><b class="bg-info"></b></i>
+                    <i class="fa fa-{{ $val['icon'] ?? 'angle-right' }} icon"><b class="bg-primary"></b></i>
                     <span>{!! $val['title'] !!}</span>
                   </a>
                 </li>

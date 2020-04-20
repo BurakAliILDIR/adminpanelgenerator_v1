@@ -92,6 +92,7 @@ class ModuleController extends Controller
   
   public function migrate_refresh($name = null)
   {
+    Artisan::call('lada-cache:flush');
     if ($name) {
       Artisan::call("module:migrate-refresh $name");
       session()->flash('info', "$name modülü sıfırlandı.");

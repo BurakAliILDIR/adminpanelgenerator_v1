@@ -1,8 +1,7 @@
 <td>
   @switch($lower_val['type'])
     @case('image')
-    <img
-      src="{{ $upper_val->getFirstMediaUrl($lower_key) === "" ? @$lower_val['value'] ? \Illuminate\Support\Facades\Storage::url('/application/defaults/'.$lower_val['value']) : null : $upper_val->getFirstMediaUrl($lower_key) }}"
+    <img src="{{ $upper_val->getFirstMediaUrl($lower_key) === "" ? @$lower_val['value'] ? \Illuminate\Support\Facades\Storage::url('/application/defaults/'.$lower_val['value']) : null : $upper_val->getFirstMediaUrl($lower_key) }}"
       width="66">
     @break
     @case('file')
@@ -53,7 +52,7 @@
     {{ \Carbon\Carbon::parse($upper_val[$lower_key])->format('d/m/Y H:i:s') }}
     @break
     @default
-    {!! $upper_val[$lower_key] !!}
+    {!! "$upper_val[$lower_key] " . @$lower_val['unit'] !!}
     @break
   @endswitch
 </td>

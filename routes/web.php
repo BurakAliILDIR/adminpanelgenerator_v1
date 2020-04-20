@@ -13,7 +13,6 @@ Auth::routes(['verify' => true]);
 
 Route::prefix('application')->middleware(['verified', 'permission:Application.Settings'])->group(function () {
   Route::resource('modules', 'Application\ModuleController');
-  Route::get('loglar', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('logs');
   Route::get('migrate-refresh/{module_name?}', 'Application\ModuleController@migrate_refresh')->name('modules.migrate_refresh');
   // Module içindeki alanların route ları. 
   Route::get('fields/{module}/{related?}', 'Application\FieldController@create')->name('fields.create');
@@ -23,7 +22,6 @@ Route::prefix('application')->middleware(['verified', 'permission:Application.Se
   Route::put('fields/{module}/{key}', 'Application\FieldController@update')->name('fields.update');
   Route::delete('fields/{module}/{key}', 'Application\FieldController@destroy')->name('fields.destroy');
   Route::post('fields', 'Application\FieldController@getFields')->name('fields.getFields');
-  
 });
 
 Route::prefix('image')->middleware(['verified'])->group(function () {

@@ -9,7 +9,7 @@
       <section class="panel panel-default">
         <header class="panel-heading font-bold">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
               <div class="m-t">
                 <a class="btn btn-xs btn-default btn-rounded "
                    href="{{ route('modules.show', $module_name) }}">
@@ -33,14 +33,18 @@
           'attributes' => ['required' => 'required'],
           ])@endcomponent
           @component('components.form.partials.text',
+          ['key' => 'name',
+          'title' => 'Ad',
+          'attributes'=> ['required' => 'required']
+          ])@endcomponent
+          @component('components.form.partials.text',
           ['key' => 'title',
           'title' => 'Başlık',
           'attributes'=> ['required' => 'required']
           ])@endcomponent
           @component('components.form.partials.text',
-          ['key' => 'name',
-          'title' => 'Ad',
-          'attributes'=> ['required' => 'required']
+          ['key' => 'unit',
+          'title' => 'Birim (isteğe bağlı)',
           ])@endcomponent
           @component('components.form.partials.number',
           ['key' => 'order',

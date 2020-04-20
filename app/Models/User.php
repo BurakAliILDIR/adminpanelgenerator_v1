@@ -11,13 +11,14 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Redis;
+use Spatie\Activitylog\Traits\CausesActivity;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
-  use Notifiable, Relations, UUID, HasRoles, SourceSettings, MediaUploads, CustomModelTools, SoftDeletes;
+  use Notifiable, CausesActivity, LogsActivity, Relations, UUID, HasRoles, SourceSettings, MediaUploads, CustomModelTools, SoftDeletes;
   
   private $source = 'User.json';
   
@@ -36,6 +37,8 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
     'email_verified_at' => 'datetime',
   ];
   
-  
-
+  protected static $logUnguarded = true;
+  protected static $logAttributes = ['remember_token', 'password'];
+  protected static $submitEmptyLogs = false;
+  protected static $logOnlyDirty = true;
 }

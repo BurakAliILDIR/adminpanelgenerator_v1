@@ -55,6 +55,9 @@
                   </span>
                 </div>
                 <div style="word-break: break-all">
+                  <small class="text-uc text-muted">ID : </small>
+                  <span>{!! $model['id'] !!}</span>
+                  <div class="line"></div>
                   <small class="text-uc text-muted">Ad : </small>
                   <span>{!! $model['name'] ?? '-' !!}</span>
                   <div class="line"></div>
@@ -97,129 +100,194 @@
           <section class="vbox">
             <header class="header bg-light bg-gradient">
               <ul class="nav nav-tabs nav-white">
-
-                <li id="roleLeaf">
-                  <a href="#role" id="roleA" data-toggle="tab"
-                     onclick="setLeaf('role')">
-                    Roller
-                  </a>
-                </li>
-
-                <li id="permissionLeaf">
-                  <a href="#permission" id="permissionA" data-toggle="tab"
-                     onclick="setLeaf('permission')">
-                    İzinler
-                  </a>
-                </li>
+                @can('Role.index')
+                  <li id="roleLeaf">
+                    <a href="#role" id="roleA" data-toggle="tab"
+                       onclick="setLeaf('role')">
+                      Roller
+                    </a>
+                  </li>
+                @endcan
+                @can('Permission.index')
+                  <li id="permissionLeaf">
+                    <a href="#permission" id="permissionA" data-toggle="tab"
+                       onclick="setLeaf('permission')">
+                      İzinler
+                    </a>
+                  </li>
+                @endcan
+                @can('Logs')
+                  <li id="logLeaf">
+                    <a href="#log" id="logA" data-toggle="tab"
+                       onclick="setLeaf('log')">
+                      Loglar
+                    </a>
+                  </li>
+                @endcan
                 @foreach($fields as $key => $val)
                   @if(($val['detail']) && @$val['multiple'] && $val['type'] !== 'multi_image')
-                    <li id="{{ $key }}Leaf">
-                      <a href="#{{ $key }}" id="{{ $key }}A" data-toggle="tab"
-                         onclick="setLeaf('{{ $key }}')">
-                        {{ $val['title'] }}
-                      </a>
-                    </li>
+                    @can("$key.index")
+                      <li id="{{ $key }}Leaf">
+                        <a href="#{{ $key }}" id="{{ $key }}A" data-toggle="tab"
+                           onclick="setLeaf('{{ $key }}')">
+                          {{ $val['title'] }}
+                        </a>
+                      </li>
+                    @endcan
                   @endif
                 @endforeach
               </ul>
             </header>
             <section class="scrollable">
               <div class="tab-content">
-                <div class="tab-pane" id="rolePage">
-                  <section class="scrollable wrapper-md w-f">
-                    @if($roles->count() > 0)
-                      <section class="panel panel-default">
-                        <div class="table-responsive">
-                          <table class="table table-striped m-b-none">
-                            <thead>
-                            <tr>
-                              <th>Rol Adı</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($roles as $row)
+                @can('Role.index')
+                  <div class="tab-pane" id="rolePage">
+                    <section class="scrollable wrapper-md w-f">
+                      @if($roles->count() > 0)
+                        <section class="panel panel-default">
+                          <div class="table-responsive">
+                            <table class="table table-striped m-b-none">
+                              <thead>
                               <tr>
-                                <td>{!! $row !!}</td>
+                                <th>Rol Adı</th>
                               </tr>
-                            @endforeach
-                            </tbody>
-                          </table>
-                        </div>
-                      </section>
-                    @else
-                      <small>Rol bulunmamaktadır.</small>
-                    @endif
-                  </section>
-                </div>
-                <div class="tab-pane" id="permissionPage">
-                  <section class="scrollable wrapper-md w-f">
-                    @if($permissions->count() > 0)
-                      <section class="panel panel-default">
-                        <div class="table-responsive">
-                          <table class="table table-striped m-b-none">
-                            <thead>
-                            <tr>
-                              <th>İzin Adı</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($permissions as $row)
+                              </thead>
+                              <tbody>
+                              @foreach($roles as $row)
+                                <tr>
+                                  <td>{!! $row !!}</td>
+                                </tr>
+                              @endforeach
+                              </tbody>
+                            </table>
+                          </div>
+                        </section>
+                      @else
+                        <small>Rol bulunmamaktadır.</small>
+                      @endif
+                    </section>
+                  </div>
+                @endcan
+                @can('Permission.index')
+                  <div class="tab-pane" id="permissionPage">
+                    <section class="scrollable wrapper-md w-f">
+                      @if($permissions->count() > 0)
+                        <section class="panel panel-default">
+                          <div class="table-responsive">
+                            <table class="table table-striped m-b-none">
+                              <thead>
                               <tr>
-                                <td>{!! $row->name !!}</td>
+                                <th>İzin Adı</th>
                               </tr>
-                            @endforeach
-                            </tbody>
-                          </table>
-                        </div>
-                      </section>
-                    @else
-                      <small>İzin bulunmamaktadır.</small>
-                    @endif
-                  </section>
-                </div>
+                              </thead>
+                              <tbody>
+                              @foreach($permissions as $row)
+                                <tr>
+                                  <td>{!! $row->name !!}</td>
+                                </tr>
+                              @endforeach
+                              </tbody>
+                            </table>
+                          </div>
+                        </section>
+                      @else
+                        <small>İzin bulunmamaktadır.</small>
+                      @endif
+                    </section>
+                  </div>
+                @endcan
+                @can('Logs')
+                  <div class="tab-pane" id="logPage">
+                    <section class="scrollable wrapper-md w-f">
+                      @if(($logs = \Illuminate\Support\Facades\Auth::user()->actions)->count())
+                        <section class="panel panel-default">
+                          <div class="table-responsive">
+                            <table class="table table-striped m-b-none">
+                              <thead>
+                              <tr>
+                                <th>Tip</th>
+                                <th>Yer</th>
+                                <th>Yeni Değerler</th>
+                                <th>Tarih</th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                              @foreach($logs as $row)
+                                @php $log_model_name = explode("\\", $row->subject_type); 
+                                $log_model_name = end($log_model_name);
+                                @endphp
+                                @can("$log_model_name.detail")
+                                  <tr>
+                                    <td>{{ $row->description }}</td>
+                                    <td><a
+                                        href="{{ route(strtolower($log_model_name).".show", $row->subject_id) }}"><strong>{!! $log_model_name !!}</strong></a>
+                                    </td>
+                                    <td>
+                                      @foreach($row->properties['attributes'] ?? [] as $key => $val)
+                                        {{ "$key: $val" }}
+                                        @if(!$loop->last)
+                                          <br>
+                                        @endif
+                                      @endforeach
+                                    </td>
+                                    <td>{{ $row->created_at }}</td>
+                                  </tr>
+                                @endcan
+                              @endforeach
+                              </tbody>
+                            </table>
+                          </div>
+                        </section>
+                      @else
+                        <small>Log bulunmamaktadır.</small>
+                      @endif
+                    </section>
+                  </div>
+                @endcan
                 @foreach($fields as $key => $val)
                   @if(($val['detail']) && @$val['multiple'] && $val['type'] !== 'multi_image')
-                    <?php $relation_infos = $val['relationship'] ?>
-                    <div class="tab-pane" id="{{ $key }}Page">
-                      <section class="scrollable wrapper-md w-f">
-                        @php
-                          $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key);
-                        @endphp
-                        @if($data->count() > 0)
-                          <section class="panel panel-default">
-                            <div class="table-responsive">
-                              <table class="table table-striped m-b-none">
-                                <thead>
-                                <tr>
-                                  @foreach($data[0]->getSettings('fields') as $relation_key => $relation_val)
-                                    @foreach($relation_infos['fields'] as $field)
-                                      @if($relation_key === $field)
-                                        <th>{{ $relation_val['title'] }}</th>
-                                      @endif
-                                    @endforeach
-                                  @endforeach
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($data as $upper_val)
+                    @can("$key.index")
+                      @php $relation_infos = $val['relationship'];
+                    $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key);
+                      @endphp
+                      <div class="tab-pane" id="{{ $key }}Page">
+                        <section class="scrollable wrapper-md w-f">
+                          @if($data->count() > 0)
+                            <section class="panel panel-default">
+                              <div class="table-responsive">
+                                <table class="table table-striped m-b-none">
+                                  <thead>
                                   <tr>
-                                    @foreach($upper_val->getSettings('fields') as $lower_key => $lower_val)
-                                      @if(array_search($lower_key, $relation_infos['fields']) !== false)
-                                        @component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
-                                      @endif
+                                    @foreach($data[0]->getSettings('fields') as $relation_key => $relation_val)
+                                      @foreach($relation_infos['fields'] as $field)
+                                        @if($relation_key === $field)
+                                          <th>{{ $relation_val['title'] }}</th>
+                                        @endif
+                                      @endforeach
                                     @endforeach
                                   </tr>
-                                @endforeach
-                                </tbody>
-                              </table>
-                            </div>
-                          </section>
-                          {{ $data->appends([$key => $data->currentPage()])->links() }}
-                        @else
-                          <small>Kayıt bulunmamaktadır.</small>
-                        @endif
-                      </section>
-                    </div>
+                                  </thead>
+                                  <tbody>
+                                  @foreach($data as $upper_val)
+                                    <tr>
+                                      @foreach($upper_val->getSettings('fields') as $lower_key => $lower_val)
+                                        @if(array_search($lower_key, $relation_infos['fields']) !== false)
+                                          @component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
+                                        @endif
+                                      @endforeach
+                                    </tr>
+                                  @endforeach
+                                  </tbody>
+                                </table>
+                              </div>
+                            </section>
+                            {{ $data->appends([$key => $data->currentPage()])->links() }}
+                          @else
+                            <small>Kayıt bulunmamaktadır.</small>
+                          @endif
+                        </section>
+                      </div>
+                    @endcan
                   @endif
                 @endforeach
               </div>
@@ -227,7 +295,6 @@
           </section>
         </aside>
         <aside class="col-md-3 b-l">
-
           <section class="vbox">
             <section class="scrollable">
               <div class="wrapper-md">
@@ -245,8 +312,7 @@
                     @endcan
                     @if(($images = $model->getMedia($key))->count())
                       @component('components.alert.alert_messages')@endcomponent
-                      <?php $imageDeletePermission = auth()->user()->can('User.imageDelete'); ?>
-                      @if($imageDeletePermission)
+                      @if(($imageDeletePermission = auth()->user()->can('User.imageDelete')))
                         <form action="{{ route('imageDelete', 'User') }}" method="post">
                           @Csrf @method('DELETE')
                           @endif

@@ -22,7 +22,7 @@
     },
     "bio": {
       "type": "textarea",
-      "title": "Hakkımda",
+      "title": "Hakk\u0131mda",
       "detail": true
     },
     "phone": {
@@ -42,12 +42,12 @@
     },
     "email_verified_at": {
       "type": "hidden",
-      "title": "E-posta Onayı",
+      "title": "E-posta Onay\u0131",
       "detail": true
     },
     "created_at": {
       "type": "datetime",
-      "title": "Kayıt Tarihi",
+      "title": "Kay\u0131t Tarihi",
       "name": "created_at",
       "rules": [
         "required"
@@ -59,7 +59,7 @@
     },
     "updated_at": {
       "type": "datetime",
-      "title": "Düzenlenme Tarihi",
+      "title": "D\u00fczenlenme Tarihi",
       "name": "updated_at",
       "rules": [
         "required"
@@ -68,6 +68,34 @@
       "update": false,
       "list": false,
       "detail": true
+    },
+    "Blog": {
+      "type": "multi_select",
+      "title": "Blog",
+      "rules": [],
+      "list": true,
+      "detail": true,
+      "create": true,
+      "update": true,
+      "relationship": {
+        "model": "Modules\\Blog\\Models\\Blog",
+        "type": "belongsToMany",
+        "keys": {
+          "foreignKey": "Blog",
+          "otherKey": "User",
+          "table": "BlogUser"
+        },
+        "pluck": {
+          "display": "ad",
+          "value": "id"
+        },
+        "fields": [
+          "ad",
+          "kasa"
+        ],
+        "perPage": 7
+      },
+      "multiple": true
     },
     "resimler": {
       "type": "multi_image",
@@ -78,7 +106,7 @@
     },
     "profile": {
       "type": "image",
-      "title": "Profil Fotoğrafı",
+      "title": "Profil Foto\u011fraf\u0131",
       "detail": true
     }
   }

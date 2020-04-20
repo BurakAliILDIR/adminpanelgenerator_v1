@@ -24,7 +24,7 @@
   "fields": {
     "id": {
       "type": "hidden",
-      "title": "Kimlik",
+      "title": "ID",
       "value": "",
       "create": false,
       "update": false,

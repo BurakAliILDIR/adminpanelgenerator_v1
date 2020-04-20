@@ -71,7 +71,7 @@ $class_name = class_basename($model);
                       @case('radio')
                       @case('textarea')
                       <small class="text-uc text-muted">{{ $val['title'] }} : </small>
-                      <span>{!! $model[$key] !!}</span>
+                      <span>{!! "$model[$key] " . @$val['unit'] !!}</span>
                       <div class="line"></div>
                       @break
                       @case('file')
@@ -130,12 +130,14 @@ $class_name = class_basename($model);
             <ul class="nav nav-tabs nav-white">
               @foreach($fields as $key => $val)
                 @if(($val[$settings['operation']]) && (@$val['multiple']) && $val['type'] !== 'multi_image')
-                  <li id="{{ $key }}Leaf">
-                    <a href="#{{ $key }}" id="{{ $key }}A" data-toggle="tab"
-                       onclick="setLeaf('{{ $key }}')">
-                      {{ $val['title'] }}
-                    </a>
-                  </li>
+                  @can("$key.index")
+                    <li id="{{ $key }}Leaf">
+                      <a href="#{{ $key }}" id="{{ $key }}A" data-toggle="tab"
+                         onclick="setLeaf('{{ $key }}')">
+                        {{ $val['title'] }}
+                      </a>
+                    </li>
+                  @endcan
                 @endif
               @endforeach
             </ul>
@@ -145,47 +147,48 @@ $class_name = class_basename($model);
               <div class="tab-content">
                 @foreach($fields as $key => $val)
                   @if(($val[$settings['operation']]) && (@$val['multiple']) && $val['type'] !== 'multi_image')
-                    <?php $relation_infos = $val['relationship']; ?>
-                    <div class="tab-pane" id="{{ $key }}Page">
-                      <section class="scrollable wrapper-md w-f">
-                        <?php
-                        $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key);
-                        ?>
-                        @if($data->count() > 0)
-                          <section class="panel panel-default">
-                            <div class="table-responsive">
-                              <table class="table table-striped m-b-none">
-                                <thead>
-                                <tr>
-                                  @foreach($data->first()->getSettings('fields') as $relation_key => $relation_val)
-                                    @foreach($relation_infos['fields'] as $field)
-                                      @if($relation_key === $field)
-                                        <th>{{ $relation_val['title'] }}</th>
-                                      @endif
-                                    @endforeach
-                                  @endforeach
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($data as $upper_val)
+                    @can("$key.index")
+                      <?php $relation_infos = $val['relationship'];
+                      $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key);
+                      ?>
+                      <div class="tab-pane" id="{{ $key }}Page">
+                        <section class="scrollable wrapper-md w-f">
+                          @if($data->count() > 0)
+                            <section class="panel panel-default">
+                              <div class="table-responsive">
+                                <table class="table table-striped m-b-none">
+                                  <thead>
                                   <tr>
-                                    @foreach($upper_val->getSettings('fields') as $lower_key => $lower_val)
-                                      @if(array_search($lower_key, $relation_infos['fields']) !== false)
-                                        @component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
-                                      @endif
+                                    @foreach($data->first()->getSettings('fields') as $relation_key => $relation_val)
+                                      @foreach($relation_infos['fields'] as $field)
+                                        @if($relation_key === $field)
+                                          <th>{{ $relation_val['title'] }}</th>
+                                        @endif
+                                      @endforeach
                                     @endforeach
                                   </tr>
-                                @endforeach
-                                </tbody>
-                              </table>
-                            </div>
-                          </section>
-                          {{ $data->appends([$key => $data->currentPage()])->links() }}
-                        @else
-                          <small>Kayıt bulunmamaktadır.</small>
-                        @endif
-                      </section>
-                    </div>
+                                  </thead>
+                                  <tbody>
+                                  @foreach($data as $upper_val)
+                                    <tr>
+                                      @foreach($upper_val->getSettings('fields') as $lower_key => $lower_val)
+                                        @if(array_search($lower_key, $relation_infos['fields']) !== false)
+                                          @component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
+                                        @endif
+                                      @endforeach
+                                    </tr>
+                                  @endforeach
+                                  </tbody>
+                                </table>
+                              </div>
+                            </section>
+                            {{ $data->appends([$key => $data->currentPage()])->links() }}
+                          @else
+                            <small>Kayıt bulunmamaktadır.</small>
+                          @endif
+                        </section>
+                      </div>
+                    @endcan
                   @endif
                 @endforeach
               </div>

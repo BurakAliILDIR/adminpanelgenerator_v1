@@ -35,5 +35,6 @@ class FirstBuildSeeder extends Seeder
         (new Permission)->create(['name' => 'User.imageDelete']);
       }
     }
+    (new Permission)->create(['name' => 'Logs']);
   }
 }

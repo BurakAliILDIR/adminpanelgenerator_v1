@@ -8,21 +8,21 @@ use App\Traits\ModelTraits\SourceSettings;
 use App\Traits\ModelTraits\UUID;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Artisan;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
 class Blog extends Model implements HasMedia
 {
-  use Relations, UUID, SourceSettings, MediaUploads, \Spiritix\LadaCache\Database\LadaCacheTrait, HasSlug, SoftDeletes;
-
+  use Relations, LogsActivity, UUID, SourceSettings, MediaUploads, \Spiritix\LadaCache\Database\LadaCacheTrait, HasSlug, SoftDeletes;
+  
   protected $table = 'Blog';
   
   protected $keyType = 'string';
-
+  
   public $incrementing = false;
-
+  
   protected $guarded = ['id', 'created_at', 'updated_at', 'deleted_at'];
   
   private $source = 'Blog.json';
@@ -33,4 +33,8 @@ class Blog extends Model implements HasMedia
       ->generateSlugsFrom($this->getSettings('slugs'))
       ->saveSlugsTo('slug');
   }
+  
+  protected static $logUnguarded = true;
+  protected static $submitEmptyLogs = false;
+  protected static $logOnlyDirty = true;
 }

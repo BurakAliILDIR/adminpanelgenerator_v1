@@ -24,7 +24,7 @@
   "fields": {
     "id": {
       "type": "hidden",
-      "title": "Kimlik",
+      "title": "ID",
       "create": false,
       "update": false,
       "list": false,
@@ -39,10 +39,83 @@
       "rules": [
         "required"
       ],
+      "create": true,
+      "update": true,
+      "list": true,
+      "detail": true
+    },
+    "User": {
+      "type": "multi_select",
+      "title": "Kullan\u0131c\u0131lar",
+      "rules": [],
+      "list": true,
+      "detail": true,
       "create": false,
       "update": false,
+      "relationship": {
+        "model": "App\\Models\\User",
+        "type": "belongsToMany",
+        "keys": {
+          "foreignKey": "User",
+          "otherKey": "Blog",
+          "table": "BlogUser"
+        },
+        "pluck": {
+          "display": "name",
+          "value": "id"
+        },
+        "fields": [
+          "name",
+          "surname",
+          "email"
+        ],
+        "perPage": 7
+      },
+      "multiple": true
+    },
+    "kasa": {
+      "type": "number",
+      "title": "Kasa",
+      "unit": "\u20ba",
+      "rules": [
+        "numeric"
+      ],
+      "attributes": [],
       "list": true,
-      "detail": false
+      "detail": true,
+      "create": true,
+      "update": true,
+      "decimal": true
+    },
+    "Deneme": {
+      "type": "multi_select",
+      "title": "Deneme",
+      "rules": [],
+      "list": true,
+      "detail": true,
+      "create": true,
+      "update": true,
+      "relationship": {
+        "model": "Modules\\Deneme\\Models\\Deneme",
+        "type": "belongsToMany",
+        "keys": {
+          "foreignKey": "Deneme",
+          "otherKey": "Blog",
+          "table": "DenemeBlog"
+        },
+        "pluck": {
+          "display": "name",
+          "value": "id"
+        },
+        "fields": [
+          "id",
+          "name",
+          "created_at",
+          "updated_at"
+        ],
+        "perPage": 7
+      },
+      "multiple": true
     },
     "created_at": {
       "type": "datetime",
