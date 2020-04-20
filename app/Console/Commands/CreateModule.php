@@ -27,8 +27,8 @@ class CreateModule extends Command
     // girilen değeri alma.
     $name = Str::studly($this->argument('name'));
     // gelen tüm değerleri array olarak alma
-    $alreadyName = ($name !== 'User' && $name !== 'Permission' && $name !== 'Role' && $name !== 'Image' && $name !== 'Profile' && $name !== 'Field' && $name !== 'Module');
-    if ( !Module::find($name) && $alreadyName) {
+    $alreadyNames = ['User', 'Permission', 'Role', 'Image', 'Profile', 'Field', 'Module'];
+    if ($name !== '' && !Module::find($name) && !in_array($name, $alreadyNames)) {
       // kaynak dosyası oluşturur.
       $this->source_generator($name);
       
@@ -45,7 +45,10 @@ class CreateModule extends Command
       
       // burada bu json dosyasına gelen $name e göre yeni bir satır keyi eklenecek.
       $this->menu_generator($name);
-    }
+      
+      $this->info('1');
+    } else
+      $this->error('0');
   }
   
   /**

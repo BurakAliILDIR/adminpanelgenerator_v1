@@ -78,9 +78,9 @@
                   <td>
                     <div class="checkbox">
                       <label class="checkbox-custom">
-                        <input type="checkbox"
-                               {{ $val['update'] ? 'checked' : '' }} onclick="this.checked=!this.checked;">
-                        <i class="fa fa-fw fa-square-o"></i>
+                          <input type="checkbox"
+                                 {{ $val['update'] ? 'checked' : '' }} onclick="this.checked=!this.checked;">
+                          <i class="fa fa-fw fa-square-o"></i>
                       </label>
                     </div>
                   </td>

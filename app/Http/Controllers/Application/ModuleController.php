@@ -23,8 +23,11 @@ class ModuleController extends Controller
   public function store(Request $request)
   {
     Artisan::call("module:create $request->name");
+    if (Artisan::output() === "1")
+      session()->flash('info', 'Modül başarıyla oluşturuldu.');
+    else
+      session()->flash('danger', 'Lütfen geçerli bir modül adı giriniz.');
     
-    session()->flash('success', 'Modül başarıyla eklendi.');
     return redirect()->route('modules.index');
   }
   

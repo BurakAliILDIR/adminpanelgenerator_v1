@@ -30,7 +30,7 @@ class PermissionController extends Controller
           $query->orWhere($column, 'like', '%' . $search . '%');
       })->orderByDESC('id')->paginate(7);
     } else
-      $data = $this->model->orderByDESC('id')->paginate(7);
+      $data = $this->model->orderByDESC('id')->paginate(10);
     
     return view('admin.permission.index', compact('data'));
   }

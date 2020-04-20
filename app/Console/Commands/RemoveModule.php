@@ -31,7 +31,7 @@ class RemoveModule extends Command
       if (Schema::hasTable($name)) {
         Artisan::call('module:migrate-reset ' . $name);
         
-        $permissions = ['index', 'detail', 'create', 'update', 'delete'];
+        $permissions = ['index', 'detail', 'create', 'update', 'delete', 'imageUpload', 'imageDelete'];
         foreach ($permissions as $permission) (new Permission)->where(['name' => $name . '.' . $permission])->sharedLock()->delete();
         
         $module->delete();
@@ -49,8 +49,7 @@ class RemoveModule extends Command
       foreach ($source['fields'] as $key => $val) {
         if (@$val['relationship']) {
           $json_path = storage_path("app/modules/sources/$key.json");
-          $json = json_decode(file_get_contents($json_path), true);
-          if ($json) {
+          if (($json = json_decode(file_get_contents($json_path), true))) {
             // eğer ortak bir tablo varsa (belongsToMany ise) 
             if (($drop_table_name = @$val['relationship']['keys']['table'])) {
               Schema::dropIfExists($drop_table_name);

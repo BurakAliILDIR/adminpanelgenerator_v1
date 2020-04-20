@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Application;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Nwidart\Modules\Facades\Module;
 
@@ -13,7 +14,7 @@ class FieldController extends Controller
   {
     $rules = $this->getRules();
     $attributes = $this->getAttributes();
-    $pages = ['list', 'detail', 'create', 'update'];
+    $pages = $this->getPages();
     if ($related) {
       $types = ['select' => 'Select', 'multi_select' => 'Multi Select', 'multi_checkbox' => 'Multi CheckBox',];
       $relationships = ['hasOne' => 'HasOne', 'hasMany' => 'HasMany', 'belongsTo' => 'BelongsTo', 'belongsToMany' => 'BelongsToMany',];
@@ -164,7 +165,6 @@ class FieldController extends Controller
         $partner_eleman['relationship']['perPage'] = $request['perPage'] ?? 7;
         $partner_eleman['relationship']['keys']['table'] = $module_name . $partner_model_name;
       }
-//      TODO : belongsTomany için de karşı tarafa yazılması gerekiyor. bu durumda her ihtimal için swich case ile düzenlenmeli.
       
       $partner_path = storage_path("app\modules\sources\\$partner_model_name.json");
       $partner_source = json_decode(file_get_contents($partner_path), true);
@@ -202,14 +202,13 @@ class FieldController extends Controller
   
   public function edit($module_name, $key)
   {
-    // TODO burada temel module özellikleri düzenlenecek. Fields lar için ayrı bir pencere açılacak
+    $pages = $this->getPages();
     $path = storage_path("app\modules\sources\\$module_name.json");
     $cells = json_decode(file_get_contents($path), true)['fields'][$key];
-    
     $rules = $this->getRules();
     $attributes = $this->getAttributes();
     
-    return view('admin.application.field.edit', compact('cells', 'module_name', 'key', 'rules', 'attributes'));
+    return view('admin.application.field.edit', compact('cells', 'pages', 'module_name', 'key', 'rules', 'attributes'));
   }
   
   public function update(Request $request, $module_name, $key)
@@ -220,17 +219,41 @@ class FieldController extends Controller
     $eleman['title'] = $request['title'];
     $eleman['rules'] = $request['rules'];
     $eleman['attributes'] = $request['attributes'];
+    $eleman['list'] = in_array('list', $request['pages'] ?? []);
+    $eleman['detail'] = in_array('detail', $request['pages'] ?? []);
+    $eleman['create'] = in_array('create', $request['pages'] ?? []);
+    $eleman['update'] = in_array('update', $request['pages'] ?? []);
     $source['fields'][$key] = $eleman;
     file_put_contents($path, json_encode($source));
-    session()->flash('info', 'Alan başarıyla düzenlendi.');
+    session()->flash('info', "\"$key\" alanı başarıyla düzenlendi.");
     return redirect()->back();
   }
   
   public function destroy($module_name, $key)
   {
-    if ( !($key !== 'id' && $key !== 'created_at' && $key !== 'updated_at')) return redirect()->route('modules.show', $module_name);
+    $forbiddenFields = ['id', 'created_at', 'updated_at'];
+    if (in_array($key, $forbiddenFields)) return redirect()->route('modules.show', $module_name);
+    
     $path = storage_path("app\modules\sources\\$module_name.json");
     $source = json_decode(file_get_contents($path), true);
+    
+    // Silinen modülün diğer json source lardaki ilişkili alanlarını silmektedir.
+    foreach ($source['fields'] as $field_key => $field_val) {
+      if (@$field_val['relationship']) {
+        $json_path = storage_path("app/modules/sources/$field_key.json");;
+        if (($json = json_decode(file_get_contents($json_path), true))) {
+          // eğer ortak bir tablo varsa (belongsToMany ise) 
+          if (($drop_table_name = @$field_val['relationship']['keys']['table'])) {
+            Schema::dropIfExists($drop_table_name);
+          }
+          unset($json['fields'][$module_name]);
+          
+          file_put_contents($json_path, json_encode($json));
+        }
+      }
+    }
+    
+    // alanın diğer source lardaki ilişkilerini sildikten sonra alanın kendini siliyorum.
     $fields = $source['fields'];
     unset($fields[$key]);
     $source['fields'] = $fields;
@@ -251,11 +274,6 @@ class FieldController extends Controller
     //return  $source['fields'];
   }
   
-  /**
-   * @param Request $request
-   *
-   * @return array
-   */
   private function ordinaryFieldFilling(Request $request) : array
   {
     $eleman = [
@@ -292,9 +310,6 @@ class FieldController extends Controller
     return $eleman;
   }
   
-  /**
-   * @return array
-   */
   private function getRules() : array
   {
     $rules = ['required', 'accepted', 'alpha', 'alpha_num', 'array', 'boolean', 'image', 'email', 'nullable', 'file', 'string',
@@ -302,12 +317,15 @@ class FieldController extends Controller
     return $rules;
   }
   
-  /**
-   * @return array
-   */
   private function getAttributes() : array
   {
     $attributes = ['required' => 'required', 'autofocus' => 'autofocus', 'disabled' => 'disabled'];
     return $attributes;
+  }
+  
+  private function getPages() : array
+  {
+    $pages = ['list', 'detail', 'create', 'update'];
+    return $pages;
   }
 }

@@ -1,1 +1,72 @@
-{"paginate":"7","slugs":["ad"],"titles":{"index":"Blog","show":"Blog Detay","create":"Blog Ekle","edit":"Blog D\u00fczenle"},"routes":{"index":"blog.index","create":"blog.create","store":"blog.store","show":"blog.show","edit":"blog.edit","update":"blog.update","delete":"blog.destroy"},"searchable":["ad"],"fields":{"id":{"type":"hidden","title":"Kimlik","create":false,"update":false,"list":false,"detail":false},"ad":{"type":"text","title":"Ad","attributes":{"autofocus":"true"},"rules":["required"],"create":true,"update":true,"list":true,"detail":true},"Deneme":{"type":"select","title":"Denemeler","rules":[],"list":false,"detail":false,"create":false,"update":false,"relationship":{"model":"Modules\\Deneme\\Models\\Deneme","type":"hasMany","keys":{"foreignKey":"Deneme","otherKey":"id"},"pluck":{"display":"name","value":"id"},"fields":["name"]}},"ondalikli":{"type":"number","title":"Ondal\u0131kl\u0131","rules":["numeric"],"attributes":[],"list":true,"detail":true,"create":true,"update":true,"decimal":true},"sayi":{"type":"number","title":"Sayi","rules":["required","integer"],"attributes":["required","autofocus"],"list":true,"detail":true,"create":true,"update":true},"created_at":{"type":"datetime","title":"Eklenme Tarihi","name":"created_at","rules":["required"],"create":false,"update":false,"list":false,"detail":true},"updated_at":{"type":"datetime","title":"D\u00fczenlenme Tarihi","name":"updated_at","rules":["required"],"create":false,"update":false,"list":false,"detail":true}}}
+{
+  "paginate": "7",
+  "slugs": [
+    "ad"
+  ],
+  "titles": {
+    "index": "Blog",
+    "show": "Blog Detay",
+    "create": "Blog Ekle",
+    "edit": "Blog D\u00fczenle"
+  },
+  "routes": {
+    "index": "blog.index",
+    "create": "blog.create",
+    "store": "blog.store",
+    "show": "blog.show",
+    "edit": "blog.edit",
+    "update": "blog.update",
+    "delete": "blog.destroy"
+  },
+  "searchable": [
+    "ad"
+  ],
+  "fields": {
+    "id": {
+      "type": "hidden",
+      "title": "Kimlik",
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": false
+    },
+    "ad": {
+      "type": "text",
+      "title": "Ad",
+      "attributes": [
+        "required"
+      ],
+      "rules": [
+        "required"
+      ],
+      "create": false,
+      "update": false,
+      "list": true,
+      "detail": false
+    },
+    "created_at": {
+      "type": "datetime",
+      "title": "Eklenme Tarihi",
+      "name": "created_at",
+      "rules": [
+        "required"
+      ],
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": true
+    },
+    "updated_at": {
+      "type": "datetime",
+      "title": "D\u00fczenlenme Tarihi",
+      "name": "updated_at",
+      "rules": [
+        "required"
+      ],
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": true
+    }
+  }
+}

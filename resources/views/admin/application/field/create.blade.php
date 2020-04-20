@@ -14,7 +14,7 @@
                 <a class="btn btn-xs btn-default btn-rounded "
                    href="{{ route('modules.show', $module_name) }}">
                   <i class="fa fa-arrow-left"></i>
-                  Tüm Alanlara Dön
+                  {{ $module_name }} Alanlarına Dön
                 </a>
                 <span class="m-l">Alan Ekle</span>
               </div>

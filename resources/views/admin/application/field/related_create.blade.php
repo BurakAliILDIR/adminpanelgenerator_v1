@@ -15,7 +15,7 @@
                 <a class="btn btn-xs btn-default btn-rounded "
                    href="{{ route('modules.show', $module_name) }}">
                   <i class="fa fa-arrow-left"></i>
-                  Tüm Alanlara Dön
+                  {{ $module_name }} Alanlarına Dön
                 </a>
                 <span class="m-l">{{ "$module_name - İlişkili Alan Ekle" }}</span>
               </div>
@@ -119,12 +119,10 @@
             </div>
           </div>
           <div class="line line-dashed line-lg pull-in"></div>
-          <small>Aşağıdaki siyah olan alanlar sadece Tip alanı "HasOne", "HasMany" ve ("belongsTo" ve Karşı taraf
-            "HasMany") ise doldurulacaktır.</small>
-          <small>--- PLUCK ---</small>
-
+          <strong class="text-danger">Aşağıdaki alanlar sadece "tip" alanı "HasOne", "HasMany" ve ("belongsTo" ve Karşı taraf
+            "HasMany") ve BelongsToMany ise doldurulacaktır.</strong>
           <div class="line line-dashed line-lg pull-in"></div>
-          <div class="form-group bg-black">
+          <div class="form-group">
             {{ Form::label('partner_display', 'Karşı Tarafın Görünecek Alan', ['class' => 'col-sm-2 control-label']) }}
             <div class="col-sm-10">
               <select class="form-control m-b" id="partner_display" name="partner_display" required>
@@ -136,10 +134,9 @@
             </div>
           </div>
           <div class="line line-dashed line-lg pull-in"></div>
-          <small>-----------------</small>
           <div class="form-check m-b">
             {{ Form::label('this_fields', 'Karşı Tarafta Görüntülenebilecek Alanlar', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10 m-b bg-black">
+            <div class="col-sm-10 m-b">
               @foreach($this_fields as $key => $val)
                 <div class="checkbox">
                   <label class="checkbox-custom center-block">
@@ -154,7 +151,7 @@
           <div class="line line-dashed line-lg pull-in"></div>
           <div class="form-check m-b">
             {{ Form::label('partner_pages', 'Karşı Taraf Görünüm', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10 m-b bg-black">
+            <div class="col-sm-10 m-b">
 
               @foreach($pages as $page)
                 <div class="checkbox">
@@ -170,7 +167,7 @@
           <div class="line line-dashed line-lg pull-in"></div>
           <div class="form-check m-b">
             {{ Form::label('partner_rules', 'Karşı Taraf Kurallar', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10 m-b bg-black">
+            <div class="col-sm-10 m-b">
               @foreach($rules as $rule)
                 <div class="checkbox">
                   <label class="checkbox-custom center-block">
