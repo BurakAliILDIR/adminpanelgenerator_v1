@@ -57,8 +57,7 @@
                   </button>
                 </th>
                 <th>Rol Adı</th>
-                <th>Eklenme Tarihi</th>
-                <th>Son Düzenlenme Tarihi</th>
+                <th>Düzenlenme Tarihi</th>
                 <th width="5"></th>
                 <th width="5"></th>
               </tr>
@@ -76,9 +75,8 @@
                       </label>
                     </div>
                   </td>
-                  <td>{!! $row->name !!}</td>
-                  <td>{!! $row->created_at !!}</td>
-                  <td>{!! $row->updated_at !!}</td>
+                  <td>{{ $row->name }}</td>
+                  <td>{{ \Carbon\Carbon::parse($row->updated_at)->format('d/m/Y H:i:s') }}</td>
                   <td>
                     <a class="btn btn-sm btn-icon btn-warning btn-rounded"
                        href="{{ route('role.show', $row['id']) }}">

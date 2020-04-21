@@ -83,10 +83,10 @@
                   <span>{!! $model['email_verified_at'] ? \Carbon\Carbon::parse($model['email_verified_at'])->format('d/m/Y H:i:s') : '-' !!}</span>
                   <div class="line"></div>
                   <small class="text-uc text-muted">Kayıt Tarihi : </small>
-                  <span>{!! \Carbon\Carbon::parse($model['created_at'])->format('d/m/Y H:i:s') !!}</span>
+                  <span>{{ \Carbon\Carbon::parse($model['created_at'])->format('d/m/Y H:i:s') }}</span>
                   <div class="line"></div>
                   <small class="text-uc text-muted">Düzenleme Tarihi : </small>
-                  <span>{!! \Carbon\Carbon::parse($model['updated_at'])->format('d/m/Y H:i:s') !!}</span>
+                  <span>{{ \Carbon\Carbon::parse($model['updated_at'])->format('d/m/Y H:i:s') }}</span>
                   <div class="line"></div>
                   <small class="text-uc text-muted">Hakkımda : </small>
                   <span>{!! $model['bio'] ?? '-' !!}</span>
@@ -199,7 +199,7 @@
                 @can('Logs')
                   <div class="tab-pane" id="logPage">
                     <section class="scrollable wrapper-md w-f">
-                      @if(($logs = Spatie\Activitylog\Models\Activity::latest()->paginate(4))->count())
+                      @if(($logs = Spatie\Activitylog\Models\Activity::where('causer_id', $model['id'])->latest()->paginate(4))->count())
                         <section class="panel panel-default">
                           <div class="table-responsive">
                             <table class="table table-striped m-b-none">

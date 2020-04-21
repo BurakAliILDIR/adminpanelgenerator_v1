@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('blog')->group(function () {
+Route::prefix('blog')->middleware(['auth', 'verified'])->group(function () {
   Route::get('/', 'BlogController@index')->middleware('permission:Blog.index')->name('blog.index');
   Route::get('/ekle', 'BlogController@create')->middleware('permission:Blog.create')->name('blog.create');
   Route::post('/', 'BlogController@store')->middleware('permission:Blog.create')->name('blog.store');

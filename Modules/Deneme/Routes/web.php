@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('deneme')->group(function () {
+Route::prefix('deneme')->middleware(['auth', 'verified'])->group(function () {
   Route::get('/', 'DenemeController@index')->middleware('permission:Deneme.index')->name('deneme.index');
   Route::get('/ekle', 'DenemeController@create')->middleware('permission:Deneme.create')->name('deneme.create');
   Route::post('/', 'DenemeController@store')->middleware('permission:Deneme.create')->name('deneme.store');

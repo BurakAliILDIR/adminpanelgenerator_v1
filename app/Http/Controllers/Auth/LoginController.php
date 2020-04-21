@@ -14,10 +14,10 @@ class LoginController extends Controller
   |--------------------------------------------------------------------------
   | Login Controller
   |--------------------------------------------------------------------------
-  
-   Bu denetleyici, uygulama için kullanıcıların kimlik doğrulamasını yapar ve
-   onları ana ekranınıza yönlendiriyor. Denetleyici bir özellik kullanır
-   uygulamalarınıza işlevselliğini sağlamak için.
+  |
+  | Bu denetleyici, uygulama için kullanıcıların kimlik doğrulamasını yapar ve
+  | onları ana ekranınıza yönlendiriyor. Denetleyici bir özellik kullanır
+  | uygulamalarınıza işlevselliğini sağlamak için.
   */
   
   use AuthenticatesUsers;

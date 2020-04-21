@@ -14,9 +14,9 @@ class LogsController extends Controller
       $data = Activity::where(function ($query) use ($conditions, $search) {
         foreach ($conditions as $column)
           $query->orWhere($column, 'like', '%' . $search . '%');
-      })->orderByDESC('id')->paginate(7);
+      })->orderByDESC('id')->paginate(5);
     } else {
-      $data = Activity::orderByDESC('id')->paginate(7);
+      $data = Activity::orderByDESC('id')->paginate(5);
     }
     return view('admin.logs.index', compact('data'));
   }

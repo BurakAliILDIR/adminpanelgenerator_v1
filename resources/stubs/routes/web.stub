@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('$LOWER_NAME$')->group(function () {
+Route::prefix('$LOWER_NAME$')->middleware(['auth', 'verified'])->group(function () {
   Route::get('/', '$STUDLY_NAME$Controller@index')->middleware('permission:$STUDLY_NAME$.index')->name('$LOWER_NAME$.index');
   Route::get('/ekle', '$STUDLY_NAME$Controller@create')->middleware('permission:$STUDLY_NAME$.create')->name('$LOWER_NAME$.create');
   Route::post('/', '$STUDLY_NAME$Controller@store')->middleware('permission:$STUDLY_NAME$.create')->name('$LOWER_NAME$.store');
