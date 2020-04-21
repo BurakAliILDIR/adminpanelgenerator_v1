@@ -1,5 +1,7 @@
 <?php
 
+$app_name = Illuminate\Support\Str::slug(env('APP_NAME', 'laravel'), '_');
+
 return [
   
   'backup' => [
@@ -7,7 +9,7 @@ return [
     /*
      * Bu uygulamanın adı. Yedekleri izlemek için bu adı kullanabilirsiniz.
      */
-    'name' => env('APP_NAME', 'laravel-backup') . '-Backup',
+    'name' => $app_name,
     
     'source' => [
       
@@ -17,7 +19,7 @@ return [
          * Yedeklemeye eklenecek dizinlerin ve dosyaların listesi.
          */
         'include' => [
-          base_path(),
+          storage_path(),
         ],
         
         /*
@@ -89,7 +91,7 @@ return [
       /*
        * Yedek zip dosyası için kullanılan dosya adı öneki.
        */
-      'filename_prefix' => Illuminate\Support\Str::slug(env('APP_NAME', 'laravel'), '_'),
+      'filename_prefix' => $app_name,
       
       /*
        * Yedeklemelerin saklanacağı disk adları.
@@ -112,7 +114,7 @@ return [
    * the `Spatie\Backup\Events` classes.
    */
   'notifications' => [
-    
+    // default mail | slack geldi yerine.
     'notifications' => [
       \Spatie\Backup\Notifications\Notifications\BackupHasFailed::class => ['mail'],
       \Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFound::class => ['mail'],
@@ -130,11 +132,11 @@ return [
     'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
     
     'mail' => [
-      'to' => 'burakaliildir@gmail.com',
+      'to' => env('BACKUP_NOTIFICATION_MAIL', 'TheNobleBrain@gmail.com'),
       
       'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'thenoblebrain@gmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'TheNobleBrain'),
+        'address' => env('MAIL_FROM_ADDRESS', 'example@example.com'),
+        'name' => env('MAIL_FROM_NAME', 'example'),
       ],
     ],
     
@@ -144,14 +146,15 @@ return [
       /*
        * Bu null değerine ayarlanırsa, web kancasının varsayılan kanalı kullanılır.
        */
-      'channel' => null,
+      'channel' => '#channel-name',
       
-      'username' => null,
+      'username' => 'username',
       
       'icon' => null,
     
     ],
   ],
+  
   
   /*
    * Burada hangi yedeklemelerin izleneceğini belirleyebilirsiniz.
@@ -215,7 +218,7 @@ return [
       /*
        * Bir yıllık yedeklemenin tutulması gereken yıl sayısı.
        */
-      'keep_yearly_backups_for_years' => 2,
+      'keep_yearly_backups_for_years' => 1000,
       
       /*
        * Yedekleri temizledikten sonra, bu megabayta ulaşılana kadar en eski yedeklemeyi kaldırın.
