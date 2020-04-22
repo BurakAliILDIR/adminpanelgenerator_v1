@@ -19,11 +19,19 @@
       </div>
     </header>
     <section class="w-f scrollable">
-      <div class=" " data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333">
+      <div class=" " data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px"
+           data-color="#333333">
         <!-- nav -->
         <nav class="nav-primary hidden-xs">
           <ul class="nav">
             <?php $auth_user = auth()->user(); ?>
+            <li>
+              <a href="{{ route('home') }}">
+                <i class="fa fa-home }} icon"><b class="bg-primary"></b></i>
+                <span>Anasayfa</span>
+              </a>
+            </li>
+
             @can('Application.Settings')
               <li class="">
                 <a class="">

@@ -58,7 +58,7 @@
           ])@endcomponent
           @component('components.form.partials.radio',
                  ['key' => 'gender',
-                 'items' => ['Bay' => 'Bay', 'Bayan' => 'Bayan'],
+                 'items' => $genders,
                  'checked' => null,
                  'title' => 'Cinsiyet',
           ])@endcomponent

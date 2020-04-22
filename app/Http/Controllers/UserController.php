@@ -15,6 +15,7 @@ class UserController extends Controller
   use HelperMethods;
   
   private $model;
+  private $genders = ['Erkek' => 'Erkek', 'Kadın' => 'Kadın'];
   
   public function __construct()
   {
@@ -41,7 +42,7 @@ class UserController extends Controller
     $model = $this->model;
     $roles = $this->getRoles();
     
-    return view('admin.user.create', compact('model', 'roles'));
+    return view('admin.user.create', compact('model', 'roles', 'genders'));
   }
   
   public function store(CreateUserRequest $request)
@@ -73,7 +74,7 @@ class UserController extends Controller
     $model = User::findOrFail($id);
     $roles = $this->getRoles();
     
-    return view('admin.user.edit', compact('model', 'roles'));
+    return view('admin.user.edit', compact('model', 'roles', 'genders'));
   }
   
   public function update(UpdateUserRequest $request, $id)

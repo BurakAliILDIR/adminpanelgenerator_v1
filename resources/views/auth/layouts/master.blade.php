@@ -2,8 +2,8 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="bg-dark">
 <head>
   <meta charset="utf-8"/>
-  <title>@yield('title') | {{ env('APP_NAME') }}</title>
-  <meta name="description" content="{{ env('APP_NAME') }}"/>
+  <title>@yield('title') | {{ config('app.name') }}</title>
+  <meta name="description" content="{{ config('app.description') }}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
   <link rel="stylesheet" href="/admin-template/css/bootstrap.css" type="text/css"/>
   <link rel="stylesheet" href="/admin-template/css/animate.css" type="text/css"/>

@@ -3,18 +3,9 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-  if (Auth::id())
-    return redirect()->route('user.index');
-  return redirect()->route('login');
-});
 Auth::routes(['verify' => true]);
 
-Route::get('/cik', function () {
-  Auth::logout();
-  return redirect()->route('login');
-});
-
+Route::get('/', 'HomeController@index')->middleware(['auth', 'verified'])->name('home');
 
 Route::prefix('application')->middleware(['auth', 'verified', 'permission:Application.Settings'])->group(function () {
   Route::resource('modules', 'Application\ModuleController');

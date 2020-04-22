@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
       $table->string('password');
       $table->text('bio')->nullable();
       $table->string('phone', 15)->nullable();
-      $table->string('gender', 15)->nullable()->index();
+      $table->string('gender', 15)->default('Belirtilmedi')->nullable()->index();
       $table->date('date_of_birth')->nullable()->index();
       $table->boolean('confirm')->default(0)->index();
       $table->dateTime('email_verified_at')->nullable();
