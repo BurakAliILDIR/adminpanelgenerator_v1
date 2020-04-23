@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Profile\UpdateProfileRequest;
-use App\Models\User;
 use App\Traits\ControllerTraits\HelperMethods;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\Models\Media;
-use Spatie\Permission\Exceptions\UnauthorizedException;
-use Spatie\Permission\Models\Role;
 
 class ProfileController extends Controller
 {
@@ -17,7 +15,7 @@ class ProfileController extends Controller
   
   public function index()
   {
-    $model = User::findOrFail(auth()->id());
+    $model = Auth::user();
     $fields = $model->getSettings('fields');
     $roles = $model->getRoleNames();
   
@@ -26,13 +24,13 @@ class ProfileController extends Controller
   
   public function edit()
   {
-    $model = auth()->user();
+    $model = Auth::user();
     return view('admin.profile.edit', compact('model'));
   }
   
   public function update(UpdateProfileRequest $request)
   {
-    $model = auth()->user();
+    $model = Auth::user();
     $model->name = $request->name;
     $model->surname = $request->surname;
     $model->bio = $request->bio;
@@ -48,7 +46,7 @@ class ProfileController extends Controller
   
   public function imageUpload(Request $request, $collection)
   {
-    auth()->user()->addMedia($request->file)
+    Auth::user()->addMedia($request->file)
       ->sanitizingFileName(function ($fileName) {
         return str_replace(['#', '/', '\\', ' ', '\'', '!', '&', '|', '(', ')', '<', '>',
           '%', '$', '£', 'ß', 'æ', '{', '}', '[', ']', '?', '=', '*', '+', '½', ',',
@@ -62,7 +60,7 @@ class ProfileController extends Controller
   public function imageDelete(Request $request)
   {
     if ($toDeleteIds = $request->mediaTodelete) {
-      Media::whereIn('id', $toDeleteIds)->where('model_id', auth()->id())->delete();
+      Media::whereIn('id', $toDeleteIds)->where('model_id', Auth::id())->delete();
       session()->flash('danger', 'Seçili resimler silindi.');
     }
     return redirect()->back();
