@@ -12,7 +12,7 @@ use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-  private $model = null;
+  private $model;
   
   public function __construct()
   {

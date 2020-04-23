@@ -2,8 +2,6 @@
 @section('title', 'Anasayfa')
 @section('css')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.0.2/echarts-en.min.js" charset="utf-8"></script>
-{{--<script src="https://code.highcharts.com/highcharts.js" charset="utf-8"></script>
-<script src="/plugins/highcharts/highcharts-3d.js"></script>--}}
 @endsection
 @section('content')
   <div class="row">

@@ -27,12 +27,12 @@ class UserController extends Controller
     $data = null;
     if ($search = trim(\request()->input('ara'))) {
       $conditions = ['id', 'name', 'surname', 'email', 'gender'];
-      $data = $this->model->where(function ($query) use ($conditions, $search) {
+      $data = $this->model->whereNotIn('id', [env('SUPER_ADMIN_ID')])->where(function ($query) use ($conditions, $search) {
         foreach ($conditions as $column)
           $query->orWhere($column, 'like', '%' . $search . '%');
       })->orderByDESC('id')->paginate(7);
     } else {
-      $data = $this->model->orderByDESC('id')->paginate(7);
+      $data = $this->model->whereNotIn('id', [env('SUPER_ADMIN_ID')])->orderByDESC('id')->paginate(7);
     }
     return view('admin.user.index', compact('data'));
   }

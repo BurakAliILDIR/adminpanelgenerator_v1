@@ -61,11 +61,11 @@
                   <td>{{ $row->id }}</td>
                   <td>{{ $row->description }}</td>
                   <td>
-                    @can("User.index")
+                    @if(\Illuminate\Support\Facades\Auth::user()->can("User.index") && $row->causer_id)
                       <a href="{{ route("user.show", $row->causer_id) }}"><strong>{!! $row->causer_id !!}</strong></a>
                     @else
-                      {!! $row->causer_id !!}
-                    @endcan
+                      {!! $row->causer_id ?? "System" !!}
+                    @endif
                   </td>
                   <td>
                     @if(\Illuminate\Support\Facades\Auth::user()->can("$log_model_name.show") && $row->description !== 'deleted')

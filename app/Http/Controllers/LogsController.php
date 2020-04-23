@@ -11,12 +11,14 @@ class LogsController extends Controller
     $data = null;
     if ($search = trim(\request()->input('ara'))) {
       $conditions = ['id', 'subject_id', 'subject_type', 'causer_id', 'description', 'created_at'];
-      $data = Activity::where(function ($query) use ($conditions, $search) {
-        foreach ($conditions as $column)
-          $query->orWhere($column, 'like', '%' . $search . '%');
-      })->orderByDESC('id')->paginate(5);
+      $data = Activity::whereNotIn('causer_id', [env('SUPER_ADMIN_ID')])->isNotNull('causer_id')
+        ->where(function ($query) use ($conditions, $search) {
+          foreach ($conditions as $column)
+            $query->orWhere($column, 'like', '%' . $search . '%');
+        })->orderByDESC('id')->paginate(5);
     } else {
-      $data = Activity::orderByDESC('id')->paginate(5);
+      $data = Activity::whereNotIn('causer_id', [env('SUPER_ADMIN_ID')])
+        ->whereNotNull('causer_id')->orderByDESC('id')->paginate(5);
     }
     return view('admin.logs.index', compact('data'));
   }
