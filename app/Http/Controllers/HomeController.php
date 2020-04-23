@@ -10,19 +10,17 @@ class HomeController extends Controller
 {
   public function index()
   {
-    // TODO aylar yazılacak
     $userCountChart = $this->userCountChart();
-    
     
     return view('admin.home.index', compact('userCountChart'));
   }
   
+  // yenş kullanıcı grafiği
   private function userCountChart()
   {
     $keys_path = config('cache.prefix') . ':home_new_user_count_keys';
     $values_path = config('cache.prefix') . ':home_new_user_count_values';
-    if ( !($keys = unserialize(Redis::get($keys_path))) &
-      !($values = unserialize(Redis::get($values_path)))) {
+    if ( !($keys = unserialize(Redis::get($keys_path))) & !($values = unserialize(Redis::get($values_path)))) {
       $months = [null, 'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık'];
       
       $users = User::selectRaw("year(created_at) as year, month(created_at) as month, count(*) as total")
@@ -34,8 +32,8 @@ class HomeController extends Controller
       }
       $values = array_values($date_user_count);
       $keys = array_keys($date_user_count);
-      Redis::set($keys_path, serialize($keys));
-      Redis::set($values_path, serialize($values));
+      Redis::set($keys_path, serialize($keys), 'EX', 7200);
+      Redis::set($values_path, serialize($values), 'EX', 7200);
     }
     
     $chart = new Echarts();

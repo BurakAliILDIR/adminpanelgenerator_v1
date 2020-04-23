@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -13,11 +12,20 @@ class FirstBuildSeeder extends Seeder
     $user = new \App\Models\User();
     $user->name = 'Burak Ali';
     $user->surname = 'ILDIR';
-    $user->email = 'burakaliildir@gmail.com';
+    $user->email = 'TheNobleBrain@gmail.com';
     $user->password = \Illuminate\Support\Facades\Hash::make('123123123');
     $user->confirm = 1;
     $user->saveOrFail();
+  
+    // TODO : Config dosyası ayarları
+    config(['my-config.super_admin_id' => $user->id]);
+    config(['my-config.error_logviewer_middleware' => 'web,auth,permission:Application.Settings']);
+    config(['my-config.danger_mail' => 'burakaliildir@gmail.com']);
+    $text = '<?php return ' . var_export(config('my-config'), true) . ';';
+    file_put_contents(config_path('my-config.php'), $text);
     
+    \Illuminate\Support\Facades\Artisan::call('config:cache');
+  
     $role = Role::create(['name' => 'super-admin']);
     \App\Models\User::findOrFail($user->id)->assignRole($role);
     $user->email_verified_at = now();

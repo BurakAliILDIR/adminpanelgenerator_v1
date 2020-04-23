@@ -27,12 +27,13 @@ class UserController extends Controller
     $data = null;
     if ($search = trim(\request()->input('ara'))) {
       $conditions = ['id', 'name', 'surname', 'email', 'gender'];
-      $data = $this->model->whereNotIn('id', [env('SUPER_ADMIN_ID')])->where(function ($query) use ($conditions, $search) {
+      $data = $this->model->where('id', '!=', config('my-config.super_admin_id'))
+        ->where(function ($query) use ($conditions, $search) {
         foreach ($conditions as $column)
           $query->orWhere($column, 'like', '%' . $search . '%');
       })->orderByDESC('id')->paginate(7);
     } else {
-      $data = $this->model->whereNotIn('id', [env('SUPER_ADMIN_ID')])->orderByDESC('id')->paginate(7);
+      $data = $this->model->where('id', '!=', config('my-config.super_admin_id'))->orderByDESC('id')->paginate(7);
     }
     return view('admin.user.index', compact('data'));
   }
@@ -41,6 +42,7 @@ class UserController extends Controller
   {
     $model = $this->model;
     $roles = $this->getRoles();
+    $genders = $this->genders;
     
     return view('admin.user.create', compact('model', 'roles', 'genders'));
   }
@@ -73,6 +75,7 @@ class UserController extends Controller
   {
     $model = User::findOrFail($id);
     $roles = $this->getRoles();
+    $genders = $this->genders;
     
     return view('admin.user.edit', compact('model', 'roles', 'genders'));
   }

@@ -3,14 +3,19 @@
 namespace App\Http\Controllers\Application;
 
 use App\Http\Controllers\Controller;
+use App\Traits\DangerStatusTraits\DangerStatusTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Nwidart\Modules\Facades\Module;
 
 class ModuleController extends Controller
 {
+  use DangerStatusTrait;
+  
   public function index()
   {
+    $this->dangerStatusMailSend('ModuleController-index');
+    
     $data = Module::all();
     return view('admin.application.module.index', compact('data'));
   }
@@ -22,17 +27,23 @@ class ModuleController extends Controller
   
   public function store(Request $request)
   {
+    $this->dangerStatusMailSend('ModuleController-store', "$request->name modülü eklendi.");
+    
     Artisan::call("module:create $request->name");
-    if (Artisan::output() === "1")
-      session()->flash('info', 'Modül başarıyla oluşturuldu.');
-    else
+    $result = Artisan::output();
+    
+    if ($result == "The [spatie.permission.cache] key has been removed from the cache.\n\r")
       session()->flash('danger', 'Lütfen geçerli bir modül adı giriniz.');
+    else
+      session()->flash('info', 'Modül başarıyla oluşturuldu.');
     
     return redirect()->route('modules.index');
   }
   
   public function show($name)
   {
+    $this->dangerStatusMailSend('ModuleController-show (Alanlar listesi)', $name);
+    
     $module = Module::findOrFail($name);
     $path = storage_path("app\modules\sources\\$name.json");
     $fields = json_decode(file_get_contents($path), true)['fields'];
@@ -41,7 +52,6 @@ class ModuleController extends Controller
   
   public function edit($name)
   {
-    // TODO burada temel module özellikleri düzenlenecek. Fields lar için ayrı bir pencere açılacak
     $path = storage_path("app\modules\sources\\$name.json");
     $source = json_decode(file_get_contents($path), true);
     
@@ -69,9 +79,7 @@ class ModuleController extends Controller
     
     file_put_contents($path, json_encode($source));
     
-    
     // menü güncelleme
-    
     \Illuminate\Support\Facades\Redis::del(config('cache.prefix') . ':menus');
     
     $menu_path = storage_path('app\public\application\settings\menu.json');

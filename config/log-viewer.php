@@ -53,7 +53,7 @@ return [
     'attributes' => [
       'prefix' => 'loglar',
       
-      'middleware' => env('ERROR_LOGVIEWER_MIDDLEWARE') ? explode(',', env('ARCANEDEV_LOGVIEWER_MIDDLEWARE')) : null,
+      'middleware' => config('my-config.error_logviewer_middleware') ? explode(',', config('my-config.error_logviewer_middleware')) : null,
     ],
   ],
   

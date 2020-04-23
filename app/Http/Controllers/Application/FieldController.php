@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Application;
 
 use App\Http\Controllers\Controller;
+use App\Traits\DangerStatusTraits\DangerStatusTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
@@ -10,6 +11,8 @@ use Nwidart\Modules\Facades\Module;
 
 class FieldController extends Controller
 {
+  use DangerStatusTrait;
+  
   public function create($module_name, $related = false)
   {
     $rules = $this->getRules();
@@ -38,6 +41,8 @@ class FieldController extends Controller
   
   public function store(Request $request, $module_name, $related = false)
   {
+    $this->dangerStatusMailSend('FieldController-store', $module_name . ' - ' . $related ? 'ilişkili alan' : 'ilişkisiz alan');
+    
     if ($related) {
       $relationship = $request['relationship'];
       $partner = $request['partner'];

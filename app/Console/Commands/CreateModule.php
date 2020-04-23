@@ -45,10 +45,7 @@ class CreateModule extends Command
       
       // burada bu json dosyasına gelen $name e göre yeni bir satır keyi eklenecek.
       $this->menu_generator($name);
-      
-      $this->info('1');
-    } else
-      $this->error('0');
+    }
   }
   
   /**
