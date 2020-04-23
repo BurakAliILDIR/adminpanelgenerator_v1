@@ -32,8 +32,8 @@ class HomeController extends Controller
       }
       $values = array_values($date_user_count);
       $keys = array_keys($date_user_count);
-      Redis::set($keys_path, serialize($keys), 'EX', 7200);
-      Redis::set($values_path, serialize($values), 'EX', 7200);
+      Redis::set($keys_path, serialize($keys), 'EX', 3600);
+      Redis::set($values_path, serialize($values), 'EX', 3600);
     }
     
     $chart = new Echarts();
