@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Traits\DangerStatusTraits\DangerStatusTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Str;
 use Nwidart\Modules\Facades\Module;
 
 class ModuleController extends Controller
@@ -34,7 +35,8 @@ class ModuleController extends Controller
   {
     $this->dangerStatusMailSend('ModuleController-store', "$request->name modülü eklendi.");
     
-    Artisan::call("module:create $request->name");
+    $name = Str::studly($request->name);
+    Artisan::call("module:create $name");
     $result = Artisan::output();
     
     if ($result == "The [spatie.permission.cache] key has been removed from the cache.\n\r")

@@ -33,7 +33,10 @@
     <div class="line line-dashed"></div>--}}
   @if (Route::has('register'))
     <div class="line line-dashed"></div>
+    <p class="text-muted text-center">
+      <small> {{ __('Don\'t have an account yet?') }}</small></p>
     <a href="{{ route('register') }}" class="btn btn-default btn-block">{{ __('Register') }}</a>
+
   @endif
   {!! Form::close() !!}
 @endsection

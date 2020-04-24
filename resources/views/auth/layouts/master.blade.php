@@ -44,5 +44,8 @@
 <script src="/admin-template/js/app.js"></script>
 <script src="/admin-template/js/slimscroll/jquery.slimscroll.min.js"></script>
 <script src="/admin-template/js/app.plugin.js"></script>
+<script>
+  localStorage.clear();
+</script>
 </body>
 </html>

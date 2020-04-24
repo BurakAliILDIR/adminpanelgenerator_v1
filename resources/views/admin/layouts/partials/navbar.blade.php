@@ -1,6 +1,6 @@
 <aside class="bg-light aside-md hidden-print hidden-xs" id="nav">
   <section class="vbox">
-    <header class="header bg-primary lter text-center">
+    {{--<header class="header bg-primary lter text-center">
       <div class="btn-group">
         <button type="button" class="btn btn-sm btn-dark btn-icon" title="New project"><i
             class="fa fa-plus"></i></button>
@@ -17,23 +17,21 @@
           </ul>
         </div>
       </div>
-    </header>
+    </header>--}}
     <section class="w-f scrollable">
       <div class=" " data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px"
            data-color="#333333">
-        <!-- nav -->
         <nav class="nav-primary hidden-xs">
           <ul class="nav">
-            <?php $auth_user = auth()->user(); ?>
-            <li>
+            <?php $auth_user = auth()->user();?>
+            <li data-toggle="menu" id="menu-Home">
               <a href="{{ route('home') }}">
                 <i class="fa fa-home }} icon"><b class="bg-primary"></b></i>
                 <span>Anasayfa</span>
               </a>
             </li>
-
             @can('Application.Settings')
-              <li class="">
+              <li class="" data-toggle="menu" id="menu-ApplicationSettings">
                 <a class="">
                   <i class="fa fa-steam icon">
                     <b class="bg-warning"></b>
@@ -61,10 +59,10 @@
               </li>
             @endif
             @if($auth_user->can('Role.index') || $auth_user->can('Permission.index') || $auth_user->can('User.index'))
-              <li class="">
+              <li class="" data-toggle="menu" id="menu-User">
                 <a class="">
                   <i class="fa fa-user icon">
-                    <b class="bg-danger"></b>
+                    <b class="bg-info"></b>
                   </i>
                   <span class="pull-right">
                           <i class="fa fa-angle-down text"></i>
@@ -109,17 +107,24 @@
               </li>
             @endif
             @php
+              $colors = ['', 'primary', 'danger', 'warning', 'info'];
               $menus_path = config('cache.prefix') . ':menus';
               if ( !($menus = unserialize(\Illuminate\Support\Facades\Redis::get($menus_path)))) {
                 $menus = json_decode(file_get_contents(storage_path('app\public\application\settings\menu.json')), true);
                 \Illuminate\Support\Facades\Redis::set($menus_path, serialize($menus));
               }
+              $menu_order = 0;
             @endphp
             @foreach($menus as $key => $val)
               @can($key . '.index')
-                <li>
+                @php
+                  $menu_order %= 4;
+                  $menu_order++;
+                @endphp
+                <li data-toggle="menu" id="menu-{{ $key }}">
                   <a href="{{ route(strtolower($key).'.index') }}">
-                    <i class="fa fa-{{ $val['icon'] ?? 'angle-right' }} icon"><b class="bg-primary"></b></i>
+                    <i class="fa fa-{{ $val['icon'] ?? 'angle-right' }} icon"><b
+                        class="bg-{{ $colors[$menu_order] }}"></b></i>
                     <span>{!! $val['title'] !!}</span>
                   </a>
                 </li>
@@ -169,7 +174,6 @@
                     </li>
                 </ul>
             </li>--}}
-
             {{--  Burası sonraki menüler --}}
             {{--   <li>
                  <a href="#uikit">
@@ -394,11 +398,24 @@
                </li>--}}
           </ul>
         </nav>
-        <!-- / nav -->
       </div>
     </section>
+    <script>
+      const prefix = '{{ config('cache.prefix') }}_active_menu';
+      $(function () {
+        const getMenu = localStorage.getItem(prefix)
+        let active = getMenu ? getMenu : 'menu-Home';
+        $('#' + active).addClass('active').children('a').addClass('active');
+      });
 
+      $('[data-toggle="menu"]').click(function () {
+        localStorage.setItem(prefix, this.id);
+      });
+
+
+    </script>
     <footer class="footer lt hidden-xs b-t b-light">
+      {{--
       <div id="chat" class="dropup">
         <section class="dropdown-menu on aside-md m-l-n">
           <section class="panel bg-white">
@@ -410,7 +427,7 @@
           </section>
         </section>
       </div>
-      <div id="invite" class="dropup">
+     <div id="invite" class="dropup">
         <section class="dropdown-menu on aside-md m-l-n">
           <section class="panel bg-white">
             <header class="panel-heading b-b b-light">
@@ -423,17 +440,24 @@
             </div>
           </section>
         </section>
-      </div>
-      <a href="#nav" data-toggle="class:nav-xs" class="pull-right btn btn-sm btn-black btn-icon">
+      </div>--}}
+      <a href="#nav" id="menu-hide" data-toggle="class:nav-xs" class="pull-right btn btn-sm btn-black btn-icon">
         <i class="fa fa-angle-left text"></i>
         <i class="fa fa-angle-right text-active"></i>
       </a>
-      <div class="btn-group hidden-nav-xs">
+      <script>
+        $('#menu-hide').click(function () {
+          
+  alert(localStorage.getItem(prefix + 'menu-hide'));        
+//          localStorage.setItem(prefix + 'menu-hide', 'hide');
+        });
+      </script>
+      {{--<div class="btn-group hidden-nav-xs">
         <button type="button" title="Chats" class="btn btn-icon btn-sm btn-black"
                 data-toggle="dropdown" data-target="#chat"><i class="fa fa-comment-o"></i></button>
         <button type="button" title="Contacts" class="btn btn-icon btn-sm btn-black"
                 data-toggle="dropdown" data-target="#invite"><i class="fa fa-facebook"></i></button>
-      </div>
+      </div>--}}
     </footer>
   </section>
 </aside>

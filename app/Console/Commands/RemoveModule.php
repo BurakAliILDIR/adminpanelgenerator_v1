@@ -37,8 +37,7 @@ class RemoveModule extends Command
         $module->delete();
       }
       
-      // burada bu json dosyasına gelen $name e göre menü alanı silinecek. önce cache i temizle.
-      \Illuminate\Support\Facades\Redis::del(config('cache.prefix') . ':menus');
+      // burada bu json dosyasına gelen $name e göre menü alanı silinecek.
       $menu_path = storage_path('app\public\application\settings\menu.json');
       $data = json_decode(file_get_contents($menu_path), true);
       foreach ($data as $key => $val) if ($key === $name) unset($data[$key]);
