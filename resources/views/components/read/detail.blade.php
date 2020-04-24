@@ -53,7 +53,7 @@ $class_name = class_basename($model);
             <div class="wrapper-lg">
               <div class="clearfix m-b">
                 @foreach($fields as $key => $val)
-                  @if($val[$settings['operation']] && $val['type'] === 'image' && (($image = $model->getFirstMediaUrl($key)) !== '' || @$val['value']))
+                  @if($val['type'] === 'image' && (($image = $model->getFirstMediaUrl($key)) !== '' || @$val['value']))
                     <span class="pull-left thumb m-r">
                     <img
                       src="{{ $image !== '' ? $image :  \Illuminate\Support\Facades\Storage::url('application/defaults/'.$val['value']) }}">
@@ -63,7 +63,7 @@ $class_name = class_basename($model);
               </div>
               <div style="word-break: break-all">
                 @foreach($fields as $key => $val)
-                  @if($val[$settings['operation']] && !(@$val['multiple']))
+                  @if(!(@$val['multiple']))
                     @switch($val['type'])
                       @case('text')
                       @case('email')
@@ -129,7 +129,7 @@ $class_name = class_basename($model);
           <header class="header bg-light bg-gradient">
             <ul class="nav nav-tabs nav-white">
               @foreach($fields as $key => $val)
-                @if(($val[$settings['operation']]) && (@$val['multiple']) && $val['type'] !== 'multi_image')
+                @if((@$val['multiple']) && $val['type'] !== 'multi_image')
                   @can("$key.index")
                     <li id="{{ $key }}Leaf">
                       <a href="#{{ $key }}" id="{{ $key }}A" data-toggle="tab"
@@ -146,35 +146,35 @@ $class_name = class_basename($model);
             <section class="scrollable">
               <div class="tab-content">
                 @foreach($fields as $key => $val)
-                  @if(($val[$settings['operation']]) && (@$val['multiple']) && $val['type'] !== 'multi_image')
+                  @if((@$val['multiple']) && $val['type'] !== 'multi_image')
                     @can("$key.index")
                       <?php $relation_infos = $val['relationship'];
-                      $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key);
+                      $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], $relation_infos['fields'], $key);
                       ?>
                       <div class="tab-pane" id="{{ $key }}Page">
                         <section class="scrollable wrapper-md w-f">
-                          @if($data->count() > 0)
+                          @if($data->count())
+                            @php
+                              $modelFields = $data->first()->getSettings('fields');
+                              foreach ($relation_infos['fields'] as $item){
+                                $resultFields[$item] = $modelFields[$item];
+                              }
+                            @endphp
                             <section class="panel panel-default">
                               <div class="table-responsive">
                                 <table class="table table-striped m-b-none">
                                   <thead>
                                   <tr>
-                                    @foreach($data->first()->getSettings('fields') as $relation_key => $relation_val)
-                                      @foreach($relation_infos['fields'] as $field)
-                                        @if($relation_key === $field)
-                                          <th>{{ $relation_val['title'] }}</th>
-                                        @endif
-                                      @endforeach
+                                    @foreach($resultFields as $relation_key => $relation_val)
+                                      <th>{{ $relation_val['title'] }}</th>
                                     @endforeach
                                   </tr>
                                   </thead>
                                   <tbody>
                                   @foreach($data as $upper_val)
                                     <tr>
-                                      @foreach($upper_val->getSettings('fields') as $lower_key => $lower_val)
-                                        @if(array_search($lower_key, $relation_infos['fields']) !== false)
-                                          @component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
-                                        @endif
+                                      @foreach($resultFields as $lower_key => $lower_val)
+                                        @component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
                                       @endforeach
                                     </tr>
                                   @endforeach
@@ -201,7 +201,7 @@ $class_name = class_basename($model);
           <section class="scrollable">
             <div class="wrapper-md">
               @foreach($fields as $key => $val)
-                @if($val[$settings['operation']] && @$val['multiple'] && $val['type'] === 'multi_image')
+                @if($val['type'] === 'multi_image')
                   @can(class_basename($model) . '.imageUpload')
                     <p>{{ $val['title'] . ' : Yükleme Alanı' }}</p>
                     <section class="panel panel-default">
@@ -212,7 +212,6 @@ $class_name = class_basename($model);
                       </form>
                     </section>
                   @endcan
-
                   @if(($images = $model->getMedia($key))->count())
                     <?php if (auth()->check()) $imageDeletePermission = auth()->user()->can($class_name . '.imageDelete');?>
                     @component('components.alert.alert_messages')@endcomponent

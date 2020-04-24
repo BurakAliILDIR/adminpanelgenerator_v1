@@ -62,9 +62,7 @@ $data = $settings['data'];
                 </th>
               @endcan
               @foreach($fields as $key => $val)
-                @if($val[$settings['operation']])
                   <th>{{ $val['title'] }}</th>
-                @endif
               @endforeach
               @can(class_basename($model).'.detail')
                 <th width="5"></th>
@@ -90,9 +88,7 @@ $data = $settings['data'];
                   </td>
                 @endcan
                 @foreach($fields as $lower_key => $lower_val)
-                  @if($lower_val[$settings['operation']] )
                     @component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
-                  @endif
                 @endforeach
                 @can(class_basename($model).'.detail')
                   <td>

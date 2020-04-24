@@ -61,6 +61,7 @@ class RemoveModule extends Command
       }
       
       Storage::delete("modules/sources/$name.json");
+      Artisan::call('cache:clear');
     }
   }
 }

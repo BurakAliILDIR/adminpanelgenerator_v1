@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Hash;
 use Modules\Blog\Http\Requests\CreateBlogRequest;
 use Modules\Blog\Http\Requests\UpdateBlogRequest;
 use Modules\Blog\Models\Blog;
-use Spatie\Activitylog\Models\Activity;
 
 class BlogController extends Controller
 {
@@ -17,15 +16,21 @@ class BlogController extends Controller
   
   private $model;
   private $jsonSettings;
+  private $redis_path;
   
   public function __construct()
   {
     $this->model = new Blog();
-    $this->jsonSettings = $this->model->getSettings();
+    $this->redis_path = config('cache.prefix') . ':Blog';
+    $this->redisJsonSettings();
   }
   
   public function index()
   {
+    $operation_type = 'list';
+    
+    $fields = $this->redisReadFields($operation_type);
+    
     $data = null;
     $paginate = $this->jsonSettings['paginate'];
     if ($search = trim(\request()->input('ara'))) {
@@ -33,14 +38,12 @@ class BlogController extends Controller
       $data = $this->model->where(function ($query) use ($conditions, $search) {
         foreach ($conditions as $column)
           $query->orWhere($column, 'like', '%' . $search . '%');
-      })->orderByDESC('id')->paginate($paginate);
+      })->orderByDESC('id')->paginate($paginate, $fields['dbSelectFields']);
     } else
-      $data = $this->model->orderByDESC('id')->paginate($paginate);
-    
+      $data = $this->model->orderByDESC('id')->paginate($paginate, $fields['dbSelectFields']);
     $settings = [
-      'operation' => 'list',
       'title' => $this->jsonSettings['titles']['index'],
-      'fields' => $this->jsonSettings['fields'],
+      'fields' => $fields['showFields'],
       'model' => $this->model,
       'data' => $data,
       'route' => $this->jsonSettings['routes'],
@@ -51,10 +54,11 @@ class BlogController extends Controller
   public function create()
   {
     $operation_type = 'create';
+    
+    $fields = $this->redisReadFields($operation_type);
     $settings = [
-      'operation' => $operation_type,
       'title' => $this->jsonSettings['titles']['create'],
-      'fields' => $this->jsonSettings['fields'],
+      'fields' => $fields['showFields'],
       'model' => $this->model,
       'params' => null,
       'submitText' => 'Ekle',
@@ -67,10 +71,10 @@ class BlogController extends Controller
   
   public function store(CreateBlogRequest $request)
   {
-    $fields = $this->jsonSettings['fields'];
     $operation_type = 'create';
-    foreach ($fields as $key => $field) {
-      if ( !$field[$operation_type]) continue;
+    
+    $fields = $this->redisReadFields($operation_type);
+    foreach ($fields['showFields'] as $key => $field) {
       switch ($type = $field['type']) {
         case 'checkbox':
           $this->model[$key] = $request[$key] ?? 0;
@@ -100,18 +104,20 @@ class BlogController extends Controller
     
     $this->model->saveOrFail();
     
-    $this->many_to_many_sync($request, $fields, $operation_type);
+    $this->many_to_many_sync($request, $fields['showFields'], $operation_type);
     session()->flash('success', 'Kayıt başarıyla eklendi.');
     return redirect()->back();
   }
   
   public function show($id)
   {
-    $this->model = $this->model->findOrFail($id);
+    $operation_type = 'detail';
+    
+    $fields = $this->redisReadFields($operation_type);
+    $this->model = $this->model->findOrFail($id, $fields['dbSelectFields']);
     $settings = [
-      'operation' => 'detail',
       'title' => $this->jsonSettings['titles']['show'],
-      'fields' => $this->jsonSettings['fields'],
+      'fields' => $fields['showFields'],
       'model' => $this->model,
       'route' => $this->jsonSettings['routes'],
     ];
@@ -120,12 +126,14 @@ class BlogController extends Controller
   
   public function edit($id)
   {
-    $this->model = $this->model->findOrFail($id);
+    $operation_type = 'update';
+    
+    $fields = $this->redisReadFields($operation_type);
+    $this->model = $this->model->findOrFail($id, array_merge($fields['dbSelectFields'], ['id']));
     $operation_type = 'update';
     $settings = [
-      'operation' => $operation_type,
       'title' => $this->jsonSettings['titles']['edit'],
-      'fields' => $this->jsonSettings['fields'],
+      'fields' => $fields['showFields'],
       'model' => $this->model,
       'params' => $this->model->id,
       'submitText' => 'Kaydet',
@@ -138,11 +146,12 @@ class BlogController extends Controller
   
   public function update(UpdateBlogRequest $request, $id)
   {
-    $this->model = $this->model->findOrFail($id);
-    $fields = $this->jsonSettings['fields'];
     $operation_type = 'update';
-    foreach ($fields as $key => $field) {
-      if ( !$field[$operation_type]) continue;
+    
+    $fields = $this->redisReadFields($operation_type);
+    $this->model = $this->model->findOrFail($id, array_merge($fields['dbSelectFields'], ['id']));
+    
+    foreach ($fields['showFields'] as $key => $field) {
       switch ($type = $field['type']) {
         case 'checkbox':
           $this->model[$key] = $request[$key] ?? 0;
@@ -172,7 +181,7 @@ class BlogController extends Controller
     
     $this->model->saveOrFail();
     
-    $this->many_to_many_sync($request, $fields, $operation_type);
+    $this->many_to_many_sync($request, $fields['showFields'], $operation_type);
     session()->flash('info', 'Kayıt başarıyla güncellendi.');
     return redirect()->back();
   }
@@ -193,3 +202,4 @@ class BlogController extends Controller
     return 1;
   }
 }
+  

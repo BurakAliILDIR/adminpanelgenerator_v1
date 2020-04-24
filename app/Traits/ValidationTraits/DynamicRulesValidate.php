@@ -2,20 +2,15 @@
 
 namespace App\Traits\ValidationTraits;
 
+use Illuminate\Support\Facades\Redis;
+
 trait DynamicRulesValidate
 {
   public function rules()
   {
     $validates = [];
     foreach ($this->fields as $key => $field) {
-      if ($field[$this->operation]) {
-        $row = '';
-        $rules = $field['rules'];
-        foreach ($rules as $rule) {
-          $row .= last($rules) === $rule ? $rule : ($rule . '|');
-        }
-        $validates[$key] = $row;
-      }
+      $validates[$key] = implode('|', $rules ?? []);
     }
     return $validates;
   }
@@ -24,29 +19,19 @@ trait DynamicRulesValidate
   {
     $attributes = [];
     foreach ($this->fields as $key => $field) {
-      if ($field[$this->operation])
-        $attributes[$key] = $field['title'];
+      $attributes[$key] = $field['title'];
     }
     return $attributes;
   }
   
-  /* CUSTOM VALIDATE MESSAGES
-  public function messages()
- {
-
-     $validates = [];
-     foreach ($this->fields as $key => $field) {
-         if ($field['create']) {
-             $row = '';
-             $rules = $field['rules'];
-             foreach ($rules as $rule) {
-                 $row .= last($rules) === $rule ? $rule : ($rule . '|');
-                 $validates[$key.".". $rule] = __("dogrulama.".$rule, ["alan" => $field["title"]]);
-             }
-
-         }
-     }
-//        dd($validates);
-     return $validates;
- }*/
+  // Redisten veya ilgili modelden aldığı veriler ile global düzeydeki $fields ı doldurur.
+  private function fillFields(string $name, string $operation) : void
+  {
+    $redis_path = config('cache.prefix') . ":$name:Json:$operation";
+    if ( !($this->fields = unserialize(Redis::get($redis_path))['showFields'])) {
+      $model = '\\Modules\\' . $name . '\\Models\\' . $name;
+      $this->fields = (new $model())->getSettings('fields');
+      Redis::set($redis_path, serialize($this->fields));
+    }
+  }
 }

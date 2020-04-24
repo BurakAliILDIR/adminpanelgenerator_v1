@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Application;
 use App\Http\Controllers\Controller;
 use App\Traits\DangerStatusTraits\DangerStatusTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Nwidart\Modules\Facades\Module;
@@ -12,6 +13,11 @@ use Nwidart\Modules\Facades\Module;
 class FieldController extends Controller
 {
   use DangerStatusTrait;
+  
+  public function __construct()
+  {
+    Artisan::call('cache:clear');
+  }
   
   public function create($module_name, $related = false)
   {
@@ -271,12 +277,7 @@ class FieldController extends Controller
   public function getFields(Request $request)
   {
     $model = new $request->model;
-    $fields = $model->getSettings('fields');
-    
-    return $fields;
-    //$path = storage_path("app\modules\sources\\$module_name.json");
-    //$source = json_decode(file_get_contents($path), true);
-    //return  $source['fields'];
+    return $model->getSettings('fields');
   }
   
   private function ordinaryFieldFilling(Request $request) : array
@@ -297,8 +298,7 @@ class FieldController extends Controller
         $eleman['value'] = $request['values'];
         break;
       case 'multi_image':
-        $eleman['count'] = $request['values'] ?? 100000000000000000;
-        $eleman['multiple'] = true;
+        $eleman['count'] = $request['values'] ?? 1000000000000;
         break;
       case 'radio':
       case 'select':

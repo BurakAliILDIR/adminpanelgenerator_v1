@@ -2,7 +2,6 @@
 @component('components.alert.error_messages')@endcomponent
 <?php $model = $settings['model']; ?>
 @foreach($settings['fields'] as $key => $field)
-  @if($field[$settings['operation']])
     <?php
     $title = @$field['title'];
     $value = @$field['value'];
@@ -94,5 +93,4 @@
       ])@endcomponent
       @break
     @endswitch
-  @endif
 @endforeach

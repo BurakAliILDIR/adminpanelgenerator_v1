@@ -108,13 +108,13 @@
                 </ul>
               </li>
             @endif
-            <?php
-            $menus_path = config('cache.prefix') . ':menus';
-            if ( !($menus = unserialize(\Illuminate\Support\Facades\Redis::get($menus_path)))) {
-              $menus = json_decode(file_get_contents(storage_path('app\public\application\settings\menu.json')), true);
-              \Illuminate\Support\Facades\Redis::set($menus_path, serialize($menus));
-            }
-            ?>
+            @php
+              $menus_path = config('cache.prefix') . ':menus';
+              if ( !($menus = unserialize(\Illuminate\Support\Facades\Redis::get($menus_path)))) {
+                $menus = json_decode(file_get_contents(storage_path('app\public\application\settings\menu.json')), true);
+                \Illuminate\Support\Facades\Redis::set($menus_path, serialize($menus));
+              }
+            @endphp
             @foreach($menus as $key => $val)
               @can($key . '.index')
                 <li>

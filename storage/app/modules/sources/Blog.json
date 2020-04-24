@@ -27,7 +27,7 @@
       "type": "hidden",
       "title": "ID",
       "create": false,
-      "update": false,
+      "update": true,
       "list": true,
       "detail": true
     },
@@ -73,6 +73,18 @@
         "perPage": 7
       },
       "multiple": true
+    },
+    "resimler": {
+      "type": "multi_image",
+      "title": "Resimler",
+      "unit": null,
+      "rules": [],
+      "attributes": [],
+      "list": false,
+      "detail": true,
+      "create": false,
+      "update": false,
+      "count": 100000000000000000
     },
     "kasa": {
       "type": "number",

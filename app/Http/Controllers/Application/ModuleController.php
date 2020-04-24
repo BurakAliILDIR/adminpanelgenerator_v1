@@ -12,6 +12,11 @@ class ModuleController extends Controller
 {
   use DangerStatusTrait;
   
+  public function __construct()
+  {
+    Artisan::call('cache:clear');
+  }
+  
   public function index()
   {
     $this->dangerStatusMailSend('ModuleController-index');
