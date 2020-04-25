@@ -59,8 +59,9 @@
               </li>
             @endif
             @can('User.index')
-              <li class="{{ Route::is('user.index') ? 'active' : '' }}">
-                <a class="{{ Route::is('user.index') ? 'active' : '' }}" href="{{ route('user.index') }}">
+                <?php $isActiveMenu = Route::is('user.index') ? 'active' : ''; ?>
+                <li class="{{ $isActiveMenu }}">
+                <a class="{{ $isActiveMenu }}" href="{{ route('user.index') }}">
                   <i class="fa fa-group icon"><b
                       class="bg-info"></b></i>
                   <span>Kullanıcılar</span>
@@ -68,8 +69,9 @@
               </li>
             @endcan
             @if($auth_user->can('Role.index') || $auth_user->can('Permission.index'))
-              <li class="{{ Route::is('role.index') || Route::is('permission.index') ? 'active' : '' }}">
-                <a class="{{ Route::is('role.index') || Route::is('permission.index') ? 'active' : '' }}">
+                <?php $isActiveMenu = Route::is('role.index') || Route::is('permission.index') ? 'active' : ''; ?>
+                <li class="{{ $isActiveMenu }}">
+                <a class="{{ $isActiveMenu }}">
                   <i class="fa fa-filter icon">
                     <b class="bg-danger"></b>
                   </i>
@@ -100,8 +102,9 @@
               </li>
             @endif
             @can('Logs.index')
-              <li class="{{ Route::is('Logs.index') ? 'active' : '' }}">
-                <a class="{{ Route::is('Logs.index') ? 'active' : '' }}" href="{{ route('Logs.index') }}">
+              <?php $isActiveMenu = Route::is('Logs.index') ? 'active' : ''; ?>
+              <li class="{{ $isActiveMenu }}">
+                <a class="{{ $isActiveMenu }}" href="{{ route('Logs.index') }}">
                   <i class="fa fa-yelp icon"><b class="bg-info"></b></i>
                   <span>Etkinlikler</span>
                 </a>
@@ -117,14 +120,15 @@
               $menu_order = 0;
             @endphp
             @foreach($menus as $key => $val)
-              @can($key . '.index')
+              @can("$key.index")
                 @php
                   $menu_order %= 4;
                   $menu_order++;
+                  $isActiveMenu =  Route::is("$key.index") ? 'active' : '';
                 @endphp
-                <li class="{{ Route::is(($key).".index") ? 'active' : '' }}">
-                  <a class="{{ Route::is(($key).".index") ? 'active' : '' }}"
-                     href="{{ route(($key).'.index') }}">
+                <li class="{{ $isActiveMenu }}">
+                  <a class="{{ $isActiveMenu }}"
+                     href="{{ route("$key.index") }}">
                     <i class="fa fa-{{ $val['icon'] ?? 'angle-right' }} icon"><b
                         class="bg-{{ $colors[$menu_order] }}"></b></i>
                     <span>{!! $val['title'] !!}</span>
