@@ -122,9 +122,9 @@
                   $menu_order %= 4;
                   $menu_order++;
                 @endphp
-                <li class="{{ Route::is(strtolower($key).".index") ? 'active' : '' }}">
-                  <a class="{{ Route::is(strtolower($key).".index") ? 'active' : '' }}"
-                     href="{{ route(strtolower($key).'.index') }}">
+                <li class="{{ Route::is(($key).".index") ? 'active' : '' }}">
+                  <a class="{{ Route::is(($key).".index") ? 'active' : '' }}"
+                     href="{{ route(($key).'.index') }}">
                     <i class="fa fa-{{ $val['icon'] ?? 'angle-right' }} icon"><b
                         class="bg-{{ $colors[$menu_order] }}"></b></i>
                     <span>{!! $val['title'] !!}</span>

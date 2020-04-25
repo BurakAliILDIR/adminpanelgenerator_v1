@@ -3,6 +3,7 @@ $fields = $settings['fields'];
 $model = $settings['model'];
 $route = $settings['route'];
 $data = $settings['data'];
+$model_name = class_basename($model);
 ?>
 <h3>{{ $settings['title'] }}</h3>
 <style>.checkbox-custom > i.checked:before {
@@ -13,7 +14,7 @@ $data = $settings['data'];
     <header class="header bg-white b-b clearfix">
       <div class="row m-t-sm">
         <div class="col-sm-7 m-b-xs">
-          @can(class_basename($model).'.create')
+          @can("$model_name.create")
             <a href="{{ route($route['create']) }}"
                class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> Yeni Kayıt</a>
           @endcan
@@ -32,8 +33,7 @@ $data = $settings['data'];
               </span>
               @endif
               <input type="text" name="ara" class="input-sm form-control rounded" autocomplete="off"
-                     placeholder="{{ $settings['title'] }} içinde ara"
-                     value="{{ $ara }}">
+                     placeholder="{{ $settings['title'] }} içinde ara" value="{{ $ara }}">
               <span class="input-group-btn">
                 <button class="btn btn-sm btn-default btn-rounded" type="submit">
                   <i class="fa fa-search"></i>
@@ -52,7 +52,7 @@ $data = $settings['data'];
           <table class="table table-striped m-b-none">
             <thead>
             <tr>
-              @can(class_basename($model).'.delete')
+              @can("$model_name.delete")
                 <th width="5">
                   <button type="button" id="multiple_delete"
                           data-url="{{ route($route['delete']) }}"
@@ -64,10 +64,10 @@ $data = $settings['data'];
               @foreach($fields as $key => $val)
                   <th>{{ $val['title'] }}</th>
               @endforeach
-              @can(class_basename($model).'.detail')
+              @can("$model_name.detail")
                 <th width="5"></th>
               @endcan
-              @can(class_basename($model).'.update')
+              @can("$model_name.update")
                 <th width="5"></th>
               @endcan
             </tr>
@@ -75,7 +75,7 @@ $data = $settings['data'];
             <tbody>
             @foreach($data as $upper_val)
               <tr>
-                @can(class_basename($model).'.delete')
+                @can("$model_name.delete")
                   <td>
                     <div class="checkbox">
                       <label class="checkbox-custom" id="{{ $upper_val['id'] }}">
@@ -90,7 +90,7 @@ $data = $settings['data'];
                 @foreach($fields as $lower_key => $lower_val)
                     @component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
                 @endforeach
-                @can(class_basename($model).'.detail')
+                @can("$model_name.detail")
                   <td>
                     <a class="btn btn-sm btn-icon btn-warning btn-rounded"
                        href="{{ route($route['show'], ((string)$upper_val['id'])) }}">
@@ -98,7 +98,7 @@ $data = $settings['data'];
                     </a>
                   </td>
                 @endcan
-                @can(class_basename($model).'.update')
+                @can("$model_name.update")
                   <td>
                     <a class="btn btn-sm btn-icon btn-info btn-rounded"
                        href="{{ route($route['edit'], $upper_val['id']) }}">

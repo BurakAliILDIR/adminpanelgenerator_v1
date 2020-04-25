@@ -2,14 +2,12 @@
 @section('title', $settings['title'])
 @section('css')
   <link href="/plugins/select2/css/select2.min.css" rel="stylesheet" />
-
   <!-- datepicker -->
   <link href="/admin-custom-template/datepicker/bootstrap-datepicker.css" rel="stylesheet">
   <!-- datetimepicker -->
   <link href="/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
   <!-- CkEditor -->
   <script src="/admin-custom-template/ckeditor/ckeditor.js" type="text/javascript"></script>
-
 @endsection
 @section('content')
   <div class="row">
@@ -48,9 +46,9 @@
   <script type="text/javascript" src="/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.js"></script>
   <!-- datepicker -->
   <script type="text/javascript" src="/admin-custom-template/datepicker/bootstrap-datepicker.js"></script>
-  <script>
-    $(document).ready(function() {
-      $('.js-example-basic-single').select2();
-    });
-  </script>
+    <script>
+      $(document).ready(function() {
+        $('.js-example-basic-single').select2();
+      });
+    </script>
 @endsection

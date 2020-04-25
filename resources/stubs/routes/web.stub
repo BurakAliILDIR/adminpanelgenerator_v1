@@ -3,11 +3,11 @@
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('$LOWER_NAME$')->middleware(['auth', 'verified'])->group(function () {
-  Route::get('/', '$STUDLY_NAME$Controller@index')->middleware('permission:$STUDLY_NAME$.index')->name('$LOWER_NAME$.index');
-  Route::get('/ekle', '$STUDLY_NAME$Controller@create')->middleware('permission:$STUDLY_NAME$.create')->name('$LOWER_NAME$.create');
-  Route::post('/', '$STUDLY_NAME$Controller@store')->middleware('permission:$STUDLY_NAME$.create')->name('$LOWER_NAME$.store');
-  Route::get('/{id}', '$STUDLY_NAME$Controller@show')->middleware('permission:$STUDLY_NAME$.detail')->name('$LOWER_NAME$.show');
-  Route::get('/{id}/duzenle', '$STUDLY_NAME$Controller@edit')->middleware('permission:$STUDLY_NAME$.update')->name('$LOWER_NAME$.edit');
-  Route::put('/{id}', '$STUDLY_NAME$Controller@update')->middleware('permission:$STUDLY_NAME$.update')->name('$LOWER_NAME$.update');
-  Route::delete('/', '$STUDLY_NAME$Controller@destroy')->middleware('permission:$STUDLY_NAME$.delete')->name('$LOWER_NAME$.destroy');
+  Route::get('/', '$STUDLY_NAME$Controller@index')->middleware('permission:$STUDLY_NAME$.index')->name('$STUDLY_NAME$.index');
+  Route::get('/ekle', '$STUDLY_NAME$Controller@create')->middleware('permission:$STUDLY_NAME$.create')->name('$STUDLY_NAME$.create');
+  Route::post('/', '$STUDLY_NAME$Controller@store')->middleware('permission:$STUDLY_NAME$.create')->name('$STUDLY_NAME$.store');
+  Route::get('/{id}', '$STUDLY_NAME$Controller@show')->middleware('permission:$STUDLY_NAME$.detail')->name('$STUDLY_NAME$.show');
+  Route::get('/{id}/duzenle', '$STUDLY_NAME$Controller@edit')->middleware('permission:$STUDLY_NAME$.update')->name('$STUDLY_NAME$.edit');
+  Route::put('/{id}', '$STUDLY_NAME$Controller@update')->middleware('permission:$STUDLY_NAME$.update')->name('$STUDLY_NAME$.update');
+  Route::delete('/', '$STUDLY_NAME$Controller@destroy')->middleware('permission:$STUDLY_NAME$.delete')->name('$STUDLY_NAME$.destroy');
 });

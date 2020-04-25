@@ -1,8 +1,7 @@
 @extends('admin.layouts.master')
 @section('title', $settings['title'])
 @section('css')
-  <link href="/plugins/select2/css/select2.min.css" rel="stylesheet"/>
-
+  <link href="/plugins/select2/css/select2.min.css" rel="stylesheet" />
   <!-- datepicker -->
   <link href="/admin-custom-template/datepicker/bootstrap-datepicker.css" rel="stylesheet">
   <!-- datetimepicker -->
@@ -59,7 +58,7 @@
   <!-- datepicker -->
   <script type="text/javascript" src="/admin-custom-template/datepicker/bootstrap-datepicker.js"></script>
   <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
       $('.js-example-basic-single').select2();
     });
   </script>

@@ -62,15 +62,14 @@ class CreateModule extends Command
       'create' => "$name Ekle",
       'edit' => "$name Düzenle",
     ];
-    $lower_name = strtolower($name);
     $default_source['routes'] = [
-      "index" => "$lower_name.index",
-      "create" => "$lower_name.create",
-      "store" => "$lower_name.store",
-      "show" => "$lower_name.show",
-      "edit" => "$lower_name.edit",
-      "update" => "$lower_name.update",
-      "delete" => "$lower_name.destroy",
+      "index" => "$name.index",
+      "create" => "$name.create",
+      "store" => "$name.store",
+      "show" => "$name.show",
+      "edit" => "$name.edit",
+      "update" => "$name.update",
+      "delete" => "$name.destroy",
     ];
     file_put_contents("$source_path\\$name.json", json_encode($default_source));
   }
