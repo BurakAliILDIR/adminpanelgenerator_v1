@@ -60,5 +60,9 @@
   "Turn Back": "Geri Dön",
   "Surname": "Soyad",
   "I accept the terms of use.": "Kullanım koşularını kabul ediyorum.",
-  "Don't have an account yet?": "Hala bir hesabın yok mu?" 
+  "Don't have an account yet?": "Hala bir hesabın yok mu?",
+  "User" : "Kullanıcı",
+  "Role" : "Rol",
+  "Permission" : "İzin",
+  "Logs" : "Kullanıcı Etkinlikleri"
 }

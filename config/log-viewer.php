@@ -51,7 +51,7 @@ return [
     'enabled' => true,
     
     'attributes' => [
-      'prefix' => 'loglar',
+      'prefix' => 'error-logs',
       
       'middleware' => config('my-config.error_logviewer_middleware') ? explode(',', config('my-config.error_logviewer_middleware')) : null,
     ],
@@ -71,7 +71,7 @@ return [
    */
   
   'download' => [
-    'prefix' => 'laravel-',
+    'prefix' => \Illuminate\Support\Str::camel(env('APP_NAME')),
     
     'extension' => 'log',
   ],

@@ -12,8 +12,10 @@
       <header class="header bg-white b-b clearfix">
         <div class="row m-t-sm">
           <div class="col-sm-7 m-b-xs">
-            <a href="{{ route('user.create') }}"
-               class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> Yeni Kullanıcı</a>
+            @can('User.create')
+              <a href="{{ route('user.create') }}"
+                 class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> Yeni Kullanıcı</a>
+            @endcan
           </div>
           <div class="col-sm-5 m-b-xs">
             <?php $ara = \request()->input('ara'); ?>
@@ -49,50 +51,60 @@
             <table class="table table-striped m-b-none">
               <thead>
               <tr>
-                <th width="5">
-                  <button type="button" id="multiple_delete"
-                          data-url="{{ route('user.destroy') }}"
-                          class="btn btn-xs btn-danger btn-rounded"
-                          title="Seçili Kullanıcıları Sil"><i class="fa fa-trash-o"></i>
-                  </button>
-                </th>
+                @can('User.delete')
+                  <th width="5">
+                    <button type="button" id="multiple_delete"
+                            data-url="{{ route('user.destroy') }}"
+                            class="btn btn-xs btn-danger btn-rounded"
+                            title="Seçili Kullanıcıları Sil"><i class="fa fa-trash-o"></i>
+                    </button>
+                  </th>
+                @endcan
                 <th width="20%">ID</th>
                 <th>Ad</th>
                 <th>Soyad</th>
                 <th>E-posta</th>
-                <th width="5"></th>
-                <th width="5"></th>
+                @can('User.detail')
+                  <th width="5"></th>
+                @endcan
+                @can('User.update')
+                  <th width="5"></th>
+                @endcan
               </tr>
               </thead>
               <tbody>
               @foreach($data as $row)
                 <tr>
-                  <td>
-                    <div class="checkbox">
-                      <label class="checkbox-custom" id="{{ $row['id'] }}">
-                        <input type="checkbox" name="checked[]"
-                               value="{{ $row['id'] }}"
-                               data-val="delete">
-                        <i class="fa fa-fw fa-square-o"></i>
-                      </label>
-                    </div>
-                  </td>
+                  @can('User.delete')
+                    <td>
+                      <div class="checkbox">
+                        <label class="checkbox-custom" id="{{ $row['id'] }}">
+                          <input type="checkbox" name="checked[]" value="{{ $row['id'] }}" data-val="delete">
+                          <i class="fa fa-fw fa-square-o"></i>
+                        </label>
+                      </div>
+                    </td>
+                  @endcan
                   <td>{!! $row->id !!}</td>
                   <td>{!! $row->name !!}</td>
                   <td>{!! $row->surname !!}</td>
                   <td>{!! $row->email !!}</td>
-                  <td>
-                    <a class="btn btn-sm btn-icon btn-warning btn-rounded"
-                       href="{{ route('user.show', $row['id']) }}">
-                      <i class="fa fa-search"></i>
-                    </a>
-                  </td>
-                  <td>
-                    <a class="btn btn-sm btn-icon btn-info btn-rounded"
-                       href="{{ route('user.edit', $row['id']) }}">
-                      <i class="fa fa-edit"></i>
-                    </a>
-                  </td>
+                  @can('User.detail')
+                    <td>
+                      <a class="btn btn-sm btn-icon btn-warning btn-rounded"
+                         href="{{ route('user.show', $row['id']) }}">
+                        <i class="fa fa-search"></i>
+                      </a>
+                    </td>
+                  @endcan
+                  @can('User.update')
+                    <td>
+                      <a class="btn btn-sm btn-icon btn-info btn-rounded"
+                         href="{{ route('user.edit', $row['id']) }}">
+                        <i class="fa fa-edit"></i>
+                      </a>
+                    </td>
+                  @endcan
                 </tr>
               @endforeach
               </tbody>

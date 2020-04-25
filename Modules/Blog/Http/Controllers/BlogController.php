@@ -94,7 +94,7 @@ class BlogController extends Controller
           break;
         case 'file':
         case 'image':
-          $this->insertToSingleMedia($request, $key);
+          $this->insertToSingleMedia($request, $key, $this->model);
           break;
         case 'password':
           $this->model[$key] = Hash::make($request[$key]);

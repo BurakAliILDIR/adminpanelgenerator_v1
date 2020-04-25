@@ -22,23 +22,27 @@
           </div>
         </div>
         <div class="col-md-6">
-          <div class="m-t m-r pull-right">
-            <a class="btn btn-xs btn-info btn-rounded "
-               href="{{ route('user.edit', $model['id']) }}">
-              <i class="fa fa-edit"></i>
-              Bu Kullanıcıyı Düzenle
-            </a>
-            <form action="{{ route('user.destroy') }}" method="post" class="inline">
-              @method('DELETE') @csrf
-              <input type="hidden" name="id" value="{{ $model['id'] }}">
-              <input type="hidden" name="back" value="{{ URL::previous() }}">
-              <button type="submit" class="btn btn-xs btn-danger btn-rounded"
-                      onclick="return confirm('Kullanıcıyı silmek istediğinize emin misiniz?')">
-                <i class="fa fa-trash"></i>
-                Bu Kullanıcıyı Sil
-              </button>
-            </form>
-          </div>
+          @can('User.update')
+            <div class="m-t m-r pull-right">
+              <a class="btn btn-xs btn-info btn-rounded "
+                 href="{{ route('user.edit', $model['id']) }}">
+                <i class="fa fa-edit"></i>
+                Bu Kullanıcıyı Düzenle
+              </a>
+              @endcan
+              @can('User.detail')
+                <form action="{{ route('user.destroy') }}" method="post" class="inline">
+                  @method('DELETE') @csrf
+                  <input type="hidden" name="id" value="{{ $model['id'] }}">
+                  <input type="hidden" name="back" value="{{ URL::previous() }}">
+                  <button type="submit" class="btn btn-xs btn-danger btn-rounded"
+                          onclick="return confirm('Kullanıcıyı silmek istediğinize emin misiniz?')">
+                    <i class="fa fa-trash"></i>
+                    Bu Kullanıcıyı Sil
+                  </button>
+                </form>
+              @endcan
+            </div>
         </div>
       </div>
     </header>

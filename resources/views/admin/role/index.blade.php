@@ -12,8 +12,10 @@
       <header class="header bg-white b-b clearfix">
         <div class="row m-t-sm">
           <div class="col-sm-7 m-b-xs">
-            <a href="{{ route('role.create') }}"
-               class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> Yeni Rol</a>
+            @can('Role.create')
+              <a href="{{ route('role.create') }}"
+                 class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> Yeni Rol</a>
+            @endcan
           </div>
           <div class="col-sm-5 m-b-xs">
             <?php $ara = \request()->input('ara'); ?>
@@ -49,17 +51,23 @@
             <table class="table table-striped m-b-none">
               <thead>
               <tr>
-                <th width="5">
-                  <button type="button" id="multiple_delete"
-                          data-url="{{ route('role.destroy') }}"
-                          class="btn btn-xs btn-danger btn-rounded"
-                          title="Seçili Rolleri Sil"><i class="fa fa-trash-o"></i>
-                  </button>
-                </th>
+                @can('Role.delete')
+                  <th width="5">
+                    <button type="button" id="multiple_delete"
+                            data-url="{{ route('role.destroy') }}"
+                            class="btn btn-xs btn-danger btn-rounded"
+                            title="Seçili Rolleri Sil"><i class="fa fa-trash-o"></i>
+                    </button>
+                  </th>
+                @endcan
                 <th>Rol Adı</th>
                 <th>Düzenlenme Tarihi</th>
-                <th width="5"></th>
-                <th width="5"></th>
+                @can('Role.detail')
+                  <th width="5"></th>
+                @endcan
+                @can('Role.update')
+                  <th width="5"></th>
+                @endcan
               </tr>
               </thead>
               <tbody>
@@ -77,18 +85,22 @@
                   </td>
                   <td>{{ $row->name }}</td>
                   <td>{{ \Carbon\Carbon::parse($row->updated_at)->format('d/m/Y H:i:s') }}</td>
-                  <td>
-                    <a class="btn btn-sm btn-icon btn-warning btn-rounded"
-                       href="{{ route('role.show', $row['id']) }}">
-                      <i class="fa fa-search"></i>
-                    </a>
-                  </td>
-                  <td>
-                    <a class="btn btn-sm btn-icon btn-info btn-rounded"
-                       href="{{ route('role.edit', $row['id']) }}">
-                      <i class="fa fa-edit"></i>
-                    </a>
-                  </td>
+                  @can('Role.detail')
+                    <td>
+                      <a class="btn btn-sm btn-icon btn-warning btn-rounded"
+                         href="{{ route('role.show', $row['id']) }}">
+                        <i class="fa fa-search"></i>
+                      </a>
+                    </td>
+                  @endcan
+                  @can('Role.update')
+                    <td>
+                      <a class="btn btn-sm btn-icon btn-info btn-rounded"
+                         href="{{ route('role.edit', $row['id']) }}">
+                        <i class="fa fa-edit"></i>
+                      </a>
+                    </td>
+                  @endcan
                 </tr>
               @endforeach
               </tbody>

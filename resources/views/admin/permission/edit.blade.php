@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 @section('title', 'İzin Düzenle')
 @section('css')
-  <link href="/plugins/select2/css/select2.min.css" rel="stylesheet" />
+  <link href="/plugins/select2/css/select2.min.css" rel="stylesheet"/>
 @endsection
 @section('content')
   <div class="row">
@@ -20,13 +20,15 @@
               </div>
             </div>
             <div class="col-md-6">
-              <div class="m-t">
-                <a class="btn btn-xs btn-default btn-rounded pull-right"
-                   href="{{ route('permission.show', $model->id) }}">
-                  Detay Sayfasına Git
-                  <i class="fa fa-arrow-right"></i>
-                </a>
-              </div>
+              @can('Permission.detail')
+                <div class="m-t">
+                  <a class="btn btn-xs btn-default btn-rounded pull-right"
+                     href="{{ route('permission.show', $model->id) }}">
+                    Detay Sayfasına Git
+                    <i class="fa fa-arrow-right"></i>
+                  </a>
+                </div>
+              @endcan
             </div>
           </div>
         </header>

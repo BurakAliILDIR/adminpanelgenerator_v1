@@ -49,46 +49,37 @@
             <table class="table table-striped m-b-none">
               <thead>
               <tr>
-                {{--<th width="5">
-                  <button type="button" id="multiple_delete"
-                          data-url="{{ route('permission.destroy') }}"
-                          class="btn btn-xs btn-danger btn-rounded"
-                          title="Seçili Kayıtları Sil"><i class="fa fa-trash-o"></i>
-                  </button>
-                </th>--}}
                 <th>İzin Adı</th>
                 <th>Düzenlenme Tarihi</th>
-                <th width="5"></th>
-                <th width="5"></th>
+                @can('Permission.detail')
+                  <th width="5"></th>
+                @endcan
+                @can('Permission.update')
+                  <th width="5"></th>
+                @endcan
               </tr>
               </thead>
               <tbody>
               @foreach($data as $row)
                 <tr>
-                  {{--<td>
-                    <div class="checkbox">
-                      <label class="checkbox-custom" id="{{ $row['id'] }}">
-                        <input type="checkbox" name="checked[]"
-                               value="{{ $row['id'] }}"
-                               data-val="delete">
-                        <i class="fa fa-fw fa-square-o"></i>
-                      </label>
-                    </div>
-                  </td>--}}
                   <td>{{ $row->name }}</td>
                   <td>{{ \Carbon\Carbon::parse($row->updated_at)->format('d/m/Y H:i:s') }}</td>
-                  <td>
-                    <a class="btn btn-sm btn-icon btn-warning btn-rounded"
-                       href="{{ route('permission.show', $row['id']) }}">
-                      <i class="fa fa-search"></i>
-                    </a>
-                  </td>
-                  <td>
-                    <a class="btn btn-sm btn-icon btn-info btn-rounded"
-                       href="{{ route('permission.edit', $row['id']) }}">
-                      <i class="fa fa-edit"></i>
-                    </a>
-                  </td>
+                  @can('Permission.detail')
+                    <td>
+                      <a class="btn btn-sm btn-icon btn-warning btn-rounded"
+                         href="{{ route('permission.show', $row['id']) }}">
+                        <i class="fa fa-search"></i>
+                      </a>
+                    </td>
+                  @endcan
+                  @can('Permission.update')
+                    <td>
+                      <a class="btn btn-sm btn-icon btn-info btn-rounded"
+                         href="{{ route('permission.edit', $row['id']) }}">
+                        <i class="fa fa-edit"></i>
+                      </a>
+                    </td>
+                  @endcan
                 </tr>
               @endforeach
               </tbody>

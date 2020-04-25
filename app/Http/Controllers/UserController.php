@@ -7,6 +7,7 @@ use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use App\Traits\ControllerTraits\HelperMethods;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
@@ -25,15 +26,16 @@ class UserController extends Controller
   public function index()
   {
     $data = null;
+    $my_id = Crypt::decryptString(config('my-config.super_admin_id'));
     if ($search = trim(\request()->input('ara'))) {
       $conditions = ['id', 'name', 'surname', 'email', 'gender'];
-      $data = $this->model->where('id', '!=', config('my-config.super_admin_id'))
+      $data = $this->model->where('id', '!=', $my_id)
         ->where(function ($query) use ($conditions, $search) {
-        foreach ($conditions as $column)
-          $query->orWhere($column, 'like', '%' . $search . '%');
-      })->orderByDESC('id')->paginate(7);
+          foreach ($conditions as $column)
+            $query->orWhere($column, 'like', '%' . $search . '%');
+        })->orderByDESC('id')->paginate(7);
     } else {
-      $data = $this->model->where('id', '!=', config('my-config.super_admin_id'))->orderByDESC('id')->paginate(7);
+      $data = $this->model->where('id', '!=', $my_id)->orderByDESC('id')->paginate(7);
     }
     return view('admin.user.index', compact('data'));
   }
@@ -120,7 +122,7 @@ class UserController extends Controller
     $this->model->confirm = $request->confirm ?? 1;
     if ($request->password)
       $this->model->password = Hash::make($request->password);
-    $this->insertToSingleMedia($request, 'profile');
+    $this->insertToSingleMedia($request, 'profile', $this->model);
     $this->model->saveOrFail();
   }
   

@@ -1,1 +1,128 @@
-{"paginate":"7","slugs":["ad"],"titles":{"index":"Blog","show":"Blog Detay","create":"Blog Ekle","edit":"Blog D\u00fczenle"},"routes":{"index":"blog.index","create":"blog.create","store":"blog.store","show":"blog.show","edit":"blog.edit","update":"blog.update","delete":"blog.destroy"},"searchable":["id","ad"],"fields":{"id":{"type":"hidden","title":"ID","create":false,"update":true,"list":true,"detail":true},"ad":{"type":"text","title":"Ad","attributes":["required"],"rules":["required"],"create":true,"update":true,"list":true,"detail":true},"User":{"type":"multi_select","title":"Kullan\u0131c\u0131lar","rules":[],"list":true,"detail":true,"create":false,"update":false,"relationship":{"model":"App\\Models\\User","type":"belongsToMany","keys":{"foreignKey":"User","otherKey":"Blog","table":"BlogUser"},"pluck":{"display":"name","value":"id"},"fields":["name","surname","email"],"perPage":7},"multiple":true},"resimler":{"type":"multi_image","title":"Resimler","unit":null,"rules":[],"attributes":[],"list":false,"detail":true,"create":false,"update":false,"count":100000000000000000},"kasa":{"type":"number","title":"Kasa","unit":"\u20ba","rules":["numeric"],"attributes":[],"list":true,"detail":true,"create":true,"update":true,"decimal":true},"created_at":{"type":"datetime","title":"Eklenme Tarihi","name":"created_at","rules":["required"],"create":false,"update":false,"list":false,"detail":true},"updated_at":{"type":"datetime","title":"D\u00fczenlenme Tarihi","name":"updated_at","rules":["required"],"create":false,"update":false,"list":false,"detail":true}}}
+{
+  "paginate": "7",
+  "slugs": [
+    "ad"
+  ],
+  "titles": {
+    "index": "Blog",
+    "show": "Blog Detay",
+    "create": "Blog Ekle",
+    "edit": "Blog D\u00fczenle"
+  },
+  "routes": {
+    "index": "blog.index",
+    "create": "blog.create",
+    "store": "blog.store",
+    "show": "blog.show",
+    "edit": "blog.edit",
+    "update": "blog.update",
+    "delete": "blog.destroy"
+  },
+  "searchable": [
+    "id",
+    "ad"
+  ],
+  "fields": {
+    "id": {
+      "type": "hidden",
+      "title": "ID",
+      "create": false,
+      "update": true,
+      "list": true,
+      "detail": true
+    },
+    "ad": {
+      "type": "text",
+      "title": "Ad",
+      "attributes": [
+        "required"
+      ],
+      "rules": [
+        "required"
+      ],
+      "create": true,
+      "update": true,
+      "list": true,
+      "detail": true
+    },
+    "User": {
+      "type": "multi_select",
+      "title": "Kullan\u0131c\u0131lar",
+      "rules": [],
+      "list": true,
+      "detail": true,
+      "create": false,
+      "update": false,
+      "relationship": {
+        "model": "App\\Models\\User",
+        "type": "belongsToMany",
+        "keys": {
+          "foreignKey": "User",
+          "otherKey": "Blog",
+          "table": "BlogUser"
+        },
+        "pluck": {
+          "display": "name",
+          "value": "id"
+        },
+        "fields": [
+          "name",
+          "surname",
+          "email"
+        ],
+        "perPage": 7
+      },
+      "multiple": true
+    },
+    "resimler": {
+      "type": "multi_image",
+      "title": "Resimler",
+      "unit": null,
+      "rules": [],
+      "attributes": [],
+      "list": false,
+      "detail": true,
+      "create": false,
+      "update": false,
+      "count": 100000000000000000
+    },
+    "kasa": {
+      "type": "number",
+      "title": "Kasa",
+      "unit": "\u20ba",
+      "rules": [
+        "numeric"
+      ],
+      "attributes": [],
+      "list": true,
+      "detail": true,
+      "create": true,
+      "update": true,
+      "decimal": true
+    },
+    "created_at": {
+      "type": "datetime",
+      "title": "Eklenme Tarihi",
+      "name": "created_at",
+      "rules": [
+        "required"
+      ],
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": true
+    },
+    "updated_at": {
+      "type": "datetime",
+      "title": "D\u00fczenlenme Tarihi",
+      "name": "updated_at",
+      "rules": [
+        "required"
+      ],
+      "create": false,
+      "update": false,
+      "list": false,
+      "detail": true
+    }
+  }
+}

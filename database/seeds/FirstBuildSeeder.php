@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Crypt;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -9,27 +10,29 @@ class FirstBuildSeeder extends Seeder
   public function run()
   {
     \Illuminate\Support\Facades\Artisan::call('cache:clear');
-    $user = new \App\Models\User();
-    $user->name = 'Burak Ali';
-    $user->surname = 'ILDIR';
-    $user->email = 'TheNobleBrain@gmail.com';
-    $user->password = \Illuminate\Support\Facades\Hash::make('123123123');
-    $user->confirm = 1;
-    $user->saveOrFail();
-  
+    \Illuminate\Support\Facades\Artisan::call('config:cache');
+    
+    $my_user = \App\Models\User::create([
+      'name' => 'Burak Ali',
+      'surname' => 'ILDIR',
+      'email' => 'TheNobleBrain@gmail.com',
+      'password' => \Illuminate\Support\Facades\Hash::make('123123123'),
+      'confirm' => 1,
+      'email_verified_at' => now(),
+    ]);
+    
     // TODO : Config dosyası ayarları
-    config(['my-config.super_admin_id' => $user->id]);
-    config(['my-config.error_logviewer_middleware' => 'web,auth,permission:Application.Settings']);
-    config(['my-config.danger_mail' => 'burakaliildir@gmail.com']);
+    config(['my-config.super_admin_id' => Crypt::encryptString($my_user->id)]);
+    config(['my-config.error_logviewer_middleware' => Crypt::encryptString('verified,auth,permission:Application.Settings')]);
+    config(['my-config.danger_mail' => Crypt::encryptString('burakaliildir@gmail.com')]);
     $text = '<?php return ' . var_export(config('my-config'), true) . ';';
     file_put_contents(config_path('my-config.php'), $text);
     
     \Illuminate\Support\Facades\Artisan::call('config:cache');
-  
+    
     $role = Role::create(['name' => 'super-admin']);
-    \App\Models\User::findOrFail($user->id)->assignRole($role);
-    $user->email_verified_at = now();
-    $user->saveOrFail();
+    \App\Models\User::findOrFail($my_user->id)->assignRole($role);
+    $my_user->saveOrFail();
     
     $permissions = ['index', 'detail', 'create', 'update', 'delete'];
     $modules = ['User', 'Role', 'Permission'];
@@ -43,6 +46,6 @@ class FirstBuildSeeder extends Seeder
         (new Permission)->create(['name' => 'User.imageDelete']);
       }
     }
-    (new Permission)->create(['name' => 'Logs']);
+    (new Permission)->create(['name' => 'Logs.index']);
   }
 }

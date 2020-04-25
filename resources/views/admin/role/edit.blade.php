@@ -20,13 +20,15 @@
               </div>
             </div>
             <div class="col-md-6">
-              <div class="m-t">
-                <a class="btn btn-xs btn-default btn-rounded pull-right"
-                   href="{{ route('role.show', $model->id) }}">
-                  Detay Sayfasına Git
-                  <i class="fa fa-arrow-right"></i>
-                </a>
-              </div>
+              @can('Role.detail')
+                <div class="m-t">
+                  <a class="btn btn-xs btn-default btn-rounded pull-right"
+                     href="{{ route('role.show', $model->id) }}">
+                    Detay Sayfasına Git
+                    <i class="fa fa-arrow-right"></i>
+                  </a>
+                </div>
+              @endcan
             </div>
           </div>
         </header>

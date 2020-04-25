@@ -21,11 +21,10 @@ trait HelperMethods
     }
   }
   
-  private function insertToSingleMedia(Request $request, $name) : void
+  private function insertToSingleMedia(Request $request, $name, $model) : void
   {
     if ($request->hasFile($name))
-      $this->model
-        ->addMedia(\request($name))
+      $model->addMedia(\request($name))
         ->sanitizingFileName(function ($fileName) {
           return str_replace(['#', '/', '\\', ' ', '\'', '!', '&', '|', '(', ')', '<', '>',
             '%', '$', '£', 'ß', 'æ', '{', '}', '[', ']', '?', '=', '*', '+', '½', ',',

@@ -236,6 +236,11 @@
           <i class="fa fa-archive"></i> @lang('Loglar')
         </a>
       </li>
+      <li class="nav-item">
+        <a href="{{ route('home') }}" class="nav-link">
+          <i class="fa fa-arrow-circle-left"></i> Siteye Geri Dön
+        </a>
+      </li>
     </ul>
   </div>
 </nav>

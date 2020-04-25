@@ -16,23 +16,27 @@
           </div>
         </div>
         <div class="col-md-6">
-          <div class="m-t m-r pull-right">
-            <a class="btn btn-xs btn-info btn-rounded "
-               href="{{ route('role.edit', $model['id']) }}">
-              <i class="fa fa-edit"></i>
-              Bu Rolü Düzenle
-            </a>
-            <form action="{{ route('role.destroy') }}" method="post" class="inline">
-              @method('DELETE') @csrf
-              <input type="hidden" name="id" value="{{ $model['id'] }}">
-              <input type="hidden" name="back" value="{{ URL::previous() }}">
-              <button type="submit" class="btn btn-xs btn-danger btn-rounded"
-                      onclick="return confirm('Rolü silmek istediğinize emin misiniz?')">
-                <i class="fa fa-trash"></i>
-                Bu Rolü Sil
-              </button>
-            </form>
-          </div>
+          @can('Role.update')
+            <div class="m-t m-r pull-right">
+              <a class="btn btn-xs btn-info btn-rounded "
+                 href="{{ route('role.edit', $model['id']) }}">
+                <i class="fa fa-edit"></i>
+                Bu Rolü Düzenle
+              </a>
+              @endcan
+              @can('Role.delete')
+                <form action="{{ route('role.destroy') }}" method="post" class="inline">
+                  @method('DELETE') @csrf
+                  <input type="hidden" name="id" value="{{ $model['id'] }}">
+                  <input type="hidden" name="back" value="{{ URL::previous() }}">
+                  <button type="submit" class="btn btn-xs btn-danger btn-rounded"
+                          onclick="return confirm('Rolü silmek istediğinize emin misiniz?')">
+                    <i class="fa fa-trash"></i>
+                    Bu Rolü Sil
+                  </button>
+                </form>
+              @endcan
+            </div>
         </div>
       </div>
     </header>
@@ -61,84 +65,92 @@
           <section class="vbox">
             <header class="header bg-light bg-gradient">
               <ul class="nav nav-tabs nav-white">
-
-                <li id="userLeaf">
-                  <a href="#user" id="userA" data-toggle="tab"
-                     onclick="setLeaf('user')">
-                    Kullanıcılar
-                  </a>
-                </li>
-
-                <li id="permissionLeaf">
-                  <a href="#permission" id="permissionA" data-toggle="tab"
-                     onclick="setLeaf('permission')">
-                    İzinler
-                  </a>
-                </li>
+                @can('User.index')
+                  <li id="userLeaf">
+                    <a href="#user" id="userA" data-toggle="tab"
+                       onclick="setLeaf('user')">
+                      Kullanıcılar
+                    </a>
+                  </li>
+                @endcan
+                @can('Permission.index')
+                  <li id="permissionLeaf">
+                    <a href="#permission" id="permissionA" data-toggle="tab"
+                       onclick="setLeaf('permission')">
+                      İzinler
+                    </a>
+                  </li>
+                @endcan
               </ul>
             </header>
             <section class="scrollable">
               <div class="tab-content">
-                <div class="tab-pane" id="userPage">
-                  <section class="scrollable wrapper-md w-f">
-                    @if($users->count() > 0)
-                      <section class="panel panel-default">
-                        <div class="table-responsive">
-                          <table class="table table-striped m-b-none">
-                            <thead>
-                            <tr>
-                              <th>Ad</th>
-                              <th>Soyad</th>
-                              <th>E-Posta</th>
-                              <th>Durum</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($users as $row)
+                @can('User.index')
+                  <div class="tab-pane" id="userPage">
+                    <section class="scrollable wrapper-md w-f">
+                      @if($users->count() > 0)
+                        <section class="panel panel-default">
+                          <div class="table-responsive">
+                            <table class="table table-striped m-b-none">
+                              <thead>
                               <tr>
-                                <td>{!! $row->name !!}</td>
-                                <td>{!! $row->surname !!}</td>
-                                <td>{!! $row->email !!}</td>
-                                <td>{!! $row->confirm ? 'Aktif' : 'Pasif' !!}</td>
+                                <th>ID</th>
+                                <th>Ad</th>
+                                <th>Soyad</th>
+                                <th>E-Posta</th>
+                                <th>Durum</th>
                               </tr>
-                            @endforeach
-                            </tbody>
-                          </table>
-                        </div>
-                      </section>
-                      {{ $users->appends(['kullanicilar' => $users->currentPage()])->links() }}
-                    @else
-                      <small>Kullanıcı bulunmamaktadır.</small>
-                    @endif
-                  </section>
-                </div>
-                <div class="tab-pane" id="permissionPage">
-                  <section class="scrollable wrapper-md w-f">
-                    @if($permissions->count() > 0)
-                      <section class="panel panel-default">
-                        <div class="table-responsive">
-                          <table class="table table-striped m-b-none">
-                            <thead>
-                            <tr>
-                              <th>İzin Adı</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($permissions as $row)
+                              </thead>
+                              <tbody>
+                              @foreach($users as $row)
+                                <tr>
+                                  <td>{{ $row->id }}</td>
+                                  <td>{!! $row->name !!}</td>
+                                  <td>{!! $row->surname !!}</td>
+                                  <td>{!! $row->email !!}</td>
+                                  <td>{{ $row->confirm ? 'Aktif' : 'Pasif' }}</td>
+                                </tr>
+                              @endforeach
+                              </tbody>
+                            </table>
+                          </div>
+                        </section>
+                        {{ $users->appends(['kullanicilar' => $users->currentPage()])->links() }}
+                      @else
+                        <small>Kullanıcı bulunmamaktadır.</small>
+                      @endif
+                    </section>
+                  </div>
+                @endcan
+                @can('Permission.index')
+                  <div class="tab-pane" id="permissionPage">
+                    <section class="scrollable wrapper-md w-f">
+                      @if($permissions->count() > 0)
+                        <section class="panel panel-default">
+                          <div class="table-responsive">
+                            <table class="table table-striped m-b-none">
+                              <thead>
                               <tr>
-                                <td>{!! $row->name !!}</td>
+                                <th>İzin Adı</th>
                               </tr>
-                            @endforeach
-                            </tbody>
-                          </table>
-                        </div>
-                      </section>
-                      {{ $permissions->appends(['izinler' => $permissions->currentPage()])->links() }}
-                    @else
-                      <small>İzin bulunmamaktadır.</small>
-                    @endif
-                  </section>
-                </div>
+                              </thead>
+                              <tbody>
+                              @foreach($permissions as $row)
+                                <tr>
+                                  <td>{!! $row->name !!}</td>
+                                </tr>
+                              @endforeach
+                              </tbody>
+                            </table>
+                          </div>
+                        </section>
+                        {{ $permissions->appends(['izinler' => $permissions->currentPage()])->links() }}
+                      @else
+                        <small>İzin bulunmamaktadır.</small>
+                      @endif
+                    </section>
+                  </div>
+                @endcan
               </div>
             </section>
           </section>

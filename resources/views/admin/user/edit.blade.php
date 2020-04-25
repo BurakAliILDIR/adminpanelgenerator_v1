@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 @section('title', 'Kullanıcı Düzenle')
 @section('css')
-  <link href="/plugins/select2/css/select2.min.css" rel="stylesheet" />
+  <link href="/plugins/select2/css/select2.min.css" rel="stylesheet"/>
   <!-- datepicker -->
   <link href="/admin-custom-template/datepicker/bootstrap-datepicker.css" rel="stylesheet">
   <!-- datetimepicker -->
@@ -26,13 +26,15 @@
               </div>
             </div>
             <div class="col-md-6">
-              <div class="m-t">
-                <a class="btn btn-xs btn-default btn-rounded pull-right"
-                   href="{{ route('user.show', $model->id) }}">
-                  Detay Sayfasına Git
-                  <i class="fa fa-arrow-right"></i>
-                </a>
-              </div>
+              @can('User.detail')
+                <div class="m-t">
+                  <a class="btn btn-xs btn-default btn-rounded pull-right"
+                     href="{{ route('user.show', $model->id) }}">
+                    Detay Sayfasına Git
+                    <i class="fa fa-arrow-right"></i>
+                  </a>
+                </div>
+              @endcan
             </div>
           </div>
         </header>
@@ -112,7 +114,7 @@
   <!-- datepicker -->
   <script type="text/javascript" src="/admin-custom-template/datepicker/bootstrap-datepicker.js"></script>
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('.js-example-basic-single').select2();
     });
   </script>

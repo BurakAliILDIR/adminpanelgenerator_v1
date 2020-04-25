@@ -1,4 +1,4 @@
-<aside class="bg-light aside-md hidden-print hidden-xs" id="nav">
+<aside class="bg-dark aside-md hidden-print hidden-xs" id="nav">
   <section class="vbox">
     {{--<header class="header bg-primary lter text-center">
       <div class="btn-group">
@@ -24,16 +24,16 @@
         <nav class="nav-primary hidden-xs">
           <ul class="nav">
             <?php $auth_user = auth()->user();?>
-            <li data-toggle="menu" id="menu-Home">
-              <a href="{{ route('home') }}">
-                <i class="fa fa-home }} icon"><b class="bg-primary"></b></i>
+            <li class="{{ Route::is("home") ? 'active' : '' }}">
+              <a class="{{ Route::is("home") ? 'active' : '' }}" href="{{ route('home') }}">
+                <i class="fa fa-home icon"><b class="bg-primary"></b></i>
                 <span>Anasayfa</span>
               </a>
             </li>
             @can('Application.Settings')
-              <li class="" data-toggle="menu" id="menu-ApplicationSettings">
-                <a class="">
-                  <i class="fa fa-steam icon">
+              <li class="{{ Route::is('modules.index') || Route::is('log-viewer::logs.filter') ? 'active' : '' }}">
+                <a class="{{ Route::is('modules.index') || Route::is('log-viewer::logs.filter') ? 'active' : '' }}">
+                  <i class="fa fa-code icon">
                     <b class="bg-warning"></b>
                   </i>
                   <span class="pull-right">
@@ -50,7 +50,7 @@
                     </a>
                   </li>
                   <li>
-                    <a href="{{ \Illuminate\Support\Facades\URL::to('loglar') }}">
+                    <a href="{{ \Illuminate\Support\Facades\URL::to('error-logs') }}">
                       <i class="fa fa-angle-right"></i>
                       <span>Hata Logları</span>
                     </a>
@@ -58,27 +58,28 @@
                 </ul>
               </li>
             @endif
-            @if($auth_user->can('Role.index') || $auth_user->can('Permission.index') || $auth_user->can('User.index'))
-              <li class="" data-toggle="menu" id="menu-User">
-                <a class="">
-                  <i class="fa fa-user icon">
-                    <b class="bg-info"></b>
+            @can('User.index')
+              <li class="{{ Route::is('user.index') ? 'active' : '' }}">
+                <a class="{{ Route::is('user.index') ? 'active' : '' }}" href="{{ route('user.index') }}">
+                  <i class="fa fa-group icon"><b
+                      class="bg-info"></b></i>
+                  <span>Kullanıcılar</span>
+                </a>
+              </li>
+            @endcan
+            @if($auth_user->can('Role.index') || $auth_user->can('Permission.index'))
+              <li class="{{ Route::is('role.index') || Route::is('permission.index') ? 'active' : '' }}">
+                <a class="{{ Route::is('role.index') || Route::is('permission.index') ? 'active' : '' }}">
+                  <i class="fa fa-filter icon">
+                    <b class="bg-danger"></b>
                   </i>
                   <span class="pull-right">
                           <i class="fa fa-angle-down text"></i>
                           <i class="fa fa-angle-up text-active"></i>
                         </span>
-                  <span>Kullanıcı İşlemleri</span>
+                  <span>Yetki İşlemleri</span>
                 </a>
                 <ul class="nav lt">
-                  @can('User.index')
-                    <li>
-                      <a href="{{ route('user.index') }}">
-                        <i class="fa fa-angle-right"></i>
-                        <span>Kullanıcılar</span>
-                      </a>
-                    </li>
-                  @endcan
                   @can('Role.index')
                     <li>
                       <a href="{{ route('role.index') }}">
@@ -95,19 +96,19 @@
                       </a>
                     </li>
                   @endcan
-                  @can('Logs')
-                    <li>
-                      <a href="{{ route('Logs') }}">
-                        <i class="fa fa-angle-right"></i>
-                        <span>Etkinlikler</span>
-                      </a>
-                    </li>
-                  @endcan
                 </ul>
               </li>
             @endif
+            @can('Logs.index')
+              <li class="{{ Route::is('Logs.index') ? 'active' : '' }}">
+                <a class="{{ Route::is('Logs.index') ? 'active' : '' }}" href="{{ route('Logs.index') }}">
+                  <i class="fa fa-yelp icon"><b class="bg-info"></b></i>
+                  <span>Etkinlikler</span>
+                </a>
+              </li>
+            @endcan
             @php
-              $colors = ['', 'primary', 'danger', 'warning', 'info'];
+              $colors = ['', 'danger', 'warning', 'info', 'primary'];
               $menus_path = config('cache.prefix') . ':menus';
               if ( !($menus = unserialize(\Illuminate\Support\Facades\Redis::get($menus_path)))) {
                 $menus = json_decode(file_get_contents(storage_path('app\public\application\settings\menu.json')), true);
@@ -121,8 +122,9 @@
                   $menu_order %= 4;
                   $menu_order++;
                 @endphp
-                <li data-toggle="menu" id="menu-{{ $key }}">
-                  <a href="{{ route(strtolower($key).'.index') }}">
+                <li class="{{ Route::is(strtolower($key).".index") ? 'active' : '' }}">
+                  <a class="{{ Route::is(strtolower($key).".index") ? 'active' : '' }}"
+                     href="{{ route(strtolower($key).'.index') }}">
                     <i class="fa fa-{{ $val['icon'] ?? 'angle-right' }} icon"><b
                         class="bg-{{ $colors[$menu_order] }}"></b></i>
                     <span>{!! $val['title'] !!}</span>
@@ -130,292 +132,12 @@
                 </li>
               @endcan
             @endforeach
-            {{--<li class="active">
-                <a href="#layout" class="active">
-                    <i class="fa fa-columns icon">
-                        <b class="bg-warning"></b>
-                    </i>
-                    <span class="pull-right">
-              <i class="fa fa-angle-down text"></i>
-              <i class="fa fa-angle-up text-active"></i>
-            </span>
-                    <span>Layouts</span>
-                </a>
-                <ul class="nav lt">
-                    <li>
-                        <a href="layout-c.html">
-                            <i class="fa fa-angle-right"></i>
-                            <span>Color option</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="layout-r.html">
-                            <i class="fa fa-angle-right"></i>
-                            <span>Right nav</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="layout-h.html">
-                            <i class="fa fa-angle-right"></i>
-                            <span>Hbox Layout</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="layout-boxed.html">
-                            <i class="fa fa-angle-right"></i>
-                            <span>Boxed Layout</span>
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a href="layout-fluid.html" class="active">
-                            <i class="fa fa-angle-right"></i>
-                            <span>Fluid Layout</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>--}}
-            {{--  Burası sonraki menüler --}}
-            {{--   <li>
-                 <a href="#uikit">
-                   <i class="fa fa-flask icon">
-                     <b class="bg-success"></b>
-                   </i>
-                   <span class="pull-right">
-                             <i class="fa fa-angle-down text"></i>
-                             <i class="fa fa-angle-up text-active"></i>
-                           </span>
-                   <span>UI kit</span>
-                 </a>
-                 <ul class="nav lt">
-                   <li>
-                     <a href="buttons.html">
-                       <i class="fa fa-angle-right"></i>
-                       <span>Buttons</span>
-                     </a>
-                   </li>
-                   <li>
-                     <a href="icons.html">
-                       <b class="badge bg-info pull-right">369</b>
-                       <i class="fa fa-angle-right"></i>
-                       <span>Icons</span>
-                     </a>
-                   </li>
-                   <li>
-                     <a href="grid.html">
-                       <i class="fa fa-angle-right"></i>
-                       <span>Grid</span>
-                     </a>
-                   </li>
-                   <li>
-                     <a href="widgets.html">
-                       <b class="badge  pull-right">8</b>
-                       <i class="fa fa-angle-right"></i>
-                       <span>Widgets</span>
-                     </a>
-                   </li>
-                   <li>
-                     <a href="components.html">
-                       <i class="fa fa-angle-right"></i>
-                       <span>Components</span>
-                     </a>
-                   </li>
-                   <li>
-                     <a href="list.html">
-                       <i class="fa fa-angle-right"></i>
-                       <span>List group</span>
-                     </a>
-                   </li>
-                   <li>
-                     <a href="#table">
-                       <i class="fa fa-angle-down text"></i>
-                       <i class="fa fa-angle-up text-active"></i>
-                       <span>Table</span>
-                     </a>
-                     <ul class="nav bg">
-                       <li>
-                         <a href="table-static.html">
-                           <i class="fa fa-angle-right"></i>
-                           <span>Table static</span>
-                         </a>
-                       </li>
-                       <li>
-                         <a href="table-datatable.html">
-                           <i class="fa fa-angle-right"></i>
-                           <span>Datatable</span>
-                         </a>
-                       </li>
-                       <li>
-                         <a href="table-datagrid.html">
-                           <i class="fa fa-angle-right"></i>
-                           <span>Datagrid</span>
-                         </a>
-                       </li>
-                     </ul>
-                   </li>
-                   <li>
-                     <a href="#form">
-                       <i class="fa fa-angle-down text"></i>
-                       <i class="fa fa-angle-up text-active"></i>
-                       <span>Form</span>
-                     </a>
-                     <ul class="nav bg">
-                       <li>
-                         <a href="form-elements.html">
-                           <i class="fa fa-angle-right"></i>
-                           <span>Form elements</span>
-                         </a>
-                       </li>
-                       <li>
-                         <a href="form-validation.html">
-                           <i class="fa fa-angle-right"></i>
-                           <span>Form validation</span>
-                         </a>
-                       </li>
-                       <li>
-                         <a href="form-wizard.html">
-                           <i class="fa fa-angle-right"></i>
-                           <span>Form wizard</span>
-                         </a>
-                       </li>
-                     </ul>
-                   </li>
-                   <li>
-                     <a href="chart.html">
-                       <i class="fa fa-angle-right"></i>
-                       <span>Chart</span>
-                     </a>
-                   </li>
-                   <li>
-                     <a href="fullcalendar.html">
-                       <i class="fa fa-angle-right"></i>
-                       <span>Fullcalendar</span>
-                     </a>
-                   </li>
-                   <li>
-                     <a href="portlet.html">
-                       <i class="fa fa-angle-right"></i>
-                       <span>Portlet</span>
-                     </a>
-                   </li>
-                   <li>
-                     <a href="timeline.html">
-                       <i class="fa fa-angle-right"></i>
-                       <span>Timeline</span>
-                     </a>
-                   </li>
-                 </ul>
-               </li>
-               <li>
-                 <a href="#pages">
-                   <i class="fa fa-file-text icon">
-                     <b class="bg-primary"></b>
-                   </i>
-                   <span class="pull-right">
-                             <i class="fa fa-angle-down text"></i>
-                             <i class="fa fa-angle-up text-active"></i>
-                           </span>
-                   <span>Pages</span>
-                 </a>
-                 <ul class="nav lt">
-                   <li>
-                     <a href="gallery.html">
-                       <i class="fa fa-angle-right"></i>
-                       <span>Gallery</span>
-                     </a>
-                   </li>
-                   <li>
-                     <a href="profile.html">
-                       <i class="fa fa-angle-right"></i>
-                       <span>Profile</span>
-                     </a>
-                   </li>
-                   <li>
-                     <a href="invoice.html">
-                       <i class="fa fa-angle-right"></i>
-                       <span>Invoice</span>
-                     </a>
-                   </li>
-                   <li>
-                     <a href="intro.html">
-                       <i class="fa fa-angle-right"></i>
-                       <span>Intro</span>
-                     </a>
-                   </li>
-                   <li>
-                     <a href="master.html">
-                       <i class="fa fa-angle-right"></i>
-                       <span>Master</span>
-                     </a>
-                   </li>
-                   <li>
-                     <a href="gmap.html">
-                       <i class="fa fa-angle-right"></i>
-                       <span>Google Map</span>
-                     </a>
-                   </li>
-                   <li>
-                     <a href="jvectormap.html">
-                       <i class="fa fa-angle-right"></i>
-                       <span>Vector Map</span>
-                     </a>
-                   </li>
-                   <li>
-                     <a href="signin.html">
-                       <i class="fa fa-angle-right"></i>
-                       <span>Signin</span>
-                     </a>
-                   </li>
-                   <li>
-                     <a href="signup.html">
-                       <i class="fa fa-angle-right"></i>
-                       <span>Signup</span>
-                     </a>
-                   </li>
-                   <li>
-                     <a href="404.html">
-                       <i class="fa fa-angle-right"></i>
-                       <span>404</span>
-                     </a>
-                   </li>
-                 </ul>
-               </li>
-               <li>
-                 <a href="mail.html">
-                   <b class="badge bg-danger pull-right">3</b>
-                   <i class="fa fa-envelope-o icon">
-                     <b class="bg-primary dker"></b>
-                   </i>
-                   <span>Message</span>
-                 </a>
-               </li>
-               <li>
-                 <a href="notebook.html">
-                   <i class="fa fa-pencil icon">
-                     <b class="bg-info"></b>
-                   </i>
-                   <span>Notes</span>
-                 </a>
-               </li>--}}
           </ul>
         </nav>
       </div>
     </section>
-    <script>
-      const prefix = '{{ config('cache.prefix') }}_active_menu';
-      $(function () {
-        const getMenu = localStorage.getItem(prefix)
-        let active = getMenu ? getMenu : 'menu-Home';
-        $('#' + active).addClass('active').children('a').addClass('active');
-      });
-
-      $('[data-toggle="menu"]').click(function () {
-        localStorage.setItem(prefix, this.id);
-      });
-
-
-    </script>
-    <footer class="footer lt hidden-xs b-t b-light">
-      {{--
+    {{--<footer class="footer lt hidden-xs b-t b-light">
+      --}}{{--
       <div id="chat" class="dropup">
         <section class="dropdown-menu on aside-md m-l-n">
           <section class="panel bg-white">
@@ -440,24 +162,38 @@
             </div>
           </section>
         </section>
-      </div>--}}
-      <a href="#nav" id="menu-hide" data-toggle="class:nav-xs" class="pull-right btn btn-sm btn-black btn-icon">
+      </div>--}}{{--
+   --}}{{--   <a href="#nav" id="menu-hide" data-toggle="class:nav-xs" class="pull-right btn btn-sm btn-black btn-icon">
         <i class="fa fa-angle-left text"></i>
         <i class="fa fa-angle-right text-active"></i>
-      </a>
-      <script>
-        $('#menu-hide').click(function () {
-          
-  alert(localStorage.getItem(prefix + 'menu-hide'));        
-//          localStorage.setItem(prefix + 'menu-hide', 'hide');
+      </a>--}}{{--
+     --}}{{-- <script>
+        const prefix = '{{ config('cache.prefix') }}menu-hide';
+        $(function () {
+          const result = localStorage.getItem(prefix);
+alert(result)
+          if (result == 'hide') {
+            $('#nav').addClass('nav-xs')
+          }
         });
-      </script>
-      {{--<div class="btn-group hidden-nav-xs">
+
+        alert(localStorage.getItem())
+        // menüyü gizlemek için kullanılan kod
+        $('#menu-hide').click(function () {
+          const val = localStorage.getItem(prefix);
+          alert(val)
+          if (!val) {
+            localStorage.setItem(prefix, 'hide');
+          } else
+            localStorage.removeItem(prefix);
+        });
+      </script>--}}{{--
+      --}}{{--<div class="btn-group hidden-nav-xs">
         <button type="button" title="Chats" class="btn btn-icon btn-sm btn-black"
                 data-toggle="dropdown" data-target="#chat"><i class="fa fa-comment-o"></i></button>
         <button type="button" title="Contacts" class="btn btn-icon btn-sm btn-black"
                 data-toggle="dropdown" data-target="#invite"><i class="fa fa-facebook"></i></button>
-      </div>--}}
-    </footer>
+      </div>--}}{{--
+    </footer>--}}
   </section>
 </aside>

@@ -16,7 +16,7 @@
               <div class="input-group">
                 @if($ara)
                   <span class="input-group-btn">
-                <a href="{{ route('Logs') }}" class="btn btn-sm btn-default btn-rounded pull-left"
+                <a href="{{ route('Logs.index') }}" class="btn btn-sm btn-default btn-rounded pull-left"
                    type="button">
                   <i class="fa fa-list"></i>
                   Tüm Etkinlikleri Listele
@@ -62,17 +62,17 @@
                   <td>{{ $row->description }}</td>
                   <td>
                     @if(\Illuminate\Support\Facades\Auth::user()->can("User.index") && $row->causer_id)
-                      <a href="{{ route("user.show", $row->causer_id) }}"><strong>{!! $row->causer_id !!}</strong></a>
+                      <a href="{{ route("user.show", $row->causer_id) }}"><strong>{{ $row->causer_id }}</strong></a>
                     @else
-                      {!! $row->causer_id ?? "System" !!}
+                      {{ $row->causer_id }}
                     @endif
                   </td>
                   <td>
                     @if(\Illuminate\Support\Facades\Auth::user()->can("$log_model_name.show") && $row->description !== 'deleted')
                       <a
-                        href="{{ route(strtolower($log_model_name).".show", $row->subject_id) }}"><strong>{!! $log_model_name !!}</strong></a>
+                        href="{{ route(strtolower($log_model_name).".show", $row->subject_id) }}"><strong>{{ __($log_model_name) }}</strong></a>
                     @else
-                      {{ $log_model_name }}
+                      {{ __($log_model_name) }}
                     @endif
                   </td>
                   <td>@foreach($row->properties['old'] ?? [] as $key => $val)

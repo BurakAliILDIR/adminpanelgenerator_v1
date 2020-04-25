@@ -3,25 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Profile\UpdateProfileRequest;
-use App\Mail\DangerMail;
-use App\Models\User;
 use App\Traits\ControllerTraits\HelperMethods;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\Models\Media;
 
 class ProfileController extends Controller
 {
   use HelperMethods;
-  
+
   public function index()
   {
     $model = Auth::user();
     $fields = $model->getSettings('fields');
     $roles = $model->getRoleNames();
-  
+    
     return view('admin.profile.index', compact('model', 'fields', 'roles'));
   }
   
@@ -40,7 +37,7 @@ class ProfileController extends Controller
     $model->phone = $request->phone;
     $model->gender = $request->gender;
     $model->date_of_birth = \Carbon\Carbon::parse($request->date_of_birth)->format('Y-m-d');
-    $this->insertToSingleMedia($request, 'profile');
+    $this->insertToSingleMedia($request, 'profile', $model);
     $model->saveOrFail();
     
     session()->flash('info', 'Profil başarıyla güncellendi.');

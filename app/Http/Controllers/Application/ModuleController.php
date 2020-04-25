@@ -11,8 +11,6 @@ use Nwidart\Modules\Facades\Module;
 
 class ModuleController extends Controller
 {
-  use DangerStatusTrait;
-  
   public function __construct()
   {
     Artisan::call('cache:clear');
@@ -20,8 +18,6 @@ class ModuleController extends Controller
   
   public function index()
   {
-    $this->dangerStatusMailSend('ModuleController-index');
-    
     $data = Module::all();
     return view('admin.application.module.index', compact('data'));
   }
@@ -33,8 +29,6 @@ class ModuleController extends Controller
   
   public function store(Request $request)
   {
-    $this->dangerStatusMailSend('ModuleController-store', "$request->name modülü eklendi.");
-    
     $name = Str::studly($request->name);
     Artisan::call("module:create $name");
     $result = Artisan::output();
@@ -49,8 +43,6 @@ class ModuleController extends Controller
   
   public function show($name)
   {
-    $this->dangerStatusMailSend('ModuleController-show (Alanlar listesi)', $name);
-    
     $module = Module::findOrFail($name);
     $path = storage_path("app\modules\sources\\$name.json");
     $fields = json_decode(file_get_contents($path), true)['fields'];
@@ -112,7 +104,7 @@ class ModuleController extends Controller
       Artisan::call("module:migrate-refresh $name");
       session()->flash('info', "$name modülü sıfırlandı.");
     } else {
-      Artisan::call("build");
+      Artisan::call("migrate:refresh --seed");
       session()->flash('info', "Sistem sıfırlandı.");
     }
     return redirect()->back();

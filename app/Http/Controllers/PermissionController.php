@@ -7,7 +7,6 @@ use App\Http\Requests\Permission\UpdatePermissionRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -39,7 +38,7 @@ class PermissionController extends Controller
   {
     $model = $this->model;
     $roles = Role::pluck('name', 'id');
-
+    
     return view('admin.permission.create', compact('model', 'roles'));
   }
   
@@ -68,17 +67,13 @@ class PermissionController extends Controller
   public function edit($id)
   {
     $model = $this->model->findOrFail($id);
-    $roles = Role::pluck('name', 'id');
-    if (($key = array_search('super-admin', $roles->toArray())) !== false) {
-      unset($roles[$key]);
-    }
+    $roles = array_diff(Role::pluck('name', 'id')->toArray(), ['super-admin']);
     return view('admin.permission.edit', compact('model', 'roles'));
   }
   
   public function update(UpdatePermissionRequest $request, $id)
   {
     $this->model = $this->model->findOrFail($id);
-    $this->model->name = $request->name;
     $this->model->saveOrFail();
     $this->model->syncRoles($request->roles);
     foreach (Role::all() as $role) {

@@ -11,21 +11,17 @@ class DangerMail extends Mailable
 {
   use Queueable, SerializesModels;
   
-  private $page;
-  private $request;
+  private $info;
   
-  public function __construct(string $page, $request)
+  public function __construct(string $info)
   {
-    $this->page = $page;
-    $this->request = $request;
+    $this->info = $info;
   }
   
   public function build()
   {
     $now = Carbon::now()->format('d/m/Y H:i.s');
-
-      $req = $this->request;
     
-    return $this->html("<h1>$this->page kullanıldı.</h1><br><br><h1>Zaman : $now</h1><br><br>$req");
+    return $this->html("$this->info <br><br> ZAMAN: $now");
   }
 }

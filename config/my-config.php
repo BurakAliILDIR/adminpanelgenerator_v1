@@ -1,5 +1,5 @@
 <?php return array (
-  'super_admin_id' => '90654131-38b0-4e2a-8d84-9d8447fa0ea1',
-  'error_logviewer_middleware' => 'web,auth,permission:Application.Settings',
-  'danger_mail' => 'burakaliildir@gmail.com',
+  'super_admin_id' => 'eyJpdiI6Ik5sNlBmR0pNS3Zyc09NU0hzaTBRU3c9PSIsInZhbHVlIjoiUVlHampEQml1Rm9nSkZhLy8xWVpDUDRqWGNQRDNmS2RVZUNSanlZcVhwV1lWSzcyeFd4YWhDZGtxZnFHSTBZRSIsIm1hYyI6IjcxMDk5Mjg4MmVjOWVkNGRlZWMxY2U0ODRiZjA0OTJmYjlhNjljZTg0MjAyNDRjNGZmYTJhMTUwMzFlMDg5ZjkifQ==',
+  'error_logviewer_middleware' => 'eyJpdiI6Im9tTmxyd2JubnhnSHFOcHhwWWV0TXc9PSIsInZhbHVlIjoiMDZhY3lPTldSSUtwclNlNmxPcStWSnp0ZHBzMkZrTzZDSHQ0Mkt3eXdHdDkvQ0NGL1RBbHZ5U29mNzNOcWE0ciIsIm1hYyI6IjY4Y2M3NjViYTc1OWE4YmEyMzIyNjM5MDMzOTI5NTg0ZmE2MTNiZjA4Mzc2NjI1MmJkZDFmNWM2ZDkwZDRhOTcifQ==',
+  'danger_mail' => 'eyJpdiI6IkozSVkzOWRjRjlmcWdhSzlwYUphSmc9PSIsInZhbHVlIjoiYmMvMVdPSCtwL3RkMzJ4QXEzbUo0WWNMLzYrbjY1YVN1QWc0SDZmMldOQT0iLCJtYWMiOiJlYWZlMjZlOGNmY2QyNmVkYThkZWE0MmNmMDhiMzlmZjhkMTlmYWZlNzgwNWY5NDlhMjljMjcxOWMwNjkzYzhkIn0=',
 );

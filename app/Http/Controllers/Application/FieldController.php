@@ -12,8 +12,6 @@ use Nwidart\Modules\Facades\Module;
 
 class FieldController extends Controller
 {
-  use DangerStatusTrait;
-  
   public function __construct()
   {
     Artisan::call('cache:clear');
@@ -47,8 +45,6 @@ class FieldController extends Controller
   
   public function store(Request $request, $module_name, $related = false)
   {
-    $this->dangerStatusMailSend('FieldController-store', $module_name . ' - ' . $related ? 'ilişkili alan' : 'ilişkisiz alan');
-    
     if ($related) {
       $relationship = $request['relationship'];
       $partner = $request['partner'];
@@ -325,13 +321,11 @@ class FieldController extends Controller
   
   private function getAttributes() : array
   {
-    $attributes = ['required' => 'required', 'autofocus' => 'autofocus', 'disabled' => 'disabled'];
-    return $attributes;
+    return ['required' => 'required', 'autofocus' => 'autofocus', 'disabled' => 'disabled'];
   }
   
   private function getPages() : array
   {
-    $pages = ['list', 'detail', 'create', 'update'];
-    return $pages;
+    return  ['list', 'detail', 'create', 'update'];
   }
 }
