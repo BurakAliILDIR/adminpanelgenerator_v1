@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\DefaultControllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Profile\UpdateProfileRequest;
 use App\Traits\ControllerTraits\HelperMethods;
 use Illuminate\Http\Request;

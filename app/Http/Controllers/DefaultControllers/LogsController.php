@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\DefaultControllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Crypt;
 use Spatie\Activitylog\Models\Activity;
 

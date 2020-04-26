@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\DefaultControllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Permission\CreatePermissionRequest;
 use App\Http\Requests\Permission\UpdatePermissionRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controller;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 

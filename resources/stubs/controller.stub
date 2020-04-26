@@ -103,8 +103,11 @@ class $CLASS$ extends Controller
                                                                                                                             
     $this->model->saveOrFail();                                                                                             
                                                                                                                             
-    $this->many_to_many_sync($request, $fields['showFields'], $operation_type);                                             
-    session()->flash('success', 'Kayıt başarıyla eklendi.');                                                                
+    $this->many_to_many_sync($request, $fields['showFields'], $operation_type);
+    
+    $detail_route = route("$STUDLY_NAME$.show", $this->model->id);
+    session()->flash('success', 'Kayıt başarıyla eklendi. <a href="' . $detail_route . '"><strong>Kayıt detayı için tıklayınız.</strong></a>');
+                                            
     return redirect()->back();                                                                                              
   }
 

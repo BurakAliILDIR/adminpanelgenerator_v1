@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\DefaultControllers;
 
 use App\Charts\Echarts;
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Redis;
 
@@ -15,7 +16,7 @@ class HomeController extends Controller
     return view('admin.home.index', compact('userCountChart'));
   }
   
-  // yenş kullanıcı grafiği
+  // aylara göre yeni kullanıcı grafiği
   private function userCountChart()
   {
     $keys_path = config('cache.prefix') . ':home_new_user_count_keys';

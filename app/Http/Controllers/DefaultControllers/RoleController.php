@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\DefaultControllers;
 
 use App\Http\Requests\Role\CreateRoleRequest;
 use App\Http\Requests\Role\UpdateRoleRequest;

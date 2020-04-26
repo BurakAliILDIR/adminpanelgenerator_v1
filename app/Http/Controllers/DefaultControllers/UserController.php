@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\DefaultControllers;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
@@ -55,7 +56,8 @@ class UserController extends Controller
     $this->model->assignRole($request->roles);
     $this->model->syncPermissions($this->model->getPermissionsViaRoles());
     
-    session()->flash('success', 'Kayıt başarıyla eklendi.');
+    $detail_route = route("user.show", $this->model->id);
+    session()->flash('success', 'Kullanıcı başarıyla eklendi. <a href="' . $detail_route . '"><strong>Kullanıcı detayı için tıklayınız.</strong></a>');
     return redirect()->back();
   }
   
