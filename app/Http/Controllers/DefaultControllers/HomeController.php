@@ -33,8 +33,8 @@ class HomeController extends Controller
       }
       $values = array_values($date_user_count);
       $keys = array_keys($date_user_count);
-      Redis::set($keys_path, serialize($keys), 'EX', 1800);
-      Redis::set($values_path, serialize($values), 'EX', 1800);
+      Redis::set($keys_path, serialize($keys), 'EX', 9000);
+      Redis::set($values_path, serialize($values), 'EX', 9000);
     }
     
     $chart = new Echarts();
@@ -79,7 +79,6 @@ class HomeController extends Controller
           "data" => $keys,
         ],
       ],
-      
       "series" => [
         "name" => $name,
         "type" => "line",
@@ -87,7 +86,6 @@ class HomeController extends Controller
         "data" => $values,
         "color" => '#65BD75',
       ],
-    
     ]);
     
     return $chart;

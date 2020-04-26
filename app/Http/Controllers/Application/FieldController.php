@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Application;
 
 use App\Http\Controllers\Controller;
-use App\Traits\DangerStatusTraits\DangerStatusTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
@@ -17,11 +16,16 @@ class FieldController extends Controller
     Artisan::call('cache:clear');
   }
   
+  private array $rules = ['required', 'accepted', 'alpha', 'alpha_num', 'array', 'boolean', 'image', 'email', 'nullable', 'file', 'string',
+    'integer', 'numeric', 'date', 'url', 'phone:TR,AUTO'];
+  private array $pages = ['list', 'detail', 'create', 'update'];
+  private array $attributes = ['required' => 'required', 'autofocus' => 'autofocus', 'disabled' => 'disabled'];
+  
   public function create($module_name, $related = false)
   {
-    $rules = $this->getRules();
-    $attributes = $this->getAttributes();
-    $pages = $this->getPages();
+    $rules = $this->rules;
+    $attributes = $this->attributes;
+    $pages = $this->pages;
     if ($related) {
       $types = ['select' => 'Select', 'multi_select' => 'Multi Select', 'multi_checkbox' => 'Multi CheckBox',];
       $relationships = ['hasOne' => 'HasOne', 'hasMany' => 'HasMany', 'belongsTo' => 'BelongsTo', 'belongsToMany' => 'BelongsToMany',];
@@ -209,11 +213,11 @@ class FieldController extends Controller
   
   public function edit($module_name, $key)
   {
-    $pages = $this->getPages();
+    $pages = $this->pages;
     $path = storage_path("app\modules\sources\\$module_name.json");
     $cells = json_decode(file_get_contents($path), true)['fields'][$key];
-    $rules = $this->getRules();
-    $attributes = $this->getAttributes();
+    $rules = $this->rules;
+    $attributes = $this->attributes;
     
     return view('admin.application.field.edit', compact('cells', 'pages', 'module_name', 'key', 'rules', 'attributes'));
   }
@@ -310,22 +314,5 @@ class FieldController extends Controller
         break;
     }
     return $eleman;
-  }
-  
-  private function getRules() : array
-  {
-    $rules = ['required', 'accepted', 'alpha', 'alpha_num', 'array', 'boolean', 'image', 'email', 'nullable', 'file', 'string',
-      'integer', 'numeric', 'date', 'url', 'phone:TR,AUTO'];
-    return $rules;
-  }
-  
-  private function getAttributes() : array
-  {
-    return ['required' => 'required', 'autofocus' => 'autofocus', 'disabled' => 'disabled'];
-  }
-  
-  private function getPages() : array
-  {
-    return  ['list', 'detail', 'create', 'update'];
   }
 }

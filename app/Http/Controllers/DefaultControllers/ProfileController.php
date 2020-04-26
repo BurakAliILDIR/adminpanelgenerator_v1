@@ -5,6 +5,7 @@ namespace App\Http\Controllers\DefaultControllers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Profile\UpdateProfileRequest;
 use App\Traits\ControllerTraits\HelperMethods;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -37,7 +38,7 @@ class ProfileController extends Controller
     $model->bio = $request->bio;
     $model->phone = $request->phone;
     $model->gender = $request->gender;
-    $model->date_of_birth = \Carbon\Carbon::parse($request->date_of_birth)->format('Y-m-d');
+    $model->date_of_birth = Carbon::parse($request->date_of_birth)->format('Y-m-d');
     $this->insertToSingleMedia($request, 'profile', $model);
     $model->saveOrFail();
     

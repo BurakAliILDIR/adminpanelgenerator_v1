@@ -1,7 +1,6 @@
 /**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
+ * İlk olarak, bu projenin Vue ve diğer kütüphaneleri içeren tüm JavaScript bağımlılıklarını yükleyeceğiz. 
+ * Vue ve Laravel kullanarak sağlam, güçlü web uygulamaları oluştururken harika bir başlangıç noktasıdır.
  */
 
 require('./bootstrap');
@@ -9,9 +8,8 @@ require('./bootstrap');
 window.Vue = require('vue');
 
 /**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
+ * Vue bileşenlerinizi otomatik olarak kaydetmek için aşağıdaki kod bloğu kullanılabilir. 
+ * Vue bileşenleri için bu dizini özyinelemeli olarak tarar ve bunları otomatik olarak "basename" kaydeder.
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
@@ -22,9 +20,9 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 /**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
+ * Ardından, yeni bir Vue uygulama örneği oluşturacağız ve sayfaya ekleyeceğiz. 
+ * Ardından, bu uygulamaya bileşenler eklemeye başlayabilir veya JavaScript iskelesini 
+ * benzersiz gereksinimlerinize uyacak şekilde özelleştirebilirsiniz.
  */
 
 const app = new Vue({

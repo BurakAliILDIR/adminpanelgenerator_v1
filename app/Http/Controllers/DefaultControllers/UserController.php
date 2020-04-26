@@ -7,6 +7,7 @@ use App\Http\Requests\User\CreateUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
 use App\Traits\ControllerTraits\HelperMethods;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
@@ -16,8 +17,8 @@ class UserController extends Controller
 {
   use HelperMethods;
   
-  private $model;
-  private $genders = ['Erkek' => 'Erkek', 'Kadın' => 'Kadın'];
+  private User $model;
+  private array $genders = ['Erkek' => 'Erkek', 'Kadın' => 'Kadın'];
   
   public function __construct()
   {
@@ -120,7 +121,7 @@ class UserController extends Controller
     $this->model->bio = $request->bio;
     $this->model->phone = $request->phone;
     $this->model->gender = $request->gender;
-    $this->model->date_of_birth = \Carbon\Carbon::parse($request->date_of_birth)->format('Y-m-d');
+    $this->model->date_of_birth = Carbon::parse($request->date_of_birth)->format('Y-m-d');
     $this->model->confirm = $request->confirm ?? 1;
     if ($request->password)
       $this->model->password = Hash::make($request->password);
