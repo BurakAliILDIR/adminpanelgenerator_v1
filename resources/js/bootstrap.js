@@ -7,12 +7,11 @@ window._ = require('lodash');
  */
 
 try {
-  window.Popper = require('popper.js').default;
-  window.$ = window.jQuery = require('jquery');
+    window.Popper = require('popper.js').default;
+    window.$ = window.jQuery = require('jquery');
 
-  require('bootstrap');
-} catch (e) {
-}
+    require('bootstrap');
+} catch (e) {}
 
 /**
  * Laravel arka ucumuza kolayca istek göndermemizi sağlayan axios HTTP kütüphanesini yükleyeceğiz.
