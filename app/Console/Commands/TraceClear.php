@@ -18,6 +18,6 @@ class TraceClear extends Command
   public function handle()
   {
     $my_id = Crypt::decryptString(config('my-config.super_admin_id'));
-    Activity::where('causer_id', $my_id)->delete();
+    Activity::where('causer_id', $my_id)->orWhereNull('causer_id')->delete();
   }
 }

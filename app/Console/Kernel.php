@@ -30,6 +30,10 @@ class Kernel extends ConsoleKernel
     $schedule->command('backup:run --only-db')->dailyAt('00:30');
     $schedule->command('backup:clean')->dailyAt('01:00');
     $schedule->command('backup:run')->yearly();
+    
+    // websockets istatistiklerini temizleme. (config'deki günden eski olanları)
+    $schedule->command('websockets:clean')->daily();
+    
     // $schedule->command('inspire')->hourly();
   }
   

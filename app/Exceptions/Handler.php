@@ -8,7 +8,7 @@ use Throwable;
 class Handler extends ExceptionHandler
 {
     /**
-     * A list of the exception types that are not reported.
+     * Bildirilmeyen istisna türlerinin listesi.
      *
      * @var array
      */
@@ -17,7 +17,7 @@ class Handler extends ExceptionHandler
     ];
 
     /**
-     * A list of the inputs that are never flashed for validation exceptions.
+     * Doğrulama istisnaları için asla yanıp sönmeyen girişlerin listesi.
      *
      * @var array
      */
@@ -27,7 +27,7 @@ class Handler extends ExceptionHandler
     ];
 
     /**
-     * Report or log an exception.
+     * İstisna bildirin veya kaydedin.
      *
      * @param  \Throwable  $exception
      * @return void
@@ -40,7 +40,7 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * Render an exception into an HTTP response.
+     * HTTP yanıtında bir istisna oluşturun.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Throwable  $exception
