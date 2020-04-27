@@ -27,7 +27,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * Yankı ve etkinlik yayını ekibinizin kolayca sağlam gerçek zamanlı web uygulamaları geliştirmesine olanak tanır.
  */
 
-import Echo from 'laravel-echo';
+/*import Echo from 'laravel-echo';
 
 window.Pusher = require('pusher-js');
 
@@ -39,4 +39,4 @@ window.Echo = new Echo({
   wssPort: 6001,
   disableStats: true,
   encrypted: true
-});
+});*/
