@@ -64,7 +64,7 @@
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <span class="thumb-sm avatar pull-left">
               <img
-                src="{{ $auth_user->getFirstMediaUrl('profile') === '' ? \Illuminate\Support\Facades\Storage::url('/application/defaults/avatar.jpg') : $auth_user->getFirstMediaUrl('profile') }}">
+                src="{{ $auth_user->getFirstMediaUrl('profile') === '' ? \Illuminate\Support\Facades\Storage::url('application/defaults/avatar.jpg') : $auth_user->getFirstMediaUrl('profile') }}">
             </span>
         {{ "$auth_user->name $auth_user->surname" }} <b class="caret"></b>
       </a>
