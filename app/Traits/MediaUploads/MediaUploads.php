@@ -4,6 +4,7 @@
 namespace App\Traits\MediaUploads;
 
 
+use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\File;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
@@ -24,16 +25,13 @@ Trait MediaUploads
       ->registerMediaConversions(function (Media $media) {
         $this
           ->addMediaConversion('thumb')
-          ->width(120)
-          ->height(120);
+          ->fit(Manipulations::FIT_CROP, 120, 120);
         $this
           ->addMediaConversion('card')
-          ->width(440)
-          ->height(220);
+          ->fit(Manipulations::FIT_CONTAIN, 440, 260);
         $this
           ->addMediaConversion('big')
-          ->width(1283)
-          ->height(734);
+          ->fit(Manipulations::FIT_CONTAIN, 1283, 734);
       });
   }
   

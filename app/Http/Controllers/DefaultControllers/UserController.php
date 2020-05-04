@@ -31,6 +31,7 @@ class UserController extends Controller
     $my_id = Crypt::decryptString(config('my-config.super_admin_id'));
     if ($search = trim(\request()->input('ara'))) {
       $conditions = ['id', 'name', 'surname', 'email', 'gender'];
+      
       $data = $this->model->where('id', '!=', $my_id)
         ->where(function ($query) use ($conditions, $search) {
           foreach ($conditions as $column)
@@ -56,7 +57,7 @@ class UserController extends Controller
     $this->saveModelFilling($request);
     $this->model->assignRole($request->roles);
     $this->model->syncPermissions($this->model->getPermissionsViaRoles());
-    
+    $this->model->addToIndex();
     $detail_route = route("user.show", $this->model->id);
     session()->flash('success', 'Kullanıcı başarıyla eklendi. <a href="' . $detail_route . '"><strong>Kullanıcı detayı için tıklayınız.</strong></a>');
     return redirect()->back();
