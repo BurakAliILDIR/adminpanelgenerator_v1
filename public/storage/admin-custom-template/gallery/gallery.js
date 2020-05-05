@@ -1,0 +1,2 @@
+baguetteBox.run('.tz-gallery');
+
