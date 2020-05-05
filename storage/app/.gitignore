@@ -1,4 +1,7 @@
 public/*
 !public/application
+!public/admin-custom-template
+!public/plugins
+!public/admin-template
 !.gitignore
 admin-panel-generator
