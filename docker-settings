@@ -1,6 +1,9 @@
 ###########################################################
 ###################### General Setup ######################
 ###########################################################
+#   Resmi sitesi:
+#   https://laradock.io/getting-started/
+#
 #   Başlatma veya yüklemek için:
 #   docker-compose up -d nginx mysql redis-cluster redis-webui elasticsearch kibana phpmyadmin
 #
