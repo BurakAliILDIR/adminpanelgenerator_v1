@@ -3,7 +3,6 @@
 <head>
   @include('admin.layouts.partials.head')
 </head>
-
 <body>
 <section class="vbox">
   @include('admin.layouts.partials.header')
