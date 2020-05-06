@@ -6,7 +6,7 @@
     <a href="#" class="navbar-brand" data-toggle="fullscreen">{{ config('app.name') }}</a>
 
   </div>
-{{--  @php($auth_user = \Illuminate\Support\Facades\Auth::user())
+  @php($auth_user = \Illuminate\Support\Facades\Auth::user())
   <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user">
     <li>
       <a href="{{ route('profile.index') }}">
@@ -25,10 +25,11 @@
       {{ Form::open(['route' => ['logout'], 'style' => 'display: none;', 'id' => 'logout-form']) }}
       {!! Form::close() !!}
     </li>
-  </ul>--}}
+  </ul>
 
-
-  <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user">
+  {{--Orjinal:
+    
+    <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user">
     <li class="hidden-xs">
       <a href="#" class="dropdown-toggle dk" data-toggle="dropdown">
         <i class="fa fa-bell"></i>
@@ -117,5 +118,5 @@
         </li>
       </ul>
     </li>
-  </ul>
+  </ul>--}}
 </header>
