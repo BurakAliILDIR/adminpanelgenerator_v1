@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="app-fluid">
 <head>
-  @include('admin.layouts.partials.head')
+{{--  @include('admin.layouts.partials.head')
+--}}
+  
   @yield('css')
 </head>
 
