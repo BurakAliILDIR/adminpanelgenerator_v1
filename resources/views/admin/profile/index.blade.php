@@ -12,7 +12,7 @@
   <section class="vbox">
     <header class="header bg-white b-b b-light">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 col-xs-6">
           <div class="m-t">
             <span class="m-l">Profilim</span>
           </div>
@@ -30,7 +30,7 @@
     </header>
     <section class="scrollable">
       <section class="hbox stretch row">
-        <aside class="bg-light lter b-r col-md-3">
+        <aside class="bg-light lter b-r col-lg-3 col-sm-12">
           <section class="vbox">
             <section class="scrollable">
               <div class="wrapper-lg">
@@ -79,7 +79,7 @@
             </section>
           </section>
         </aside>
-        <aside class="bg-white col-md-6">
+        <aside class="bg-white col-md-6 col-sm-12">
           <section class="vbox">
             <header class="header bg-light bg-gradient">
               <ul class="nav nav-tabs nav-white">
@@ -146,7 +146,7 @@
             </section>
           </section>
         </aside>
-        <aside class="col-md-3 b-l">
+        <aside class="col-md-3 b-l col-sm-12">
           <section class="vbox">
             <section class="scrollable">
               <div class="wrapper-md">

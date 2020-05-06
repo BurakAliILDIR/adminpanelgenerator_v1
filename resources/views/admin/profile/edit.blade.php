@@ -87,9 +87,9 @@
   <!-- datetimepicker -->
   <script src="{{ asset('/storage/admin-custom-template/datetimepicker/moment.min.js') }}"
           type="text/javascript"></script>
-  <script type="text/javascript" src="{{ asset
-  ('/storage/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.js') }}"></script>
+  <script type="text/javascript"
+          src="{{ asset('/storage/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.js') }}"></script>
   <!-- datepicker -->
-  <script type="text/javascript" src="{{ asset('/storage/admin-custom-template/datepicker/bootstrap-datepicker.js') }}
-    "></script>
+  <script type="text/javascript"
+          src="{{ asset('/storage/admin-custom-template/datepicker/bootstrap-datepicker.js') }}"></script>
 @endsection

@@ -8,7 +8,7 @@
       <section class="panel panel-default">
         <header class="panel-heading font-bold">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
               <div class="m-t">
                 <a class="btn btn-xs btn-default btn-rounded "
                    href="{{ route('modules.index') }}">

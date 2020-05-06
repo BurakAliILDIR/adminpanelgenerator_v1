@@ -6,6 +6,28 @@
     <a href="#" class="navbar-brand" data-toggle="fullscreen">{{ config('app.name') }}</a>
 
   </div>
+{{--  @php($auth_user = \Illuminate\Support\Facades\Auth::user())
+  <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user">
+    <li>
+      <a href="{{ route('profile.index') }}">
+            <span class="thumb-sm avatar pull-left">
+              <img
+                src="{{ $auth_user->getFirstMediaUrl('profile') === '' ? asset('/storage/application/defaults/avatar.jpg') : 
+                $auth_user->getFirstMediaUrl('profile') }}">
+            </span>
+        {{ "$auth_user->name $auth_user->surname" }} </b>
+      </a>
+    </li>
+    <li>
+      <a href="{{ route('logout') }}"
+         onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa 
+         fa-sign-out"></i> Çıkış</a>
+      {{ Form::open(['route' => ['logout'], 'style' => 'display: none;', 'id' => 'logout-form']) }}
+      {!! Form::close() !!}
+    </li>
+  </ul>--}}
+
+
   <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user">
     <li class="hidden-xs">
       <a href="#" class="dropdown-toggle dk" data-toggle="dropdown">
@@ -64,7 +86,8 @@
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <span class="thumb-sm avatar pull-left">
               <img
-                src="{{ $auth_user->getFirstMediaUrl('profile') === '' ? \Illuminate\Support\Facades\Storage::url('application/defaults/avatar.jpg') : $auth_user->getFirstMediaUrl('profile') }}">
+                src="{{ $auth_user->getFirstMediaUrl('profile') === '' ? asset('/storage/application/defaults/avatar.jpg') : 
+                $auth_user->getFirstMediaUrl('profile') }}">
             </span>
         {{ "$auth_user->name $auth_user->surname" }} <b class="caret"></b>
       </a>

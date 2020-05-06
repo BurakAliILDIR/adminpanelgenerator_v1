@@ -80,7 +80,7 @@ class HomeController extends Controller
         ],
       ],
       "series" => [
-        "name" => $name,
+        //"name" => $name,
         "type" => "line",
         "areaStyle" => [],
         "data" => $values,

@@ -19,7 +19,7 @@ $class_name = class_basename($model);
         </div>
         {{--@endcan--}}
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6 col-xs-12">
         <div class="m-t m-r pull-right">
           @can($class_name.'.update')
 

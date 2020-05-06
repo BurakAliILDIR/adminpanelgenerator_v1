@@ -16,7 +16,7 @@
       <section class="panel panel-default">
         <header class="panel-heading font-bold">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 col-xs-8">
               <div class="m-t">
                 <a class="btn btn-xs btn-default btn-rounded "
                    href="{{ route('user.index') }}">
@@ -29,8 +29,7 @@
             <div class="col-md-6">
               @can('User.detail')
                 <div class="m-t">
-                  <a class="btn btn-xs btn-default btn-rounded pull-right"
-                     href="{{ route('user.show', $model->id) }}">
+                  <a class="btn btn-xs btn-default btn-rounded pull-right" href="{{ route('user.show', $model->id) }}">
                     Detay Sayfasına Git
                     <i class="fa fa-arrow-right"></i>
                   </a>

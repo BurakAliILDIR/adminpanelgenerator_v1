@@ -8,7 +8,7 @@
     <section class="vbox">
       <header class="header bg-white b-b clearfix">
         <div class="row m-t-sm">
-          <div class="col-sm-7 m-b-xs">
+          <div class="col-sm-7 m-b-xs col-xs-6">
             <a href="{{ route('modules.create') }}"
                class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> Yeni Modül</a>
           </div>

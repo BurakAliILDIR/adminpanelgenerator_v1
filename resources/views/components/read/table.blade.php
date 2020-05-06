@@ -13,13 +13,13 @@ $model_name = class_basename($model);
   <section class="vbox">
     <header class="header bg-white b-b clearfix">
       <div class="row m-t-sm">
-        <div class="col-sm-7 m-b-xs">
+        <div class="col-sm-7 m-b-xs col-xs-4">
           @can("$model_name.create")
             <a href="{{ route($route['create']) }}"
                class="btn btn-sm btn-primary btn-rounded"><i class="fa fa-plus"></i> Yeni Kayıt</a>
           @endcan
         </div>
-        <div class="col-sm-5 m-b-xs">
+        <div class="col-sm-5 m-b-xs col-xs-8">
           <?php $ara = request()->input('ara'); ?>
           <form>
             <div class="input-group">
