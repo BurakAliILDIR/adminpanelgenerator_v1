@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 @section('title', 'Rol Ekle')
 @section('css')
-  <link href="/plugins/select2/css/select2.min.css" rel="stylesheet" />
+  <link href="{{ asset('/storage/plugins/select2/css/select2.min.css') }}" rel="stylesheet"/>
 @endsection
 @section('content')
   <div class="row">
@@ -42,5 +42,5 @@
   </div>
 @endsection
 @section('js')
-  <script src="/plugins/select2/js/select2.min.js"></script>
+  <script src="{{ asset('/storage/plugins/select2/js/select2.min.js') }}"></script>
 @endsection

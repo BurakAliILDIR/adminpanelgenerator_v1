@@ -1,13 +1,14 @@
 @extends('admin.layouts.master')
 @section('title', $settings['title'])
 @section('css')
-  <link href="/plugins/select2/css/select2.min.css" rel="stylesheet" />
+  <link href="{{ asset('/storage/plugins/select2/css/select2.min.css') }}" rel="stylesheet"/>
   <!-- datepicker -->
-  <link href="/admin-custom-template/datepicker/bootstrap-datepicker.css" rel="stylesheet">
+  <link href="{{ asset('/storage/admin-custom-template/datepicker/bootstrap-datepicker.css') }}" rel="stylesheet">
   <!-- datetimepicker -->
-  <link href="/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+  <link href="{{ asset('/storage/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.css') }}"
+        rel="stylesheet">
   <!-- CkEditor -->
-  <script src="/admin-custom-template/ckeditor/ckeditor.js" type="text/javascript"></script>
+  <script src="{{ asset('/storage/admin-custom-template/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
 @endsection
 @section('content')
   <div class="row">
@@ -49,16 +50,19 @@
   </div>
 @endsection
 @section('js')
-  <script src="/plugins/select2/js/select2.min.js"></script>
+  <script src="{{ asset('/storage/plugins/select2/js/select2.min.js') }}"></script>
   <!-- sadece rakam kısıtlaması -->
-  <script src="/admin-custom-template/form/only_number.js"></script>
+  <script src="{{ asset('/storage/admin-custom-template/form/only_number.js') }}"></script>
   <!-- datetimepicker -->
-  <script src="/admin-custom-template/datetimepicker/moment.min.js" type="text/javascript"></script>
-  <script type="text/javascript" src="/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+  <script src="{{ asset('/storage/admin-custom-template/datetimepicker/moment.min.js') }}"
+          type="text/javascript"></script>
+  <script type="text/javascript"
+          src="{{ asset('/storage/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.js') }}"></script>
   <!-- datepicker -->
-  <script type="text/javascript" src="/admin-custom-template/datepicker/bootstrap-datepicker.js"></script>
+  <script type="text/javascript"
+          src="{{ asset('/storage/admin-custom-template/datepicker/bootstrap-datepicker.js') }}"></script>
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('.js-example-basic-single').select2();
     });
   </script>

@@ -2,7 +2,7 @@
 ########   https://laradock.io/getting-started/
 ########
 ########   Başlatma veya yüklemek için:
-########   docker-compose up -d nginx mysql redis-cluster redis-webui elasticsearch kibana phpmyadmin sonarqube
+########   docker-compose up -d nginx mysql redis-cluster redis-webui elasticsearch kibana phpmyadmin php-worker
 ########
 ########   Composer, artisan komutları için;
 ########   - laradock içine girip:

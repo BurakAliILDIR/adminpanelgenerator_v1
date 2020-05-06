@@ -1,8 +1,7 @@
 @extends('admin.layouts.master')
 @section('title', "$module_name - İlişkili Alan Ekle")
 @section('css')
-  <link href="/plugins/select2/css/select2.min.css" rel="stylesheet"/>
-
+  <link href="{{ asset('/storage/plugins/select2/css/select2.min.css') }}" rel="stylesheet"/>
 @endsection
 @section('content')
   <div class="row">
@@ -176,17 +175,17 @@
               @endforeach
             </div>
           </div>
-          <div class="line line-dashed line-lg pull-in"></div>
-          {{ Form::submit("Ekle", array_merge(['class' => 'btn btn-primary btn-block'])) }}
-          {!! Form::close() !!}
+            <div class="line line-dashed line-lg pull-in"></div>
+            {{ Form::submit("Ekle", array_merge(['class' => 'btn btn-primary btn-block'])) }}
+            {!! Form::close() !!}
         </div>
       </section>
     </div>
   </div>
 @endsection
 @section('js')
-  <script src="/plugins/select2/js/select2.min.js"></script>
-  <script src="/admin-custom-template/form/only_number.js"></script>
+  <script src="{{ asset('/storage/plugins/select2/js/select2.min.js') }}"></script>
+  <script src="{{ asset('/storage/admin-custom-template/form/only_number.js') }}"></script>
   <script>
     $(document).ready(() => {
       // select 2 çalışması için.

@@ -21,7 +21,7 @@
           <div class="list-group list-group-alt animated fadeInRight">
             <a href="#" class="media list-group-item">
                   <span class="pull-left thumb-sm">
-                    <img src="/admin-template/images/avatar.jpg" alt="Mikel"
+                    <img src="{{ asset('/storage/admin-template/images/avatar.jpg') }}" alt="Mikel"
                          class="img-circle">
                   </span>
               <span class="media-body block m-b-none">

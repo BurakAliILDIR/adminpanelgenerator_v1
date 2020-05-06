@@ -20,7 +20,7 @@ $model_name = class_basename($model);
           @endcan
         </div>
         <div class="col-sm-5 m-b-xs">
-          <?php $ara = \request()->input('ara'); ?>
+          <?php $ara = request()->input('ara'); ?>
           <form>
             <div class="input-group">
               @if($ara)
@@ -127,5 +127,4 @@ $model_name = class_basename($model);
     </footer>
   </section>
 </aside>
-<script src="/admin-custom-template/table/table-delete.js">
-</script>
+<script src="{{ asset('/storage/admin-custom-template/table/table-delete.js') }}"></script>

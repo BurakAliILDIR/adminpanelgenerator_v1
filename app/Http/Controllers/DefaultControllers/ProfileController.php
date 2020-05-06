@@ -37,7 +37,7 @@ class ProfileController extends Controller
     $model->surname = $request->surname;
     $model->bio = $request->bio;
     $model->phone = $request->phone;
-    $model->gender = $request->gender;
+    $model->gender = $request->gender ?? 'Belirtilmedi';
     $model->date_of_birth = Carbon::parse($request->date_of_birth)->format('Y-m-d');
     $this->insertToSingleMedia($request, 'profile', $model);
     $model->saveOrFail();

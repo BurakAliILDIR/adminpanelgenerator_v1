@@ -128,5 +128,5 @@
   </aside>
 @endsection
 @section('js')
-  <script src="/admin-custom-template/table/table-delete.js"></script>
+  <script src="{{ asset('/storage/admin-custom-template/table/table-delete.js') }}"></script>
 @endsection

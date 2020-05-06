@@ -1,11 +1,3 @@
-<?php
-/**
- * @var  Arcanedev\LogViewer\Entities\Log            $log
- * @var  Illuminate\Pagination\LengthAwarePaginator  $entries
- * @var  string|null                                 $query
- */
-?>
-
 @extends('log-viewer::bootstrap-4._master')
 
 @section('content')
@@ -258,7 +250,7 @@
                 @php
                     $htmlHighlight = version_compare(PHP_VERSION, '7.4.0') >= 0
                         ? join('|', log_styler()->toHighlight())
-                        : join(log_styler()->toHighlight(), '|');
+                        : join(log_styler()->toHighlight(), '|')
                 @endphp
 
                 $('.stack-content').each(function() {

@@ -2,11 +2,12 @@
 @section('title', 'Profil Düzenle')
 @section('css')
   <!-- datepicker -->
-  <link href="/admin-custom-template/datepicker/bootstrap-datepicker.css" rel="stylesheet">
+  <link href="{{ asset('/storage/admin-custom-template/datepicker/bootstrap-datepicker.css') }}" rel="stylesheet">
   <!-- datetimepicker -->
-  <link href="/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+  <link href="{{ asset('/storage/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.css') }}"
+        rel="stylesheet">
   <!-- CkEditor -->
-  <script src="/admin-custom-template/ckeditor/ckeditor.js" type="text/javascript"></script>
+  <script src="{{ asset('/storage/admin-custom-template/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
 @endsection
 @section('content')
   <div class="row">
@@ -75,8 +76,8 @@
          ['key' => 'bio',
          'title' => 'Hakkımda',
          ])@endcomponent
-          {{ Form::submit('Kaydet', array_merge(['class' => 'btn btn-info btn-block'])) }}
-          {!! Form::close() !!}
+            {{ Form::submit('Kaydet', array_merge(['class' => 'btn btn-info btn-block'])) }}
+            {!! Form::close() !!}
         </div>
       </section>
     </div>
@@ -84,8 +85,11 @@
 @endsection
 @section('js')
   <!-- datetimepicker -->
-  <script src="/admin-custom-template/datetimepicker/moment.min.js" type="text/javascript"></script>
-  <script type="text/javascript" src="/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.js"></script>
+  <script src="{{ asset('/storage/admin-custom-template/datetimepicker/moment.min.js') }}"
+          type="text/javascript"></script>
+  <script type="text/javascript" src="{{ asset
+  ('/storage/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.js') }}"></script>
   <!-- datepicker -->
-  <script type="text/javascript" src="/admin-custom-template/datepicker/bootstrap-datepicker.js"></script>
+  <script type="text/javascript" src="{{ asset('/storage/admin-custom-template/datepicker/bootstrap-datepicker.js') }}
+    "></script>
 @endsection

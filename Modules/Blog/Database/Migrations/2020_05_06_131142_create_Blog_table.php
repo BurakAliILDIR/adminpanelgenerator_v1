@@ -1,12 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
+use App\Traits\MigrationTraits\BelongsToManyTableSettings;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateBlogTable extends Migration
 {
-  use \App\Traits\MigrationTraits\BelongsToManyTableSettings;
+  use BelongsToManyTableSettings;
+  
   private $fields = null;
   
   public function __construct()
@@ -51,7 +53,7 @@ class CreateBlogTable extends Migration
             $rows = @$field['attributes']['rows'] ?? 5;
             if ($rows < 5) $table->text($key)->nullable();
             else if ($rows === 5) $table->mediumText($key)->nullable();
-            else $table->longText($key)->nullable();   
+            else $table->longText($key)->nullable();
             break;
           case 'date':
             $table->date($key)->nullable()->index();

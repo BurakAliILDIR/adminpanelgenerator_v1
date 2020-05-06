@@ -5,15 +5,15 @@
   <title>@yield('title') | {{ config('app.name') }}</title>
   <meta name="description" content="{{ config('app.description') }}"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-  <link rel="stylesheet" href="/admin-template/css/bootstrap.css" type="text/css"/>
-  <link rel="stylesheet" href="/admin-template/css/animate.css" type="text/css"/>
-  <link rel="stylesheet" href="/admin-template/css/font-awesome.min.css" type="text/css"/>
-  <link rel="stylesheet" href="/admin-template/css/font.css" type="text/css"/>
-  <link rel="stylesheet" href="/admin-template/css/app.css" type="text/css"/>
-  <!--[if lt IE 9]>
-  <script src="/admin-template/js/ie/html5shiv.js"></script>
-  <script src="/admin-template/js/ie/respond.min.js"></script>
-  <script src="/admin-template/js/ie/excanvas.js"></script>
+  <link rel="stylesheet" href="{{ asset('/storage/admin-template/css/bootstrap.css') }}" type="text/css"/>
+  <link rel="stylesheet" href="{{ asset('/storage/admin-template/css/animate.css') }}" type="text/css"/>
+  <link rel="stylesheet" href="{{ asset('/storage/admin-template/css/font-awesome.min.css') }}" type="text/css"/>
+  <link rel="stylesheet" href="{{ asset('/storage/admin-template/css/font.css') }}" type="text/css"/>
+  <link rel="stylesheet" href="{{ asset('/storage/admin-template/css/app.css') }}" type="text/css"/>
+<!--[if lt IE 9]>
+  <script src="{{ asset('/storage/admin-template/js/ie/html5shiv.js') }}"></script>
+  <script src="{{ asset('/storage/admin-template/js/ie/respond.min.js') }}"></script>
+  <script src="{{ asset('/storage/admin-template/js/ie/excanvas.js') }}"></script>
   <![endif]-->
 </head>
 <body>
@@ -37,15 +37,12 @@
   </div>
 </footer>
 <!-- / footer -->
-<script src="/admin-template/js/jquery.min.js"></script>
+<script src="{{ asset('/storage/admin-template/js/jquery.min.js') }}"></script>
 <!-- Bootstrap -->
-<script src="/admin-template/js/bootstrap.js"></script>
+<script src="{{ asset('/storage/admin-template/js/bootstrap.js') }}"></script>
 <!-- App -->
-<script src="/admin-template/js/app.js"></script>
-<script src="/admin-template/js/slimscroll/jquery.slimscroll.min.js"></script>
-<script src="/admin-template/js/app.plugin.js"></script>
-<script>
-  localStorage.clear();
-</script>
+<script src="{{ asset('/storage/admin-template/js/app.js') }}"></script>
+<script src="{{ asset('/storage/admin-template/js/slimscroll/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ asset('/storage/admin-template/js/app.plugin.js') }}"></script>
 </body>
 </html>

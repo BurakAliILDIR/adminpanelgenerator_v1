@@ -276,7 +276,7 @@ $class_name = class_basename($model);
                         @if($imageDeletePermission)
                       </form>
                     @endif
-                  @endif
+                    @endif
                 @endif
               @endforeach
             </div>
@@ -286,4 +286,4 @@ $class_name = class_basename($model);
     </section>
   </section>
 </section>
-<script src="/admin-custom-template/detail/change-leaf.js"></script>
+<script src="{{ asset('/storage/admin-custom-template/detail/change-leaf.js') }}"></script>

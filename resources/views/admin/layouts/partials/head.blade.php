@@ -9,10 +9,11 @@
 <link rel="stylesheet" href="{{ asset('/storage/admin-template/css/font.css') }}" type="text/css"/>
 <link rel="stylesheet" href="{{ asset('/storage/admin-template/js/fuelux/fuelux.css') }}" type="text/css"/>
 
-<link rel="stylesheet" href="/admin-template/css/app.css" type="text/css"/>
+<link rel="stylesheet" href="{{ asset('/storage/admin-template/css/app.css') }}" type="text/css"/>
 <!--[if lt IE 9]>
-<script src="/admin-template/js/ie/html5shiv.js"></script>
-<script src="/admin-template/js/ie/respond.min.js"></script>
-<script src="/admin-template/js/ie/excanvas.js"></script>
+<script src="{{ asset('/storage/admin-template/js/ie/html5shiv.js') }}"></script>
+<script src="{{ asset('/storage/admin-template/js/ie/respond.min.js') }}"></script>
+<script src="{{ asset('/storage/admin-template/js/ie/excanvas.js') }}"></script>
 <![endif]-->
-<script src="/admin-template/js/jquery.min.js"></script>
+<script src="{{ asset('/storage/admin-template/js/jquery.min.js') }}"></script>
+@yield('css')

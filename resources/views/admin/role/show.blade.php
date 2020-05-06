@@ -150,7 +150,7 @@
                       @endif
                     </section>
                   </div>
-                @endcan
+                  @endcan
               </div>
             </section>
           </section>
@@ -160,5 +160,5 @@
   </section>
 @endsection
 @section('js')
-  <script src="/admin-custom-template/detail/change-leaf.js"></script>
+  <script src="{{ asset('/storage/admin-custom-template/detail/change-leaf.js') }}"></script>
 @endsection

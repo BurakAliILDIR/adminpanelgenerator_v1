@@ -1,7 +1,5 @@
 @extends('log-viewer::bootstrap-4._master')
 
-<?php /** @var  Illuminate\Pagination\LengthAwarePaginator $rows */ ?>
-
 @section('content')
   <div class="page-header mb-4">
     <h1>@lang('Logs')</h1>

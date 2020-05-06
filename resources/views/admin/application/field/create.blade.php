@@ -1,10 +1,10 @@
 @extends('admin.layouts.master')
 @section('title', 'Alan Ekle')
 @section('css')
-  <link href="/plugins/select2/css/select2.min.css" rel="stylesheet"/>
+  <link href="{{ asset('/storage/plugins/select2/css/select2.min.css') }}" rel="stylesheet"/>
 @endsection
 @section('content')
-  <div class="row">
+  <div class="row" style="margin-bottom: 300px;">
     <div class="col-md-5 col-md-offset-3">
       <section class="panel panel-default">
         <header class="panel-heading font-bold">
@@ -120,14 +120,13 @@
       </section>
     </div>
   </div>
-  <div style="height: 300px;"></div>
 @endsection
 @section('js')
-  <script src="/plugins/select2/js/select2.min.js"></script>
+  <script src="{{ asset('/storage/plugins/select2/js/select2.min.js') }}"></script>
   <script>
     $(document).ready(function () {
       $('.js-example-basic-single').select2();
     });
   </script>
-  <script src="/admin-custom-template/form/only_number.js"></script>
+  <script src="{{ asset('/storage/admin-custom-template/form/only_number.js') }}"></script>
 @endsection
