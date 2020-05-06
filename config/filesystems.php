@@ -7,9 +7,9 @@ return [
     | Default Filesystem Disk
     |--------------------------------------------------------------------------
     |
-    | Here you may specify the default filesystem disk that should be used
-    | by the framework. The "local" disk, as well as a variety of cloud
-    | based disks are available to your application. Just store away!
+    | Burada, çerçeve tarafından kullanılması gereken varsayılan 
+    | dosya sistemi diskini belirtebilirsiniz. Uygulamanız için "local" 
+    | disk ve çeşitli bulut tabanlı diskler kullanılabilir. Sadece sakla!
     |
     */
 
@@ -20,9 +20,9 @@ return [
     | Default Cloud Filesystem Disk
     |--------------------------------------------------------------------------
     |
-    | Many applications store files both locally and in the cloud. For this
-    | reason, you may specify a default "cloud" driver here. This driver
-    | will be bound as the Cloud disk implementation in the container.
+    | Birçok uygulama dosyaları hem yerel olarak hem de bulutta depolar.
+    | Bu nedenle, burada varsayılan bir "cloud" sürücüsü belirtebilirsiniz.
+    | Bu sürücü, kapsayıcıdaki Cloud disk uygulaması olarak bağlanır.
     |
     */
 
@@ -33,9 +33,9 @@ return [
     | Filesystem Disks
     |--------------------------------------------------------------------------
     |
-    | Here you may configure as many filesystem "disks" as you wish, and you
-    | may even configure multiple disks of the same driver. Defaults have
-    | been setup for each driver as an example of the required options.
+    | Burada istediğiniz kadar dosya sistemi "disks" yapılandırabilir ve 
+    | hatta aynı sürücünün birden fazla diskini yapılandırabilirsiniz.
+    | Gerekli seçeneklere örnek olarak her sürücü için varsayılan değerler ayarlanmıştır.
     |
     | Supported Drivers: "local", "ftp", "sftp", "s3"
     |
@@ -77,9 +77,8 @@ return [
     | Symbolic Links
     |--------------------------------------------------------------------------
     |
-    | Here you may configure the symbolic links that will be created when the
-    | `storage:link` Artisan command is executed. The array keys should be
-    | the locations of the links and the values should be their targets.
+    | Burada `storage: link` Artisan komutu yürütüldüğünde oluşturulacak sembolik bağlantıları 
+    | yapılandırabilirsiniz. Dizi anahtarları bağlantıların yerleri ve değerler hedefleri olmalıdır.
     |
     */
 
