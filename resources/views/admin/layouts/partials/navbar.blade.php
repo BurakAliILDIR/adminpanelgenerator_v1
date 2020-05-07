@@ -1,38 +1,49 @@
+<?php $auth_user = auth()->user(); ?>
 <aside class="bg-dark aside-md hidden-print hidden-xs" id="nav">
   <section class="vbox">
-    {{--<header class="header bg-primary lter text-center">
-      <div class="btn-group">
-        <button type="button" class="btn btn-sm btn-dark btn-icon" title="New project"><i
-            class="fa fa-plus"></i></button>
-        <div class="btn-group hidden-nav-xs">
-          <button type="button" class="btn btn-sm btn-primary dropdown-toggle"
-                  data-toggle="dropdown">
-            Switch Project
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu text-left">
-            <li><a href="#">Project</a></li>
-            <li><a href="#">Another Project</a></li>
-            <li><a href="#">More Projects</a></li>
-          </ul>
-        </div>
-      </div>
-    </header>--}}
+    <header class="bg-primary lter text-center " style="min-height: 130px;">
+      <a href="{{ route('profile.index') }}"><img src="{{ $auth_user->getFirstMediaUrl('profile') === '' ? asset
+       ('/storage/application/defaults/avatar.jpg') :
+         $auth_user->getFirstMediaUrl('profile') }}" class="m-t" style="height: 100px; border-radius: 
+         500px;">
+        <h5 style="padding-bottom: 15px;" class="text-dark">{{ "$auth_user->name $auth_user->surname" }}</h5></a>
+
+      {{--
+            <div class="btn-group">
+              <button type="button" class="btn btn-sm btn-dark btn-icon" title="New project"><i
+                  class="fa fa-plus"></i></button>
+              <div class="btn-group hidden-nav-xs">
+                <button type="button" class="btn btn-sm btn-primary dropdown-toggle"
+                        data-toggle="dropdown">
+                  Switch Project
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu text-left">
+                  <li><a href="#">Project</a></li>
+                  <li><a href="#">Another Project</a></li>
+                  <li><a href="#">More Projects</a></li>
+                </ul>
+              </div>
+            </div>
+      --}}
+    </header>
     <section class="w-f scrollable">
       <div class=" " data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px"
            data-color="#333333">
         <nav class="nav-primary hidden-xs">
           <ul class="nav">
-            <?php $auth_user = auth()->user();?>
-            <li class="{{ Route::is("home") ? 'active' : '' }}">
-              <a class="{{ Route::is("home") ? 'active' : '' }}" href="{{ route('home') }}">
+            <?php $is_home = Route::is("home") ? 'active' : ''; ?>
+            <li class="{{ $is_home }}">
+              <a class="{{ $is_home }}" href="{{ route('home') }}">
                 <i class="fa fa-home icon"><b class="bg-primary"></b></i>
                 <span>Anasayfa</span>
               </a>
             </li>
             @can('Application.Settings')
-              <li class="{{ Route::is('modules.index') || Route::is('log-viewer::logs.filter') ? 'active' : '' }}">
-                <a class="{{ Route::is('modules.index') || Route::is('log-viewer::logs.filter') ? 'active' : '' }}">
+              <?php $is_settings = (Route::is('modules.index') || Route::is('log-viewer::logs.filter')) ? 'active' :
+                ''; ?>
+              <li class="{{ $is_settings }}">
+                <a class="{{ $is_settings }}">
                   <i class="fa fa-code icon">
                     <b class="bg-warning"></b>
                   </i>
@@ -59,8 +70,8 @@
               </li>
             @endif
             @can('User.index')
-                <?php $isActiveMenu = Route::is('user.index') ? 'active' : ''; ?>
-                <li class="{{ $isActiveMenu }}">
+              <?php $isActiveMenu = Route::is('user.index') ? 'active' : ''; ?>
+              <li class="{{ $isActiveMenu }}">
                 <a class="{{ $isActiveMenu }}" href="{{ route('user.index') }}">
                   <i class="fa fa-group icon"><b
                       class="bg-info"></b></i>
@@ -69,8 +80,8 @@
               </li>
             @endcan
             @if($auth_user->can('Role.index') || $auth_user->can('Permission.index'))
-                <?php $isActiveMenu = Route::is('role.index') || Route::is('permission.index') ? 'active' : ''; ?>
-                <li class="{{ $isActiveMenu }}">
+              <?php $isActiveMenu = Route::is('role.index') || Route::is('permission.index') ? 'active' : ''; ?>
+              <li class="{{ $isActiveMenu }}">
                 <a class="{{ $isActiveMenu }}">
                   <i class="fa fa-filter icon">
                     <b class="bg-danger"></b>
@@ -117,14 +128,14 @@
                 $menus = json_decode(file_get_contents(storage_path('app\public\application\settings\menu.json')), true);
                 \Illuminate\Support\Facades\Redis::set($menus_path, serialize($menus));
               }
-              $menu_order = 0;
+              $menu_order = 0
             @endphp
             @foreach($menus as $key => $val)
               @can("$key.index")
                 @php
                   $menu_order %= 4;
                   $menu_order++;
-                  $isActiveMenu =  Route::is("$key.index") ? 'active' : '';
+                  $isActiveMenu =  Route::is("$key.index") ? 'active' : ''
                 @endphp
                 <li class="{{ $isActiveMenu }}">
                   <a class="{{ $isActiveMenu }}"
@@ -136,6 +147,13 @@
                 </li>
               @endcan
             @endforeach
+            <li>
+              <a href="{{ route('logout') }}"
+                 onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa 
+         fa-sign-out"></i> Çıkış</a>
+              {{ Form::open(['route' => ['logout'], 'style' => 'display: none;', 'id' => 'logout-form']) }}
+              {!! Form::close() !!}
+            </li>
           </ul>
         </nav>
       </div>
