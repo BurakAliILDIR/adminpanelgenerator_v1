@@ -4,9 +4,9 @@ namespace App\Models;
 
 use App\Traits\MediaUploads\CustomModelTools;
 use App\Traits\MediaUploads\MediaUploads;
+use App\Traits\ModelTraits\Booting;
 use App\Traits\ModelTraits\Relations;
 use App\Traits\ModelTraits\SourceSettings;
-use App\Traits\ModelTraits\UUID;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -18,7 +18,8 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
-  use Notifiable, CausesActivity, LogsActivity, Relations, UUID, HasRoles, SourceSettings, MediaUploads, CustomModelTools, SoftDeletes;
+  use Booting, Notifiable, CausesActivity, LogsActivity, Relations, HasRoles, SourceSettings,
+    MediaUploads, CustomModelTools, SoftDeletes;
   
   private $source = 'User.json';
   

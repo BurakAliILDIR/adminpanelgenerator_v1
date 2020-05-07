@@ -5,7 +5,7 @@ namespace $NAMESPACE$;
 use App\Traits\MediaUploads\MediaUploads;
 use App\Traits\ModelTraits\Relations;
 use App\Traits\ModelTraits\SourceSettings;
-use App\Traits\ModelTraits\UUID;
+use App\Traits\ModelTraits\Booting;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -15,7 +15,7 @@ use Spatie\Sluggable\SlugOptions;
 
 class $CLASS$ extends Model implements HasMedia
 {
-  use Relations, UUID, SourceSettings, MediaUploads, \Spiritix\LadaCache\Database\LadaCacheTrait, HasSlug, LogsActivity, SoftDeletes;
+  use Booting, Relations, SourceSettings, MediaUploads, \Spiritix\LadaCache\Database\LadaCacheTrait, HasSlug, LogsActivity, SoftDeletes;
 
   protected $table = '$CLASS$';
   

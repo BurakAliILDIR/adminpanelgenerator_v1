@@ -1,11 +1,11 @@
 @extends('admin.layouts.master')
 @section('title', 'Kullanıcı Düzenle')
 @section('css')
-  <link href="{{ asset('/storage/plugins/select2/css/select2.min..css') }}" rel="stylesheet"/>
+  <link href="{{ asset('/storage/plugins/select2/css/select2.min.css') }}" rel="stylesheet"/>
   <!-- datepicker -->
-  <link href="{{ asset('/storage/admin-custom-template/datepicker/bootstrap-datepicker..css') }}" rel="stylesheet">
+  <link href="{{ asset('/storage/admin-custom-template/datepicker/bootstrap-datepicker.css') }}" rel="stylesheet">
   <!-- datetimepicker -->
-  <link href="{{ asset('/storage/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min..css') }}"
+  <link href="{{ asset('/storage/admin-custom-template/datetimepicker/bootstrap-datetimepicker.min.css') }}"
         rel="stylesheet">
   <!-- CkEditor -->
   <script src="{{ asset('/storage/admin-custom-template/ckeditor/ckeditor.js') }}" type="text/javascript"></script>

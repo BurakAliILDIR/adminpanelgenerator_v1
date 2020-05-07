@@ -8,12 +8,11 @@ use Illuminate\Support\Str;
 
 trait UUID
 {
-  protected static function boot()
+  
+  protected static function bootGenerateUUID()
   {
-    parent::boot();
-    
     static::creating(function ($model) {
-      $model->{$model->getKeyName()} = (string) Str::orderedUuid();
+      $model->{$model->getKeyName()} = (string)Str::orderedUuid();
     });
   }
 }
