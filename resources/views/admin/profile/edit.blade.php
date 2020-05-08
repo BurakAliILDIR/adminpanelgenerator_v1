@@ -66,16 +66,16 @@
                'title' => 'Doğum Tarihi',
                'value' => $model->date_of_birth,
           ])@endcomponent
-          @component('components.form.partials.image',
-          ['key' => 'profile',
-          'type' => 'image',
-          'value' => $model->getFirstMediaUrl('profile'),
-          'title' => 'Profil Fotoğrafı',
-          ])@endcomponent
-          @component('components.form.partials.textarea',
-         ['key' => 'bio',
-         'title' => 'Hakkımda',
-         ])@endcomponent
+            @component('components.form.partials.image',
+            ['key' => 'profile',
+            'type' => 'image',
+            'value' => $model->getFirstMediaUrl('profile'),
+            'title' => 'Profil Fotoğrafı',
+            ])@endcomponent
+            @component('components.form.partials.textarea',
+           ['key' => 'bio',
+           'title' => 'Hakkımda',
+           ])@endcomponent
             {{ Form::submit('Kaydet', array_merge(['class' => 'btn btn-info btn-block'])) }}
             {!! Form::close() !!}
         </div>
