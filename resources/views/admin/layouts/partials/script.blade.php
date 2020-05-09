@@ -7,5 +7,4 @@
 <!-- file input -->
 <script src="{{ asset('/storage/admin-template/js/file-input/bootstrap-filestyle.min.js') }}"></script>
 <script src="{{ asset('/storage/admin-template/js/app.plugin.js') }}"></script>
-{{--<script src="{{ mix('js/app.js') }}"></script>--}}
 @yield('js')

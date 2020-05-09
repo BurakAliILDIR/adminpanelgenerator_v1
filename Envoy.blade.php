@@ -13,8 +13,8 @@ composer install
 composer update
 
 php artisan key:generate
-php artisan build
 php artisan storage:link
+php artisan build
 echo "Cache temizleniyor"
 php artisan config:clear
 php artisan cache:clear
