@@ -37,7 +37,8 @@
                 <div class="clearfix m-b">
                   <span class="pull-left thumb m-r">
                     <img
-                      src="{{ $model->getFirstMediaUrl('profile') === '' ? asset('/storage/application/defaults/avatar.jpg') : $model->getFirstMediaUrl('profile') }}">
+                      src="{{ asset($model->getFirstMediaUrl('profile') === '' ? '/storage/application/defaults/avatar
+                      .jpg' : $model->getFirstMediaUrl('profile')) }}">
                   </span>
                 </div>
                 <div style="word-break: break-all">
@@ -103,7 +104,7 @@
                     <div class="tab-pane" id="{{ $key }}Page">
                       <section class="scrollable wrapper-md w-f">
                         @php
-                          $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key);
+                          $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key)
                         @endphp
                         @if($data->count() > 0)
                           <section class="panel panel-default">
@@ -184,8 +185,9 @@
                                       <div class="row">
                                         <div class="col-md-12">
                                           <a class="lightbox"
-                                             href="{{ $image->getUrl('big') }}">
-                                            <img src="{{ $image->getUrl('card') }}" alt="{{ $image->name }}">
+                                             href="{{ asset($image->getUrl('big')) }}">
+                                            <img src="{{ asset($image->getUrl('card')) }}" alt="{{ 
+                                            $image->name }}">
                                           </a>
                                         </div>
                                       </div>

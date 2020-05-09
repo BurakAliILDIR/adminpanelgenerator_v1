@@ -2,13 +2,15 @@
   @switch($lower_val['type'])
     @case('image')
     <img
-      src="{{ $upper_val->getFirstMediaUrl($lower_key) === "" ? @$lower_val['value'] ? asset('/storage/application/defaults/'.$lower_val['value']) : null : $upper_val->getFirstMediaUrl($lower_key) }}"
+      src="{{ $upper_val->getFirstMediaUrl($lower_key) === '' ? @$lower_val['value'] ? asset
+      ('/storage/application/defaults/'
+      .$lower_val['value']) : null : asset($upper_val->getFirstMediaUrl($lower_key)) }}"
       width="66">
     @break
     @case('file')
     @if(($file = $upper_val->getFirstMediaUrl($lower_key)) !== '')
       <a class="btn btn-default btn-xs btn-rounded"
-         href="{{ $file }}" target="_blank">
+         href="{{ asset($file) }}" target="_blank">
         {{ $lower_val['title'] }}
         Görüntüle
       </a>

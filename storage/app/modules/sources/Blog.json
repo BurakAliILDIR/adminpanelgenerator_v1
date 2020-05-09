@@ -47,6 +47,20 @@
       "list": true,
       "detail": true
     },
+    "image": {
+      "type": "image",
+      "title": "Resim",
+      "unit": null,
+      "rules": [
+        "image"
+      ],
+      "attributes": [],
+      "list": true,
+      "detail": true,
+      "create": true,
+      "update": true,
+      "value": "avatar.jpg"
+    },
     "created_at": {
       "type": "datetime",
       "title": "Eklenme Tarihi",

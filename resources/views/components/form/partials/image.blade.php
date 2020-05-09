@@ -1,7 +1,7 @@
 @if($value !== '')
   <div class="row">
     <div class="col-sm-offset-3 col-sm-4">
-      <img class="m-b" style="width: 100%" src="{{ $value }}">
+      <img class="m-b" style="width: 100%" src="{{ asset($value) }}">
     </div>
   </div>
 @endif

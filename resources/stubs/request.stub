@@ -4,7 +4,6 @@ namespace $NAMESPACE$;
 
 use App\Traits\ValidationTraits\DynamicRulesValidate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Redis;
 
 class $CLASS$ extends FormRequest
 {

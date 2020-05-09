@@ -55,7 +55,9 @@
                 <div class="clearfix m-b">
                   <span class="pull-left thumb m-r">
                     <img
-                      src="{{ $model->getFirstMediaUrl('profile') === '' ? \Illuminate\Support\Facades\Storage::url('/application/defaults/avatar.jpg') : $model->getFirstMediaUrl('profile') }}">
+                      src="{{ asset($model->getFirstMediaUrl('profile') === '' ? 
+                              \Illuminate\Support\Facades\Storage::url('/application/defaults/avatar.jpg') :
+                              $model->getFirstMediaUrl('profile')) }}">
                   </span>
                 </div>
                 <div style="word-break: break-all">
@@ -219,7 +221,7 @@
                               <tbody>
                               @foreach($logs as $row)
                                 @php $log_model_name = explode("\\", $row->subject_type); 
-                                $log_model_name = end($log_model_name);
+                                $log_model_name = end($log_model_name)
                                 @endphp
                                 @can("$log_model_name.detail")
                                   <tr>
@@ -259,7 +261,7 @@
                   @if(($val['detail']) && @$val['multiple'] && $val['type'] !== 'multi_image')
                     @can("$key.index")
                       @php $relation_infos = $val['relationship'];
-                    $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key);
+                    $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key)
                       @endphp
                       <div class="tab-pane" id="{{ $key }}Page">
                         <section class="scrollable wrapper-md w-f">
@@ -349,8 +351,8 @@
                                         <div class="row">
                                           <div class="col-md-12">
                                             <a class="lightbox"
-                                               href="{{ $image->getUrl('big') }}">
-                                              <img src="{{ $image->getUrl('card') }}" alt="{{ $image->name }}">
+                                               href="{{ asset($image->getUrl('big')) }}">
+                                              <img src="{{ asset($image->getUrl('card')) }}" alt="{{ $image->name }}">
                                             </a>
                                           </div>
                                         </div>
@@ -389,7 +391,6 @@
               </div>
             </section>
           </section>
-
         </aside>
       </section>
     </section>
