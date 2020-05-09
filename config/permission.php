@@ -1,8 +1,6 @@
 <?php
 
 return [
-  // benim tarafımdan eklendi.
-//  
   
   'models' => [
     
@@ -101,20 +99,20 @@ return [
   'enable_wildcard_permission' => false,
   
   'cache' => [
-    
+  
     /*
      * By default all permissions are cached for 24 hours to speed up performance.
      * When permissions or roles are updated the cache is flushed automatically.
      */
-    
-    'expiration_time' => \DateInterval::createFromDateString('24 hours'),
-    
+  
+    'expiration_time' => DateInterval::createFromDateString('24 hours'),
+  
     /*
      * The cache key used to store all permissions.
      */
-    
+  
     'key' => 'spatie.permission.cache',
-    
+  
     /*
      * When checking for a permission against a model by passing a Permission
      * instance to the check, this key determines what attribute on the
@@ -125,11 +123,12 @@ return [
      */
     
     'model_key' => 'name',
-    
+  
     /*
-     * You may optionally indicate a specific cache driver to use for permission and
-     * role caching using any of the `store` drivers listed in the cache.php config
-     * file. Using 'default' here means to use the `default` set in cache.php.
+     * İsteğe bağlı olarak, cache.php config dosyasında listelenen "store" 
+     * sürücülerinden birini kullanarak izin ve rol önbelleğe almak için 
+     * kullanılacak belirli bir önbellek sürücüsünü belirtebilirsiniz. 
+     * Burada 'default' kullanmak, cache.php içinde ayarlanan `default 'ı kullanmak anlamına gelir.
      */
     
     'store' => 'default',

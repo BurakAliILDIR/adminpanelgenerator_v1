@@ -6,9 +6,9 @@ use App\Traits\ControllerTraits\HelperMethods;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-use Modules\Blog\Models\Blog;
 use Modules\Blog\Http\Requests\CreateBlogRequest;
 use Modules\Blog\Http\Requests\UpdateBlogRequest;
+use Modules\Blog\Models\Blog;
 
 class BlogController extends Controller
 {
@@ -172,9 +172,9 @@ class BlogController extends Controller
           $this->model[$key] = \Carbon\Carbon::parse($request[$key])->format($type === 'datetime' ? 'Y-m-d H:i:s' : 'Y-m-d');                        
           break;                                                                                                                                     
         case 'file':                                                                                                                                 
-        case 'image':                                                                                                                                
-          $this->insertToSingleMedia($request, $key);                                                                                                
-          break;                                                                                                                                     
+        case 'image':
+        $this->insertToSingleMedia($request, $key, $this->model);
+        break;                                                                                                                                     
         case 'password':                                                                                                                             
           $this->model[$key] = Hash::make($request[$key]);                                                                                           
           break;                                                                                                                                     

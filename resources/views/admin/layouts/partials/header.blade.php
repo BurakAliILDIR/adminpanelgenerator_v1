@@ -3,7 +3,7 @@
     <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html">
       <i class="fa fa-bars"></i>
     </a>
-    <a href="#" class="navbar-brand" data-toggle="fullscreen">{{ config('app.name') }}</a>
+    <a href="{{ route('home') }}" class="navbar-brand" data-toggle="fullscreen">{{ config('app.name') }}</a>
 
   </div>
   @php($auth_user = \Illuminate\Support\Facades\Auth::user())
@@ -12,8 +12,8 @@
       <a href="{{ route('profile.index') }}">
             <span class="thumb-sm avatar pull-left">
               <img
-                src="{{ $auth_user->getFirstMediaUrl('profile') === '' ? asset('/storage/application/defaults/avatar.jpg') : 
-                $auth_user->getFirstMediaUrl('profile') }}">
+                src="{{ asset($auth_user->getFirstMediaUrl('profile') === '' ? '/storage/application/defaults/avatar.jpg' : 
+                $auth_user->getFirstMediaUrl('profile')) }}">
             </span>
         {{ "$auth_user->name $auth_user->surname" }} </b>
       </a>

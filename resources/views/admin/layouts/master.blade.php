@@ -8,9 +8,7 @@
   @include('admin.layouts.partials.header')
   <section>
     <section class="hbox stretch">
-      <!-- .aside -->
-    @include('admin.layouts.partials.navbar')
-    <!-- /.aside -->
+      @include('admin.layouts.partials.navbar')
       <section id="content">
         <section class="wrapper">
           @yield('content')
