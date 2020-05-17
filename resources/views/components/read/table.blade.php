@@ -79,9 +79,7 @@ $model_name = class_basename($model);
                   <td>
                     <div class="checkbox">
                       <label class="checkbox-custom" id="{{ $upper_val['id'] }}">
-                        <input type="checkbox" name="checked[]"
-                               value="{{ $upper_val['id'] }}"
-                               data-val="delete">
+                        <input type="checkbox" name="checked[]" value="{{ $upper_val['id'] }}" data-val="delete">
                         <i class="fa fa-fw fa-square-o"></i>
                       </label>
                     </div>

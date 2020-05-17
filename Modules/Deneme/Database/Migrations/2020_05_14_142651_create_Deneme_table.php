@@ -1,25 +1,23 @@
 <?php
 
-use App\Traits\MigrationTraits\BelongsToManyTableSettings;
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreateBlogTable extends Migration
+class CreateDenemeTable extends Migration
 {
-  use BelongsToManyTableSettings;
-  
+  use \App\Traits\MigrationTraits\BelongsToManyTableSettings;
   private $fields = null;
   
   public function __construct()
   {
-    $model = 'Modules\\Blog\\Models\\Blog';
+    $model = 'Modules\\Deneme\\Models\\Deneme';
     $this->fields = (new $model())->getSettings('fields');
   }
   
   public function up()
   {
-    Schema::create('Blog', function (Blueprint $table) {
+    Schema::create('Deneme', function (Blueprint $table) {
       $table->uuid('id')->index()->unique()->primary();
       $table->string('slug')->unique()->index();
       $table->timestamps();
@@ -53,7 +51,7 @@ class CreateBlogTable extends Migration
             $rows = @$field['attributes']['rows'] ?? 5;
             if ($rows < 5) $table->text($key)->nullable();
             else if ($rows === 5) $table->mediumText($key)->nullable();
-            else $table->longText($key)->nullable();
+            else $table->longText($key)->nullable();   
             break;
           case 'date':
             $table->date($key)->nullable()->index();
@@ -71,6 +69,6 @@ class CreateBlogTable extends Migration
   public function down()
   {
     $this->belongsToManyDown();
-    Schema::dropIfExists('Blog');
+    Schema::dropIfExists('Deneme');
   }
 }

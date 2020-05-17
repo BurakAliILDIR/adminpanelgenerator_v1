@@ -12,16 +12,16 @@
               <div class="m-t">
                 <a class="btn btn-xs btn-default btn-rounded "
                    href="{{ route('modules.index') }}">
-                  <i class="fa fa-arrow-left"></i>
-                  Tüm Modüllere Dön
-                </a>
-                <span class="m-l">{{ 'Modül Düzenle' }}</span>
-              </div>
-            </div>
-          </div>
-        </header>
-        <div class="panel-body">
-          @component('components.alert.alert_messages')@endcomponent
+									<i class="fa fa-arrow-left"></i>
+									Tüm Modüllere Dön
+								</a>
+								<span class="m-l">Modül Düzenle</span>
+							</div>
+						</div>
+					</div>
+				</header>
+				<div class="panel-body">
+					@component('components.alert.alert_messages')@endcomponent
           @component('components.alert.error_messages')@endcomponent
           {{ Form::model($source, ['route' => ['modules.update', $name],  'method' => 'put', 'class' => 'form-horizontal']) }}
           @component('components.form.partials.text',

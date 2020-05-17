@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="app-fluid">
-<head>
   @include('admin.layouts.partials.head')
-</head>
 <body>
 <section class="vbox">
   @include('admin.layouts.partials.header')
@@ -17,7 +15,7 @@
            data-target="#nav,html"></a>
       </section>
       <aside class="bg-light lter b-l aside-md hide" id="notes">
-        <div class="wrapper">Notification</div>
+        <div class="wrapper">Bildirimler</div>
       </aside>
     </section>
   </section>

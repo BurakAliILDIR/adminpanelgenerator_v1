@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Traits\MediaUploads;
-
 
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\File;
@@ -15,8 +13,7 @@ Trait MediaUploads
   
   private function image_size_format($key, $count)
   {
-    $this
-      ->addMediaCollection($key)
+    $this->addMediaCollection($key)
       ->acceptsFile(function (File $file) {
         return (($file->mimeType === 'image/jpeg') ||
           ($file->mimeType === 'image/jpg') ||

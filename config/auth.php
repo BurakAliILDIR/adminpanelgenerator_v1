@@ -7,9 +7,9 @@ return [
   | Authentication Defaults
   |--------------------------------------------------------------------------
   |
-  | This option controls the default authentication "guard" and password
-  | reset options for your application. You may change these defaults
-  | as required, but they're a perfect start for most applications.
+  | Bu seçenek, uygulamanız için varsayılan kimlik doğrulama "guard" ve parola sıfırlama
+  | seçeneklerini denetler.
+  | Bu varsayılanları gerektiği gibi değiştirebilirsiniz, ancak çoğu uygulama için mükemmel bir başlangıçtır.
   |
   */
   
@@ -17,23 +17,24 @@ return [
     'guard' => 'web',
     'passwords' => 'users',
   ],
-  
-  /*
-  |--------------------------------------------------------------------------
-  | Authentication Guards
-  |--------------------------------------------------------------------------
-  |
-  | Next, you may define every authentication guard for your application.
-  | Of course, a great default configuration has been defined for you
-  | here which uses session storage and the Eloquent user provider.
-  |
-  | All authentication drivers have a user provider. This defines how the
-  | users are actually retrieved out of your database or other storage
-  | mechanisms used by this application to persist your user's data.
-  |
-  | Supported: "session", "token"
-  |
-  */
+	
+	/*
+	|--------------------------------------------------------------------------
+	| Authentication Guards
+	|--------------------------------------------------------------------------
+	|
+	| Ardından, uygulamanız için her kimlik doğrulama korumasını tanımlayabilirsiniz.
+	| Elbette, burada sizin için oturum depolama alanını ve
+	| Eloquent kullanıcı sağlayıcısını kullanan harika bir varsayılan yapılandırma tanımlanmıştır.
+	|
+	| Tüm kimlik doğrulama sürücülerinin bir kullanıcı sağlayıcısı vardır.
+	| Bu, kullanıcıların veritabanınızdan veya bu uygulama tarafından
+	| kullanıcı verilerinizi kalıcı hale getirmek için kullanılan diğer
+	| depolama mekanizmalarından nasıl alınacağını tanımlar.
+	|
+	| Supported: "session", "token"
+	|
+	*/
   
   'guards' => [
     'web' => [
@@ -47,23 +48,24 @@ return [
       'hash' => false,
     ],
   ],
-  
-  /*
-  |--------------------------------------------------------------------------
-  | User Providers
-  |--------------------------------------------------------------------------
-  |
-  | All authentication drivers have a user provider. This defines how the
-  | users are actually retrieved out of your database or other storage
-  | mechanisms used by this application to persist your user's data.
-  |
-  | If you have multiple user tables or models you may configure multiple
-  | sources which represent each model / table. These sources may then
-  | be assigned to any extra authentication guards you have defined.
-  |
-  | Supported: "database", "eloquent"
-  |
-  */
+	
+	/*
+	|--------------------------------------------------------------------------
+	| User Providers
+	|--------------------------------------------------------------------------
+	|
+	| Tüm kimlik doğrulama sürücülerinin bir kullanıcı sağlayıcısı vardır.
+	| Bu, kullanıcıların veritabanınızdan veya bu uygulama tarafından kullanıcı
+	| verilerinizi kalıcı hale getirmek için kullanılan diğer depolama
+	| mekanizmalarından nasıl alınacağını tanımlar.
+	|
+	| Birden fazla kullanıcı tablonuz veya modeliniz varsa, her model / table
+	| temsil eden birden fazla kaynak yapılandırabilirsiniz.
+	| Bu kaynaklar daha sonra tanımladığınız ek kimlik doğrulama korumalarına atanabilir.
+	|
+	| Supported: "database", "eloquent"
+	|
+	*/
   
   'providers' => [
     'users' => [
@@ -76,21 +78,21 @@ return [
     //     'table' => 'users',
     // ],
   ],
-  
-  /*
-  |--------------------------------------------------------------------------
-  | Resetting Passwords
-  |--------------------------------------------------------------------------
-  |
-  | You may specify multiple password reset configurations if you have more
-  | than one user table or model in the application and you want to have
-  | separate password reset settings based on the specific user types.
-  |
-  | The expire time is the number of minutes that the reset token should be
-  | considered valid. This security feature keeps tokens short-lived so
-  | they have less time to be guessed. You may change this as needed.
-  |
-  */
+	
+	/*
+	|--------------------------------------------------------------------------
+	| Resetting Passwords
+	|--------------------------------------------------------------------------
+	|
+	| Uygulamada birden fazla kullanıcı tablonuz veya modeliniz varsa ve
+	| belirli kullanıcı türlerine göre ayrı şifre sıfırlama ayarlarına sahip olmak istiyorsanız,
+	| birden çok şifre sıfırlama yapılandırması belirtebilirsiniz.
+	|
+	| Son kullanma süresi, sıfırlama simgesinin geçerli sayılması gereken dakika sayısıdır.
+	| Bu güvenlik özelliği, jetonları kısa ömürlü tutar, böylece tahmin edilmesi daha az zaman alır.
+	| Bunu gerektiği gibi değiştirebilirsiniz.
+	|
+	*/
   
   'passwords' => [
     'users' => [
@@ -100,17 +102,17 @@ return [
       'throttle' => 60,
     ],
   ],
-  
-  /*
-  |--------------------------------------------------------------------------
-  | Password Confirmation Timeout
-  |--------------------------------------------------------------------------
-  |
-  | Here you may define the amount of seconds before a password confirmation
-  | times out and the user is prompted to re-enter their password via the
-  | confirmation screen. By default, the timeout lasts for three hours.
-  |
-  */
+	
+	/*
+	|--------------------------------------------------------------------------
+	| Password Confirmation Timeout
+	|--------------------------------------------------------------------------
+	|
+	| Burada, şifre onayının zaman aşımına uğramadan ve kullanıcıdan onay
+	| ekranından şifresini tekrar girmesi istenecek saniye sayısını belirleyebilirsiniz.
+	| Varsayılan olarak, zaman aşımı üç saat sürer.
+	|
+	*/
   
   'password_timeout' => 10800,
 

@@ -54,8 +54,8 @@ class CreateModule extends Command
    */
   private function source_generator($name) : void
   {
-    $source_path = storage_path('app\modules\sources');
-    $default_source = json_decode(file_get_contents($source_path . '\default_source.json'), true);
+    $source_path = storage_path('app/modules/sources');
+    $default_source = json_decode(file_get_contents("$source_path/default_source.json"), true);
     $default_source['titles'] = [
       'index' => "$name",
       'show' => "$name Detay",
@@ -71,11 +71,10 @@ class CreateModule extends Command
       "update" => "$name.update",
       "delete" => "$name.destroy",
     ];
-    file_put_contents("$source_path\\$name.json", json_encode($default_source));
+    file_put_contents("$source_path/$name.json", json_encode($default_source));
   }
   
   /**
-   * @param $name
    * Permission ları oluşturur.
    */
   private function permission_generator($name) : void
@@ -88,7 +87,6 @@ class CreateModule extends Command
   }
   
   /**
-   * @param $name
    * Menuyü oluşturup json dosyasına yazar.
    */
   private function menu_generator($name) : void

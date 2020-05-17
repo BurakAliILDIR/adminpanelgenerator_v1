@@ -6,27 +6,27 @@
 @section('content')
   <div class="row">
     <div class="col-md-5 col-md-offset-3">
-      <section class="panel panel-default">
-        <header class="panel-heading font-bold">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="m-t">
-                <a class="btn btn-xs btn-default btn-rounded "
-                   href="{{ route('modules.show', $module_name) }}">
-                  <i class="fa fa-arrow-left"></i>
-                  {{ $module_name }} Alanlarına Dön
-                </a>
-                <span class="m-l">{{ "$module_name - İlişkili Alan Ekle" }}</span>
-              </div>
-            </div>
-          </div>
-        </header>
-        <div class="panel-body">
-          @component('components.alert.alert_messages')@endcomponent
-          @component('components.alert.error_messages')@endcomponent
-          {{ Form::open(['route' => ['fields.store', $module_name, true], 'class' => 'form-horizontal']) }}
-          <div class="form-group">
-            {{ Form::label('model', 'Model', ['class' => 'col-sm-2 control-label']) }}
+			<section class="panel panel-default">
+				<header class="panel-heading font-bold">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="m-t">
+								<a class="btn btn-xs btn-default btn-rounded "
+									 href="{{ route('modules.show', $module_name) }}">
+									<i class="fa fa-arrow-left"></i>
+									{{ $module_name }} Alanlarına Dön
+								</a>
+								<span class="m-l">{{ $module_name }} - İlişkili Alan Ekle</span>
+							</div>
+						</div>
+					</div>
+				</header>
+				<div class="panel-body">
+					@component('components.alert.alert_messages')@endcomponent
+					@component('components.alert.error_messages')@endcomponent
+					{{ Form::open(['route' => ['fields.store', $module_name, true], 'class' => 'form-horizontal']) }}
+					<div class="form-group">
+						{{ Form::label('model', 'Model', ['class' => 'col-sm-2 control-label']) }}
             <div class="col-sm-10">
               <select class="form-control m-b" id="model" name="model" required>
                 <option selected hidden disabled><-- Model Seçiniz --></option>

@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Traits\MediaUploads\CustomModelTools;
 use App\Traits\MediaUploads\MediaUploads;
 use App\Traits\ModelTraits\Booting;
 use App\Traits\ModelTraits\Relations;
@@ -18,13 +17,9 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
-  use Booting, Notifiable, CausesActivity, LogsActivity, Relations, HasRoles, SourceSettings,
-    MediaUploads, CustomModelTools, SoftDeletes;
+  use Booting, Notifiable, CausesActivity, LogsActivity, Relations, HasRoles, SourceSettings, MediaUploads, SoftDeletes;
   
   private $source = 'User.json';
-  
-  // kendi media ayar dizisini kullanacağı için. CustomModelTools ile beraber kullanılır.
-  private $customMediaUploads = true;
   
   protected $keyType = 'string';
   
@@ -34,9 +29,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
   
   protected $hidden = ['remember_token', 'password'];
   
-  protected $casts = [
-    'email_verified_at' => 'datetime', 'date_of_birth' => 'date',
-  ];
+  protected $casts = ['email_verified_at' => 'datetime', 'date_of_birth' => 'date',];
   
   protected static $logUnguarded = true;
   protected static $submitEmptyLogs = false;

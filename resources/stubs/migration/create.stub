@@ -21,7 +21,7 @@ class $CLASS$ extends Migration
       $table->uuid('id')->index()->unique()->primary();
       $table->string('slug')->unique()->index();
       $table->timestamps();
-      $table->softDeletes();
+      $table->softDeletes()->index();
       foreach ($this->fields as $key => $field) {
         switch ($type = $field['type']) {
           case 'radio':
@@ -60,6 +60,9 @@ class $CLASS$ extends Migration
             if ($key !== 'created_at' && $key !== 'updated_at')
               $table->dateTime($key)->nullable()->index();
             break;
+					case 'auth':
+						$table->uuid($key)->index();
+						break;
         }
       }
     });

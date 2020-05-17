@@ -45,21 +45,28 @@ Route::prefix('roller')->middleware(['verified', 'auth'])->group(function () {
 });
 
 Route::prefix('kullanicilar')->middleware(['verified', 'auth'])->group(function () {
-  Route::get('/', 'DefaultControllers\UserController@index')->middleware('permission:User.index')->name('user.index');
-  Route::get('/ekle', 'DefaultControllers\UserController@create')->middleware('permission:User.create')->name('user.create');
-  Route::post('/', 'DefaultControllers\UserController@store')->middleware('permission:User.create')->name('user.store');
-  Route::get('/{id}', 'DefaultControllers\UserController@show')->middleware('permission:User.detail')->name('user.show');
-  Route::get('/{id}/duzenle', 'DefaultControllers\UserController@edit')->middleware('permission:User.update')->name('user.edit');
-  Route::put('/{id}', 'DefaultControllers\UserController@update')->middleware('permission:User.update')->name('user.update');
-  Route::delete('/', 'DefaultControllers\UserController@destroy')->middleware('permission:User.delete')->name('user.destroy');
+	Route::get('/', 'DefaultControllers\UserController@index')->middleware('permission:User.index')->name('user.index');
+	Route::get('/ekle', 'DefaultControllers\UserController@create')->middleware('permission:User.create')->name('user.create');
+	Route::post('/', 'DefaultControllers\UserController@store')->middleware('permission:User.create')->name('user.store');
+	Route::get('/{id}', 'DefaultControllers\UserController@show')->middleware('permission:User.detail')->name('user.show');
+	Route::get('/{id}/duzenle', 'DefaultControllers\UserController@edit')->middleware('permission:User.update')->name('user.edit');
+	Route::put('/{id}', 'DefaultControllers\UserController@update')->middleware('permission:User.update')->name('user.update');
+	Route::delete('/', 'DefaultControllers\UserController@destroy')->middleware('permission:User.delete')->name('user.destroy');
 });
 
 Route::prefix('izinler')->middleware(['verified', 'auth'])->group(function () {
-  Route::get('/', 'DefaultControllers\PermissionController@index')->middleware('permission:Permission.index')->name('permission.index');
-  Route::get('/{id}', 'DefaultControllers\PermissionController@show')->middleware('permission:Permission.detail')->name('permission.show');
-  Route::get('/{id}/duzenle', 'DefaultControllers\PermissionController@edit')->middleware('permission:Permission.update')->name('permission.edit');
-  Route::put('/{id}', 'DefaultControllers\PermissionController@update')->middleware('permission:Permission.update')->name('permission.update');
+	Route::get('/', 'DefaultControllers\PermissionController@index')->middleware('permission:Permission.index')->name('permission.index');
+	Route::get('/{id}', 'DefaultControllers\PermissionController@show')->middleware('permission:Permission.detail')->name('permission.show');
+	Route::get('/{id}/duzenle', 'DefaultControllers\PermissionController@edit')->middleware('permission:Permission.update')->name('permission.edit');
+	Route::put('/{id}', 'DefaultControllers\PermissionController@update')->middleware('permission:Permission.update')->name('permission.update');
 });
+
+Route::prefix('sistem-ayarlar')->middleware(['verified', 'auth'])->group(function () {
+	Route::get('/', 'DefaultControllers\SystemSettingsController@index')->middleware('permission:SystemSettings.index')->name('system_settings.index');
+	Route::get('/duzenle', 'DefaultControllers\SystemSettingsController@edit')->middleware('permission:SystemSettings.edit')->name('system_settings.edit');
+	Route::put('/', 'DefaultControllers\SystemSettingsController@update')->middleware('permission:SystemSettings.edit')->name('system_settings.update');
+});
+
 
 Route::get('/etkinlikler', 'DefaultControllers\LogsController@index')->middleware(['verified', 'auth', 'permission:Logs.index'])->name('Logs.index');
 

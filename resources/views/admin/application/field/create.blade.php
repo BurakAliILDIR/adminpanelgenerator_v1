@@ -16,7 +16,7 @@
                   <i class="fa fa-arrow-left"></i>
                   {{ $module_name }} Alanlarına Dön
                 </a>
-                <span class="m-l">Alan Ekle</span>
+                <span class="m-l">{{ $module_name }} - Alan Ekle</span>
               </div>
             </div>
           </div>
@@ -34,7 +34,7 @@
           ])@endcomponent
           @component('components.form.partials.text',
           ['key' => 'name',
-          'title' => 'Ad',
+          'title' => 'Key',
           'attributes'=> ['required' => 'required']
           ])@endcomponent
           @component('components.form.partials.text',
@@ -42,6 +42,7 @@
           'title' => 'Başlık',
           'attributes'=> ['required' => 'required']
           ])@endcomponent
+          <small>Eğer Text, Number veya Decimal tipinde ise:</small>
           @component('components.form.partials.text',
           ['key' => 'unit',
           'title' => 'Birim (isteğe bağlı)',
@@ -68,6 +69,23 @@
                ['key' => 'values',
                'title' => 'Değerler',
           ])@endcomponent
+          <small>Auth seçildi ise:</small>
+          <div class="form-check m-b">
+            {{ Form::label('fields', 'Görüntülenecek Alanlar', ['class' => 'col-sm-2 control-label']) }}
+            <div class="col-sm-10 m-b">
+              @foreach($this_fields as $key => $val)
+                <div class="checkbox">
+                  <label class="checkbox-custom center-block">
+                    {{ Form::checkbox('fields[]', $key) }}
+                    <i class="fa fa-fw fa-square-o"></i>
+                    {{ "$key (" . $val['title'] . ")" }}
+                  </label>
+                </div>
+              @endforeach
+            </div>
+          </div>
+          <div class="line line-dashed line-lg pull-in"></div>
+
           <div class="form-check m-b">
             {{ Form::label('rules', 'Kurallar', ['class' => 'col-sm-2 control-label']) }}
             <div class="col-sm-10 m-b">

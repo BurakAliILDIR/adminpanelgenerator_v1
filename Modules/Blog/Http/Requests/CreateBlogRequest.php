@@ -4,7 +4,6 @@ namespace Modules\Blog\Http\Requests;
 
 use App\Traits\ValidationTraits\DynamicRulesValidate;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Redis;
 
 class CreateBlogRequest extends FormRequest
 {

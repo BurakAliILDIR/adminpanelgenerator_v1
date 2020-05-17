@@ -7,7 +7,6 @@
     {{ Form::text($key, $value, array_merge(['class' => 'form-control m-b', 'data-toggle' => 'datetimepicker'.$key, 'readonly' => 'readonly'], $attributes ?? [])) }}
   </div>
 </div>
-<div class="line line-dashed line-lg pull-in"></div>
 
 <script>
   $(function () {
@@ -22,3 +21,4 @@
     });
   });
 </script>
+<div class="line line-dashed line-lg pull-in"></div>

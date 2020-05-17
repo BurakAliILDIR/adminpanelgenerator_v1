@@ -7,9 +7,9 @@ return [
     | Cross-Origin Resource Sharing (CORS) Configuration
     |--------------------------------------------------------------------------
     |
-    | Here you may configure your settings for cross-origin resource sharing
-    | or "CORS". This determines what cross-origin operations may execute
-    | in web browsers. You are free to adjust these settings as needed.
+    | Burada, kaynak kökenli kaynak paylaşımı veya "CORS" için ayarlarınızı yapılandırabilirsiniz.
+    | Bu, web tarayıcılarında hangi çapraz menşe işlemlerin yürütülebileceğini belirler.
+    | Bu ayarları gerektiği gibi ayarlamakta serbestsiniz.
     |
     | To learn more: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
     |

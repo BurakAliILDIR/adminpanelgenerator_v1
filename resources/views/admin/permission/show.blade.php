@@ -9,14 +9,14 @@
         <div class="col-md-6 col-xs-6">
           <div class="m-t">
             <a class="btn btn-xs btn-default btn-rounded " href="{{ route('permission.index') }}">
-              <i class="fa fa-arrow-left"></i>
-              Tüm İzinlere Dön
-            </a>
-            <span class="m-l">{{ 'İzin Detay' }}</span>
-          </div>
-        </div>
-        <div class="col-md-6">
-          @can('Permission.update')
+							<i class="fa fa-arrow-left"></i>
+							Tüm İzinlere Dön
+						</a>
+						<span class="m-l">İzin Detay</span>
+					</div>
+				</div>
+				<div class="col-md-6">
+					@can('Permission.update')
             <div class="m-t m-r pull-right">
               <a class="btn btn-xs btn-info btn-rounded "
                  href="{{ route('permission.edit', $model['id']) }}">

@@ -14,14 +14,14 @@
                    href="{{ route('modules.show', $module_name) }}">
                   <i class="fa fa-arrow-left"></i>
                   {{ $module_name }} Alanlarına Dön
-                </a>
-                <span class="m-l">{{ 'Modül Düzenle' }}</span>
-              </div>
-            </div>
-          </div>
-        </header>
-        <div class="panel-body">
-          @component('components.alert.alert_messages')@endcomponent
+								</a>
+								<span class="m-l">Modül Düzenle</span>
+							</div>
+						</div>
+					</div>
+				</header>
+				<div class="panel-body">
+					@component('components.alert.alert_messages')@endcomponent
           @component('components.alert.error_messages')@endcomponent
           {{ Form::model($cells, ['route' => ['fields.update', $module_name, $key],  'method' => 'put', 'class' => 'form-horizontal']) }}
           @component('components.form.partials.text',

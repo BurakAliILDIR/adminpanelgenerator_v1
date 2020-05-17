@@ -39,8 +39,8 @@ trait HelperMethods
   {
     $plucks = [];
     foreach ($this->jsonSettings['fields'] as $key => $field) {
-      if ($field[$operation_type] && @($relation = $field['relationship']))
-        $plucks[$key] = (new $relation['model'])->pluck($relation['pluck']['display'], $relation['pluck']['value']);
+	    if ($field[$operation_type] && @($relation = $field['relationship']) && $field['type'] !== 'auth')
+		    $plucks[$key] = (new $relation['model'])->pluck($relation['pluck']['display'], $relation['pluck']['value']);
     }
     return $plucks;
   }
@@ -48,29 +48,37 @@ trait HelperMethods
   // Settings json çekme ve işlemeleri (Aşağıdaki 3 fonksiyon)
   private function readFieldsPick($page) : array
   {
-    $dbTypes = ['text', 'checkbox', 'date', 'datetime', 'email', 'number', 'radio', 'hidden', 'password', 'select', 'textarea'];
-    
-    $showFields = [];
-    $dbSelectFields = [];
-    foreach ($this->jsonSettings['fields'] as $key => $field) {
-      if ($field[$page]) {
-        $showFields[$key] = $field;
-        if (in_array($field['type'], $dbTypes)) {
-          array_push($dbSelectFields, $key);
-        }
-      }
-    }
-    return ['showFields' => $showFields, 'dbSelectFields' => $dbSelectFields];
+	  $dbTypes = ['text', 'checkbox', 'date', 'datetime', 'email', 'number', 'radio', 'hidden', 'password', 'textarea'];
+	
+	  $showFields = [];
+	  $dbSelectFields = [];
+	  foreach ($this->jsonSettings['fields'] as $key => $field) {
+		  if ($field[$page]) {
+			  $showFields[$key] = $field;
+			  if (in_array($field['type'], $dbTypes)) {
+				  array_push($dbSelectFields, $key);
+			  } 
+			  if ($field['type'] === 'select' || $field['type'] === 'auth') {
+				  if (($relation = @$field['relationship'])) {
+					  if (($relation['type'] === 'hasOne' || $relation['type'] === 'hasMany')) {
+						  array_push($dbSelectFields, $key);
+					  }
+				  } else
+					  array_push($dbSelectFields, $key);
+			  }
+		  }
+	  }
+	  return ['showFields' => $showFields, 'dbSelectFields' => $dbSelectFields];
   }
   
   private function redisReadFields(string $operation_type)
   {
-    $key = "$this->redis_path:Json:$operation_type";
-    if ( !($fields = unserialize(Redis::get($key)))) {
-      $fields = $this->readFieldsPick($operation_type);
-      Redis::set($key, serialize($fields));
-    }
-    return $fields;
+	  $key = "$this->redis_path:Json:$operation_type";
+	  if ( !($fields = unserialize(Redis::get($key)))) {
+		  $fields = $this->readFieldsPick($operation_type);
+		  Redis::set($key, serialize($fields));
+	  }
+	  return $fields;
   }
   
   private function redisJsonSettings() : void

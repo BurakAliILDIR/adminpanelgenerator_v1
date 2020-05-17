@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Str;
-
 return [
   
   /*
@@ -118,21 +116,21 @@ return [
   |
   */
   
-	'redis' => [
-		'client' => 'phpredis',
-		'options' => [
-			'cluster' => 'redis',
-		],
-		'clusters' => [
-			'default' => [
-				[
-					'host' => 'redis-cluster',
-					'password' => 'secret',
-					'port' => 7000,
-					'database' => 0,
-				],
-			],
-		],
-	],
+  'redis' => [
+    'client' => 'phpredis',
+    'options' => [
+      'cluster' => 'redis',
+    ],
+    'clusters' => [
+      'default' => [
+        [
+          'host' => 'redis-cluster',
+          'password' => null,
+          'port' => 7000,
+          'database' => 0,
+        ],
+      ],
+    ],
+  ],
 
 ];

@@ -32,7 +32,7 @@
               <tr>
                 <th>Başlık</th>
                 <th>Tip</th>
-                <th>Ad</th>
+                <th>Key</th>
                 <th width="50">Listeleme Sayfası</th>
                 <th width="50">Detay Sayfası</th>
                 <th width="50">Ekleme Sayfası</th>

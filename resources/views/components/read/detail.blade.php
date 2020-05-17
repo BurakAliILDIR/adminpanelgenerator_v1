@@ -36,96 +36,116 @@ $class_name = class_basename($model);
               <input type="hidden" name="back" value="{{ URL::previous() }}">
               <button type="submit" class="btn btn-xs btn-danger btn-rounded"
                       onclick="return confirm('Kaydı silmek istediğinize emin misiniz?')">
-                <i class="fa fa-trash"></i>
-                Bu Kaydı Sil
-              </button>
-            </form>
-          @endcan
-        </div>
-      </div>
-    </div>
-  </header>
-  <section class="scrollable">
-    <section class="hbox stretch row">
-      <aside class="bg-light lter b-r col-md-3">
-        <section class="vbox">
-          <section class="scrollable">
-            <div class="wrapper-lg">
-              <div class="clearfix m-b">
-                @foreach($fields as $key => $val)
-                  @if($val['type'] === 'image' && (($image = $model->getFirstMediaUrl($key)) !== '' || @$val['value']))
-                    <span class="pull-left thumb m-r">
+								<i class="fa fa-trash"></i>
+								Bu Kaydı Sil
+							</button>
+						</form>
+					@endcan
+				</div>
+			</div>
+		</div>
+	</header>
+	<section class="scrollable">
+		<section class="hbox stretch row">
+			<aside class="bg-light lter b-r col-md-3">
+				<section class="vbox">
+					<section class="scrollable">
+						<div class="wrapper-lg">
+							<div class="clearfix m-b">
+								@foreach($fields as $key => $val)
+									@if($val['type'] === 'image' && (($image = $model->getFirstMediaUrl($key)) !== '' || @$val['value']))
+										<span class="pull-left thumb m-r">
                     <img
-                      src="{{ $image !== '' ? $image :  \Illuminate\Support\Facades\Storage::url('application/defaults/'.$val['value']) }}">
+											src="{{ $image !== '' ? $image : \Illuminate\Support\Facades\Storage::url('application/defaults/'.$val['value']) }}">
                     </span>
-                  @endif
-                @endforeach
-              </div>
-              <div style="word-break: break-all">
-                @foreach($fields as $key => $val)
-                  @if(!(@$val['multiple']))
-                    @switch($val['type'])
-                      @case('text')
-                      @case('email')
-                      @case('number')
-                      @case('radio')
-                      @case('textarea')
-                      <small class="text-uc text-muted">{{ $val['title'] }} : </small>
-                      <span>{!! "$model[$key] " . @$val['unit'] !!}</span>
-                      <div class="line"></div>
-                      @break
-                      @case('file')
-                      <small class="text-uc text-muted">{{ $val['title'] }} : </small>
-                      @if(($file = $model->getFirstMediaUrl($key)) !== '')
-                        <a class="btn btn-default btn-xs btn-rounded"
-                           href="{{ $file }}" target="_blank">
-                          {{ $val['title'] }}
-                          Görüntüle
-                        </a>
-                      @else
-                        -
-                      @endif
-                      <div class="line"></div>
-                      @break
-                      @case('select')
-                      <?php $relation_infos = @$val['relationship'] ?>
-                      @if(@$relation_infos['multiple'] ?? true)
-                        <small class="text-uc text-muted">{{ $val['title'] }} : </small>
-                        @if($relation_infos)
-                          @if(($item = $model->relation($relation_infos)->first()))
-                            @foreach($relation_infos['fields'] as $v)
-                              {{ $item[$v] ?? '-' }}
-                              @if(!$loop->last)
-                                {{ ' - ' }}
-                              @endif
-                            @endforeach
-                          @endif
-                        @else
-                          <span>{!! $model[$key] !!}</span>
-                        @endif
-                        <div class="line"></div>
-                      @endif
-                      @break
-                      @case('date')
-                      <small class="text-uc text-muted">{{ $val['title'] }} : </small>
-                      {{ \Carbon\Carbon::parse($model[$key])->format('d/m/Y') }}
-                      <div class="line"></div>
-                      @break
-                      @case('datetime')
-                      <small class="text-uc text-muted">{{ $val['title'] }} : </small>
-                      {{ \Carbon\Carbon::parse($model[$key])->format('d/m/Y H:i:s') }}
-                      <div class="line"></div>
-                      @break
-                    @endswitch
-                  @endif
-                @endforeach
-              </div>
-            </div>
-          </section>
-        </section>
-      </aside>
-      <aside class="bg-white col-md-6">
-        <section class="vbox">
+									@endif
+								@endforeach
+							</div>
+							<div style="word-break: break-all">
+								@foreach($fields as $key => $val)
+									@if(!(@$val['multiple']))
+										@switch($val['type'])
+											@case('text')
+											@case('email')
+											@case('number')
+											@case('radio')
+											@case('textarea')
+											<small class="text-uc text-muted">{{ $val['title'] }} : </small>
+											<span>{!! "$model[$key] " . @$val['unit'] !!}</span>
+											<div class="line"></div>
+											@break
+											@case('file')
+											<small class="text-uc text-muted">{{ $val['title'] }} : </small>
+											@if(($file = $model->getFirstMediaUrl($key)) !== '')
+												<a class="btn btn-default btn-xs btn-rounded"
+													 href="{{ $file }}" target="_blank">
+													{{ $val['title'] }}
+													Görüntüle
+												</a>
+											@else
+												-
+											@endif
+											<div class="line"></div>
+											@break
+											@case('select')
+											<?php $relation_infos = @$val['relationship'] ?>
+											@if(@$relation_infos['multiple'] ?? true)
+												<small class="text-uc text-muted">{{ $val['title'] }} : </small>
+												@if($relation_infos)
+													{{--{{ dd($model->relation($relation_infos)->first()) }}--}}
+													@if(($item = $model->relation($relation_infos)->first()))
+														@foreach($relation_infos['fields'] as $v)
+															{{ $item[$v] ?? '-' }}
+															@if(!$loop->last)
+																{{ ' - ' }}
+															@endif
+														@endforeach
+													@endif
+												@else
+													<span>{{ $model[$key] }}</span>
+												@endif
+												<div class="line"></div>
+											@endif
+											@break
+											@case('auth')
+											<?php $relation_infos = @$val['relationship'] ?>
+											@if(@$relation_infos['multiple'] ?? true)
+												<small class="text-uc text-muted">{{ $val['title'] }} : </small>
+												@if($relation_infos && ($item = $model->relation($relation_infos)->first()))
+													@can('User.detail')
+														@if ($item['id'] === \Illuminate\Support\Facades\Crypt::decryptString(config
+														('my-config.super_admin_id')))
+															{{ $item['name'] . ' ' . $item['surname'] }}
+														@else
+															<a href="{{ $item['id'] }}"><strong>{{ $item['name'] . ' ' . $item['surname']}}</strong></a>
+														@endif
+													@else
+														{{ $item['name'] . ' ' . $item['surname'] }}
+													@endcan
+												@endif
+											@endif
+											<div class="line"></div>
+											@break
+											@case('date')
+											<small class="text-uc text-muted">{{ $val['title'] }} : </small>
+											{{ \Carbon\Carbon::parse($model[$key])->format('d/m/Y') }}
+											<div class="line"></div>
+											@break
+											@case('datetime')
+											<small class="text-uc text-muted">{{ $val['title'] }} : </small>
+											{{ \Carbon\Carbon::parse($model[$key])->format('d/m/Y H:i:s') }}
+											<div class="line"></div>
+											@break
+										@endswitch
+									@endif
+								@endforeach
+							</div>
+						</div>
+					</section>
+				</section>
+			</aside>
+			<aside class="bg-white col-md-6">
+				<section class="vbox">
           <header class="header bg-light bg-gradient">
             <ul class="nav nav-tabs nav-white">
               @foreach($fields as $key => $val)
@@ -255,7 +275,7 @@ $class_name = class_basename($model);
                                                 <div class="checkbox m-l">
                                                   <label class="checkbox-custom center-block">
                                                     <input type="checkbox" name='mediaTodelete[]'
-                                                           value="{{$image->id}}">
+                                                           value="{{ $image->id }}">
                                                     <i class="fa fa-fw fa-square-o"></i>
                                                     Sil
                                                   </label>

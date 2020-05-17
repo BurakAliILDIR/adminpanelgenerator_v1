@@ -1,6 +1,7 @@
+<head>
 <meta charset="utf-8"/>
-<title>@yield('title') | {{ config('app.name') }}</title>
-<meta name="description" content="{{ config('app.description') }}"/>
+<title>@yield('title') | {{ $system_settings['name'] }}</title>
+<meta name="description" content="{{ $system_settings['description'] }}"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="csrf-token" content="{{ csrf_token() }}"/>
 <link rel="stylesheet" href="{{ asset('/storage/admin-template/css/bootstrap.css') }}" type="text/css"/>
@@ -17,3 +18,4 @@
 <![endif]-->
 <script src="{{ asset('/storage/admin-template/js/jquery.min.js') }}"></script>
 @yield('css')
+</head>

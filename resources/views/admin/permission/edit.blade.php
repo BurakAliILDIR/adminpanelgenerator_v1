@@ -13,14 +13,14 @@
               <div class="m-t">
                 <a class="btn btn-xs btn-default btn-rounded "
                    href="{{ route('permission.index') }}">
-                  <i class="fa fa-arrow-left"></i>
-                  Tüm Kayıtlara Dön
-                </a>
-                <span class="m-l">{{ 'İzin Düzenle' }}</span>
-              </div>
-            </div>
-            <div class="col-md-6">
-              @can('Permission.detail')
+									<i class="fa fa-arrow-left"></i>
+									Tüm Kayıtlara Dön
+								</a>
+								<span class="m-l">İzin Düzenle</span>
+							</div>
+						</div>
+						<div class="col-md-6">
+							@can('Permission.detail')
                 <div class="m-t">
                   <a class="btn btn-xs btn-default btn-rounded pull-right"
                      href="{{ route('permission.show', $model->id) }}">

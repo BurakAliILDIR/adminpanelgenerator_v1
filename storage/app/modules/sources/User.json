@@ -1,1 +1,109 @@
-{"fields":{"id":{"type":"hidden","title":"Kimlik","detail":true},"name":{"type":"text","title":"Ad","detail":true},"surname":{"type":"text","title":"Soyad","detail":true},"email":{"type":"email","title":"E-posta","detail":true},"bio":{"type":"textarea","title":"Hakk\u0131mda","detail":true},"phone":{"type":"number","title":"Telefon","detail":true},"gender":{"type":"radio","title":"Cinsiyet","detail":true},"confirm":{"type":"radio","title":"Durum","detail":true},"email_verified_at":{"type":"hidden","title":"E-posta Onay\u0131","detail":true},"created_at":{"type":"datetime","title":"Kay\u0131t Tarihi","name":"created_at","rules":["required"],"create":false,"update":false,"list":false,"detail":true},"updated_at":{"type":"datetime","title":"D\u00fczenlenme Tarihi","name":"updated_at","rules":["required"],"create":false,"update":false,"list":false,"detail":true},"resimler":{"type":"multi_image","title":"Resimler","count":10,"multiple":true,"detail":true},"profile":{"type":"image","title":"Profil Foto\u011fraf\u0131","detail":true}}}
+{
+	"fields": {
+		"id": {
+			"type": "hidden",
+			"title": "Kimlik",
+			"detail": true
+		},
+		"name": {
+			"type": "text",
+			"title": "Ad",
+			"detail": true
+		},
+		"surname": {
+			"type": "text",
+			"title": "Soyad",
+			"detail": true
+		},
+		"email": {
+			"type": "email",
+			"title": "E-posta",
+			"detail": true
+		},
+		"bio": {
+			"type": "textarea",
+			"title": "Hakk\u0131mda",
+			"detail": true
+		},
+		"phone": {
+			"type": "number",
+			"title": "Telefon",
+			"detail": true
+		},
+		"gender": {
+			"type": "radio",
+			"title": "Cinsiyet",
+			"detail": true
+		},
+		"confirm": {
+			"type": "radio",
+			"title": "Durum",
+			"detail": true
+		},
+		"email_verified_at": {
+			"type": "hidden",
+			"title": "E-posta Onay\u0131",
+			"detail": true
+		},
+		"created_at": {
+			"type": "datetime",
+			"title": "Kay\u0131t Tarihi",
+			"name": "created_at",
+			"rules": [
+				"required"
+			],
+			"create": false,
+			"update": false,
+			"list": false,
+			"detail": true
+		},
+		"updated_at": {
+			"type": "datetime",
+			"title": "D\u00fczenlenme Tarihi",
+			"name": "updated_at",
+			"rules": [
+				"required"
+			],
+			"create": false,
+			"update": false,
+			"list": false,
+			"detail": true
+		},
+		"Blog": {
+			"type": "auth",
+			"title": "Blog",
+			"list": false,
+			"detail": true,
+			"create": false,
+			"update": false,
+			"multiple": true,
+			"relationship": {
+				"model": "Modules\\Blog\\Models\\Blog",
+				"type": "belongsTo",
+				"keys": {
+					"foreignKey": "User",
+					"otherKey": "id",
+					"partner": "hasMany"
+				},
+				"fields": [
+					"id",
+					"name",
+					"created_at"
+				],
+				"perPage": 7
+			}
+		},
+		"resimler": {
+			"type": "multi_image",
+			"title": "Resimler",
+			"count": 10000000000,
+			"multiple": true,
+			"detail": true
+		},
+		"profile": {
+			"type": "image",
+			"title": "Profil Foto\u011fraf\u0131",
+			"detail": true
+		}
+	}
+}

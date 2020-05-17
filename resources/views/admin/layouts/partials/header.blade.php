@@ -1,19 +1,20 @@
 <header class="bg-black navbar-fixed-top header navbar navbar-fixed-top-xs">
-  <div class="navbar-header aside-logo">
-    <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html">
-      <i class="fa fa-bars"></i>
-    </a>
-    <a href="{{ route('home') }}" class="navbar-brand" data-toggle="fullscreen">{{ config('app.name') }}</a>
-
-  </div>
-  @php($auth_user = \Illuminate\Support\Facades\Auth::user())
-  <ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user">
-    <li>
-      <a href="{{ route('profile.index') }}">
+	<div class="navbar-header aside-logo">
+		<a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen,open" data-target="#nav,html">
+			<i class="fa fa-bars"></i>
+		</a>
+		<a href="{{ route('home') }}" class="navbar-brand" data-toggle="fullscreen">
+			@if ($system_settings['isLogo'])
+				<img src="{{ asset('logo.png') }}" alt="{{ $system_settings['name'] }}">
+			@endif
+			{{ $system_settings['name'] }}</a>
+	</div>
+	@php($auth_user = \Illuminate\Support\Facades\Auth::user())
+	<ul class="nav navbar-nav navbar-right m-n hidden-xs nav-user">
+		<li>
+			<a href="{{ route('profile.index') }}">
             <span class="thumb-sm avatar pull-left">
-              <img
-                src="{{ asset($auth_user->getFirstMediaUrl('profile') === '' ? '/storage/application/defaults/avatar.jpg' : 
-                $auth_user->getFirstMediaUrl('profile')) }}">
+              <img src="{{ asset($auth_user->getFirstMediaUrl('profile') === '' ? '/storage/application/defaults/avatar.jpg' : $auth_user->getFirstMediaUrl('profile')) }}">
             </span>
         {{ "$auth_user->name $auth_user->surname" }} </b>
       </a>

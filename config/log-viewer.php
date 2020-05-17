@@ -1,6 +1,7 @@
 <?php
 
 use Arcanedev\LogViewer\Contracts\Utilities\Filesystem;
+use Illuminate\Support\Str;
 
 return [
   
@@ -17,9 +18,9 @@ return [
    */
   
   'pattern' => [
-    'prefix' => Filesystem::PATTERN_PREFIX,    // 'laravel-'
-    'date' => Filesystem::PATTERN_DATE,      // '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]'
-    'extension' => Filesystem::PATTERN_EXTENSION, // '.log'
+	  'prefix' => config('cache.prefix'),    // 'laravel-'
+	  'date' => Filesystem::PATTERN_DATE,      // '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]'
+	  'extension' => Filesystem::PATTERN_EXTENSION, // '.log'
   ],
   
   /* -----------------------------------------------------------------
@@ -31,14 +32,14 @@ return [
    */
   
   'locale' => 'tr',
-  
-  /* -----------------------------------------------------------------
-   |  Theme
-   | -----------------------------------------------------------------
-   |  Supported themes :
-   |    'bootstrap-3', 'bootstrap-4'
-   |  Make your own theme by adding a folder to the views directory and specifying it here.
-   */
+	
+	/* -----------------------------------------------------------------
+	 |  Theme
+	 | -----------------------------------------------------------------
+	 |  Supported themes :
+	 |    'bootstrap-3', 'bootstrap-4'
+	 |  Views dizinine bir klasör ekleyip burada belirterek kendi temanızı oluşturun.
+	 */
   
   'theme' => 'bootstrap-4',
   
@@ -56,12 +57,12 @@ return [
       'middleware' => config('my-config.error_logviewer_middleware') ? explode(',', config('my-config.error_logviewer_middleware')) : null,
     ],
   ],
-  
-  /* -----------------------------------------------------------------
-   |  Log entries per page
-   | -----------------------------------------------------------------
-   |  This defines how many logs & entries are displayed per page.
-   */
+	
+	/* -----------------------------------------------------------------
+	 |  Log entries per page
+	 | -----------------------------------------------------------------
+	 |  Bu, sayfa başına kaç günlük ve giriş görüntüleneceğini tanımlar.
+	 */
   
   'per-page' => 30,
   
@@ -71,9 +72,9 @@ return [
    */
   
   'download' => [
-    'prefix' => \Illuminate\Support\Str::camel(env('APP_NAME')),
-    
-    'extension' => 'log',
+	  'prefix' => Str::camel(env('APP_NAME')),
+	
+	  'extension' => 'log',
   ],
   
   /* -----------------------------------------------------------------

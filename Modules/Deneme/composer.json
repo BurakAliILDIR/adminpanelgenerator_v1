@@ -1,0 +1,25 @@
+{
+    "name": "TheNobleBrain/deneme",
+    "description": "",
+    "authors": [
+        {
+            "name": "Burak Ali ILDIR",
+            "email": "TheNobleBrain@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Modules\\Deneme\\Providers\\DenemeServiceProvider"
+            ],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\Deneme\\": ""
+        }
+    }
+}

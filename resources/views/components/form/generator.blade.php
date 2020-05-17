@@ -85,6 +85,8 @@
                  'value' => $model[$key] ?? $value
       ])@endcomponent
       @break
+      @case('auth')
+      @break
       @default
       @component('components.form.partials.' . $field['type'],
                  ['key' => $key,

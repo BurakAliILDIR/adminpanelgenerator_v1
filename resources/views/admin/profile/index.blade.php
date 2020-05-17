@@ -37,8 +37,8 @@
                 <div class="clearfix m-b">
                   <span class="pull-left thumb m-r">
                     <img
-                      src="{{ asset($model->getFirstMediaUrl('profile') === '' ? '/storage/application/defaults/avatar
-                      .jpg' : $model->getFirstMediaUrl('profile')) }}">
+                      src="{{ asset($model->getFirstMediaUrl('profile') === '' ?
+ '/storage/application/defaults/avatar.jpg' : $model->getFirstMediaUrl('profile')) }}">
                   </span>
                 </div>
                 <div style="word-break: break-all">

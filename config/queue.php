@@ -7,26 +7,26 @@ return [
   | Default Queue Connection Name
   |--------------------------------------------------------------------------
   |
-  | Laravel's queue API supports an assortment of back-ends via a single
-  | API, giving you convenient access to each back-end using the same
-  | syntax for every one. Here you may define a default connection.
+  | Laravel'in kuyruk API'si, tek bir API aracılığıyla arka uç çeşitliliğini destekler,
+  | böylece her biri için aynı sözdizimini kullanarak her arka uca kolay erişim sağlar.
+  | Burada varsayılan bir bağlantı tanımlayabilirsiniz.
   |
   */
   
   'default' => env('QUEUE_CONNECTION', 'sync'),
-  
-  /*
-  |--------------------------------------------------------------------------
-  | Queue Connections
-  |--------------------------------------------------------------------------
-  |
-  | Here you may configure the connection information for each server that
-  | is used by your application. A default configuration has been added
-  | for each back-end shipped with Laravel. You are free to add more.
-  |
-  | Drivers: "sync", "database", "beanstalkd", "sqs", "redis", "null"
-  |
-  */
+	
+	/*
+	|--------------------------------------------------------------------------
+	| Queue Connections
+	|--------------------------------------------------------------------------
+	|
+	| Burada uygulamanız tarafından kullanılan her sunucu için bağlantı bilgilerini yapılandırabilirsiniz.
+	| Laravel ile gönderilen her bir arka uç için varsayılan bir yapılandırma eklenmiştir.
+	| Daha fazlasını eklemekte özgürsünüz.
+	|
+	| Drivers: "sync", "database", "beanstalkd", "sqs", "redis", "null"
+	|
+	*/
   
   'connections' => [
     
@@ -67,17 +67,17 @@ return [
     ],
   
   ],
-  
-  /*
-  |--------------------------------------------------------------------------
-  | Failed Queue Jobs
-  |--------------------------------------------------------------------------
-  |
-  | These options configure the behavior of failed queue job logging so you
-  | can control which database and table are used to store the jobs that
-  | have failed. You may change them to any database / table you wish.
-  |
-  */
+	
+	/*
+	|--------------------------------------------------------------------------
+	| Failed Queue Jobs
+	|--------------------------------------------------------------------------
+	|
+	| Bu seçenekler, başarısız olan sıralı iş günlüğü davranışını yapılandırır,
+	| böylece başarısız olan işleri depolamak için hangi veritabanının ve tablonun kullanılacağını denetleyebilirsiniz.
+	| Bunları istediğiniz herhangi bir database / table değiştirebilirsiniz.
+	|
+	*/
   
   'failed' => [
     'driver' => env('QUEUE_FAILED_DRIVER', 'database'),

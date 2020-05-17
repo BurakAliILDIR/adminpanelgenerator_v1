@@ -11,28 +11,26 @@ return [
     | Default Log Channel
     |--------------------------------------------------------------------------
     |
-    | This option defines the default log channel that gets used when writing
-    | messages to the logs. The name specified in this option should match
-    | one of the channels defined in the "channels" configuration array.
+    | Bu seçenek, günlüklere mesaj yazarken kullanılacak varsayılan günlük kanalını tanımlar.
+    | Bu seçenekte belirtilen ad, "channels" yapılandırma dizisinde tanımlanan
+    | kanallardan biriyle eşleşmelidir.
     |
     */
 
     'default' => env('LOG_CHANNEL', 'stack'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Log Channels
-    |--------------------------------------------------------------------------
-    |
-    | Here you may configure the log channels for your application. Out of
-    | the box, Laravel uses the Monolog PHP logging library. This gives
-    | you a variety of powerful log handlers / formatters to utilize.
-    |
-    | Available Drivers: "single", "daily", "slack", "syslog",
-    |                    "errorlog", "monolog",
-    |                    "custom", "stack"
-    |
-    */
+	
+	/*
+	|--------------------------------------------------------------------------
+	| Log Channels
+	|--------------------------------------------------------------------------
+	|
+	| Burada uygulamanız için günlük kanallarını yapılandırabilirsiniz. Kutudan çıkar çıkmaz Laravel, Monolog PHP günlük kütüphanesini kullanır. Bu, kullanmak için çeşitli güçlü günlük handlers / formatters sağlar.
+	|
+	| Available Drivers: "single", "daily", "slack", "syslog",
+	|                    "errorlog", "monolog",
+	|                    "custom", "stack"
+	|
+	*/
 
     'channels' => [
         'stack' => [

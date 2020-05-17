@@ -9,35 +9,31 @@ return [
   | Module Namespace
   |--------------------------------------------------------------------------
   |
-  | Default module namespace.
+  | Varsayılan modül ad alanı.
   |
   */
   
   'namespace' => 'Modules',
-  
-  /*
-  |--------------------------------------------------------------------------
-  | Module Stubs
-  |--------------------------------------------------------------------------
-  |
-  | Default module stubs.
-  |
-  */
+	
+	/*
+	|--------------------------------------------------------------------------
+	| Module Stubs
+	|--------------------------------------------------------------------------
+	|
+	| Varsayılan modül saplamaları.
+	|
+	*/
   
   'stubs' => [
     'enabled' => true,
     'path' => resource_path() . '/stubs',
     'files' => [
-      //'model' => 'Models/Blog.php',
-      //'create-request' => 'Http/Requests/BlogCreateRequest.php',
-      //'edit-request' => 'Http/Requests/BlogEditRequest.php',
       'routes/web' => 'Routes/web.php',
       'routes/api' => 'Routes/api.php',
       'views/index' => 'Resources/views/index.blade.php',
       'views/show' => 'Resources/views/show.blade.php',
       'views/create' => 'Resources/views/create.blade.php',
       'views/edit' => 'Resources/views/edit.blade.php',
-      'source' => 'Source/Source.json',
       'scaffold/config' => 'Config/config.php',
       'composer' => 'composer.json',
       'assets/js/app' => 'Resources/assets/js/app.js',
@@ -46,23 +42,14 @@ return [
       'package' => 'package.json',
     ],
     'replacements' => [
-      //'model' => ['LOWER_NAME', 'STUDLY_NAME', 'MODULE_NAMESPACE'],
-      //'create-request' => ['STUDLY_NAME', 'MODULE_NAMESPACE'],
-      //'edit-request' => ['STUDLY_NAME', 'MODULE_NAMESPACE'],
       'routes/web' => ['LOWER_NAME', 'STUDLY_NAME'],
       'routes/api' => ['LOWER_NAME'],
-      // TODO 1: Module silme komutu yazılacak.
-      // where ile Blog.index, Blog.create, olarak aranıp silinecek. Name den gelen isim ile bulacak.
-      //foreach'da dönerek alan dizileri üzerinden tek tek silinecek. 
       'views/index' => ['STUDLY_NAME'],
       'views/show' => ['STUDLY_NAME'],
       'views/create' => ['STUDLY_NAME'],
       'views/edit' => ['STUDLY_NAME'],
-      'source' => ['LOWER_NAME', 'STUDLY_NAME'],
       'webpack' => ['LOWER_NAME'],
       'json' => ['LOWER_NAME', 'STUDLY_NAME', 'MODULE_NAMESPACE', 'PROVIDER_NAMESPACE'],
-      //'views/index' => ['LOWER_NAME'],
-      //'views/master' => ['LOWER_NAME', 'STUDLY_NAME'],
       'scaffold/config' => ['STUDLY_NAME'],
       'composer' => [
         'LOWER_NAME',
@@ -77,45 +64,44 @@ return [
     'gitkeep' => false,
   ],
   'paths' => [
-    /*
-    |--------------------------------------------------------------------------
-    | Modules path
-    |--------------------------------------------------------------------------
-    |
-    | This path used for save the generated module. This path also will be added
-    | automatically to list of scanned folders.
-    |
-    */
+	  /*
+		|--------------------------------------------------------------------------
+		| Modules path
+		|--------------------------------------------------------------------------
+		|
+		| Oluşturulan modülü kaydetmek için kullanılan bu yol.
+		| Bu yol ayrıca taranan klasörlerin listesine otomatik olarak eklenir.
+		|
+		*/
     
     'modules' => base_path('Modules'),
-    /*
-    |--------------------------------------------------------------------------
-    | Modules assets path
-    |--------------------------------------------------------------------------
-    |
-    | Here you may update the modules assets path.
-    |
-    */
+	  /*
+		|--------------------------------------------------------------------------
+		| Modules assets path
+		|--------------------------------------------------------------------------
+		|
+		| Burada modüllerin varlık yolunu güncelleyebilirsiniz.
+		|
+		*/
     
     'assets' => public_path('modules'),
-    /*
-    |--------------------------------------------------------------------------
-    | The migrations path
-    |--------------------------------------------------------------------------
-    |
-    | Where you run 'module:publish-migration' command, where do you publish the
-    | the migration files?
-    |
-    */
+	  /*
+		|--------------------------------------------------------------------------
+		| The migrations path
+		|--------------------------------------------------------------------------
+		|
+		| Nerede 'module:publish-migration' komutunu çalıştırırsınız, taşıma dosyalarını nerede yayınlıyorsunuz?
+		|
+		*/
     
     'migration' => base_path('database/migrations'),
-    /*
-    |--------------------------------------------------------------------------
-    | Generator path
-    |--------------------------------------------------------------------------
-    | Customise the paths where the folders will be generated.
-    | Set the generate key to false to not generate that folder
-    */
+	  /*
+		|--------------------------------------------------------------------------
+		| Generator path
+		|--------------------------------------------------------------------------
+		| Klasörlerin oluşturulacağı yolları özelleştirin.
+		| Bu klasörü oluşturmamak için oluşturma anahtarını false olarak ayarlayın
+		*/
     'generator' => [
       'config' => ['path' => 'Config', 'generate' => true],
       'command' => ['path' => 'Console', 'generate' => true],
@@ -123,7 +109,6 @@ return [
       'seeder' => ['path' => 'Database/Seeders', 'generate' => true],
       'factory' => ['path' => 'Database/factories', 'generate' => true],
       'model' => ['path' => 'Models', 'generate' => true],
-      'source' => ['path' => 'Source', 'generate' => true],
       'routes' => ['path' => 'Routes', 'generate' => true],
       'controller' => ['path' => 'Http/Controllers', 'generate' => true],
       'filter' => ['path' => 'Http/Middleware', 'generate' => true],
@@ -145,15 +130,16 @@ return [
       'resource' => ['path' => 'Transformers', 'generate' => false],
     ],
   ],
-  /*
-  |--------------------------------------------------------------------------
-  | Scan Path
-  |--------------------------------------------------------------------------
-  |
-  | Here you define which folder will be scanned. By default will scan vendor
-  | directory. This is useful if you host the package in packagist website.
-  |
-  */
+	/*
+	|--------------------------------------------------------------------------
+	| Scan Path
+	|--------------------------------------------------------------------------
+	|
+	| Burada hangi klasörün taranacağını tanımlarsınız.
+	| Varsayılan olarak satıcı dizinini tarar.
+	| Bu, paketi paketci web sitesinde barındırıyorsanız yararlıdır.
+	|
+	*/
   
   'scan' => [
     'enabled' => false,
@@ -161,20 +147,20 @@ return [
       base_path('vendor/*/*'),
     ],
   ],
-  /*
-  |--------------------------------------------------------------------------
-  | Composer File Template
-  |--------------------------------------------------------------------------
-  |
-  | Here is the config for composer.json file, generated by this package
-  |
-  */
+	/*
+	|--------------------------------------------------------------------------
+	| Composer File Template
+	|--------------------------------------------------------------------------
+	|
+	| Bu paket tarafından oluşturulan composer.json dosyası için yapılandırma
+	|
+	*/
   
   'composer' => [
-    'vendor' => 'nwidart',
+    'vendor' => 'TheNobleBrain',
     'author' => [
-      'name' => 'Nicolas Widart',
-      'email' => 'n.widart@gmail.com',
+      'name' => 'Burak Ali ILDIR',
+      'email' => 'TheNobleBrain@gmail.com',
     ],
   ],
   /*

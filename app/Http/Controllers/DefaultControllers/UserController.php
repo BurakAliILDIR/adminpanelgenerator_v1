@@ -98,12 +98,10 @@ class UserController extends Controller
   
   public function destroy(Request $request)
   {
-    if (($id = $request->id) && ($back = $request->back)) {
+    if (($id = $request->id)) {
       User::destroy($id);
       session()->flash('danger', 'Kullanıcı silindi.');
-      if (($indexURL = route('user.index')) !== $back)
-        $back = $indexURL;
-      return redirect($back);
+      return redirect()->route('user.index');
     }
     foreach ($request->checked as $id) {
       $this->model->destroy($id);

@@ -1,35 +1,44 @@
 <?php
 
-$app_name = Illuminate\Support\Str::slug(env('APP_NAME', 'laravel'), '_');
+use Spatie\Backup\Notifications\Notifiable;
+use Spatie\Backup\Notifications\Notifications\BackupHasFailed;
+use Spatie\Backup\Notifications\Notifications\BackupWasSuccessful;
+use Spatie\Backup\Notifications\Notifications\CleanupHasFailed;
+use Spatie\Backup\Notifications\Notifications\CleanupWasSuccessful;
+use Spatie\Backup\Notifications\Notifications\HealthyBackupWasFound;
+use Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFound;
+use Spatie\Backup\Tasks\Cleanup\Strategies\DefaultStrategy;
+use Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays;
+use Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes;
 
 return [
-  
-  'backup' => [
-    
-    /*
-     * Bu uygulamanın adı. Yedekleri izlemek için bu adı kullanabilirsiniz.
-     */
-    'name' => $app_name,
-    
-    'source' => [
-      
-      'files' => [
-        
-        /*
-         * Yedeklemeye eklenecek dizinlerin ve dosyaların listesi.
-         */
-        'include' => [
-          storage_path(),
-        ],
-        
-        /*
-         * Bu dizinler ve dosyalar yedeklemenin dışında bırakılır.
-         *
-         * Yedekleme işlemi tarafından kullanılan dizinler otomatik olarak hariç tutulur.
-         */
-        'exclude' => [
-          base_path('vendor'),
-          base_path('node_modules'),
+	
+	'backup' => [
+		
+		/*
+		 * Bu uygulamanın adı. Yedekleri izlemek için bu adı kullanabilirsiniz.
+		 */
+		'name' => config('cache.prefix'),
+		
+		'source' => [
+			
+			'files' => [
+				
+				/*
+				 * Yedeklemeye eklenecek dizinlerin ve dosyaların listesi.
+				 */
+				'include' => [
+					storage_path(),
+				],
+				
+				/*
+				 * Bu dizinler ve dosyalar yedeklemenin dışında bırakılır.
+				 *
+				 * Yedekleme işlemi tarafından kullanılan dizinler otomatik olarak hariç tutulur.
+				 */
+				'exclude' => [
+					base_path('vendor'),
+					base_path('node_modules'),
         ],
         
         /*
@@ -87,18 +96,18 @@ return [
     'database_dump_compressor' => null,
     
     'destination' => [
-      
-      /*
-       * Yedek zip dosyası için kullanılan dosya adı öneki.
-       */
-      'filename_prefix' => $app_name,
-      
-      /*
-       * Yedeklemelerin saklanacağı disk adları.
-       */
-      'disks' => [
-        'local',
-      ],
+	
+	    /*
+			 * Yedek zip dosyası için kullanılan dosya adı öneki.
+			 */
+	    'filename_prefix' => config('cache.prefix'),
+	
+	    /*
+			 * Yedeklemelerin saklanacağı disk adları.
+			 */
+	    'disks' => [
+		    'local',
+	    ],
     ],
     
     /*
@@ -116,29 +125,29 @@ return [
   'notifications' => [
     // default mail | slack geldi yerine.
     'notifications' => [
-      \Spatie\Backup\Notifications\Notifications\BackupHasFailed::class => ['mail'],
-      \Spatie\Backup\Notifications\Notifications\UnhealthyBackupWasFound::class => ['mail'],
-      \Spatie\Backup\Notifications\Notifications\CleanupHasFailed::class => ['mail'],
-      \Spatie\Backup\Notifications\Notifications\BackupWasSuccessful::class => ['mail'],
-      \Spatie\Backup\Notifications\Notifications\HealthyBackupWasFound::class => ['mail'],
-      \Spatie\Backup\Notifications\Notifications\CleanupWasSuccessful::class => ['mail'],
+	    BackupHasFailed::class => ['mail'],
+	    UnhealthyBackupWasFound::class => ['mail'],
+	    CleanupHasFailed::class => ['mail'],
+	    BackupWasSuccessful::class => ['mail'],
+	    HealthyBackupWasFound::class => ['mail'],
+	    CleanupWasSuccessful::class => ['mail'],
     ],
-    
-    /*
-     * Burada bildirimlerin gönderileceği bildirimi belirtebilirsiniz. 
-     * Varsayılan bildirim, bu yapılandırma dosyasında belirtilen değişkenleri kullanır.
-     * // TODO : YEDEK Bildirimleri gönderimi.
-     */
-    'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
-    
-    'mail' => [
-      'to' => env('BACKUP_NOTIFICATION_MAIL', 'TheNobleBrain@gmail.com'),
-      
-      'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'example@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'example'),
-      ],
-    ],
+	
+	  /*
+		 * Burada bildirimlerin gönderileceği bildirimi belirtebilirsiniz. 
+		 * Varsayılan bildirim, bu yapılandırma dosyasında belirtilen değişkenleri kullanır.
+		 * // TODO : YEDEK Bildirimleri gönderimi.
+		 */
+	  'notifiable' => Notifiable::class,
+	
+	  'mail' => [
+		  'to' => env('BACKUP_NOTIFICATION_MAIL', 'TheNobleBrain@gmail.com'),
+		
+		  'from' => [
+			  'address' => env('MAIL_FROM_ADDRESS', 'example@example.com'),
+			  'name' => env('MAIL_FROM_NAME', 'example'),
+		  ],
+	  ],
     
     'slack' => [
       'webhook_url' => '',
@@ -165,8 +174,8 @@ return [
       'name' => env('APP_NAME', 'laravel-backup'),
       'disks' => ['local'],
       'health_checks' => [
-        \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
-        \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
+	      MaximumAgeInDays::class => 1,
+	      MaximumStorageInMegabytes::class => 5000,
       ],
     ],
     
@@ -183,26 +192,26 @@ return [
   ],
   
   'cleanup' => [
-    /*
-     * Eski yedeklemeleri temizlemek için kullanılacak strateji. 
-     * Varsayılan strateji, tüm yedeklemeleri belirli bir gün boyunca tutacaktır. 
-     * Bu süreden sonra yalnızca günlük bir yedek tutulur. Bu süreden sonra yalnızca haftalık 
-     * yedekler saklanacaktır.
-     *
-     * Nasıl yapılandırırsanız yapın, varsayılan strateji hiçbir zaman en yeni yedeklemeyi silmez.
-     */
-    'strategy' => \Spatie\Backup\Tasks\Cleanup\Strategies\DefaultStrategy::class,
-    
-    'default_strategy' => [
-      
-      /*
-       * Yedeklemelerin tutulacağı gün sayısı.
-       */
-      'keep_all_backups_for_days' => 7,
-      
-      /*
-       * Günlük yedeklemelerin tutulacağı gün sayısı.
-       */
+	  /*
+		 * Eski yedeklemeleri temizlemek için kullanılacak strateji. 
+		 * Varsayılan strateji, tüm yedeklemeleri belirli bir gün boyunca tutacaktır. 
+		 * Bu süreden sonra yalnızca günlük bir yedek tutulur. Bu süreden sonra yalnızca haftalık 
+		 * yedekler saklanacaktır.
+		 *
+		 * Nasıl yapılandırırsanız yapın, varsayılan strateji hiçbir zaman en yeni yedeklemeyi silmez.
+		 */
+	  'strategy' => DefaultStrategy::class,
+	
+	  'default_strategy' => [
+		
+		  /*
+			 * Yedeklemelerin tutulacağı gün sayısı.
+			 */
+		  'keep_all_backups_for_days' => 7,
+		
+		  /*
+			 * Günlük yedeklemelerin tutulacağı gün sayısı.
+			 */
       'keep_daily_backups_for_days' => 16,
       
       /*

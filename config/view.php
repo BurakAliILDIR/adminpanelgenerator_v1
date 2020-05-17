@@ -7,42 +7,41 @@ return [
     | View Storage Paths
     |--------------------------------------------------------------------------
     |
-    | Most templating systems load templates from disk. Here you may specify
-    | an array of paths that should be checked for your views. Of course
-    | the usual Laravel view path has already been registered for you.
+    | Çoğu şablonlama sistemi şablonları diskten yükler.
+    | Burada, görünümleriniz için kontrol edilmesi gereken bir yol dizisi belirtebilirsiniz.
+    | Tabii ki her zamanki Laravel görünüm yolu zaten sizin için kaydedildi.
     |
     */
 
     'paths' => [
         resource_path('views'),
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Compiled View Path
-    |--------------------------------------------------------------------------
-    |
-    | This option determines where all the compiled Blade templates will be
-    | stored for your application. Typically, this is within the storage
-    | directory. However, as usual, you are free to change this value.
-    |
-    */
+	
+	/*
+	|--------------------------------------------------------------------------
+	| Compiled View Path
+	|--------------------------------------------------------------------------
+	|
+	| Bu seçenek, derlenen tüm Blade şablonlarının uygulamanız için nerede saklanacağını belirler.
+	| Genellikle, bu depolama dizini içindedir. Ancak, her zamanki gibi bu değeri değiştirmekte özgürsünüz.
+	|
+	*/
 
     'compiled' => env(
         'VIEW_COMPILED_PATH',
         realpath(storage_path('framework/views'))
     ),
-
-    /*
-     |--------------------------------------------------------------------------
-     | Blade View Modification Checking
-     |--------------------------------------------------------------------------
-     |
-     | On every request the framework will check to see if a view has expired
-     | to determine if it needs to be recompiled. If you are in production
-     | and precompiling views this feature may be disabled to save time.
-     |
-     */
+	
+	/*
+	 |--------------------------------------------------------------------------
+	 | Blade View Modification Checking
+	 |--------------------------------------------------------------------------
+	 |
+	 | Her istekte, çerçeve, yeniden derlenmesinin gerekip gerekmediğini belirlemek
+	 | için bir görünümün süresinin dolup dolmadığını kontrol eder.
+	 | Üretim ve ön derleme görünümleri içindeyseniz, zaman kazanmak için bu özellik devre dışı bırakılabilir.
+	 |
+	 */
 
     'expires' => env('VIEW_CHECK_EXPIRATION', true),
 

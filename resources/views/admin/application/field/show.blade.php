@@ -12,7 +12,7 @@
               <i class="fa fa-arrow-left"></i>
               Tüm Alanlara Dön
             </a>
-            <span class="m-l">Alan Detay</span>
+            <span class="m-l">{{ $module_name }} - Alan Detay</span>
           </div>
         </div>
         <div class="col-md-6">

@@ -70,7 +70,6 @@
           ])@endcomponent
           @component('components.form.partials.image',
           ['key' => 'profile',
-          'type' => 'image',
           'value' => '',
           'title' => 'Profil Fotoğrafı',
           ])@endcomponent

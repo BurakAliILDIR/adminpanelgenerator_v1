@@ -6,9 +6,9 @@ return [
     | Default library used in charts.
     |--------------------------------------------------------------------------
     |
-    | This value is used as the default chart library used when creating
-    | any chart in the command line. Feel free to modify it or set it up
-    | while creating the chart to ignore this value.
+    | Bu değer, komut satırında herhangi bir grafik oluştururken kullanılan
+    | varsayılan grafik kitaplığı olarak kullanılır.
+    | Bu değeri yok saymak için grafik oluştururken değiştirmekten veya ayarlamaktan çekinmeyin.
     |
     */
       'default_library' => 'Echarts',

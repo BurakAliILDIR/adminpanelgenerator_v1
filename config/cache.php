@@ -9,9 +9,8 @@ return [
   | Default Cache Store
   |--------------------------------------------------------------------------
   |
-  | This option controls the default cache connection that gets used while
-  | using this caching library. This connection is used when another is
-  | not explicitly specified when executing a given caching function.
+  | Bu seçenek, bu önbellek kitaplığı kullanılırken kullanılan varsayılan önbellek bağlantısını denetler.
+  | Bu bağlantı, belirli bir önbellekleme işlevi yürütülürken açıkça başka bir belirtilmemişse kullanılır.
   |
   | Supported: "apc", "array", "database", "file",
   |            "memcached", "redis", "dynamodb"
@@ -19,17 +18,17 @@ return [
   */
   
   'default' => env('CACHE_DRIVER', 'file'),
-  
-  /*
-  |--------------------------------------------------------------------------
-  | Cache Stores
-  |--------------------------------------------------------------------------
-  |
-  | Here you may define all of the cache "stores" for your application as
-  | well as their drivers. You may even define multiple stores for the
-  | same cache driver to group types of items stored in your caches.
-  |
-  */
+	
+	/*
+	|--------------------------------------------------------------------------
+	| Cache Stores
+	|--------------------------------------------------------------------------
+	|
+	| Burada uygulamanız için tüm önbellek "stores" ve sürücülerini tanımlayabilirsiniz.
+	| Önbelleklerinizde depolanan öğe türlerini gruplamak için aynı
+	| önbellek sürücüsü için birden fazla depo tanımlayabilirsiniz.
+	|
+	*/
   
   'stores' => [
     

@@ -93,26 +93,22 @@ class RoleController extends Controller
   
   public function destroy(Request $request)
   {
-    $this->model = $this->model->where('name', 'super-admin')->first();
-    if (($id = $request->id) && ($back = $request->back) && ($request->id !== $this->model->id)) {
-      $this->model->destroy($id);
-      session()->flash('danger', 'Rol silindi.');
-      if (($indexURL = route('role.index')) !== $back)
-        $back = $indexURL;
-      return redirect($back);
-    }
-    if (($selected = $request->checked)->contains($this->model->id)) {
-      $models = $this->model->whereIn('id', $selected);
-      session()->flash('danger', 'Seçili roller silindi.');
-      return $models->delete();
-    }
-    return redirect($back);
+	  $this->model = $this->model->where('name', 'super-admin')->first();
+	  if (($id = $request->id) && ($back = $request->back) && ($id !== $this->model->id)) {
+		  $this->model->destroy($id);
+		  session()->flash('danger', 'Rol silindi.');
+	  }
+	  if (!in_array($this->model->id, ($selected = $request->checked))) {
+		  $this->model->whereIn('id', $selected)->delete();
+		  session()->flash('danger', 'Seçili roller silindi.');
+		  return 1;
+	  }
+	  return redirect()->route('role.index');
   }
   
   // eğer erişilmeye çalışan rol super-admin ise engelle.
   private function isSuperAdmin($role)
   {
-    if ($role === 'super-admin')
-      abort(404);
+	  if ($role === 'super-admin') abort(404);
   }
 }

@@ -12,8 +12,8 @@ $(document).on('click', '#multiple_delete', function () {
                 method: 'DELETE',
                 data: {checked: ids},
                 success: function (data) {
-                    location.reload();
-                }
+									location.reload();
+								}
             });
         }
     }

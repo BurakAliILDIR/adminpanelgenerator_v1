@@ -119,103 +119,113 @@
                   <i class="fa fa-yelp icon"><b class="bg-info"></b></i>
                   <span>Etkinlikler</span>
                 </a>
-              </li>
-            @endcan
-            @php
-              $colors = ['', 'danger', 'warning', 'info', 'primary'];
-              $menus_path = config('cache.prefix') . ':menus';
-              if ( !($menus = unserialize(\Illuminate\Support\Facades\Redis::get($menus_path)))) {
-                $menus = json_decode(file_get_contents(storage_path('app\public\application\settings\menu.json')), true);
-                \Illuminate\Support\Facades\Redis::set($menus_path, serialize($menus));
-              }
-              $menu_order = 0
-            @endphp
-            @foreach($menus as $key => $val)
-              @can("$key.index")
-                @php
-                  $menu_order %= 4;
-                  $menu_order++;
-                  $isActiveMenu =  Route::is("$key.index") ? 'active' : ''
-                @endphp
-                <li class="{{ $isActiveMenu }}">
-                  <a class="{{ $isActiveMenu }}"
-                     href="{{ route("$key.index") }}">
-                    <i class="fa fa-{{ $val['icon'] ?? 'angle-right' }} icon"><b
-                        class="bg-{{ $colors[$menu_order] }}"></b></i>
-                    <span>{!! $val['title'] !!}</span>
-                  </a>
-                </li>
-              @endcan
-            @endforeach
-            <li>
-              <a href="{{ route('logout') }}"
-                 onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa 
+							</li>
+							@endcan
+							@php
+								$colors = ['', 'danger', 'warning', 'info', 'primary'];
+								$menus_path = config('cache.prefix') . ':menus';
+								if ( !($menus = unserialize(\Illuminate\Support\Facades\Redis::get($menus_path)))) {
+									$menus = json_decode(file_get_contents(storage_path('app\public\application\settings\menu.json')), true);
+									\Illuminate\Support\Facades\Redis::set($menus_path, serialize($menus));
+								}
+								$menu_order = 0
+							@endphp
+							@foreach($menus as $key => $val)
+								@can("$key.index")
+									@php
+										$menu_order %= 4;
+										$menu_order++;
+										$isActiveMenu =  Route::is("$key.index") ? 'active' : ''
+									@endphp
+									<li class="{{ $isActiveMenu }}">
+										<a class="{{ $isActiveMenu }}"
+											 href="{{ route("$key.index") }}">
+											<i class="fa fa-{{ $val['icon'] ?? 'angle-right' }} icon"><b
+													class="bg-{{ $colors[$menu_order] }}"></b></i>
+											<span>{!! $val['title'] !!}</span>
+										</a>
+									</li>
+								@endcan
+							@endforeach
+							@can('SystemSettings.index')
+								<?php $isActiveMenu = Route::is('system_settings.index') ? 'active' : ''; ?>
+								<li class="{{ $isActiveMenu }}">
+									<a class="{{ $isActiveMenu }}" href="{{ route('system_settings.index') }}">
+										<i class="fa fa-cogs icon"><b
+												class="bg-primary"></b></i>
+										<span>Sistem Bilgileri</span>
+									</a>
+								</li>
+							@endcan
+							@auth
+								<li>
+									<a href="{{ route('logout') }}"
+										 onclick="event.preventDefault();document.getElementById('logout-form').submit();"><i class="fa 
          fa-sign-out"></i> Çıkış</a>
-              {{ Form::open(['route' => ['logout'], 'style' => 'display: none;', 'id' => 'logout-form']) }}
-              {!! Form::close() !!}
-            </li>
-          </ul>
-        </nav>
-      </div>
-    </section>
-    {{--<footer class="footer lt hidden-xs b-t b-light">
-      --}}{{--
-      <div id="chat" class="dropup">
-        <section class="dropdown-menu on aside-md m-l-n">
-          <section class="panel bg-white">
-            <header class="panel-heading b-b b-light">Active chats</header>
-            <div class="panel-body animated fadeInRight">
-              <p class="text-sm">No active chats.</p>
-              <p><a href="#" class="btn btn-sm btn-default">Start a chat</a></p>
-            </div>
-          </section>
-        </section>
-      </div>
-     <div id="invite" class="dropup">
-        <section class="dropdown-menu on aside-md m-l-n">
-          <section class="panel bg-white">
-            <header class="panel-heading b-b b-light">
-              John <i class="fa fa-circle text-success"></i>
-            </header>
-            <div class="panel-body animated fadeInRight">
-              <p class="text-sm">No contacts in your lists.</p>
-              <p><a href="#" class="btn btn-sm btn-facebook"><i
-                    class="fa fa-fw fa-facebook"></i> Invite from Facebook</a></p>
-            </div>
-          </section>
-        </section>
-      </div>--}}{{--
-   --}}{{--   <a href="#nav" id="menu-hide" data-toggle="class:nav-xs" class="pull-right btn btn-sm btn-black btn-icon">
-        <i class="fa fa-angle-left text"></i>
-        <i class="fa fa-angle-right text-active"></i>
-      </a>--}}{{--
-     --}}{{-- <script>
-        const prefix = '{{ config('cache.prefix') }}menu-hide';
-        $(function () {
-          const result = localStorage.getItem(prefix);
+								</li>
+							@endauth
+					</ul>
+				</nav>
+			</div>
+		</section>
+		{{--<footer class="footer lt hidden-xs b-t b-light">
+			--}}{{--
+			<div id="chat" class="dropup">
+				<section class="dropdown-menu on aside-md m-l-n">
+					<section class="panel bg-white">
+						<header class="panel-heading b-b b-light">Active chats</header>
+						<div class="panel-body animated fadeInRight">
+							<p class="text-sm">No active chats.</p>
+							<p><a href="#" class="btn btn-sm btn-default">Start a chat</a></p>
+						</div>
+					</section>
+				</section>
+			</div>
+		 <div id="invite" class="dropup">
+				<section class="dropdown-menu on aside-md m-l-n">
+					<section class="panel bg-white">
+						<header class="panel-heading b-b b-light">
+							John <i class="fa fa-circle text-success"></i>
+						</header>
+						<div class="panel-body animated fadeInRight">
+							<p class="text-sm">No contacts in your lists.</p>
+							<p><a href="#" class="btn btn-sm btn-facebook"><i
+										class="fa fa-fw fa-facebook"></i> Invite from Facebook</a></p>
+						</div>
+					</section>
+				</section>
+			</div>--}}{{--
+	 --}}{{--   <a href="#nav" id="menu-hide" data-toggle="class:nav-xs" class="pull-right btn btn-sm btn-black btn-icon">
+				<i class="fa fa-angle-left text"></i>
+				<i class="fa fa-angle-right text-active"></i>
+			</a>--}}{{--
+		 --}}{{-- <script>
+				const prefix = '{{ config('cache.prefix') }}menu-hide';
+				$(function () {
+					const result = localStorage.getItem(prefix);
 alert(result)
-          if (result == 'hide') {
-            $('#nav').addClass('nav-xs')
-          }
-        });
+					if (result == 'hide') {
+						$('#nav').addClass('nav-xs')
+					}
+				});
 
-        alert(localStorage.getItem())
-        // menüyü gizlemek için kullanılan kod
-        $('#menu-hide').click(function () {
-          const val = localStorage.getItem(prefix);
-          alert(val)
-          if (!val) {
-            localStorage.setItem(prefix, 'hide');
-          } else
-            localStorage.removeItem(prefix);
-        });
-      </script>--}}{{--
-      --}}{{--<div class="btn-group hidden-nav-xs">
-        <button type="button" title="Chats" class="btn btn-icon btn-sm btn-black"
-                data-toggle="dropdown" data-target="#chat"><i class="fa fa-comment-o"></i></button>
-        <button type="button" title="Contacts" class="btn btn-icon btn-sm btn-black"
-                data-toggle="dropdown" data-target="#invite"><i class="fa fa-facebook"></i></button>
-      </div>--}}{{--
-    </footer>--}}
+				alert(localStorage.getItem())
+				// menüyü gizlemek için kullanılan kod
+				$('#menu-hide').click(function () {
+					const val = localStorage.getItem(prefix);
+					alert(val)
+					if (!val) {
+						localStorage.setItem(prefix, 'hide');
+					} else
+						localStorage.removeItem(prefix);
+				});
+			</script>--}}{{--
+			--}}{{--<div class="btn-group hidden-nav-xs">
+				<button type="button" title="Chats" class="btn btn-icon btn-sm btn-black"
+								data-toggle="dropdown" data-target="#chat"><i class="fa fa-comment-o"></i></button>
+				<button type="button" title="Contacts" class="btn btn-icon btn-sm btn-black"
+								data-toggle="dropdown" data-target="#invite"><i class="fa fa-facebook"></i></button>
+			</div>--}}{{--
+		</footer>--}}
   </section>
 </aside>
