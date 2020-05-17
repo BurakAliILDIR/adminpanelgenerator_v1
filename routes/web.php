@@ -63,10 +63,9 @@ Route::prefix('izinler')->middleware(['verified', 'auth'])->group(function () {
 
 Route::prefix('sistem-ayarlar')->middleware(['verified', 'auth'])->group(function () {
 	Route::get('/', 'DefaultControllers\SystemSettingsController@index')->middleware('permission:SystemSettings.index')->name('system_settings.index');
-	Route::get('/duzenle', 'DefaultControllers\SystemSettingsController@edit')->middleware('permission:SystemSettings.edit')->name('system_settings.edit');
-	Route::put('/', 'DefaultControllers\SystemSettingsController@update')->middleware('permission:SystemSettings.edit')->name('system_settings.update');
+	Route::get('/duzenle', 'DefaultControllers\SystemSettingsController@edit')->middleware('permission:SystemSettings.update')->name('system_settings.edit');
+	Route::put('/', 'DefaultControllers\SystemSettingsController@update')->middleware('permission:SystemSettings.update')->name('system_settings.update');
 });
-
 
 Route::get('/etkinlikler', 'DefaultControllers\LogsController@index')->middleware(['verified', 'auth', 'permission:Logs.index'])->name('Logs.index');
 

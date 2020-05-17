@@ -51,7 +51,7 @@ class FirstBuildSeeder extends Seeder
 		}
 		(new Permission)->create(['name' => 'Logs.index']);
 		(new Permission)->create(['name' => 'SystemSettings.index']);
-		(new Permission)->create(['name' => 'SystemSettings.edit']);
+		(new Permission)->create(['name' => 'SystemSettings.update']);
 		
 		// TODO: Sistem ayarlarını oluşturma:
 		$system_settings = [
