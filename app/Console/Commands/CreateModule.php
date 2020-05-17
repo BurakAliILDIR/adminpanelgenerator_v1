@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Nwidart\Modules\Facades\Module;
@@ -35,16 +36,18 @@ class CreateModule extends Command
       Artisan::call('module:make ' . $name);
       Artisan::call('module:make-model ' . $name . ' ' . $name);
       Artisan::call('module:make-migration create_' . $name . '_table ' . $name);
-      Artisan::call('module:make-request Create' . $name . 'Request ' . $name);
-      Artisan::call('module:make-request Update' . $name . 'Request ' . $name);
-      
-      // eğer daha önceden tablo oluşturulmuşsa migrate etme.
-      if ( !Schema::hasTable($name)) Artisan::call('module:migrate ' . $name);
-      
-      $this->permission_generator($name);
-      
-      // burada bu json dosyasına gelen $name e göre yeni bir satır keyi eklenecek.
-      $this->menu_generator($name);
+	    Artisan::call('module:make-request Create' . $name . 'Request ' . $name);
+	    Artisan::call('module:make-request Update' . $name . 'Request ' . $name);
+	
+	    // eğer daha önceden tablo oluşturulmuşsa migrate etme.
+	    if ( !Schema::hasTable($name)) Artisan::call('module:migrate ' . $name);
+	
+	    $this->permission_generator($name);
+	
+	    // burada bu json dosyasına gelen $name e göre yeni bir satır keyi eklenecek.
+	    $this->menu_generator($name);
+	
+	    Artisan::call('route:clear');
     }
   }
   
@@ -91,7 +94,7 @@ class CreateModule extends Command
    */
   private function menu_generator($name) : void
   {
-    \Illuminate\Support\Facades\Redis::del(config('cache.prefix') . ':menus');
+	  Redis::del(config('cache.prefix') . ':menus');
     
     $menu_path = storage_path('app\public\application\settings\menu.json');
     $data = json_decode(file_get_contents($menu_path), true);

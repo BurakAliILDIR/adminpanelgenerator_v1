@@ -3,7 +3,7 @@
   <section class="vbox">
     <header class="bg-primary lter text-center " style="min-height: 130px;">
       <a href="{{ route('profile.index') }}"><img src="{{ $auth_user->getFirstMediaUrl('profile') === '' ? asset
-       ('/storage/application/defaults/avatar.jpg') :
+       ('/storage/media/defaults/avatar.jpg') :
          $auth_user->getFirstMediaUrl('profile') }}" class="m-t" style="height: 100px; border-radius: 
          50px;">
         <h5 style="padding-bottom: 15px;" class="text-dark">{{ "$auth_user->name $auth_user->surname" }}</h5></a>

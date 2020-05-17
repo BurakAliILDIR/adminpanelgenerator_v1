@@ -1,1 +1,22 @@
-{"Deneme":{"title":"Deneme","icon":null},"Blog":{"title":"Blog","icon":null}}
+{
+	"Deneme": {
+		"title": "Deneme",
+		"icon": null
+	},
+	"Blog": {
+		"title": "Blog",
+		"icon": null
+	},
+	"Urun": {
+		"title": "Urun",
+		"icon": null
+	},
+	"Deneme1": {
+		"title": "Deneme1",
+		"icon": null
+	},
+	"Ben": {
+		"title": "Ben",
+		"icon": null
+	}
+}
