@@ -1,20 +1,20 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
-    ],
-    "content-hash": "596e8ffb4320217f0b9e1b697097c3ed",
-    "packages": [
-        {
-            "name": "arcanedev/log-viewer",
-            "version": "7.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ARCANEDEV/LogViewer.git",
-                "reference": "fd976c90f19e5f2446f7a2d6eeb6c5705cb67178"
-            },
-            "dist": {
+	"_readme": [
+		"This file locks the dependencies of your project to a known state",
+		"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+		"This file is @generated automatically"
+	],
+	"content-hash": "13e17a862a05edf9cc3e570a012cf08b",
+	"packages": [
+		{
+			"name": "arcanedev/log-viewer",
+			"version": "7.0.0",
+			"source": {
+				"type": "git",
+				"url": "https://github.com/ARCANEDEV/LogViewer.git",
+				"reference": "fd976c90f19e5f2446f7a2d6eeb6c5705cb67178"
+			},
+			"dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/ARCANEDEV/LogViewer/zipball/fd976c90f19e5f2446f7a2d6eeb6c5705cb67178",
                 "reference": "fd976c90f19e5f2446f7a2d6eeb6c5705cb67178",
@@ -8437,9 +8437,9 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.4.4",
-        "ext-json": "*"
-    },
+			"php": "^7.4",
+			"ext-json": "*"
+		},
     "platform-dev": [],
     "plugin-api-version": "1.1.0"
 }

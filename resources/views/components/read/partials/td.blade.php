@@ -2,8 +2,7 @@
 	@switch($lower_val['type'])
 		@case('image')
 		<img
-			src="{{ $upper_val->getFirstMediaUrl($lower_key) === '' ? @$lower_val['value'] ? asset
-      ('/storage/application/defaults/'
+			src="{{ $upper_val->getFirstMediaUrl($lower_key) === '' ? @$lower_val['value'] ? asset('/storage/media/defaults/'
       .$lower_val['value']) : null : asset($upper_val->getFirstMediaUrl($lower_key)) }}"
 			width="66">
 		@break
@@ -22,7 +21,7 @@
 		@if(@$lower_val['relationship'])
 			@if($lower_val['relationship']['type'] === 'belongsTo' && @$lower_val['relationship']['keys']['partner'] === 'hasMany')
 				<small>{{ $upper_val->relation($lower_val['relationship'])->count() }} adet bulunmaktadır.</small>
-			@elseif(($item = $upper_val->relation($lower_val['relationship'])->first()))
+			@elseif(($item = $upper_val->relation($lower_val['relationship'])->first($lower_val['relationship']['fields'])))
 				@foreach($lower_val['relationship']['fields'] as $v)
 					{{ (string)$item[$v] }}
 					@if(!$loop->last)
@@ -35,15 +34,15 @@
 		@endif
 		@break
 		@case('auth')
-		@if(@$lower_val['relationship'] && ($item = $upper_val->relation($lower_val['relationship'])->first()))
+		@if(@$lower_val['relationship'] && ($item = $upper_val->relation($lower_val['relationship'])->first(['id', 'name',
+		 'surname'])))
 			@can('User.detail')
-				@if ($item['id'] === \Illuminate\Support\Facades\Crypt::decryptString(config
-																('my-config.super_admin_id')))
+				@if ($item['id'] === \Illuminate\Support\Facades\Crypt::decryptString(config('my-config.super_admin_id')))
 					{{ $item['name'] . ' ' . $item['surname'] }}
 				@else
 					<a
 						href="{{ $item['id'] }}"><strong>{{ $item['name'] . ' ' . $item['surname']}}</strong></a>
-				@endif      
+				@endif
 			@else
 				{{ $item['name'] . ' ' . $item['surname'] }}
 			@endcan

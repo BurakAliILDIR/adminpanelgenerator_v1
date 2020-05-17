@@ -14,11 +14,11 @@ class VerificationController extends Controller
   |--------------------------------------------------------------------------
   | Email Verification Controller
   |--------------------------------------------------------------------------
-  
-   Bu denetleyici, herhangi biri için e-posta doğrulamasından sorumludur.
-   uygulamasına yeni kaydolan kullanıcı. E-postalar ayrıca
-   kullanıcı orijinal e-posta iletisini almadıysa yeniden gönderilir.
-  
+  |
+  | Bu denetleyici, herhangi biri için e-posta doğrulamasından sorumludur.
+  | uygulamasına yeni kaydolan kullanıcı. E-postalar ayrıca
+  | kullanıcı orijinal e-posta iletisini almadıysa yeniden gönderilir.
+  |
   */
   
   use VerifiesEmails;

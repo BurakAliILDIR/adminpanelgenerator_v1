@@ -65,6 +65,7 @@ $class_name = class_basename($model);
 								@foreach($fields as $key => $val)
 									@if(!(@$val['multiple']))
 										@switch($val['type'])
+											@case('hidden')
 											@case('text')
 											@case('email')
 											@case('number')

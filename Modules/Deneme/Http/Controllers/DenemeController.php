@@ -3,12 +3,13 @@
 namespace Modules\Deneme\Http\Controllers;
 
 use App\Traits\ControllerTraits\HelperMethods;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
-use Modules\Deneme\Models\Deneme;
 use Modules\Deneme\Http\Requests\CreateDenemeRequest;
 use Modules\Deneme\Http\Requests\UpdateDenemeRequest;
+use Modules\Deneme\Models\Deneme;
 
 class DenemeController extends Controller
 {
@@ -58,67 +59,74 @@ class DenemeController extends Controller
     $settings = [
       'title' => $this->jsonSettings['titles']['create'],
       'fields' => $fields['showFields'],
-      'model' => $this->model,
-      'params' => null,
-      'submitText' => 'Ekle',
-      'submitAttributes' => [],
-      'route' => $this->jsonSettings['routes'],
-      'plucks' => $this->getPluck($operation_type),
+	    'model' => $this->model,
+	    'params' => null,
+	    'submitText' => 'Ekle',
+	    'submitAttributes' => [],
+	    'route' => $this->jsonSettings['routes'],
+	    'plucks' => $this->getPluck($operation_type),
     ];
-    return view('deneme::create', compact('settings'));
+	  return view('deneme::create', compact('settings'));
   }
-
-  public function store(CreateDenemeRequest $request)                                                                         
-  {                                                                                                                         
-    $operation_type = 'create';                                                                                             
-                                                                                                                            
-    $fields = $this->redisReadFields($operation_type);                                                                      
-    foreach ($fields['showFields'] as $key => $field) {                                                                     
-      switch ($type = $field['type']) {                                                                                     
-        case 'checkbox':                                                                                                    
-          $this->model[$key] = $request[$key] ?? 0;                                                                         
-          break;                                                                                                            
-        case 'radio':                                                                                                       
-        case 'hidden':                                                                                                      
-        case 'email':                                                                                                       
-        case 'number':                                                                                                      
-        case 'select':                                                                                                      
-        case 'text':                                                                                                        
-        case 'textarea':                                                                                                    
-          $this->model[$key] = $request[$key];                                                                              
-          break;                                                                                                            
-        case 'date':                                                                                                        
-        case 'datetime':                                                                                                    
-          $this->model[$key] = \Carbon\Carbon::parse($request[$key])->format($type == 'datetime' ? 'Y-m-d H:i:s' : 'Y-m-d');
-          break;                                                                                                            
-        case 'file':                                                                                                        
-        case 'image':                                                                                                       
-          $this->insertToSingleMedia($request, $key, $this->model);                                                                       
-          break;                                                                                                            
-        case 'password':                                                                                                    
-          $this->model[$key] = Hash::make($request[$key]);                                                                  
-          break;                                                                                                            
-      }                                                                                                                     
-    }                                                                                                                       
-                                                                                                                            
-    $this->model->saveOrFail();                                                                                             
-                                                                                                                            
-    $this->many_to_many_sync($request, $fields['showFields'], $operation_type);
-    
-    $detail_route = route("Deneme.show", $this->model->id);
-    session()->flash('success', 'Kayıt başarıyla eklendi. <a href="' . $detail_route . '"><strong>Kayıt detayı için tıklayınız.</strong></a>');
-                                            
-    return redirect()->back();                                                                                              
-  }
-
-  public function show($id)                                                        
-  {                                                                                
-    $operation_type = 'detail';                                                    
-                                                                                   
-    $fields = $this->redisReadFields($operation_type);                             
-    $this->model = $this->model->findOrFail($id, $fields['dbSelectFields']);       
-    $settings = [                                                                  
-      'title' => $this->jsonSettings['titles']['show'],                            
+	
+	public function store(CreateDenemeRequest $request)
+	{
+		$operation_type = 'create';
+		$fields = $this->redisReadFields($operation_type);
+		foreach ($fields['showFields'] as $key => $field) {
+			switch ($type = $field['type']) {
+				case 'checkbox':
+					$this->model[$key] = $request[$key] ?? 0;
+					break;
+				case 'radio':
+				case 'hidden':
+				case 'email':
+				case 'number':
+				case 'text':
+				case 'textarea':
+					$this->model[$key] = $request[$key];
+					break;
+				case 'select':
+					if (($relation = @$field['relationship'])) {
+						if ($relation['type'] !== 'belongsTo')
+							$this->model[$key] = $request[$key];
+						else
+							return "Denem mdoülündeki $key select ekleme ve güncelleme işleminde gizli olmalıdır.";
+					} else
+						$this->model[$key] = $request[$key];
+					break;
+				case 'date':
+				case 'datetime':
+					$this->model[$key] = Carbon::parse($request[$key])->format($type == 'datetime' ? 'Y-m-d H:i:s' : 'Y-m-d');
+					break;
+				case 'file':
+				case 'image':
+					$this->insertToSingleMedia($request, $key, $this->model);
+					break;
+				case 'password':
+					$this->model[$key] = Hash::make($request[$key]);
+					break;
+			}
+		}
+		
+		$this->model->saveOrFail();
+		
+		$this->many_to_many_sync($request, $fields['showFields'], $operation_type);
+		
+		$detail_route = route("Deneme.show", $this->model->id);
+		session()->flash('success', 'Kayıt başarıyla eklendi. <a href="' . $detail_route . '"><strong>Kayıt detayı için tıklayınız.</strong></a>');
+		
+		return redirect()->back();
+	}
+	
+	public function show($id)
+	{
+		$operation_type = 'detail';
+		
+		$fields = $this->redisReadFields($operation_type);
+		$this->model = $this->model->findOrFail($id, $fields['dbSelectFields']);
+		$settings = [
+			'title' => $this->jsonSettings['titles']['show'],                            
       'fields' => $fields['showFields'],                                           
       'model' => $this->model,                                                     
       'route' => $this->jsonSettings['routes'],                                    
@@ -154,29 +162,37 @@ class DenemeController extends Controller
     $this->model = $this->model->findOrFail($id, array_merge($fields['dbSelectFields'], ['id']));                                                    
                                                                                                                                                      
     foreach ($fields['showFields'] as $key => $field) {                                                                                              
-      switch ($type = $field['type']) {                                                                                                              
-        case 'checkbox':                                                                                                                             
-          $this->model[$key] = $request[$key] ?? 0;                                                                                                  
-          break;                                                                                                                                     
-        case 'radio':                                                                                                                                
-        case 'hidden':                                                                                                                               
-        case 'email':                                                                                                                                
-        case 'number':                                                                                                                               
-        case 'select':                                                                                                                               
-        case 'text':                                                                                                                                 
-        case 'textarea':                                                                                                                             
-          $this->model[$key] = $request[$key];                                                                                                       
-          break;                                                                                                                                     
-        case 'date':                                                                                                                                 
-        case 'datetime':                                                                                                                             
-          $this->model[$key] = \Carbon\Carbon::parse($request[$key])->format($type === 'datetime' ? 'Y-m-d H:i:s' : 'Y-m-d');                        
-          break;                                                                                                                                     
-        case 'file':                                                                                                                                 
-        case 'image':                                                                                                                                
-          $this->insertToSingleMedia($request, $key, $this->model);                                                                                                
-          break;                                                                                                                                     
-        case 'password':                                                                                                                             
-          $this->model[$key] = Hash::make($request[$key]);                                                                                           
+      switch ($type = $field['type']) {
+	      case 'checkbox':
+		      $this->model[$key] = $request[$key] ?? 0;
+		      break;
+	      case 'radio':
+	      case 'hidden':
+	      case 'email':
+	      case 'number':
+	      case 'text':
+	      case 'textarea':
+		      $this->model[$key] = $request[$key];
+		      break;
+	      case 'select':
+		      if (($relation = @$field['relationship'])) {
+			      if ($relation['type'] !== 'belongsTo')
+				      $this->model[$key] = $request[$key];
+			      else
+				      return "Denem mdoülündeki $key select ekleme ve güncelleme işleminde gizli olmalıdır.";
+		      } else
+			      $this->model[$key] = $request[$key];
+		      break;
+	      case 'date':
+	      case 'datetime':
+		      $this->model[$key] = Carbon::parse($request[$key])->format($type === 'datetime' ? 'Y-m-d H:i:s' : 'Y-m-d');
+		      break;
+	      case 'file':
+	      case 'image':
+		      $this->insertToSingleMedia($request, $key, $this->model);
+		      break;
+	      case 'password':
+		      $this->model[$key] = Hash::make($request[$key]);                                                                                           
           break;                                                                                                                                     
       }                                                                                                                                              
     }                                                                                                                                                

@@ -8,8 +8,8 @@
   ],
   "license": "MIT",
   "require": {
-    "php": "^7.4.4",
-    "ext-json": "*",
+		"php": "^7.4",
+		"ext-json": "*",
 		"arcanedev/log-viewer": "7",
 		"bepsvpt/secure-headers": "^6.0",
 		"brick/math": "^0.8.14",

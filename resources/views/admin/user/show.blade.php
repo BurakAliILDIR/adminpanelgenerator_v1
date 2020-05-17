@@ -15,14 +15,14 @@
         <div class="col-md-6 col-xs-6">
           <div class="m-t">
             <a class="btn btn-xs btn-default btn-rounded " href="{{ route('user.index') }}">
-              <i class="fa fa-arrow-left"></i>
-              Tüm Kullanıcılara Dön
-            </a>
-            <span class="m-l">{{ 'Kullanıcı Detay' }}</span>
-          </div>
-        </div>
-        <div class="col-md-6">
-          @can('User.update')
+							<i class="fa fa-arrow-left"></i>
+							Tüm Kullanıcılara Dön
+						</a>
+						<span class="m-l">Kullanıcı Detay</span>
+					</div>
+				</div>
+				<div class="col-md-6">
+					@can('User.update')
             <div class="m-t m-r pull-right">
               <a class="btn btn-xs btn-info btn-rounded "
                  href="{{ route('user.edit', $model['id']) }}">
@@ -56,7 +56,7 @@
                   <span class="pull-left thumb m-r">
                     <img
                       src="{{ asset($model->getFirstMediaUrl('profile') === '' ? 
-                              \Illuminate\Support\Facades\Storage::url('/application/defaults/avatar.jpg') :
+                              \Illuminate\Support\Facades\Storage::url('media/defaults/avatar.jpg') :
                               $model->getFirstMediaUrl('profile')) }}">
                   </span>
                 </div>
@@ -252,50 +252,50 @@
                         </section>
                         {{ $logs->appends(['logs' => $logs->currentPage()])->links() }}
                       @else
-                        <small>Log bulunmamaktadır.</small>
-                      @endif
-                    </section>
-                  </div>
-                @endcan
-                @foreach($fields as $key => $val)
-                  @if(($val['detail']) && @$val['multiple'] && $val['type'] !== 'multi_image')
-                    @can("$key.index")
-                      @php $relation_infos = $val['relationship'];
+												<small>Log bulunmamaktadır.</small>
+											@endif
+										</section>
+									</div>
+									@endcan
+									@foreach($fields as $key => $val)
+										@if(($val['detail']) && @$val['multiple'] && $val['type'] !== 'multi_image')
+											@can("$key.index")
+												@php $relation_infos = $val['relationship'];
                     $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key)
-                      @endphp
-                      <div class="tab-pane" id="{{ $key }}Page">
-                        <section class="scrollable wrapper-md w-f">
-                          @if($data->count() > 0)
-                            <section class="panel panel-default">
-                              <div class="table-responsive">
-                                <table class="table table-striped m-b-none">
-                                  <thead>
-                                  <tr>
-                                    @foreach($data[0]->getSettings('fields') as $relation_key => $relation_val)
-                                      @foreach($relation_infos['fields'] as $field)
-                                        @if($relation_key === $field)
-                                          <th>{{ $relation_val['title'] }}</th>
-                                        @endif
-                                      @endforeach
-                                    @endforeach
-                                  </tr>
-                                  </thead>
-                                  <tbody>
-                                  @foreach($data as $upper_val)
-                                    <tr>
-                                      @foreach($upper_val->getSettings('fields') as $lower_key => $lower_val)
-                                        @if(array_search($lower_key, $relation_infos['fields']) !== false)
-                                          @component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
-                                        @endif
-                                      @endforeach
-                                    </tr>
-                                  @endforeach
-                                  </tbody>
-                                </table>
-                              </div>
-                            </section>
-                            {{ $data->appends([$key => $data->currentPage()])->links() }}
-                          @else
+												@endphp
+												<div class="tab-pane" id="{{ $key }}Page">
+													<section class="scrollable wrapper-md w-f">
+														@if($data->count() > 0)
+															<section class="panel panel-default">
+																<div class="table-responsive">
+																	<table class="table table-striped m-b-none">
+																		<thead>
+																		<tr>
+																			@foreach($data[0]->getSettings('fields') as $relation_key => $relation_val)
+																				@foreach($relation_infos['fields'] as $field)
+																					@if($relation_key === $field)
+																						<th>{{ $relation_val['title'] }}</th>
+																					@endif
+																				@endforeach
+																			@endforeach
+																		</tr>
+																		</thead>
+																		<tbody>
+																		@foreach($data as $upper_val)
+																			<tr>
+																				@foreach($upper_val->getSettings('fields') as $lower_key => $lower_val)
+																					@if(array_search($lower_key, $relation_infos['fields']))
+																						@component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
+																					@endif
+																				@endforeach
+																			</tr>
+																		@endforeach
+																		</tbody>
+																	</table>
+																</div>
+															</section>
+															{{ $data->appends([$key => $data->currentPage()])->links() }}
+														@else
                             <small>Kayıt bulunmamaktadır.</small>
                           @endif
                         </section>

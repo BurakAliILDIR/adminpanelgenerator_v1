@@ -1,1 +1,100 @@
-{"paginate":7,"slugs":["name"],"titles":{"index":"Deneme","show":"Deneme Detay","create":"Deneme Ekle","edit":"Deneme D\u00fczenle"},"routes":{"index":"Deneme.index","create":"Deneme.create","store":"Deneme.store","show":"Deneme.show","edit":"Deneme.edit","update":"Deneme.update","delete":"Deneme.destroy"},"searchable":["id","name"],"fields":{"id":{"type":"hidden","title":"ID","value":"","create":false,"update":false,"list":true,"detail":true},"name":{"type":"text","title":"Ad","value":"","attributes":{"autofocus":"true"},"rules":["required"],"create":true,"update":true,"list":true,"detail":true},"created_at":{"type":"datetime","title":"Eklenme Tarihi","name":"created_at","rules":["required"],"create":false,"update":false,"list":false,"detail":true},"updated_at":{"type":"datetime","title":"D\u00fczenlenme Tarihi","name":"updated_at","rules":["required"],"create":false,"update":false,"list":false,"detail":true}}}
+{
+	"paginate": 7,
+	"slugs": [
+		"name"
+	],
+	"titles": {
+		"index": "Deneme",
+		"show": "Deneme Detay",
+		"create": "Deneme Ekle",
+		"edit": "Deneme D\u00fczenle"
+	},
+	"routes": {
+		"index": "Deneme.index",
+		"create": "Deneme.create",
+		"store": "Deneme.store",
+		"show": "Deneme.show",
+		"edit": "Deneme.edit",
+		"update": "Deneme.update",
+		"delete": "Deneme.destroy"
+	},
+	"searchable": [
+		"id",
+		"name"
+	],
+	"fields": {
+		"id": {
+			"type": "hidden",
+			"title": "ID",
+			"value": "",
+			"create": false,
+			"update": false,
+			"list": true,
+			"detail": true
+		},
+		"name": {
+			"type": "text",
+			"title": "Ad",
+			"value": "",
+			"attributes": {
+				"autofocus": "true"
+			},
+			"rules": [
+				"required"
+			],
+			"create": true,
+			"update": true,
+			"list": true,
+			"detail": true
+		},
+		"Blog": {
+			"type": "select",
+			"title": "www",
+			"rules": [],
+			"list": true,
+			"detail": true,
+			"create": true,
+			"update": true,
+			"relationship": {
+				"model": "Modules\\Blog\\Models\\Blog",
+				"type": "hasOne",
+				"keys": {
+					"foreignKey": "id",
+					"otherKey": "Blog"
+				},
+				"pluck": {
+					"display": "name",
+					"value": "id"
+				},
+				"fields": [
+					"name",
+					"User"
+				]
+			}
+		},
+		"created_at": {
+			"type": "datetime",
+			"title": "Eklenme Tarihi",
+			"name": "created_at",
+			"rules": [
+				"required"
+			],
+			"create": false,
+			"update": false,
+			"list": false,
+			"detail": true
+		},
+		"updated_at": {
+			"type": "datetime",
+			"title": "D\u00fczenlenme Tarihi",
+			"name": "updated_at",
+			"rules": [
+				"required"
+			],
+			"create": false,
+			"update": false,
+			"list": false,
+			"detail": true
+		}
+	}
+}

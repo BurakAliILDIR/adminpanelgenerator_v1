@@ -12,11 +12,11 @@ class ResetPasswordController extends Controller
     |--------------------------------------------------------------------------
     | Password Reset Controller
     |--------------------------------------------------------------------------
-    
-     Bu denetleyici şifre sıfırlama isteklerini işlemekten sorumludur
-     ve bu davranışı dahil etmek için basit bir özellik kullanır. Özgürsün
-     bu özelliği araştırın ve değiştirmek istediğiniz yöntemleri geçersiz kılın.
-    
+    |
+    | Bu denetleyici şifre sıfırlama isteklerini işlemekten sorumludur
+    | ve bu davranışı dahil etmek için basit bir özellik kullanır. Özgürsün
+    | bu özelliği araştırın ve değiştirmek istediğiniz yöntemleri geçersiz kılın.
+    |
     */
 
     use ResetsPasswords;

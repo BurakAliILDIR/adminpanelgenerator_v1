@@ -68,6 +68,32 @@
 				]
 			}
 		},
+		"Deneme": {
+			"type": "select",
+			"title": "Deneme",
+			"rules": [],
+			"list": true,
+			"detail": true,
+			"create": false,
+			"update": false,
+			"relationship": {
+				"model": "Modules\\Deneme\\Models\\Deneme",
+				"type": "belongsTo",
+				"keys": {
+					"foreignKey": "id",
+					"otherKey": "Blog",
+					"partner": "hasOne"
+				},
+				"pluck": {
+					"display": "name",
+					"value": "id"
+				},
+				"fields": [
+					"name",
+					"created_at"
+				]
+			}
+		},
 		"created_at": {
 			"type": "datetime",
 			"title": "Eklenme Tarihi",

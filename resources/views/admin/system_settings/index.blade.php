@@ -11,11 +11,11 @@
 						<span class="m-l">Sistem Bilgileri</span>
 					</div>
 				</div>
-				@can('SystemSettings.edit')
+				@can('SystemSettings.update')
 					<div class="col-md-6">
 						<div class="m-t m-r pull-right">
 							<a class="btn btn-xs btn-info btn-rounded "
-								 href="{{ route('system_settings.update') }}">
+								 href="{{ route('system_settings.edit') }}">
 								<i class="fa fa-edit"></i>
 								Sistem Bilgilerini Düzenle
 							</a>

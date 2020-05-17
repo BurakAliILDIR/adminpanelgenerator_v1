@@ -27,150 +27,184 @@
 					{{ Form::open(['route' => ['fields.store', $module_name, true], 'class' => 'form-horizontal']) }}
 					<div class="form-group">
 						{{ Form::label('model', 'Model', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10">
-              <select class="form-control m-b" id="model" name="model" required>
-                <option selected hidden disabled><-- Model Seçiniz --></option>
-                @foreach($models ?? [] as $key => $val)
-                  <option value="{{ $key }}">{{ $val }}</option>
-                @endforeach
-              </select>
-            </div>
-          </div>
-          <div class="line line-dashed line-lg pull-in"></div>
-          @component('components.form.partials.select',
-          ['key' => 'relationship',
-          'title' => 'İlişki',
-          'items' => $relationships,
-          ])@endcomponent
-          <small>Çoklu seçim isteniyorsa "BelongsToMany" olmak zorundadır. </small>
-          @component('components.form.partials.select',
-          ['key' => 'type',
-          'title' => 'Tip',
-          'items' => $types,
-          ])@endcomponent
-          @component('components.form.partials.radio',
-                 ['key' => 'partner',
-                 'items' => ['hasOne' => 'HasOne (Tek)', 'hasMany' => 'HasMany (Karşısı Çok)'],
-                 'checked' => null,
-                 'title' => 'Karşı Tablo Yapısı',
-          ])@endcomponent
-          <small>--- PLUCK ---</small>
-          @component('components.form.partials.select',
-          ['key' => 'display',
-          'title' => 'Görünecek Alan',
-          'items' => []
-          ])@endcomponent
-
-          <div class="form-check m-b">
-            {{ Form::label('fields', 'Görüntülenecek Alanlar', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10 m-b">
-              <select class="js-example-basic-multiple" style="width: 100%" name="fields[]" id="fields"
-                      multiple="multiple" required></select>
-            </div>
-          </div>
-          <div class="line line-dashed line-lg pull-in"></div>
-          <script>$(document).ready(() => {
-              $('#fields').select2({language: "tr"});
-            });</script>
-          @component('components.form.partials.number',
-          ['key' => 'perPage',
-          'title' => 'Sayfa Başı Kayıt',
-          ])@endcomponent
-          @component('components.form.partials.text',
-          ['key' => 'title',
-          'title' => 'Başlık',
-          'attributes'=> ['required']
-          ])@endcomponent
-          @component('components.form.partials.number',
-          ['key' => 'order',
-          'title' => 'Sıra',
-          'attributes'=> ['required']          
-          ])@endcomponent
-          <div class="form-check m-b">
-            {{ Form::label('rules', 'Kurallar', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10 m-b">
-              @foreach($rules as $rule)
-                <div class="checkbox">
-                  <label class="checkbox-custom center-block">
-                    {{ Form::checkbox('rules[]', $rule) }}
-                    <i class="fa fa-fw fa-square-o"></i>
-                    {{ $rule }}
-                  </label>
-                </div>
-              @endforeach
-            </div>
-          </div>
-          <div class="line line-dashed line-lg pull-in"></div>
-          <div class="form-check m-b">
-            {{ Form::label('pages', 'Görünüm', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10 m-b">
-              @foreach($pages as $page)
-                <div class="checkbox">
-                  <label class="checkbox-custom center-block">
-                    {{ Form::checkbox('pages[]', $page) }}
-                    <i class="fa fa-fw fa-square-o"></i>
-                    {{ $page }}
-                  </label>
-                </div>
-              @endforeach
-            </div>
-          </div>
-          <div class="line line-dashed line-lg pull-in"></div>
-          <strong class="text-danger">Aşağıdaki alanlar sadece "tip" alanı "HasOne", "HasMany" ve ("belongsTo" ve Karşı taraf
-            "HasMany") ve BelongsToMany ise doldurulacaktır.</strong>
-          <div class="line line-dashed line-lg pull-in"></div>
-          <div class="form-group">
-            {{ Form::label('partner_display', 'Karşı Tarafın Görünecek Alan', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10">
-              <select class="form-control m-b" id="partner_display" name="partner_display" required>
-                <option selected hidden disabled><-- Karşı Tarafın Görünecek Alan Seçiniz --></option>
-                @foreach($this_fields as $key => $val)
-                  <option value="{{ $key }}">{{ $key }}</option>
-                @endforeach
-              </select>
-            </div>
-          </div>
-          <div class="line line-dashed line-lg pull-in"></div>
-          <div class="form-check m-b">
-            {{ Form::label('this_fields', 'Karşı Tarafta Görüntülenebilecek Alanlar', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10 m-b">
-              @foreach($this_fields as $key => $val)
-                <div class="checkbox">
-                  <label class="checkbox-custom center-block">
-                    {{ Form::checkbox('this_fields[]', $key) }}
-                    <i class="fa fa-fw fa-square-o"></i>
-                    {{ $key }}
-                  </label>
-                </div>
-              @endforeach
-            </div>
-          </div>
-          <div class="line line-dashed line-lg pull-in"></div>
-          <div class="form-check m-b">
-            {{ Form::label('partner_pages', 'Karşı Taraf Görünüm', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10 m-b">
-              @foreach($pages as $page)
-                <div class="checkbox">
-                  <label class="checkbox-custom center-block">
-                    {{ Form::checkbox('partner_pages[]', $page) }}
-                    <i class="fa fa-fw fa-square-o"></i>
-                    {{ $page }}
-                  </label>
-                </div>
-              @endforeach
-            </div>
-          </div>
-          <div class="line line-dashed line-lg pull-in"></div>
-          <div class="form-check m-b">
-            {{ Form::label('partner_rules', 'Karşı Taraf Kurallar', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10 m-b">
-              @foreach($rules as $rule)
-                <div class="checkbox">
-                  <label class="checkbox-custom center-block">
-                    {{ Form::checkbox('partner_rules[]', $rule) }}
-                    <i class="fa fa-fw fa-square-o"></i>
-                    {{ $rule }}
-                  </label>
+						<div class="col-sm-10">
+							<select class="form-control m-b" id="model" name="model" required>
+								<option selected hidden disabled><-- Model Seçiniz --></option>
+								@foreach($models ?? [] as $key => $val)
+									<option value="{{ $key }}">{{ $val }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+					<div class="line line-dashed line-lg pull-in"></div>
+					<table class="table">
+						<tr>
+							<td>HasMany</td>
+							<td>"Select" tipinde olmalı. Ekleme ve güncelleme işlemleri bu modülde görünür olmalı. Karşı modül
+								birden fazla bu modül verisine sahip olabilir.
+							</td>
+						</tr>
+						<tr>
+							<td>HasOne</td>
+							<td>"Select" tipinde olmalı. Ekleme ve güncelleme işlemleri bu modülde görünür olmalı. Karşı modül
+								bir bu modül verisine sahip olabilir.
+							</td>
+						</tr>
+						<tr>
+							<td>BelongsTo (HasOne)</td>
+							<td>"Select" tipinde olmalı. Ekleme ve güncelleme işlemleri karşı modülde görünür olmalı. İki modül de
+								birbirine bağlanan bir adet veriye sahip olabilir.
+							</td>
+						</tr>
+						<tr>
+							<td>BelongsTo (HasMany)</td>
+							<td>"Select" tipinde olmalı. Ekleme ve güncelleme işlemleri karşı modülde görünür olmalı. Bu modül
+								birden fazla karşı modül verisine sahip olabilir.
+							</td>
+						</tr>
+						<tr>
+							<td>BelongsToMany</td>
+							<td>"Multi Select" veya "Multi Checkbox" tipinde olmalı. İsteğe bağlı olarak en az bir modülde ekleme
+								ve güncelleme işlemleri görünür olmalıdır. İki modül de birden fazla karşı modül verisine sahip
+								olabilir.
+							</td>
+						</tr>
+					</table>
+					@component('components.form.partials.select',
+					['key' => 'relationship',
+					'title' => 'İlişki',
+					'items' => $relationships,
+					])@endcomponent
+					<small>Çoklu seçim isteniyorsa "BelongsToMany" olmak zorundadır. Aksi taktirde "Select" seçilmedir.</small>
+					@component('components.form.partials.select',
+					['key' => 'type',
+					'title' => 'Tip',
+					'items' => $types,
+					])@endcomponent
+					<small>Eğer "belogsTo" seçildiyse:</small>
+					@component('components.form.partials.radio',
+								 ['key' => 'partner',
+								 'items' => ['hasOne' => 'HasOne (Tek)', 'hasMany' => 'HasMany (Karşısı Çok)'],
+								 'checked' => null,
+								 'title' => 'Karşı Tablo Yapısı',
+					])@endcomponent
+					<small>--- Form kontorlü ---</small>
+					@component('components.form.partials.select',
+					['key' => 'display',
+					'title' => 'Görünecek Alan',
+					'items' => []
+					])@endcomponent
+					<small>--- Listeleme ve detay sayfalarında ---</small>
+					<div class="form-check m-b">
+						{{ Form::label('fields', 'Görüntülenecek Alanlar', ['class' => 'col-sm-2 control-label']) }}
+						<div class="col-sm-10 m-b">
+							<select class="js-example-basic-multiple" style="width: 100%" name="fields[]" id="fields"
+											multiple="multiple" required></select>
+						</div>
+					</div>
+					<div class="line line-dashed line-lg pull-in"></div>
+					<script>$(document).ready(() => {
+							$('#fields').select2({language: "tr"});
+						});</script>
+					@component('components.form.partials.number',
+					['key' => 'perPage',
+					'title' => 'Sayfa Başı Kayıt',
+					])@endcomponent
+					@component('components.form.partials.text',
+					['key' => 'title',
+					'title' => 'Başlık',
+					'attributes'=> ['required']
+					])@endcomponent
+					@component('components.form.partials.number',
+					['key' => 'order',
+					'title' => 'Sıra',
+					'attributes'=> ['required']          
+					])@endcomponent
+					<div class="form-check m-b">
+						{{ Form::label('rules', 'Kurallar', ['class' => 'col-sm-2 control-label']) }}
+						<div class="col-sm-10 m-b">
+							@foreach($rules as $rule)
+								<div class="checkbox">
+									<label class="checkbox-custom center-block">
+										{{ Form::checkbox('rules[]', $rule) }}
+										<i class="fa fa-fw fa-square-o"></i>
+										{{ $rule }}
+									</label>
+								</div>
+							@endforeach
+						</div>
+					</div>
+					<div class="line line-dashed line-lg pull-in"></div>
+					<div class="form-check m-b">
+						{{ Form::label('pages', 'Görünüm', ['class' => 'col-sm-2 control-label']) }}
+						<div class="col-sm-10 m-b">
+							@foreach($pages as $page)
+								<div class="checkbox">
+									<label class="checkbox-custom center-block">
+										{{ Form::checkbox('pages[]', $page) }}
+										<i class="fa fa-fw fa-square-o"></i>
+										{{ $page }}
+									</label>
+								</div>
+							@endforeach
+						</div>
+					</div>
+					<div class="line line-dashed line-lg pull-in"></div>
+					<strong class="text-danger">Aşağıdaki alanlar sadece "tip" alanı "HasOne", "HasMany" ve ("belongsTo" ve Karşı
+						taraf "HasMany") ve BelongsToMany ise doldurulacaktır.</strong>
+					<div class="line line-dashed line-lg pull-in"></div>
+					<div class="form-group">
+						{{ Form::label('partner_display', 'Karşı Tarafın Görünecek Alan', ['class' => 'col-sm-2 control-label']) }}
+						<div class="col-sm-10">
+							<select class="form-control m-b" id="partner_display" name="partner_display" required>
+								<option selected hidden disabled><-- Karşı Tarafın Görünecek Alan Seçiniz --></option>
+								@foreach($this_fields as $key => $val)
+									<option value="{{ $key }}">{{ $key }}</option>
+								@endforeach
+							</select>
+						</div>
+					</div>
+					<div class="line line-dashed line-lg pull-in"></div>
+					<div class="form-check m-b">
+						{{ Form::label('this_fields', 'Karşı Tarafta Görüntülenebilecek Alanlar', ['class' => 'col-sm-2 control-label']) }}
+						<div class="col-sm-10 m-b">
+							@foreach($this_fields as $key => $val)
+								<div class="checkbox">
+									<label class="checkbox-custom center-block">
+										{{ Form::checkbox('this_fields[]', $key) }}
+										<i class="fa fa-fw fa-square-o"></i>
+										{{ $key }}
+									</label>
+								</div>
+							@endforeach
+						</div>
+					</div>
+					<div class="line line-dashed line-lg pull-in"></div>
+					<div class="form-check m-b">
+						{{ Form::label('partner_pages', 'Karşı Taraf Görünüm', ['class' => 'col-sm-2 control-label']) }}
+						<div class="col-sm-10 m-b">
+							@foreach($pages as $page)
+								<div class="checkbox">
+									<label class="checkbox-custom center-block">
+										{{ Form::checkbox('partner_pages[]', $page) }}
+										<i class="fa fa-fw fa-square-o"></i>
+										{{ $page }}
+									</label>
+								</div>
+							@endforeach
+						</div>
+					</div>
+					<div class="line line-dashed line-lg pull-in"></div>
+					<div class="form-check m-b">
+						{{ Form::label('partner_rules', 'Karşı Taraf Kurallar', ['class' => 'col-sm-2 control-label']) }}
+						<div class="col-sm-10 m-b">
+							@foreach($rules as $rule)
+								<div class="checkbox">
+									<label class="checkbox-custom center-block">
+										{{ Form::checkbox('partner_rules[]', $rule) }}
+										<i class="fa fa-fw fa-square-o"></i>
+										{{ $rule }}
+									</label>
                 </div>
               @endforeach
             </div>

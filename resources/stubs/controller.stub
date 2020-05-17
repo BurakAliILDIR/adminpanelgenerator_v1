@@ -82,11 +82,19 @@ class $CLASS$ extends Controller
         case 'hidden':
         case 'email':
         case 'number':
-        case 'select':
         case 'text':
         case 'textarea':
           $this->model[$key] = $request[$key];
           break;
+				case 'select':
+					if (($relation = @$field['relationship'])) {
+						if ($relation['type'] !== 'belongsTo')
+							$this->model[$key] = $request[$key];
+						else
+							return "$key select ekleme ve güncelleme işleminde gizli olmalıdır.";
+					} else
+						$this->model[$key] = $request[$key];
+					break;
         case 'date':
         case 'datetime':
           $this->model[$key] = \Carbon\Carbon::parse($request[$key])->format($type == 'datetime' ? 'Y-m-d H:i:s' : 'Y-m-d');
@@ -162,11 +170,19 @@ class $CLASS$ extends Controller
         case 'hidden':
         case 'email':
         case 'number':
-        case 'select':
         case 'text':
         case 'textarea':
           $this->model[$key] = $request[$key];
           break;
+				case 'select':
+					if (($relation = @$field['relationship'])) {
+						if ($relation['type'] !== 'belongsTo')
+							$this->model[$key] = $request[$key];
+						else
+							return "$STUDLY_NAME$ modülündeki $key select ekleme ve güncelleme işleminde gizli olmalıdır.";
+					} else
+						$this->model[$key] = $request[$key];
+					break;
         case 'date':
         case 'datetime':
           $this->model[$key] = \Carbon\Carbon::parse($request[$key])->format($type === 'datetime' ? 'Y-m-d H:i:s' : 'Y-m-d');                        

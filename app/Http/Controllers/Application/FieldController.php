@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
+use Nwidart\Modules\Facades\Module;
 
 class FieldController extends Controller
 {
@@ -100,10 +101,11 @@ class FieldController extends Controller
 	
 	    // teke tek ise:
 	    if ($relationship === 'hasOne' || ($relationship === 'belongsTo' && $partner === 'hasOne')) {
-		    if ($relationship == 'hasOne') {
+		    if ($relationship === 'hasOne') {
 			    // bulunduğum model
 			    $eleman['relationship']['keys']['foreignKey'] = 'id';
 			    $eleman['relationship']['keys']['otherKey'] = $partner_model_name;
+			    $eleman['type'] = 'select';
 			
 			    // partner model
 			    $partner_eleman['type'] = 'select';
@@ -111,11 +113,14 @@ class FieldController extends Controller
 			    $partner_eleman['relationship']['keys']['foreignKey'] = 'id';
 			    $partner_eleman['relationship']['keys']['otherKey'] = $partner_model_name;
 			    $partner_eleman['relationship']['keys']['partner'] = 'hasOne';
+			    $partner_eleman['create'] = $partner_eleman['update'] = false;
 		    } else {
 			    // bulunduğum model
 			    $eleman['relationship']['keys']['foreignKey'] = 'id';
 			    $eleman['relationship']['keys']['otherKey'] = $module_name;
 			    $eleman['relationship']['keys']['partner'] = $partner;
+			    $eleman['create'] = $eleman['update'] = false;
+			    $eleman['type'] = 'select';
 			
 			    // partner model
 			    $partner_eleman['type'] = 'select';
@@ -133,6 +138,7 @@ class FieldController extends Controller
 			    // bulunduğum model
 			    $eleman['relationship']['keys']['foreignKey'] = $partner_model_name;
 			    $eleman['relationship']['keys']['otherKey'] = 'id';
+			    $eleman['type'] = 'select';
 			
 			    // partner model
 			    $partner_eleman['type'] = 'select';
@@ -142,6 +148,7 @@ class FieldController extends Controller
 			    $partner_eleman['relationship']['keys']['partner'] = 'hasMany';
 			    $partner_eleman['multiple'] = true;
 			    $partner_eleman['relationship']['perPage'] = $request['perPage'] ?? 7;
+			    $partner_eleman['create'] = $partner_eleman['update'] = false;
 		    } else {
 			    // bulunduğum model
 			    $eleman['relationship']['keys']['foreignKey'] = $module_name;
@@ -149,6 +156,8 @@ class FieldController extends Controller
 			    $eleman['relationship']['keys']['partner'] = 'hasMany';
 			    $eleman['multiple'] = true;
 			    $eleman['relationship']['perPage'] = $request['perPage'] ?? 7;
+			    $eleman['create'] = $eleman['update'] = false;
+			    $eleman['type'] = 'select';
 			
 			    // partner model
 			    $partner_eleman['type'] = 'select';
@@ -294,13 +303,11 @@ class FieldController extends Controller
 		];
 		switch ($eleman['type']) {
 			case 'image':
-				$eleman['value'] = $request['values'];
+				$eleman['value'] = $request['values'] ?? 'image.png';
 				break;
 			case 'multi_image':
-				$eleman['list'] = false;
+				$eleman['list'] = $eleman['create'] = $eleman['update'] = false;
 				$eleman['detail'] = true;
-				$eleman['create'] = false;
-				$eleman['update'] = false;
 				$eleman['count'] = $request['values'] ?? 10000000000000;
 				break;
 			case 'radio':

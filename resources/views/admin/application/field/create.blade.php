@@ -32,91 +32,90 @@
           'selected' => null,
           'attributes' => ['required' => 'required'],
           ])@endcomponent
-          @component('components.form.partials.text',
-          ['key' => 'name',
-          'title' => 'Key',
-          'attributes'=> ['required' => 'required']
-          ])@endcomponent
-          @component('components.form.partials.text',
-          ['key' => 'title',
-          'title' => 'Başlık',
-          'attributes'=> ['required' => 'required']
-          ])@endcomponent
-          <small>Eğer Text, Number veya Decimal tipinde ise:</small>
-          @component('components.form.partials.text',
-          ['key' => 'unit',
-          'title' => 'Birim (isteğe bağlı)',
-          ])@endcomponent
-          @component('components.form.partials.number',
-          ['key' => 'order',
-          'title' => 'Sıra',
-          'attributes'=> ['required']          
-          ])@endcomponent
+					@component('components.form.partials.text',
+					['key' => 'name',
+					'title' => 'Key',
+					'attributes'=> ['required' => 'required']
+					])@endcomponent
+					@component('components.form.partials.text',
+					['key' => 'title',
+					'title' => 'Başlık',
+					'attributes'=> ['required' => 'required']
+					])@endcomponent
+					<small>Eğer Text, Number veya Decimal tipinde ise:</small>
+					@component('components.form.partials.text',
+					['key' => 'unit',
+					'title' => 'Birim (isteğe bağlı)',
+					])@endcomponent
+					@component('components.form.partials.number',
+					['key' => 'order',
+					'title' => 'Sıra',
+					'attributes'=> ['required']          
+					])@endcomponent
 
-          <small>
-            <u>Eğer tip aşağıdaki seçeneklerden biriyse;</u> <br>
-            <u>Radio:</u> Hangi seçenekler arasında seçim yapılacağını yazın. | işareti ile ayırarak (boşluk
-            olmadan).<br>
-            <u>Select:</u> Hangi seçenekler arasında seçim yapılacağını yazın. | işareti ile ayırarak (boşluk
-            olmadan).<br>
-            <u>CheckBox:</u> Kutucuğun yanında yazacak yazıyı yazın.<br>
-            <u>Image:</u> "avatar.jpg" varsayılan değerlerinden bir tanesini yazın.<br>
-            <u>Multi Image:</u> En fazla bulunabilecek resim sayısını yazınız. (Boş bıraklırsa sınırsız resim
-            bulundurabilir.)<br>
-          </small>
-          <br>
-          @component('components.form.partials.text',
-               ['key' => 'values',
-               'title' => 'Değerler',
-          ])@endcomponent
-          <small>Auth seçildi ise:</small>
-          <div class="form-check m-b">
-            {{ Form::label('fields', 'Görüntülenecek Alanlar', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10 m-b">
-              @foreach($this_fields as $key => $val)
-                <div class="checkbox">
-                  <label class="checkbox-custom center-block">
-                    {{ Form::checkbox('fields[]', $key) }}
-                    <i class="fa fa-fw fa-square-o"></i>
-                    {{ "$key (" . $val['title'] . ")" }}
-                  </label>
-                </div>
-              @endforeach
-            </div>
-          </div>
-          <div class="line line-dashed line-lg pull-in"></div>
+					<small>
+						<u>Eğer tip aşağıdaki seçeneklerden biriyse;</u> <br>
+						<u>Radio:</u> Hangi seçenekler arasında seçim yapılacağını yazın. | işareti ile ayırarak (boşluk
+						olmadan).<br>
+						<u>Select:</u> Hangi seçenekler arasında seçim yapılacağını yazın. | işareti ile ayırarak (boşluk
+						olmadan).<br>
+						<u>CheckBox:</u> Kutucuğun yanında yazacak yazıyı yazın.<br>
+						<u>Image:</u> "avatar.jpg" veya "image.png" değerlerinden bir tanesini yazın. Varsayılan "image.png"<br>
+						<u>Multi Image:</u> En fazla bulunabilecek resim sayısını yazınız. (Boş bıraklırsa sınırsız resim
+						bulundurabilir.)<br>
+					</small>
+					<br>
+					@component('components.form.partials.text',
+							 ['key' => 'values',
+							 'title' => 'Değerler',
+					])@endcomponent
+					<small>Auth seçildi ise: --- Detay sayfasında görünecek alanlar ---</small>
+					<div class="form-check m-b">
+						{{ Form::label('fields', 'Görüntülenecek Alanlar', ['class' => 'col-sm-2 control-label']) }}
+						<div class="col-sm-10 m-b">
+							@foreach($this_fields as $key => $val)
+								<div class="checkbox">
+									<label class="checkbox-custom center-block">
+										{{ Form::checkbox('fields[]', $key) }}
+										<i class="fa fa-fw fa-square-o"></i>
+										{{ "$key (" . $val['title'] . ")" }}
+									</label>
+								</div>
+							@endforeach
+						</div>
+					</div>
+					<div class="line line-dashed line-lg pull-in"></div>
 
-          <div class="form-check m-b">
-            {{ Form::label('rules', 'Kurallar', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10 m-b">
-              @foreach($rules as $rule)
-                <div class="checkbox">
-                  <label class="checkbox-custom center-block">
-                    {{ Form::checkbox('rules[]', $rule) }}
-                    <i class="fa fa-fw fa-square-o"></i>
-                    {{ $rule }}
-                  </label>
-                </div>
+					<div class="form-check m-b">
+						{{ Form::label('rules', 'Kurallar', ['class' => 'col-sm-2 control-label']) }}
+						<div class="col-sm-10 m-b">
+							@foreach($rules as $rule)
+								<div class="checkbox">
+									<label class="checkbox-custom center-block">
+										{{ Form::checkbox('rules[]', $rule) }}
+										<i class="fa fa-fw fa-square-o"></i>
+										{{ $rule }}
+									</label>
+								</div>
+							@endforeach
+						</div>
+					</div>
+					<div class="line line-dashed line-lg pull-in"></div>
+					<div class="form-check m-b">
+						{{ Form::label('attributes', 'Özellikler', ['class' => 'col-sm-2 control-label']) }}
+						<div class="col-sm-10 m-b">
+							@foreach($attributes as $attribute_key => $attribute)
+								<div class="checkbox">
+									<label class="checkbox-custom center-block">
+										{{ Form::checkbox('attributes[]', $attribute_key) }}
+										<i class="fa fa-fw fa-square-o"></i>
+										{{ $attribute }}
+									</label>
+								</div>
               @endforeach
             </div>
           </div>
           <div class="line line-dashed line-lg pull-in"></div>
-          <div class="form-check m-b">
-            {{ Form::label('attributes', 'Özellikler', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10 m-b">
-              @foreach($attributes as $attribute_key => $attribute)
-                <div class="checkbox">
-                  <label class="checkbox-custom center-block">
-                    {{ Form::checkbox('attributes[]', $attribute_key) }}
-                    <i class="fa fa-fw fa-square-o"></i>
-                    {{ $attribute }}
-                  </label>
-                </div>
-              @endforeach
-            </div>
-          </div>
-          <div class="line line-dashed line-lg pull-in"></div>
-          <small>Multi Image: Sadece "detail" görünümü seçilmelidir.</small><br><br>
           <div class="form-check m-b">
             {{ Form::label('pages', 'Görünüm', ['class' => 'col-sm-2 control-label']) }}
             <div class="col-sm-10 m-b">

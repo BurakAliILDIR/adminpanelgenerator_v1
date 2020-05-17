@@ -6,7 +6,7 @@ return [
 	 * Varsayılan olarak eklenen dosyaların ve türetilmiş görüntülerin depolanacağı disk.
 	 * config/filesystems.php içinde yapılandırdığınız bir veya daha fazla diski seçin.
 	 */
-	'disk_name' => env('MEDIA_DISK', 'public'),
+	'disk_name' => env('MEDIA_DISK', 'media'),
 	
 	/*
 	 * Bir öğenin bayt cinsinden maksimum dosya boyutu.

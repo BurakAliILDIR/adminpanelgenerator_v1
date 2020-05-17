@@ -28,27 +28,27 @@
         </div>
       </div>
     </header>
-    <section class="scrollable">
-      <section class="hbox stretch row">
-        <aside class="bg-light lter b-r col-lg-3 col-sm-12">
-          <section class="vbox">
-            <section class="scrollable">
-              <div class="wrapper-lg">
-                <div class="clearfix m-b">
+		<section class="scrollable">
+			<section class="hbox stretch row">
+				<aside class="bg-light lter b-r col-lg-3 col-sm-12">
+					<section class="vbox">
+						<section class="scrollable">
+							<div class="wrapper-lg">
+								<div class="clearfix m-b">
                   <span class="pull-left thumb m-r">
                     <img
-                      src="{{ asset($model->getFirstMediaUrl('profile') === '' ?
- '/storage/application/defaults/avatar.jpg' : $model->getFirstMediaUrl('profile')) }}">
+											src="{{ asset($model->getFirstMediaUrl('profile') === '' ?
+ '/storage/media/defaults/avatar.jpg' : $model->getFirstMediaUrl('profile')) }}">
                   </span>
-                </div>
-                <div style="word-break: break-all">
-                  <small class="text-uc text-muted">Ad : </small>
-                  <span>{!! $model['name'] ?? '-' !!}</span>
-                  <div class="line"></div>
-                  <small class="text-uc text-muted">Soyad : </small>
-                  <span>{!! $model['surname'] ?? '-' !!}</span>
-                  <div class="line"></div>
-                  <small class="text-uc text-muted">E-posta : </small>
+								</div>
+								<div style="word-break: break-all">
+									<small class="text-uc text-muted">Ad : </small>
+									<span>{!! $model['name'] ?? '-' !!}</span>
+									<div class="line"></div>
+									<small class="text-uc text-muted">Soyad : </small>
+									<span>{!! $model['surname'] ?? '-' !!}</span>
+									<div class="line"></div>
+									<small class="text-uc text-muted">E-posta : </small>
                   <span>{!! $model['email'] !!}</span>
                   <div class="line"></div>
                   <small class="text-uc text-muted">Telefon : </small>

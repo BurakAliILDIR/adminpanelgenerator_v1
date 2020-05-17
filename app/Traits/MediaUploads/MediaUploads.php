@@ -21,11 +21,11 @@ Trait MediaUploads
       })->onlyKeepLatest($count)
       ->registerMediaConversions(function (Media $media) {
         $this
-          ->addMediaConversion('thumb')
-          ->fit(Manipulations::FIT_CROP, 120, 120);
-        $this
-          ->addMediaConversion('card')
-          ->fit(Manipulations::FIT_CONTAIN, 440, 260);
+	        ->addMediaConversion('thumb')
+	        ->fit(Manipulations::FIT_CONTAIN, 120, 120);
+	      $this
+		      ->addMediaConversion('card')
+		      ->fit(Manipulations::FIT_CONTAIN, 440, 260);
         $this
           ->addMediaConversion('big')
           ->fit(Manipulations::FIT_CONTAIN, 1283, 734);

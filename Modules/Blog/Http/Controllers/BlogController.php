@@ -82,10 +82,18 @@ class BlogController extends Controller
 				case 'hidden':
 				case 'email':
 				case 'number':
-				case 'select':
 				case 'text':
 				case 'textarea':
 					$this->model[$key] = $request[$key];
+					break;
+				case 'select':
+					if (($relation = @$field['relationship'])) {
+						if ($relation['type'] !== 'belongsTo')
+							$this->model[$key] = $request[$key];
+						else
+							return "$key select ekleme ve güncelleme işleminde gizli olmalıdır.";
+					} else
+						$this->model[$key] = $request[$key];
 					break;
 				case 'date':
 				case 'datetime':
@@ -161,10 +169,18 @@ class BlogController extends Controller
 				case 'hidden':
 				case 'email':
 				case 'number':
-				case 'select':
 				case 'text':
 				case 'textarea':
 					$this->model[$key] = $request[$key];
+					break;
+				case 'select':
+					if (($relation = @$field['relationship'])) {
+						if ($relation['type'] !== 'belongsTo')
+							$this->model[$key] = $request[$key];
+						else
+							return "$key select ekleme ve güncelleme işleminde gizli olmalıdır.";
+					} else
+						$this->model[$key] = $request[$key];
 					break;
 				case 'date':
 				case 'datetime':

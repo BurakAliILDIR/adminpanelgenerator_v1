@@ -11,14 +11,16 @@
 				<header class="panel-heading font-bold">
 					<div class="row">
 						<div class="col-md-12">
-							<div class="m-t">
-								<a class="btn btn-xs btn-default btn-rounded "
-									 href="{{ route('system_settings.index') }}">
-									<i class="fa fa-arrow-left"></i>
-									Sistem Bilgilerine Geri Dön
-								</a>
-								<span class="m-l">Sistem Bilgilerini Düzenle</span>
-							</div>
+							@can('SystemSettings.index')
+								<div class="m-t">
+									<a class="btn btn-xs btn-default btn-rounded "
+										 href="{{ route('system_settings.index') }}">
+										<i class="fa fa-arrow-left"></i>
+										Sistem Bilgilerine Geri Dön
+									</a>
+									<span class="m-l">Sistem Bilgilerini Düzenle</span>
+								</div>
+							@endcan
 						</div>
 					</div>
 				</header>
