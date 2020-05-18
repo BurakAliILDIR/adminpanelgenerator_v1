@@ -171,12 +171,14 @@ class FieldController extends Controller
 			
 			// çoka çok ise:
 			if ($relationship === 'belongsToMany') {
+				$table_name = strtolower($module_name . "_$partner_model_name");
+				
 				// bulunduğum model
 				$eleman['relationship']['keys']['foreignKey'] = $partner_model_name;
 				$eleman['relationship']['keys']['otherKey'] = $module_name;
 				$eleman['multiple'] = true;
 				$eleman['relationship']['perPage'] = $request['perPage'] ?? 7;
-				$eleman['relationship']['keys']['table'] = $module_name . $partner_model_name;
+				$eleman['relationship']['keys']['table'] = $table_name;
 				
 				// partner model
 				$partner_eleman['type'] = $request['type'];
@@ -185,7 +187,7 @@ class FieldController extends Controller
 				$partner_eleman['relationship']['keys']['otherKey'] = $partner_model_name;
 				$partner_eleman['multiple'] = true;
 				$partner_eleman['relationship']['perPage'] = $request['perPage'] ?? 7;
-				$partner_eleman['relationship']['keys']['table'] = $module_name . $partner_model_name;
+				$partner_eleman['relationship']['keys']['table'] = $table_name;
 			}
 			
 			$partner_path = storage_path("app\modules\sources\\$partner_model_name.json");
@@ -238,7 +240,7 @@ class FieldController extends Controller
 	public function update(Request $request, $module_name, $key)
 	{
 		if (($unique_index = array_search('unique', ($rules = $request['rules'] ?? []), true))) {
-			$rules[$unique_index] = "unique:" . $module_name . "," . $key . ",\$this->id";
+			$rules[$unique_index] = "unique:" . $module_name . "," . $key . ',$this->id';
 		}
 		$path = storage_path("app\modules\sources\\$module_name.json");
 		$source = json_decode(file_get_contents($path), true);
