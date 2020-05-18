@@ -47,35 +47,9 @@
 			"list": true,
 			"detail": true
 		},
-		"Blog": {
-			"type": "select",
-			"title": "www",
-			"rules": [],
-			"list": true,
-			"detail": true,
-			"create": true,
-			"update": true,
-			"relationship": {
-				"model": "Modules\\Blog\\Models\\Blog",
-				"type": "hasOne",
-				"keys": {
-					"foreignKey": "id",
-					"otherKey": "Blog"
-				},
-				"pluck": {
-					"display": "name",
-					"value": "id"
-				},
-				"fields": [
-					"name",
-					"User"
-				]
-			}
-		},
 		"created_at": {
 			"type": "datetime",
 			"title": "Eklenme Tarihi",
-			"name": "created_at",
 			"rules": [
 				"required"
 			],
@@ -87,7 +61,6 @@
 		"updated_at": {
 			"type": "datetime",
 			"title": "D\u00fczenlenme Tarihi",
-			"name": "updated_at",
 			"rules": [
 				"required"
 			],

@@ -38,6 +38,7 @@
           @component('components.form.partials.text',
                ['key' => 'name',
                'title' => 'Rol Adı',
+               'attributes' => ['autofocus' => 'true']
           ])@endcomponent
           @component('components.form.partials.multi_select',
           ['key' => 'permissions',

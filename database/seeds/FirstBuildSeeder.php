@@ -50,18 +50,17 @@ class FirstBuildSeeder extends Seeder
 			}
 		}
 		(new Permission)->create(['name' => 'Logs.index']);
-		(new Permission)->create(['name' => 'SystemSettings.index']);
 		(new Permission)->create(['name' => 'SystemSettings.update']);
 		
 		// TODO: Sistem ayarlarını oluşturma:
 		$system_settings = [
 			'name' => config('app.name'),
 			'description' => config('app.description'),
-			'email' => 'w',
-			'phone' => 'w',
-			'fax' => 'w',
-			'address' => 'w',
-			'about' => 'w',
+			'email' => env('MAIL_USERNAME'),
+			'phone' => '05529403053',
+			'fax' => '05529403053',
+			'address' => 'Mustafa Kemal Mah.',
+			'about' => 'Bu sistem yeni bir proje oluştururken temel zemini hızlı bir şekilde hazırlamak için üretilmiştir.',
 			'isLogo' => true,
 		];
 		foreach ($system_settings as $key => $value) {

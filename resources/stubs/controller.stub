@@ -8,8 +8,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use $MODULE_NAMESPACE$\$STUDLY_NAME$\Models\$STUDLY_NAME$;
-use $MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\Create$STUDLY_NAME$Request;
-use $MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\Update$STUDLY_NAME$Request;
 
 class $CLASS$ extends Controller
 {
@@ -69,7 +67,7 @@ class $CLASS$ extends Controller
     return view('$LOWER_NAME$::create', compact('settings'));
   }
 
-  public function store(Create$STUDLY_NAME$Request $request)
+  public function store(\$MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\Create$STUDLY_NAME$ $request)
   {
     $operation_type = 'create';              
     $fields = $this->redisReadFields($operation_type);
@@ -156,7 +154,7 @@ class $CLASS$ extends Controller
     return view('$LOWER_NAME$::edit', compact('settings'));                                                         
   }                                                                                                         
                                                                         
-  public function update(Update$STUDLY_NAME$Request $request, $id)
+  public function update(\$MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\Update$STUDLY_NAME$ $request, $id)
   {
     $operation_type = 'update';
     $fields = $this->redisReadFields($operation_type);

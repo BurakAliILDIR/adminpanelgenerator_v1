@@ -73,7 +73,7 @@ trait HelperMethods
   
   private function redisReadFields(string $operation_type)
   {
-	  $key = "$this->redis_path:Json:$operation_type";
+	  $key = "$this->redis_path:json:$operation_type";
 	  if ( !($fields = unserialize(Redis::get($key)))) {
 		  $fields = $this->readFieldsPick($operation_type);
 		  Redis::set($key, serialize($fields));
@@ -83,7 +83,7 @@ trait HelperMethods
   
   private function redisJsonSettings() : void
   {
-    $key = "$this->redis_path:Json:all";
+	  $key = "$this->redis_path:json:all";
     if ( !($this->jsonSettings = unserialize(Redis::get($key)))) {
       $json = $this->model->getSettings();
       Redis::set($key, serialize($json));

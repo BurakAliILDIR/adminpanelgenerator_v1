@@ -49,129 +49,133 @@
 									<span>{!! $model['surname'] ?? '-' !!}</span>
 									<div class="line"></div>
 									<small class="text-uc text-muted">E-posta : </small>
-                  <span>{!! $model['email'] !!}</span>
-                  <div class="line"></div>
-                  <small class="text-uc text-muted">Telefon : </small>
-                  <span>{!! $model['phone'] ?? '-' !!}</span>
-                  <div class="line"></div>
-                  <small class="text-uc text-muted">Cinsiyet : </small>
-                  <span>{!! $model['gender'] ?? '-' !!}</span>
-                  <div class="line"></div>
-                  <small class="text-uc text-muted">Doğum Tarihi : </small>
-                  <span>{!! $model['date_of_birth'] ? \Carbon\Carbon::parse($model['date_of_birth'])->format('d/m/Y') : '-' !!}</span>
-                  <div class="line"></div>
-                  @if($roles->count() === 1)
-                    <small class="text-uc text-muted">Yetki : </small>
-                    <span>{!! $roles[0] !!}</span>
-                  @else
-                    <small class="text-uc text-muted">Yetkiler : </small>
-                    <span>
+									<span>{!! $model['email'] !!}</span>
+									<div class="line"></div>
+									<small class="text-uc text-muted">Telefon : </small>
+									<span>{!! $model['phone'] ?? '-' !!}</span>
+									<div class="line"></div>
+									<small class="text-uc text-muted">Cinsiyet : </small>
+									<span>{!! $model['gender'] ?? '-' !!}</span>
+									<div class="line"></div>
+									<small class="text-uc text-muted">Doğum Tarihi : </small>
+									<span>{!! $model['date_of_birth'] ? \Carbon\Carbon::parse($model['date_of_birth'])->format('d/m/Y') : '-' !!}</span>
+									<div class="line"></div>
+									@if($roles->count() === 1)
+										<small class="text-uc text-muted">Yetki : </small>
+										<span>{!! $roles[0] !!}</span>
+									@else
+										<small class="text-uc text-muted">Yetkiler : </small>
+										<span>
                       @foreach($roles as $row)
-                        {!! $row . $loop->last ? '' : ' | ' !!}
-                      @endforeach
+												{!! $row . $loop->last ? '' : ' | ' !!}
+											@endforeach
                     </span>
-                  @endif
-                  <div class="line"></div>
-                  <small class="text-uc text-muted">Hakkımda : </small>
-                  <span>{!! $model['bio'] ?? '-' !!}</span>
-                  <div class="line"></div>
-                </div>
-              </div>
-            </section>
-          </section>
-        </aside>
-        <aside class="bg-white col-md-6 col-sm-12">
-          <section class="vbox">
-            <header class="header bg-light bg-gradient">
-              <ul class="nav nav-tabs nav-white">
-                @foreach($fields as $key => $val)
-                  @if((@$val['detail']) && @$val['multiple'] && $val['type'] !== 'multi_image')
-                    <li id="{{ $key }}Leaf">
-                      <a href="#{{ $key }}" id="{{ $key }}A" data-toggle="tab"
-                         onclick="setLeaf('{{ $key }}')">
-                        {{ $val['title'] }}
-                      </a>
-                    </li>
-                  @endif
-                @endforeach
-              </ul>
-            </header>
-            <section class="scrollable">
-              <div class="tab-content">
-                @foreach($fields as $key => $val)
-                  @if((@$val['detail']) && @$val['multiple'] && $val['type'] !== 'multi_image')
-                    <?php $relation_infos = $val['relationship'] ?>
-                    <div class="tab-pane" id="{{ $key }}Page">
-                      <section class="scrollable wrapper-md w-f">
-                        @php
-                          $data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key)
-                        @endphp
-                        @if($data->count() > 0)
-                          <section class="panel panel-default">
-                            <div class="table-responsive">
-                              <table class="table table-striped m-b-none">
-                                <thead>
-                                <tr>
-                                  @foreach($data[0]->getSettings('fields') as $relation_key => $relation_val)
-                                    @foreach($relation_infos['fields'] as $field)
-                                      @if($relation_key === $field)
-                                        <th>{{ $relation_val['title'] }}</th>
-                                      @endif
-                                    @endforeach
-                                  @endforeach
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach($data as $upper_val)
-                                  <tr>
-                                    @foreach($upper_val->getSettings('fields') as $lower_key => $lower_val)
-                                      @if(array_search($lower_key, $relation_infos['fields']) !== false)
-                                        @component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
-                                      @endif
-                                    @endforeach
-                                  </tr>
-                                @endforeach
-                                </tbody>
-                              </table>
-                            </div>
-                          </section>
-                          {{ $data->appends([$key => $data->currentPage()])->links() }}
-                        @else
-                          <small>Kayıt bulunmamaktadır.</small>
-                        @endif
-                      </section>
-                    </div>
-                  @endif
-                @endforeach
-              </div>
-            </section>
-          </section>
-        </aside>
-        <aside class="col-md-3 b-l col-sm-12">
-          <section class="vbox">
-            <section class="scrollable">
-              <div class="wrapper-md">
-                @foreach($fields as $key => $val)
-                  @if($val['detail'] && @$val['multiple'] && $val['type'] === 'multi_image')
-                    <p>{{ $val['title'] . ' : Yükleme Alanı' }}</p>
-                    <section class="panel panel-default">
-                      <form
-                        action="{{ route('profileImageUpload', $key) }}"
-                        class="dropzone">
-                        @csrf
-                      </form>
-                    </section>
-                    @if(($images = $model->getMedia($key))->count())
-                      @component('components.alert.alert_messages')@endcomponent
-                      <form action="{{ route('profileImageDelete') }}" method="post">
-                        @Csrf @method('DELETE')
-                        <p>{{ $val['title'] }}
-                          <button class="btn btn-danger pull-right btn-xs btn-rounded"
-                                  onclick="return confirm('Seçili resimleri silmek istediğinize emin misiniz?');">
-                            <i class="fa fa-trash"></i> Seçili Resimleri Sil
-                          </button>
-                        </p>
-                        <section class="panel panel-default">
+									@endif
+									<div class="line"></div>
+									<small class="text-uc text-muted">Hakkımda : </small>
+									<span>{!! $model['bio'] ?? '-' !!}</span>
+									<div class="line"></div>
+								</div>
+							</div>
+						</section>
+					</section>
+				</aside>
+				<aside class="bg-white col-md-6 col-sm-12">
+					<section class="vbox">
+						<header class="header bg-light bg-gradient">
+							<ul class="nav nav-tabs nav-white">
+								@foreach($fields as $key => $val)
+									@if((@$val['detail']) && @$val['multiple'] && $val['type'] !== 'multi_image')
+										@can("$key.index")
+											<li id="{{ $key }}Leaf">
+												<a href="#{{ $key }}" id="{{ $key }}A" data-toggle="tab"
+													 onclick="setLeaf('{{ $key }}')">
+													{{ $val['title'] }}
+												</a>
+											</li>
+										@endcan
+									@endif
+								@endforeach
+							</ul>
+						</header>
+						<section class="scrollable">
+							<div class="tab-content">
+								@foreach($fields as $key => $val)
+									@if((@$val['detail']) && @$val['multiple'] && $val['type'] !== 'multi_image')
+										@can("$key.index")
+											<?php $relation_infos = $val['relationship'] ?>
+											<div class="tab-pane" id="{{ $key }}Page">
+												<section class="scrollable wrapper-md w-f">
+													@php
+														$data = $model->relation($relation_infos)->orderByDESC('id')->paginate($relation_infos['perPage'], ['*'], $key)
+													@endphp
+													@if($data->count() > 0)
+														<section class="panel panel-default">
+															<div class="table-responsive">
+																<table class="table table-striped m-b-none">
+																	<thead>
+																	<tr>
+																		@foreach($data[0]->getSettings('fields') as $relation_key => $relation_val)
+																			@foreach($relation_infos['fields'] as $field)
+																				@if($relation_key === $field)
+																					<th>{{ $relation_val['title'] }}</th>
+																				@endif
+																			@endforeach
+																		@endforeach
+																	</tr>
+																	</thead>
+																	<tbody>
+																	@foreach($data as $upper_val)
+																		<tr>
+																			@foreach($upper_val->getSettings('fields') as $lower_key => $lower_val)
+																				@if(array_search($lower_key, $relation_infos['fields']) !== false)
+																					@component('components.read.partials.td', ['lower_val'=> $lower_val, 'lower_key'=> $lower_key, 'upper_val'=> $upper_val])@endcomponent
+																				@endif
+																			@endforeach
+																		</tr>
+																	@endforeach
+																	</tbody>
+																</table>
+															</div>
+														</section>
+														{{ $data->appends([$key => $data->currentPage()])->links() }}
+													@else
+														<small>Kayıt bulunmamaktadır.</small>
+													@endif
+												</section>
+											</div>
+										@endcan
+									@endif
+								@endforeach
+							</div>
+						</section>
+					</section>
+				</aside>
+				<aside class="col-md-3 b-l col-sm-12">
+					<section class="vbox">
+						<section class="scrollable">
+							<div class="wrapper-md">
+								@foreach($fields as $key => $val)
+									@if($val['detail'] && @$val['multiple'] && $val['type'] === 'multi_image')
+										<p>{{ $val['title'] . ' : Yükleme Alanı' }}</p>
+										<section class="panel panel-default">
+											<form
+												action="{{ route('profileImageUpload', $key) }}"
+												class="dropzone">
+												@csrf
+											</form>
+										</section>
+										@if(($images = $model->getMedia($key))->count())
+											@component('components.alert.alert_messages')@endcomponent
+											<form action="{{ route('profileImageDelete') }}" method="post">
+												@Csrf @method('DELETE')
+												<p>{{ $val['title'] }}
+													<button class="btn btn-danger pull-right btn-xs btn-rounded"
+																	onclick="return confirm('Seçili resimleri silmek istediğinize emin misiniz?');">
+														<i class="fa fa-trash"></i> Seçili Resimleri Sil
+													</button>
+												</p>
+												<section class="panel panel-default">
                           <div class="tz-gallery">
                             <style>.checkbox-custom > i.checked:before {
                                 color: #fb6b5b;

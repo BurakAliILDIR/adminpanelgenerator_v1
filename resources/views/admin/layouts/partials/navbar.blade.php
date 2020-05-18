@@ -147,7 +147,6 @@
 									</li>
 								@endcan
 							@endforeach
-							@can('SystemSettings.index')
 								<?php $isActiveMenu = Route::is('system_settings.index') ? 'active' : ''; ?>
 								<li class="{{ $isActiveMenu }}">
 									<a class="{{ $isActiveMenu }}" href="{{ route('system_settings.index') }}">
@@ -156,7 +155,6 @@
 										<span>Sistem Bilgileri</span>
 									</a>
 								</li>
-							@endcan
 							@auth
 								<li>
 									<a href="{{ route('logout') }}"

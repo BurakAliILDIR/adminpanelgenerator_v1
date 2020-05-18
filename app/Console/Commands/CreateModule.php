@@ -23,32 +23,33 @@ class CreateModule extends Command
   
   public function handle()
   {
-    Artisan::call('cache:forget spatie.permission.cache');
-    
-    // girilen değeri alma.
-    $name = Str::studly($this->argument('name'));
-    // gelen tüm değerleri array olarak alma
-    $alreadyNames = ['User', 'Permission', 'Role', 'Image', 'Profile', 'Field', 'Module'];
-    if ($name !== '' && !Module::find($name) && !in_array($name, $alreadyNames)) {
-      // kaynak dosyası oluşturur.
-      $this->source_generator($name);
-      
-      Artisan::call('module:make ' . $name);
-      Artisan::call('module:make-model ' . $name . ' ' . $name);
-      Artisan::call('module:make-migration create_' . $name . '_table ' . $name);
-	    Artisan::call('module:make-request Create' . $name . 'Request ' . $name);
-	    Artisan::call('module:make-request Update' . $name . 'Request ' . $name);
+	  Artisan::call('cache:forget spatie.permission.cache');
 	
-	    // eğer daha önceden tablo oluşturulmuşsa migrate etme.
-	    if ( !Schema::hasTable($name)) Artisan::call('module:migrate ' . $name);
-	
-	    $this->permission_generator($name);
-	
-	    // burada bu json dosyasına gelen $name e göre yeni bir satır keyi eklenecek.
-	    $this->menu_generator($name);
-	
-	    Artisan::call('route:clear');
-    }
+	  // girilen değeri alma.
+	  $name = Str::studly($this->argument('name'));
+	  $lower_name = strtolower($name);
+	  // gelen tüm değerleri array olarak alma
+	  $alreadyNames = ['User', 'Permission', 'Role', 'Image', 'Profile', 'Field', 'Module'];
+	  if ($name !== '' && !Module::find($name) && !in_array($name, $alreadyNames)) {
+		  // kaynak dosyası oluşturur.
+		  $this->source_generator($name);
+		
+		  Artisan::call("module:make $name");
+		  Artisan::call("module:make-model $name $name");
+		  Artisan::call("module:make-migration create_$lower_name" . "_table $name");
+		  Artisan::call("module:make-request Create$name $name");
+		  Artisan::call("module:make-request Update$name $name");
+		
+		  // eğer daha önceden tablo oluşturulmuşsa migrate etme.
+		  if ( !Schema::hasTable($lower_name)) Artisan::call("module:migrate $lower_name");
+		
+		  $this->permission_generator($name);
+		
+		  // burada bu json dosyasına gelen $name e göre yeni bir satır keyi eklenecek.
+		  $this->menu_generator($name);
+		
+		  Artisan::call('route:clear');
+	  }
   }
   
   /**

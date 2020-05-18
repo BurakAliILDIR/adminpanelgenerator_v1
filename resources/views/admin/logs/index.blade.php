@@ -11,70 +11,68 @@
           <div class="col-sm-7 m-b-xs">
           </div>
           <div class="col-sm-5 m-b-xs">
-            <?php $ara = \request()->input('ara'); ?>
+            <?php $ara = request()->input('ara'); ?>
             <form>
-              <div class="input-group">
-                @if($ara)
-                  <span class="input-group-btn">
+							<div class="input-group">
+								@if($ara)
+									<span class="input-group-btn">
                 <a href="{{ route('Logs.index') }}" class="btn btn-sm btn-default btn-rounded pull-left"
-                   type="button">
+									 type="button">
                   <i class="fa fa-list"></i>
                   Tüm Etkinlikleri Listele
                 </a>
               </span>
-                @endif
-                <input type="text" name="ara" class="input-sm form-control rounded" autocomplete="off"
-                       placeholder="Etkinlikler içinde ara"
-                       value="{{ $ara }}">
-                <span class="input-group-btn">
+								@endif
+								<input type="text" name="ara" class="input-sm form-control rounded" autocomplete="off"
+											 placeholder="Etkinlikler içinde ara"
+											 value="{{ $ara }}">
+								<span class="input-group-btn">
                 <button class="btn btn-sm btn-default btn-rounded" type="submit">
                   <i class="fa fa-search"></i>
                   Ara
                 </button>
               </span>
-              </div>
-            </form>
-          </div>
-        </div>
-      </header>
-      <section class="scrollable wrapper-sm w-f">
-        <section class="panel panel-default">
-          <div class="table-responsive">
-            <table class="table table-striped m-b-none">
-              <thead>
-              <tr>
-                <th>ID</th>
-                <th>Tip</th>
-                <th>Yapan Hesap</th>
-                <th>Yer</th>
-                <th>Eski Değerler</th>
-                <th>Yeni Değerler</th>
-                <th>Tarih</th>
-              </tr>
-              </thead>
-              <tbody>
-              @foreach($data as $row)
-                @php $log_model_name = explode("\\", $row->subject_type); 
-                     $log_model_name = end($log_model_name);
-                @endphp
-                <tr>
-                  <td>{{ $row->id }}</td>
-                  <td>{{ $row->description }}</td>
-                  <td>
-                    @if(\Illuminate\Support\Facades\Auth::user()->can("User.index") && $row->causer_id)
-                      <a href="{{ route("user.show", $row->causer_id) }}"><strong>{{ $row->causer_id }}</strong></a>
-                    @else
-                      {{ $row->causer_id }}
-                    @endif
-                  </td>
-                  <td>
-                    @if(\Illuminate\Support\Facades\Auth::user()->can("$log_model_name.show") && $row->description !== 'deleted')
-                      <a
-                        href="{{ route(strtolower($log_model_name).".show", $row->subject_id) }}"><strong>{{ __($log_model_name) }}</strong></a>
-                    @else
-                      {{ __($log_model_name) }}
-                    @endif
-                  </td>
+							</div>
+						</form>
+					</div>
+				</div>
+			</header>
+			<section class="scrollable wrapper-sm w-f">
+				<section class="panel panel-default">
+					<div class="table-responsive">
+						<table class="table table-striped m-b-none">
+							<thead>
+							<tr>
+								<th>İşlem Türü</th>
+								<th>Yapan Hesap</th>
+								<th>Kayıt</th>
+								<th>Eski Değerler</th>
+								<th>Değerler</th>
+								<th>Tarih</th>
+							</tr>
+							</thead>
+							<tbody>
+							@foreach($data as $row)
+								@php $log_model_name = explode("\\", $row->subject_type); 
+                     $log_model_name = end($log_model_name)
+								@endphp
+								<tr>
+									<td>{{ $row->description }}</td>
+									<td>
+										@if(\Illuminate\Support\Facades\Auth::user()->can("User.index") && $row->causer_id)
+											<a href="{{ route("user.show", $row->causer_id) }}"><strong>{{ $row->causer_id }}</strong></a>
+										@else
+											{{ $row->causer_id }}
+										@endif
+									</td>
+									<td>
+										@if(\Illuminate\Support\Facades\Auth::user()->can("$log_model_name.show") && $row->description !== 'deleted')
+											<a
+												href="{{ route(strtolower($log_model_name).".show", $row->subject_id) }}"><strong>{{ __($log_model_name) }}</strong></a>
+										@else
+											{{ __($log_model_name) }}
+										@endif
+									</td>
                   <td>@foreach($row->properties['old'] ?? [] as $key => $val)
                       {{ "$key: $val" }}
                       @if(!$loop->last)

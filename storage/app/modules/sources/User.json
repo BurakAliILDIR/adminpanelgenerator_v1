@@ -69,30 +69,6 @@
 			"list": false,
 			"detail": true
 		},
-		"Blog": {
-			"type": "auth",
-			"title": "Blog",
-			"list": false,
-			"detail": true,
-			"create": false,
-			"update": false,
-			"multiple": true,
-			"relationship": {
-				"model": "Modules\\Blog\\Models\\Blog",
-				"type": "belongsTo",
-				"keys": {
-					"foreignKey": "User",
-					"otherKey": "id",
-					"partner": "hasMany"
-				},
-				"fields": [
-					"id",
-					"name",
-					"created_at"
-				],
-				"perPage": 7
-			}
-		},
 		"resimler": {
 			"type": "multi_image",
 			"title": "Resimler",

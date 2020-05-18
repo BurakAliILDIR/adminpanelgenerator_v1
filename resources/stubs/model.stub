@@ -17,7 +17,7 @@ class $CLASS$ extends Model implements HasMedia
 {
   use Booting, Relations, SourceSettings, MediaUploads, \Spiritix\LadaCache\Database\LadaCacheTrait, HasSlug, LogsActivity, SoftDeletes;
 
-  protected $table = '$CLASS$';
+  protected $table = '$LOWER_NAME$';
   
   protected $keyType = 'string';
 

@@ -13,8 +13,6 @@ class $CLASS$ extends FormRequest
   
   public function __construct()
   {
-    $operation = strtolower(substr('$CLASS$', 0, 6));
-    $name = substr('$CLASS$', 6, -7);
-    $this->fillFields($name, $operation);
+    $this->fillFields();
   }
 }

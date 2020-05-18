@@ -50,7 +50,6 @@
     "created_at": {
       "type": "datetime",
       "title": "Eklenme Tarihi",
-      "name": "created_at",
       "rules": [
         "required"
       ],
@@ -62,7 +61,6 @@
     "updated_at": {
       "type": "datetime",
       "title": "Düzenlenme Tarihi",
-      "name": "updated_at",
       "rules": [
         "required"
       ],

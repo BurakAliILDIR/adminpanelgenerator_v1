@@ -7,11 +7,12 @@ use Illuminate\Database\Migrations\Migration;
 class $CLASS$ extends Migration
 {
   use \App\Traits\MigrationTraits\BelongsToManyTableSettings;
-  private $fields = null;
+  private $fields;
   
   public function __construct()
   {
-    $model = 'Modules\\$TABLE$\\Models\\$TABLE$';
+  	$name = Illuminate\Support\Str::studly('$TABLE$');
+    $model = "Modules\\$name\\Models\\$name";
     $this->fields = (new $model())->getSettings('fields');
   }
   
