@@ -46,7 +46,7 @@ class $CLASS$ extends Controller
       'data' => $data,                                                                          
       'route' => $this->jsonSettings['routes'],                                                 
     ];                                                                                          
-    return view('$LOWER_NAME$::index', compact('settings'));                                            
+    return view('components.pages.index', compact('settings'));                                            
   } 
   
   public function create()
@@ -64,7 +64,7 @@ class $CLASS$ extends Controller
       'route' => $this->jsonSettings['routes'],
       'plucks' => $this->getPluck($operation_type),
     ];
-    return view('$LOWER_NAME$::create', compact('settings'));
+    return view('components.pages.create', compact('settings'));
   }
 
   public function store(\$MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\Create$STUDLY_NAME$ $request)
@@ -131,7 +131,7 @@ class $CLASS$ extends Controller
       'model' => $this->model,                                                     
       'route' => $this->jsonSettings['routes'],                                    
     ];                                                                             
-    return view('$LOWER_NAME$::show', compact('settings'));                                
+    return view('components.pages.show', compact('settings'));                                
   }                                                                                                                                                                    
                                                                                                               
   public function edit($id)                                                                                 
@@ -151,7 +151,7 @@ class $CLASS$ extends Controller
       'route' => $this->jsonSettings['routes'],                                                             
       'plucks' => $this->getPluck($operation_type),                                                         
     ];                                                                                                      
-    return view('$LOWER_NAME$::edit', compact('settings'));                                                         
+    return view('components.pages.edit', compact('settings'));                                                         
   }                                                                                                         
                                                                         
   public function update(\$MODULE_NAMESPACE$\$STUDLY_NAME$\Http\Requests\Update$STUDLY_NAME$ $request, $id)
