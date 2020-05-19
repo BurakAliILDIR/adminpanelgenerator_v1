@@ -4,7 +4,7 @@
 		"Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
 		"This file is @generated automatically"
 	],
-	"content-hash": "46e4dd6b0de3bf1e37624209a69b767a",
+	"content-hash": "fa1d70280e16ec017bc29407e3fff44f",
 	"packages": [
 		{
 			"name": "arcanedev/log-viewer",
@@ -25,16 +25,16 @@
 				"ext-json": "*",
 				"php": "^7.2.5",
 				"psr/log": "^1.0"
-            },
-            "require-dev": {
-                "orchestra/testbench": "^5.0",
-                "phpunit/phpunit": "^8.0|^9.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Arcanedev\\LogViewer\\LogViewerServiceProvider",
+			},
+			"require-dev": {
+				"orchestra/testbench": "^5.0",
+				"phpunit/phpunit": "^8.0|^9.0"
+			},
+			"type": "library",
+			"extra": {
+				"laravel": {
+					"providers": [
+						"Arcanedev\\LogViewer\\LogViewerServiceProvider",
                         "Arcanedev\\LogViewer\\Providers\\DeferredServicesProvider"
                     ]
                 }
@@ -1157,16 +1157,16 @@
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Eduardo Gulias Davis"
-                }
-            ],
-            "description": "A library for validating emails against several RFCs",
-            "homepage": "https://github.com/egulias/EmailValidator",
+					"license": [
+						"MIT"
+					],
+					"authors": [
+						{
+							"name": "Eduardo Gulias Davis"
+						}
+					],
+					"description": "A library for validating emails against several RFCs",
+					"homepage": "https://github.com/egulias/EmailValidator",
 					"keywords": [
 						"email",
 						"emailvalidation",
@@ -1351,16 +1351,16 @@
 			"dist": {
 				"type": "zip",
 				"url": "https://api.github.com/repos/fideloper/TrustedProxy/zipball/ec38ad69ee378a1eec04fb0e417a97cfaf7ed11a",
-                "reference": "ec38ad69ee378a1eec04fb0e417a97cfaf7ed11a",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/contracts": "^5.0|^6.0|^7.0|^8.0",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "illuminate/http": "^5.0|^6.0|^7.0|^8.0",
-                "mockery/mockery": "^1.0",
+				"reference": "ec38ad69ee378a1eec04fb0e417a97cfaf7ed11a",
+				"shasum": ""
+			},
+			"require": {
+				"illuminate/contracts": "^5.0|^6.0|^7.0|^8.0",
+				"php": ">=5.4.0"
+			},
+			"require-dev": {
+				"illuminate/http": "^5.0|^6.0|^7.0|^8.0",
+				"mockery/mockery": "^1.0",
                 "phpunit/phpunit": "^6.0"
             },
             "type": "library",
@@ -2105,16 +2105,16 @@
             "authors": [
                 {
                     "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                }
-            ],
-            "description": "Laravel UI utilities and presets.",
-            "keywords": [
-                "laravel",
-                "ui"
-            ],
-            "time": "2020-04-29T15:06:45+00:00"
-        },
+									"email": "taylor@laravel.com"
+								}
+						],
+					"description": "Laravel UI utilities and presets.",
+					"keywords": [
+						"laravel",
+						"ui"
+					],
+					"time": "2020-04-29T15:06:45+00:00"
+				},
 		{
 			"name": "laravelcollective/html",
 			"version": "v6.1.1",
@@ -2129,16 +2129,16 @@
 				"reference": "895115187e6fca81350a0b1152b5804f52a8ac28",
 				"shasum": ""
 			},
-            "require": {
-                "illuminate/http": "^6.0|^7.0",
-                "illuminate/routing": "^6.0|^7.0",
-                "illuminate/session": "^6.0|^7.0",
-                "illuminate/support": "^6.0|^7.0",
-                "illuminate/view": "^6.0|^7.0",
-                "php": ">=7.2.5"
-            },
-            "require-dev": {
-                "illuminate/database": "^6.0|^7.0",
+			"require": {
+				"illuminate/http": "^6.0|^7.0",
+				"illuminate/routing": "^6.0|^7.0",
+				"illuminate/session": "^6.0|^7.0",
+				"illuminate/support": "^6.0|^7.0",
+				"illuminate/view": "^6.0|^7.0",
+				"php": ">=7.2.5"
+			},
+			"require-dev": {
+				"illuminate/database": "^6.0|^7.0",
                 "mockery/mockery": "~1.0",
                 "phpunit/phpunit": "~7.1"
             },
@@ -2273,16 +2273,16 @@
                     "type": "github"
                 },
                 {
-                    "url": "https://www.patreon.com/colinodell",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/league/commonmark",
-                    "type": "tidelift"
-                }
-            ],
-            "time": "2020-05-04T22:15:21+00:00"
-        },
+									"url": "https://www.patreon.com/colinodell",
+									"type": "patreon"
+								},
+							{
+								"url": "https://tidelift.com/funding/github/packagist/league/commonmark",
+								"type": "tidelift"
+							}
+						],
+					"time": "2020-05-04T22:15:21+00:00"
+				},
 		{
 			"name": "league/flysystem",
 			"version": "1.0.69",
@@ -2297,16 +2297,16 @@
 				"reference": "7106f78428a344bc4f643c233a94e48795f10967",
 				"shasum": ""
 			},
-            "require": {
-                "ext-fileinfo": "*",
-                "php": ">=5.5.9"
-            },
-            "conflict": {
-                "league/flysystem-sftp": "<1.0.6"
-            },
-            "require-dev": {
-                "phpspec/phpspec": "^3.4",
-                "phpunit/phpunit": "^5.7.26"
+			"require": {
+				"ext-fileinfo": "*",
+				"php": ">=5.5.9"
+			},
+			"conflict": {
+				"league/flysystem-sftp": "<1.0.6"
+			},
+			"require-dev": {
+				"phpspec/phpspec": "^3.4",
+				"phpunit/phpunit": "^5.7.26"
             },
             "suggest": {
                 "ext-fileinfo": "Required for MimeType",
@@ -2924,63 +2924,25 @@
             "authors": [
                 {
                     "name": "Marius Sarca",
-                    "email": "marius.sarca@gmail.com"
-                },
-                {
-                    "name": "Sorin Sarca",
-                    "email": "sarca_sorin@hotmail.com"
-                }
-            ],
-            "description": "A library that can be used to serialize closures (anonymous functions) and arbitrary objects.",
-            "homepage": "https://opis.io/closure",
-            "keywords": [
-							"anonymous functions",
-							"closure",
-							"function",
-							"serializable",
-							"serialization",
-							"serialize"
+									"email": "marius.sarca@gmail.com"
+								},
+							{
+								"name": "Sorin Sarca",
+								"email": "sarca_sorin@hotmail.com"
+							}
 						],
+					"description": "A library that can be used to serialize closures (anonymous functions) and arbitrary objects.",
+					"homepage": "https://opis.io/closure",
+					"keywords": [
+						"anonymous functions",
+						"closure",
+						"function",
+						"serializable",
+						"serialization",
+						"serialize"
+					],
 					"time": "2019-11-29T22:36:02+00:00"
 				},
-		{
-			"name": "org_heigl/ghostscript",
-			"version": "2.3.1",
-			"source": {
-				"type": "git",
-				"url": "https://github.com/heiglandreas/Org_Heigl_Ghostscript.git",
-				"reference": "2bcd115f047589c28243a66e6bbea993fc91da21"
-			},
-			"dist": {
-				"type": "zip",
-				"url": "https://api.github.com/repos/heiglandreas/Org_Heigl_Ghostscript/zipball/2bcd115f047589c28243a66e6bbea993fc91da21",
-				"reference": "2bcd115f047589c28243a66e6bbea993fc91da21",
-				"shasum": ""
-			},
-			"require-dev": {
-				"mockery/mockery": "^1.0",
-				"phpdocumentor/phpdocumentor": "^2.9",
-				"phpunit/phpunit": "^5.5||^6.0||^7.0"
-			},
-			"type": "library",
-			"autoload": {
-				"psr-4": {
-					"Org_Heigl\\Ghostscript\\": "src/"
-				}
-			},
-			"notification-url": "https://packagist.org/downloads/",
-			"license": [
-				"MIT"
-			],
-			"authors": [
-				{
-					"name": "Andreas Heigl",
-					"email": "andreas@heigl.org"
-				}
-			],
-			"description": "A PHP-Wrapper around the Ghostscript-CLI",
-			"time": "2018-02-22T08:37:21+00:00"
-		},
 		{
 			"name": "phpoption/phpoption",
 			"version": "1.7.3",
@@ -2992,16 +2954,16 @@
 			"dist": {
 				"type": "zip",
 				"url": "https://api.github.com/repos/schmittjoh/php-option/zipball/4acfd6a4b33a509d8c88f50e5222f734b6aeebae",
-                "reference": "4acfd6a4b33a509d8c88f50e5222f734b6aeebae",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.5.9 || ^7.0 || ^8.0"
-            },
-            "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.3",
-                "phpunit/phpunit": "^4.8.35 || ^5.0 || ^6.0 || ^7.0"
-            },
+				"reference": "4acfd6a4b33a509d8c88f50e5222f734b6aeebae",
+				"shasum": ""
+			},
+			"require": {
+				"php": "^5.5.9 || ^7.0 || ^8.0"
+			},
+			"require-dev": {
+				"bamarni/composer-bin-plugin": "^1.3",
+				"phpunit/phpunit": "^4.8.35 || ^5.0 || ^6.0 || ^7.0"
+			},
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -3578,17 +3540,17 @@
                     "src/functions.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "A PHP library for generating and working with universally unique identifiers (UUIDs).",
-            "homepage": "https://github.com/ramsey/uuid",
-            "keywords": [
-                "guid",
-                "identifier",
-                "uuid"
-						],
+					"notification-url": "https://packagist.org/downloads/",
+					"license": [
+						"MIT"
+					],
+					"description": "A PHP library for generating and working with universally unique identifiers (UUIDs).",
+					"homepage": "https://github.com/ramsey/uuid",
+					"keywords": [
+						"guid",
+						"identifier",
+						"uuid"
+					],
 					"funding": [
 						{
 							"url": "https://github.com/ramsey",
@@ -3654,16 +3616,16 @@
 			"dist": {
 				"type": "zip",
 				"url": "https://api.github.com/repos/spatie/db-dumper/zipball/56448e8f41d4e8e83babf701d5708b1e597e8ec6",
-                "reference": "56448e8f41d4e8e83babf701d5708b1e597e8ec6",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2",
-                "symfony/process": "^4.2|^5.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7.0|^8.0"
-            },
+				"reference": "56448e8f41d4e8e83babf701d5708b1e597e8ec6",
+				"shasum": ""
+			},
+			"require": {
+				"php": "^7.2",
+				"symfony/process": "^4.2|^5.0"
+			},
+			"require-dev": {
+				"phpunit/phpunit": "^7.0|^8.0"
+			},
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -4241,48 +4203,47 @@
             "homepage": "https://github.com/spatie/laravel-sluggable",
             "keywords": [
                 "laravel-sluggable",
-                "spatie"
-            ],
-            "funding": [
-                {
-                    "url": "https://spatie.be/open-source/support-us",
-                    "type": "custom"
-                }
-            ],
-            "time": "2020-04-20T19:10:09+00:00"
-        },
+							"spatie"
+						],
+					"funding": [
+						{
+							"url": "https://spatie.be/open-source/support-us",
+							"type": "custom"
+						}
+					],
+					"time": "2020-04-20T19:10:09+00:00"
+				},
 		{
 			"name": "spatie/pdf-to-image",
-			"version": "v2.x-dev",
+			"version": "2.0.1",
 			"source": {
 				"type": "git",
 				"url": "https://github.com/spatie/pdf-to-image.git",
-				"reference": "6718a89065c34dfadfbb2ca61eb1c3e6a956e503"
+				"reference": "3b140c4ef9a8cbb72ac51592a3f13d6a6b6d969e"
 			},
 			"dist": {
 				"type": "zip",
-				"url": "https://api.github.com/repos/spatie/pdf-to-image/zipball/6718a89065c34dfadfbb2ca61eb1c3e6a956e503",
-				"reference": "6718a89065c34dfadfbb2ca61eb1c3e6a956e503",
+				"url": "https://api.github.com/repos/spatie/pdf-to-image/zipball/3b140c4ef9a8cbb72ac51592a3f13d6a6b6d969e",
+				"reference": "3b140c4ef9a8cbb72ac51592a3f13d6a6b6d969e",
 				"shasum": ""
 			},
-            "require": {
-							"org_heigl/ghostscript": "^2.2",
-							"php": "^7.0"
-						},
-            "require-dev": {
-							"phpunit/phpunit": "^6.2",
-							"spatie/temporary-directory": "^1.1"
-						},
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Spatie\\PdfToImage\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
+			"require": {
+				"ext-imagick": "*",
+				"php": "^7.2"
+			},
+			"require-dev": {
+				"phpunit/phpunit": "^8.0"
+			},
+			"type": "library",
+			"autoload": {
+				"psr-4": {
+					"Spatie\\PdfToImage\\": "src"
+				}
+			},
+			"notification-url": "https://packagist.org/downloads/",
+			"license": [
+				"MIT"
+			],
             "authors": [
                 {
                     "name": "Freek Van der Herten",
@@ -4290,18 +4251,24 @@
                     "homepage": "https://spatie.be",
                     "role": "Developer"
                 }
-            ],
-            "description": "Convert a pdf to an image",
-            "homepage": "https://github.com/spatie/pdf-to-image",
-            "keywords": [
-                "convert",
-                "image",
-                "pdf",
-                "pdf-to-image",
-                "spatie"
-            ],
-			"time": "2017-06-20T05:58:45+00:00"
-        },
+						],
+			"description": "Convert a pdf to an image",
+			"homepage": "https://github.com/spatie/pdf-to-image",
+			"keywords": [
+				"convert",
+				"image",
+				"pdf",
+				"pdf-to-image",
+				"spatie"
+			],
+			"funding": [
+				{
+					"url": "https://www.patreon.com/spatie",
+					"type": "patreon"
+				}
+			],
+			"time": "2020-04-29T08:21:17+00:00"
+		},
         {
             "name": "spatie/temporary-directory",
             "version": "1.2.2",
@@ -6625,16 +6592,16 @@
                 "exception",
                 "facade",
                 "flare",
-                "reporting"
-            ],
-            "funding": [
-                {
-                    "url": "https://www.patreon.com/spatie",
-                    "type": "patreon"
-                }
-            ],
-            "time": "2020-03-02T15:52:04+00:00"
-        },
+							"reporting"
+						],
+					"funding": [
+						{
+							"url": "https://www.patreon.com/spatie",
+							"type": "patreon"
+						}
+					],
+					"time": "2020-03-02T15:52:04+00:00"
+				},
 			{
 				"name": "facade/ignition",
 				"version": "2.0.4",
@@ -6649,29 +6616,29 @@
 					"reference": "749fba7bf560fe2600ea55bf8734a7c9b8c30cfd",
 					"shasum": ""
 				},
-            "require": {
-							"ext-json": "*",
-							"ext-mbstring": "*",
-							"facade/flare-client-php": "^1.0",
-							"facade/ignition-contracts": "^1.0",
-							"filp/whoops": "^2.4",
-							"illuminate/support": "^7.0|^8.0",
-							"monolog/monolog": "^2.0",
-							"php": "^7.2.5",
-							"scrivo/highlight.php": "^9.15",
-							"symfony/console": "^5.0",
-							"symfony/var-dumper": "^5.0"
-						},
-            "require-dev": {
-                "friendsofphp/php-cs-fixer": "^2.14",
-                "mockery/mockery": "^1.3",
-                "orchestra/testbench": "5.0"
-            },
-            "suggest": {
-                "laravel/telescope": "^3.1"
-            },
-            "type": "library",
-            "extra": {
+				"require": {
+					"ext-json": "*",
+					"ext-mbstring": "*",
+					"facade/flare-client-php": "^1.0",
+					"facade/ignition-contracts": "^1.0",
+					"filp/whoops": "^2.4",
+					"illuminate/support": "^7.0|^8.0",
+					"monolog/monolog": "^2.0",
+					"php": "^7.2.5",
+					"scrivo/highlight.php": "^9.15",
+					"symfony/console": "^5.0",
+					"symfony/var-dumper": "^5.0"
+				},
+				"require-dev": {
+					"friendsofphp/php-cs-fixer": "^2.14",
+					"mockery/mockery": "^1.3",
+					"orchestra/testbench": "5.0"
+				},
+				"suggest": {
+					"laravel/telescope": "^3.1"
+				},
+				"type": "library",
+				"extra": {
                 "branch-alias": {
                     "dev-master": "2.x-dev"
                 },
@@ -8660,17 +8627,17 @@
                 "MIT"
             ],
             "authors": [
-                {
-                    "name": "Bernhard Schussek",
-                    "email": "bschussek@gmail.com"
-                }
-            ],
-            "description": "Assertions to validate method input/output with nice error messages.",
-            "keywords": [
-                "assert",
-                "check",
-                "validate"
+							{
+								"name": "Bernhard Schussek",
+								"email": "bschussek@gmail.com"
+							}
 						],
+					"description": "Assertions to validate method input/output with nice error messages.",
+					"keywords": [
+						"assert",
+						"check",
+						"validate"
+					],
 					"time": "2020-04-18T12:12:48+00:00"
 				}
 		],

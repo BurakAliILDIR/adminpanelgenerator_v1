@@ -33,8 +33,7 @@
 		"spatie/laravel-searchable": "^1.6",
 		"spatie/laravel-sluggable": "^2.4",
 		"spatie/pdf-to-image": "^2.0",
-		"spiritix/lada-cache": "^5.0",
-		"elasticsearch/elasticsearch": "^7.6"
+		"spiritix/lada-cache": "^5.0"
 	},
 	"require-dev": {
 		"andrey-helldar/laravel-lang-publisher": "^4.0",
