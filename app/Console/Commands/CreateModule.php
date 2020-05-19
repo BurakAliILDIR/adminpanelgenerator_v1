@@ -23,13 +23,13 @@ class CreateModule extends Command
   
   public function handle()
   {
-	  Artisan::call('cache:forget spatie.permission.cache');
+	  Artisan::call('cache:forget ' . config('cache.prefix') . '.permission.cache');
 	
 	  // girilen değeri alma.
-	  $name = Str::studly($this->argument('name'));
-	  $lower_name = strtolower($name);
+	  $lower_name = strtolower($this->argument('name'));
+	  $name = Str::studly($lower_name);
 	  // gelen tüm değerleri array olarak alma
-	  $alreadyNames = ['User', 'Permission', 'Role', 'Image', 'Profile', 'Field', 'Module'];
+	  $alreadyNames = ['User', 'Permission', 'Role', 'Image', 'Profile', 'Field', 'Module', 'SystemSettings'];
 	  if ($name !== '' && !Module::find($name) && !in_array($name, $alreadyNames)) {
 		  // kaynak dosyası oluşturur.
 		  $this->source_generator($name);
