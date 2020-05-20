@@ -24,7 +24,7 @@
 				<div class="panel-body">
 					@component('components.alert.alert_messages')@endcomponent
 					@component('components.alert.error_messages')@endcomponent
-					{{ Form::open(['route' => ['fields.store', $module_name, true], 'class' => 'form-horizontal']) }}
+					{{ Form::open(['route' => ['fields.store', [$module_name, true]], 'class' => 'form-horizontal']) }}
 					<div class="form-group">
 						{{ Form::label('model', 'Model', ['class' => 'col-sm-2 control-label']) }}
 						<div class="col-sm-10">
@@ -120,18 +120,11 @@
 					'title' => 'Sıra',
 					'attributes'=> ['required']          
 					])@endcomponent
-					<div class="form-check m-b">
+					@include('admin.application.field.partials.rules_table')
+					<div class="form-group">
 						{{ Form::label('rules', 'Kurallar', ['class' => 'col-sm-2 control-label']) }}
-						<div class="col-sm-10 m-b">
-							@foreach($rules as $rule)
-								<div class="checkbox">
-									<label class="checkbox-custom center-block">
-										{{ Form::checkbox('rules[]', $rule) }}
-										<i class="fa fa-fw fa-square-o"></i>
-										{{ $rule }}
-									</label>
-								</div>
-							@endforeach
+						<div class="col-sm-10">
+							{{ Form::textarea('rules', null, ['class' => 'form-control m-b', 'rows' => '3']) }}
 						</div>
 					</div>
 					<div class="line line-dashed line-lg pull-in"></div>
@@ -150,7 +143,8 @@
 						</div>
 					</div>
 					<div class="line line-dashed line-lg pull-in"></div>
-					<strong class="text-danger">Aşağıdaki alanlar sadece "tip" alanı "HasOne", "HasMany" ve ("belongsTo" ve Karşı
+					<strong class="text-danger">Aşağıdaki alanlar sadece "tip" alanı "HasOne", "HasMany" ve ("belongsTo" ve
+						Karşı
 						taraf "HasMany") ve BelongsToMany ise doldurulacaktır.</strong>
 					<div class="line line-dashed line-lg pull-in"></div>
 					<div class="form-group">
@@ -180,6 +174,14 @@
 						</div>
 					</div>
 					<div class="line line-dashed line-lg pull-in"></div>
+					@include('admin.application.field.partials.rules_table')
+					<div class="form-group">
+						{{ Form::label('partner_rules', 'Karşı Taraf Kurallar', ['class' => 'col-sm-2 control-label']) }}
+						<div class="col-sm-10">
+							{{ Form::textarea('partner_rules', null, ['class' => 'form-control m-b', 'rows' => '3']) }}
+						</div>
+					</div>
+					<div class="line line-dashed line-lg pull-in"></div>
 					<div class="form-check m-b">
 						{{ Form::label('partner_pages', 'Karşı Taraf Görünüm', ['class' => 'col-sm-2 control-label']) }}
 						<div class="col-sm-10 m-b">
@@ -195,47 +197,32 @@
 						</div>
 					</div>
 					<div class="line line-dashed line-lg pull-in"></div>
-					<div class="form-check m-b">
-						{{ Form::label('partner_rules', 'Karşı Taraf Kurallar', ['class' => 'col-sm-2 control-label']) }}
-						<div class="col-sm-10 m-b">
-							@foreach($rules as $rule)
-								<div class="checkbox">
-									<label class="checkbox-custom center-block">
-										{{ Form::checkbox('partner_rules[]', $rule) }}
-										<i class="fa fa-fw fa-square-o"></i>
-										{{ $rule }}
-									</label>
-                </div>
-              @endforeach
-            </div>
-          </div>
-            <div class="line line-dashed line-lg pull-in"></div>
-            {{ Form::submit("Ekle", array_merge(['class' => 'btn btn-primary btn-block'])) }}
-            {!! Form::close() !!}
-        </div>
-      </section>
-    </div>
-  </div>
+					{{ Form::submit("Ekle", array_merge(['class' => 'btn btn-primary btn-block'])) }}
+					{!! Form::close() !!}
+				</div>
+			</section>
+		</div>
+	</div>
 @endsection
 @section('js')
-  <script src="{{ asset('/storage/plugins/select2/js/select2.min.js') }}"></script>
-  <script src="{{ asset('/storage/admin-custom-template/form/only_number.js') }}"></script>
-  <script>
-    $(document).ready(() => {
-      // select 2 çalışması için.
-      $('.js-example-basic-single').select2();
+	<script src="{{ asset('/storage/plugins/select2/js/select2.min.js') }}"></script>
+	<script src="{{ asset('/storage/admin-custom-template/form/only_number.js') }}"></script>
+	<script>
+		$(document).ready(() => {
+			// select 2 çalışması için.
+			$('.js-example-basic-single').select2();
 
-      // seçilen modele göre ajax isteği ile dolduracak.
-      $("#model").change(() => {
+			// seçilen modele göre ajax isteği ile dolduracak.
+			$("#model").change(() => {
 
-        const display = $('#display');
-        const value = $('#value');
-        const fields = $('#fields');
-        $.ajax({
-          headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-          type: "post",
-          data: {model: $("#model").val()},
-          url: '{{ route('fields.getFields') }}',
+				const display = $('#display');
+				const value = $('#value');
+				const fields = $('#fields');
+				$.ajax({
+					headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+					type: "post",
+					data: {model: $("#model").val()},
+					url: '{{ route('fields.getFields') }}',
         }).done((data) => {
           display.children().remove();
           value.children().remove();

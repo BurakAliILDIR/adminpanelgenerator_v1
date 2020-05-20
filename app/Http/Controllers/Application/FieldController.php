@@ -16,13 +16,11 @@ class FieldController extends Controller
 		Artisan::call('cache:clear');
 	}
 	
-	private array $rules = ['required', 'accepted', 'alpha', 'alpha_num', 'array', 'boolean', 'image', 'email', 'nullable', 'file', 'string', 'integer', 'numeric', 'date', 'url', 'phone:TR,AUTO', 'unique'];
 	private array $pages = ['list', 'detail', 'create', 'update'];
 	private array $attributes = ['required' => 'required', 'autofocus' => 'autofocus', 'disabled' => 'disabled'];
 	
 	public function create($module_name, $related = false)
 	{
-		$rules = $this->rules;
 		$attributes = $this->attributes;
 		$pages = $this->pages;
 		$this_fields = json_decode(file_get_contents(storage_path("app\modules\sources\\$module_name.json")), true)['fields'];
@@ -37,21 +35,20 @@ class FieldController extends Controller
 				$models[$m_path] = $m_name;
 			}
 			
-			return view('admin.application.field.related_create', compact('module_name', 'pages', 'rules', 'attributes', 'types', 'models', 'relationships', 'this_fields'));
+			return view('admin.application.field.related_create', compact('module_name', 'pages', 'attributes', 'types', 'models', 'relationships', 'this_fields'));
 		} else {
 			$types = ['text' => 'Text', 'number' => 'Integer', 'decimal' => 'Decimal', 'textarea' => 'Textarea', 'radio' => 'Radio Button', 'checkbox' => 'CheckBox (true, false)',
 				'select' => 'Select', 'date' => 'Date (dd.mm.yyyy)', 'datetime' => 'DateTime (dd.mm.yyyy H:i:s)', 'image' => 'Image',
 				'multi_image' => 'Multi Image', 'file' => 'File', 'email' => 'E-mail', 'hidden' => 'Hidden', 'password' => 'Secret', 'auth' => 'Authentication',
 			];
-			return view('admin.application.field.create', compact('module_name', 'pages', 'rules', 'attributes', 'types', 'this_fields'));
+			return view('admin.application.field.create', compact('module_name', 'pages', 'attributes', 'types', 'this_fields'));
 		}
 	}
 	
 	public function store(Request $request, $module_name, $related = false)
 	{
-		if (($unique_index = array_search('unique', ($rules = $request['rules'] ?? []), true))) {
-			$rules[$unique_index] = 'unique:' . $request->name . ':$this->id';
-		}
+		$rules = str_replace(['unique'], ['unique:' . strtolower($module_name) . ',' . $request['name'] . ',$this->id'], $request['rules']);
+		$partner_rules = str_replace('unique', null, $request['partner_rules']);
 		if ($related) {
 			$relationship = $request['relationship'];
 			$partner = $request['partner'];
@@ -82,7 +79,7 @@ class FieldController extends Controller
 			$partner_eleman = [
 				'type' => '',
 				'title' => $module_name,
-				'rules' => $request['partner_rules'] ?? [],
+				'rules' => $partner_rules,
 				'list' => in_array('list', $request['partner_pages'] ?? []),
 				'detail' => in_array('detail', $request['partner_pages'] ?? []),
 				'create' => in_array('create', $request['partner_pages'] ?? []),
@@ -98,8 +95,6 @@ class FieldController extends Controller
 					'fields' => $request['this_fields'],
 				],
 			];
-			
-			$partner_key = $partner_model_name;
 			
 			// teke tek ise:
 			if ($relationship === 'hasOne' || ($relationship === 'belongsTo' && $partner === 'hasOne')) {
@@ -130,7 +125,6 @@ class FieldController extends Controller
 					$partner_eleman['relationship']['keys']['foreignKey'] = 'id';
 					$partner_eleman['relationship']['keys']['otherKey'] = $module_name;
 				}
-				$partner_key = $partner_model_name;
 			}
 			
 			// teke çok ise:
@@ -211,7 +205,7 @@ class FieldController extends Controller
 			$count = ($request['order'] > $count - 2) ? $count - 2 : $request['order'];
 			
 			// dizi elemanlarının arasına eleman sokuşturmak.
-			$source['fields'] = array_slice($fields, 0, $count, true) + [$request['name'] ?? Str::studly($partner_key) => $eleman] +
+			$source['fields'] = array_slice($fields, 0, $count, true) + [$request['name'] ?? Str::studly(class_basename(new $request['model'])) => $eleman] +
 				array_slice($fields, $count, count($fields) - 1, true);
 			file_put_contents($path, json_encode($source));
 		}
@@ -231,17 +225,13 @@ class FieldController extends Controller
 		$pages = $this->pages;
 		$path = storage_path("app\modules\sources\\$module_name.json");
 		$cells = json_decode(file_get_contents($path), true)['fields'][$key];
-		$rules = $this->rules;
 		$attributes = $this->attributes;
-		
-		return view('admin.application.field.edit', compact('cells', 'pages', 'module_name', 'key', 'rules', 'attributes'));
+		return view('admin.application.field.edit', compact('cells', 'pages', 'module_name', 'key', 'attributes'));
 	}
 	
 	public function update(Request $request, $module_name, $key)
 	{
-		if (($unique_index = array_search('unique', ($rules = $request['rules'] ?? []), true))) {
-			$rules[$unique_index] = "unique:" . $module_name . "," . $key . ',$this->id';
-		}
+		$rules = str_replace(['unique'], ['unique:' . strtolower($module_name) . ',' . $request['name'] . ',$this->id'], $request['rules']);
 		$path = storage_path("app\modules\sources\\$module_name.json");
 		$source = json_decode(file_get_contents($path), true);
 		$eleman = $source['fields'][$key];
@@ -297,7 +287,7 @@ class FieldController extends Controller
 		return $model->getSettings('fields');
 	}
 	
-	private function ordinaryFieldFilling(Request $request, string $module_name, array $rules)
+	private function ordinaryFieldFilling(Request $request, string $module_name, string $rules)
 	{
 		$eleman = [
 			'type' => $request['type'],

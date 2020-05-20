@@ -10,9 +10,7 @@ trait DynamicRulesValidate
 	{
 		$validates = [];
 		foreach ($this->fields as $key => $field) {
-			$tmp = implode('|', $field['rules']);
-			$tmp = str_replace(['$this->id'], [$this->id], $tmp);
-			$validates[$key] = $tmp;
+			$validates[$key] = str_replace(['$this->id'], [$this->id], @$field['rules']);
 		}
 		return $validates;
 	}
@@ -33,7 +31,7 @@ trait DynamicRulesValidate
 		$type = strtolower(substr($class, 0, 6));
 		$name = substr($class, 6);
 		$redis_path = config('cache.prefix') . ":$name:json:$type";
-		if ( !($this->fields = unserialize(Redis::get($redis_path))['showFields'])) {
+		if ( !($this->fields = @(unserialize(Redis::get($redis_path)))['showFields'])) {
 			$model = '\\Modules\\' . $name . '\\Models\\' . $name;
 			$this->fields = (new $model())->getSettings('fields');
 			Redis::set($redis_path, serialize($this->fields));

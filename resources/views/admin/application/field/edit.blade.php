@@ -23,35 +23,30 @@
 				<div class="panel-body">
 					@component('components.alert.alert_messages')@endcomponent
 					@component('components.alert.error_messages')@endcomponent
-					{{ Form::model($cells, ['route' => ['fields.update', $module_name, $key],  'method' => 'put', 'class' => 'form-horizontal']) }}
+					{{ Form::model($cells, ['route' => ['fields.update', [$module_name, $key]],  'method' => 'put', 'class' => 
+					'form-horizontal']) }}
 					@component('components.form.partials.text',
 					['key' => 'title',
 					'title' => 'Başlık',
 					'value' => $cells['title'],
 					'attributes'=> ['required' => 'required']
 					])@endcomponent
-					<div class="form-check m-b">
+					@include('admin.application.field.partials.rules_table')
+					<div class="form-group">
 						{{ Form::label('rules', 'Kurallar', ['class' => 'col-sm-2 control-label']) }}
-						<div class="col-sm-10 m-b">
-							@foreach($rules as $rule)
-								<div class="checkbox">
-									<label class="checkbox-custom center-block">
-										{{ Form::checkbox('rules[]', $rule) }}
-										<i class="fa fa-fw fa-square-o"></i>
-										{{ $rule }}
-									</label>
-								</div>
-							@endforeach
+						<div class="col-sm-10">
+							{{ Form::textarea('rules', null, array_merge(['class' => 'form-control m-b', 'rows' => '3'])) }}
 						</div>
 					</div>
+					<div class="line line-dashed line-lg pull-in"></div>
 					<div class="line line-dashed line-lg pull-in"></div>
 					<div class="form-check m-b">
 						{{ Form::label('attributes', 'Özellikler', ['class' => 'col-sm-2 control-label']) }}
 						<div class="col-sm-10 m-b">
 							@foreach($attributes as $attribute_key => $attribute)
 								<div class="checkbox">
-                  <label class="checkbox-custom center-block">
-                    {{ Form::checkbox('attributes[]', $attribute_key) }}
+									<label class="checkbox-custom center-block">
+										{{ Form::checkbox('attributes[]', $attribute_key) }}
                     <i class="fa fa-fw fa-square-o"></i>
                     {{ $attribute }}
                   </label>

@@ -24,7 +24,7 @@
         <div class="panel-body">
           @component('components.alert.alert_messages')@endcomponent
           @component('components.alert.error_messages')@endcomponent
-          {{ Form::open(['route' => ['fields.store', $module_name, false], 'class' => 'form-horizontal']) }}
+          {{ Form::open(['route' => ['fields.store', [$module_name, false]], 'class' => 'form-horizontal']) }}
           @component('components.form.partials.select',
           ['key' => 'type',
           'title' => 'Tip',
@@ -84,63 +84,55 @@
 							@endforeach
 						</div>
 					</div>
-					<div class="line line-dashed line-lg pull-in"></div>
-
-					<div class="form-check m-b">
-						{{ Form::label('rules', 'Kurallar', ['class' => 'col-sm-2 control-label']) }}
-						<div class="col-sm-10 m-b">
-							@foreach($rules as $rule)
-								<div class="checkbox">
-									<label class="checkbox-custom center-block">
-										{{ Form::checkbox('rules[]', $rule) }}
-										<i class="fa fa-fw fa-square-o"></i>
-										{{ $rule }}
-									</label>
-								</div>
-							@endforeach
+						<div class="line line-dashed line-lg pull-in"></div>
+						@include('admin.application.field.partials.rules_table')
+						<div class="form-group">
+							{{ Form::label('rules', 'Kurallar', ['class' => 'col-sm-2 control-label']) }}
+							<div class="col-sm-10">
+								{{ Form::textarea('rules', null, ['class' => 'form-control m-b', 'rows' => '3']) }}
+							</div>
 						</div>
-					</div>
-					<div class="line line-dashed line-lg pull-in"></div>
-					<div class="form-check m-b">
-						{{ Form::label('attributes', 'Özellikler', ['class' => 'col-sm-2 control-label']) }}
-						<div class="col-sm-10 m-b">
-							@foreach($attributes as $attribute_key => $attribute)
-								<div class="checkbox">
-									<label class="checkbox-custom center-block">
-										{{ Form::checkbox('attributes[]', $attribute_key) }}
-										<i class="fa fa-fw fa-square-o"></i>
-										{{ $attribute }}
-									</label>
-								</div>
-              @endforeach
-            </div>
-          </div>
-          <div class="line line-dashed line-lg pull-in"></div>
-          <div class="form-check m-b">
-            {{ Form::label('pages', 'Görünüm', ['class' => 'col-sm-2 control-label']) }}
-            <div class="col-sm-10 m-b">
-              @foreach($pages as $page)
-                <div class="checkbox">
-                  <label class="checkbox-custom center-block">
-                    {{ Form::checkbox('pages[]', $page) }}
-                    <i class="fa fa-fw fa-square-o"></i>
-                    {{ $page }}
-                  </label>
-                </div>
-              @endforeach
-            </div>
-          </div>
-          <div class="line line-dashed line-lg pull-in"></div>
-          {{ Form::submit("Ekle", array_merge(['class' => 'btn btn-primary btn-block'])) }}
-          {!! Form::close() !!}
-        </div>
-      </section>
-    </div>
-  </div>
+						<div class="line line-dashed line-lg pull-in"></div>
+						<div class="form-check m-b">
+							{{ Form::label('attributes', 'Özellikler', ['class' => 'col-sm-2 control-label']) }}
+							<div class="col-sm-10 m-b">
+								@foreach($attributes as $attribute_key => $attribute)
+									<div class="checkbox">
+										<label class="checkbox-custom center-block">
+											{{ Form::checkbox('attributes[]', $attribute_key) }}
+											<i class="fa fa-fw fa-square-o"></i>
+											{{ $attribute }}
+										</label>
+									</div>
+								@endforeach
+							</div>
+						</div>
+						<div class="line line-dashed line-lg pull-in"></div>
+						<div class="form-check m-b">
+							{{ Form::label('pages', 'Görünüm', ['class' => 'col-sm-2 control-label']) }}
+							<div class="col-sm-10 m-b">
+								@foreach($pages as $page)
+									<div class="checkbox">
+										<label class="checkbox-custom center-block">
+											{{ Form::checkbox('pages[]', $page) }}
+											<i class="fa fa-fw fa-square-o"></i>
+											{{ $page }}
+										</label>
+									</div>
+								@endforeach
+							</div>
+						</div>
+						<div class="line line-dashed line-lg pull-in"></div>
+						{{ Form::submit("Ekle", array_merge(['class' => 'btn btn-primary btn-block'])) }}
+						{!! Form::close() !!}
+				</div>
+			</section>
+		</div>
+	</div>
 @endsection
 @section('js')
-  <script src="{{ asset('/storage/plugins/select2/js/select2.min.js') }}"></script>
-  <script>
+	<script src="{{ asset('/storage/plugins/select2/js/select2.min.js') }}"></script>
+	<script>
     $(document).ready(function () {
       $('.js-example-basic-single').select2();
     });

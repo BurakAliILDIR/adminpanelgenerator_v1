@@ -44,7 +44,7 @@ class $CLASS$ extends Migration
           case 'select':
             if (@($rel = $field['relationship']) && !($rel['type'] === 'belongsToMany') && !($rel['type'] === 'belongsTo')) {
               $table->uuid($key)->nullable()->index();
-            } else if ( !$field['relationship']) {
+						} else if ( !(@$field['relationship'])) {
               $table->string($key)->nullable()->index();
             }
             break;

@@ -33,41 +33,35 @@
       "detail": true
     },
     "name": {
-      "type": "text",
-      "title": "Ad",
-      "value": "",
-      "attributes": {
-        "autofocus": "true"
-      },
-      "rules": [
-        "required"
-      ],
-      "create": true,
-      "update": true,
-      "list": true,
-      "detail": true
-    },
+			"type": "text",
+			"title": "Ad",
+			"value": "",
+			"attributes": {
+				"autofocus": "true"
+			},
+			"rules": "required",
+			"create": true,
+			"update": true,
+			"list": true,
+			"detail": true
+		},
     "created_at": {
-      "type": "datetime",
-      "title": "Eklenme Tarihi",
-      "rules": [
-        "required"
-      ],
-      "create": false,
-      "update": false,
-      "list": false,
-      "detail": true
-    },
+			"type": "datetime",
+			"title": "Eklenme Tarihi",
+			"rules": "required",
+			"create": false,
+			"update": false,
+			"list": false,
+			"detail": true
+		},
     "updated_at": {
-      "type": "datetime",
-      "title": "Düzenlenme Tarihi",
-      "rules": [
-        "required"
-      ],
-      "create": false,
-      "update": false,
-      "list": false,
-      "detail": true
-    }
+			"type": "datetime",
+			"title": "Düzenlenme Tarihi",
+			"rules": "required",
+			"create": false,
+			"update": false,
+			"list": false,
+			"detail": true
+		}
   }
 }

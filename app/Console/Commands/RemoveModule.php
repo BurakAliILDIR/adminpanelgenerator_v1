@@ -47,20 +47,21 @@ class RemoveModule extends Command
 		  $source = json_decode(file_get_contents(storage_path("app/modules/sources/$name.json")), true);
 		  foreach ($source['fields'] as $key => $val) {
         if (@$val['relationship']) {
-          $json_path = storage_path("app/modules/sources/$key.json");
-          if (($json = json_decode(file_get_contents($json_path), true))) {
-            // eğer ortak bir tablo varsa (belongsToMany ise) 
-            if (($drop_table_name = @$val['relationship']['keys']['table'])) {
-              Schema::dropIfExists($drop_table_name);
-            }
-            unset($json['fields'][$name]);
-            file_put_contents($json_path, json_encode($json));
-          }
+	        $json_path = storage_path("app/modules/sources/$key.json");
+	        if (($json = json_decode(file_get_contents($json_path), true))) {
+		        // eğer ortak bir tablo varsa (belongsToMany ise) 
+		        if (($drop_table_name = @$val['relationship']['keys']['table'])) {
+			        Schema::dropIfExists($drop_table_name);
+		        }
+		        unset($json['fields'][$name]);
+		        file_put_contents($json_path, json_encode($json));
+	        }
         }
-      }
-      
-      Storage::delete("modules/sources/$name.json");
-      Artisan::call('cache:clear');
-    }
+		  }
+		
+		  Storage::delete("modules/sources/$name.json");
+		  Schema::dropIfExists($lower_name);
+		  Artisan::call('cache:clear');
+	  }
   }
 }
