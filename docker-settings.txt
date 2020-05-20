@@ -2,17 +2,11 @@
 ########   https://laradock.io/getting-started/
 ########
 ########   Başlatma veya yüklemek için:
-########   docker-compose up -d nginx mysql redis-cluster redis-webui phpmyadmin php-worker elasticsearch kibana
+########   docker-compose up -d nginx mysql redis-cluster redis-webui phpmyadmin php-worker
 ########
 ########   Composer, artisan komutları için;
 ########   - laradock içine girip:
 ########   docker-compose exec workspace bash
-########
-########   çalışan container IP almak
-########   docker inspect -f '{{.Name}} - {{range .NetworkSettings.Networks}} {{.IPAddress}}{{end}}' $(docker ps -aq)
-########
-########   cache temizleme
-########   docker builder prune
 
 ###########################################################
 ###################### General Setup ######################
