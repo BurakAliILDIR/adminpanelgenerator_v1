@@ -75,7 +75,7 @@ DOCKER_HOST_IP=10.0.75.1
 ### Remote Interpreter ####################################
 
 # Eşleşen bir Uzak Tercüman girişi seçin. Varsayılan `laradock`tur
-PHP_IDE_CONFIG=serverName=adminpanelgenerator
+PHP_IDE_CONFIG=serverName=laradock
 
 ### Windows Path ##########################################
 

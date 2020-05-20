@@ -2,4 +2,5 @@
 
 # Admin Panel Generator v.1
 - İlişkisel alanlar listeleme sayfasında var.
+- MySQL ve Redis kullanıldı. 
 
