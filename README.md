@@ -3,6 +3,8 @@
 
 Bu projede amaç kod yazmadan sadece yazılım zihniyetine sahip birinin kod yazmadan panel üzerinde form doldurarak sıfırdan istediği özelliklerde bir admin paneline sahip olabilir.
 
+10 Mart 2020 - 20 Mayıs 2020 tarihleri arasında geliştirildi.
+
 ## Roller Yönetimi
 - Super Admin (Projeyi kodsuz olarak inşa edebilme yeteneği)
 - Admin (Projeyi Super Adminden istediği özellikler ile satın alan kişi)
