@@ -1,5 +1,3 @@
-<p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
-
 # Admin Panel Generator v.1
 
 
@@ -23,3 +21,10 @@ Bu projede amaç kod yazmadan sadece yazılım zihniyetine sahip birinin kod yaz
 
 ## Diğer
 - Her admin panelinde olması gereken profil yönetimi, giriş, çıkış, parolamı unuttum gibi özellikler.
+
+## Teknolojiler
+- PHP
+- Laravel
+- MySQL
+- Redis
+- Docker (Geliştirici ortamı için)
